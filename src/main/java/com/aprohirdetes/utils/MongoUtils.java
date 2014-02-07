@@ -16,14 +16,14 @@ public class MongoUtils {
 
 			int port = 27017;
 			try {
-				port = Integer.parseInt(AproApplication.CONFIG
+				port = Integer.parseInt(AproApplication.APP_CONFIG
 						.getProperty("DB.MONGO.PORT"));
 			} catch (NumberFormatException nfe) {
 			}
 
 			try {
 				MONGO_CLIENT = new MongoClient(
-						AproApplication.CONFIG.getProperty("DB.MONGO.HOST"),
+						AproApplication.APP_CONFIG.getProperty("DB.MONGO.HOST"),
 						port);
 			} catch (UnknownHostException uhe) {
 				uhe.printStackTrace();
@@ -35,7 +35,7 @@ public class MongoUtils {
 
 		}
 
-		db = MONGO_CLIENT.getDB(AproApplication.CONFIG
+		db = MONGO_CLIENT.getDB(AproApplication.APP_CONFIG
 				.getProperty("DB.MONGO.DB"));
 
 		return db;

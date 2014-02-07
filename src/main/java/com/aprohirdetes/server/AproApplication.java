@@ -10,20 +10,25 @@ import org.restlet.Restlet;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
+import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.utils.MongoUtils;
 
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+
 public class AproApplication extends Application {
 
-	public static Properties CONFIG = new Properties();
+	public static Properties APP_CONFIG = new Properties();
+	public static Configuration TPL_CONFIG;
 	
 	public AproApplication() {
 		getLogger().info("Initializing application...");
 
-		setName("Aprohirdetes.com");
-		setDescription("Aprohirdetes.com - Ingyenes apróhirdető portál");
+		setName("Apróhirdetés.com");
+		setDescription("Apróhirdetés.com - Ingyenes apróhirdető portál");
 		setOwner("Vámos Balázs");
 		setAuthor("Vámos Balázs");
 	}
@@ -33,6 +38,26 @@ public class AproApplication extends Application {
 		Router router = new Router(getContext());
 
 		router.attach("/", RootServerResource.class);
+		
+		String cssUri = "war:///css";
+		Directory cssDirectory = new Directory(getContext(), cssUri);
+		cssDirectory.setListingAllowed(true);
+		router.attach("/css", cssDirectory);
+		
+		String jsUri = "war:///js";
+		Directory jsDirectory = new Directory(getContext(), jsUri);
+		jsDirectory.setListingAllowed(true);
+		router.attach("/js", jsDirectory);
+		
+		String fontsUri = "war:///fonts";
+		Directory fontsDirectory = new Directory(getContext(), fontsUri);
+		fontsDirectory.setListingAllowed(true);
+		router.attach("/fonts", fontsDirectory);
+		
+		String imagesUri = "war:///images";
+		Directory imagesDirectory = new Directory(getContext(), imagesUri);
+		imagesDirectory.setListingAllowed(true);
+		router.attach("/images", imagesDirectory);
 
 		return router;
 	}
@@ -58,8 +83,14 @@ public class AproApplication extends Application {
 			return;
 		}
 		
-		CONFIG.load(new StringReader(response.getEntityAsText()));
-		System.out.println(CONFIG);
+		APP_CONFIG.load(new StringReader(response.getEntityAsText()));
+		System.out.println(APP_CONFIG);
+		
+		//Loading Template (Freemarker) configuration
+		Configuration cfg = new Configuration();
+		cfg.setObjectWrapper(new DefaultObjectWrapper());
+		cfg.setDefaultEncoding("UTF-8");
+		TPL_CONFIG = cfg;
 		
 		// Loading Kategoriak into memory cache
 		Kategoria.loadCache();

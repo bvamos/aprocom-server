@@ -12,6 +12,10 @@
       <param-name>org.restlet.application</param-name>
       <param-value>com.aprohirdetes.server.AproApplication</param-value>
     </init-param>
+    <init-param>
+      <param-name>org.restlet.clients</param-name>
+      <param-value>CLAP</param-value>
+    </init-param>
   </servlet>
   
   <servlet-mapping>

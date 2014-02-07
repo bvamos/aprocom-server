@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>${content}</title>
+	<meta name="description" content="Ingyenes apróhirdetések">
+	<meta name="keywords" content="apróhirdetés" />
+	
+	<link rel="stylesheet" href="css/apro.css"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10">
+				<section id="banner_top">
+					<div class="banner_border_out">
+						<div class="banner_border_in">
+						Banner
+						</div>
+					</div>
+				</section>
+				<header>
+					<div class="row">
+						<div class="col-md-9">
+							<span class="glyphicon glyphicon-home"></span>
+							<span class="header_link">www.aprohirdetes.com</span>
+							<ul class="header-tabs tabs1">
+								<li><a href="">Apró</a></li>
+								<li><a href="">Ingatlan</a></li>
+								<li><a href="">Jármű</a></li>
+								<li><a href="">Állás</a></li>
+							</ul>
+						</div>
+						<div class="col-md-3">
+							<ul class="header-tabs tabs2">
+								<li><a href="">Keresés</a></li>
+								<li><a href="">Belépés</a></li>
+							</ul>
+						</div>						
+					</div>
+					<div class="row">
+						<div class="col-md-9">
+							<div class="header_logo"></div>
+						</div>
+						<div class="col-md-3">
+							<div class="login_header">&raquo; Bejelentkezés</div>
+							<div class="login_body">
+								<form>
+									<label>email:</label>
+									<input type="text" class="form-control" placeholder="E-mail cím">
+									<input type="password" class="form-control" placeholder="Jelszó">
+								</form>
+							</div>
+						</div>						
+					</div>
+					<div>maradék</div>
+				</header>
+				<div>
+					<label>Name:</label>
+					<input type="text" ng-model="yourName" placeholder="Enter a name here">
+					<hr>
+					<h1>Hello {{yourName}}!</h1>
+				</div>
+			</div>
+			<div class="col-md-2">
+				2
+			</div>
+		</div>
+	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+</body>
+</html>
