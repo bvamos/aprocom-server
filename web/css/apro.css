@@ -1,4 +1,9 @@
+div.placeholder {
+	padding: 0;
+}
+
 #banner_top {
+	margin-bottom: 10px;
 }
 
 div.banner_border_out {
@@ -23,6 +28,7 @@ ul.header-tabs {
 	margin: 0;
 	padding: 0;
 	float: right;
+	z-index: 10001;
 }
 
 ul.header-tabs>li {
@@ -50,22 +56,62 @@ ul.tabs2>li>a {
 }
 
 div.header_logo {
+	height: 143px;
 	background-image: url("../images/header_background.png");
+	background-repeat: no-repeat;
+	z-index: 10000;
+	padding-top: 15px;
+	margin-top: -15px;
 }
 
-div.login_header {
+form.form-signin {
+	background-color: #ee8301;
+	color: #fff;
+	margin: 2px 0 0 2px;
+	height: 126px;
+}
+
+form.form-signin>h2 {
 	background-color: #e36703;
 	color: #fff;
 	font-stretch: condensed;
 	font-size: 18px;
 	font-shadow: 1px 1px #934d08;
 	padding: 6px;
-	margin: 2px 0 0 2px;
+	margin: 0;
 }
 
-div.login_body {
-	background-color: #ee8301;
-	color: #fff;
+div.form-signin-placeholder {
 	padding: 6px;
-	margin: 0 0 0 2px;
+}
+
+div.form-signin-placeholder>input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+div.form-signin-placeholder>input[type="password"] {
+    margin-bottom: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+div.search_container {
+	padding: 20px 0 20px 0;
+}
+
+div.footer_container {
+	background-image: url("../images/footer_background.png");
+	background-repeat: no-repeat;
+	height: 61px;
+}
+
+div.footer_links1 {
+	float: right;
+}
+
+div.footer_links2 {
+	color: #fff;
+	margin: 40px 0 0 10px;
 }

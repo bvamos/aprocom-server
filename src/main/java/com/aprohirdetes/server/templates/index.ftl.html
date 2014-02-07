@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,51 +25,58 @@
 						</div>
 					</div>
 				</section>
-				<header>
-					<div class="row">
-						<div class="col-md-9">
-							<span class="glyphicon glyphicon-home"></span>
-							<span class="header_link">www.aprohirdetes.com</span>
-							<ul class="header-tabs tabs1">
-								<li><a href="">Apró</a></li>
-								<li><a href="">Ingatlan</a></li>
-								<li><a href="">Jármű</a></li>
-								<li><a href="">Állás</a></li>
-							</ul>
-						</div>
-						<div class="col-md-3">
-							<ul class="header-tabs tabs2">
-								<li><a href="">Keresés</a></li>
-								<li><a href="">Belépés</a></li>
-							</ul>
-						</div>						
+				<div class="row placeholders">
+					<div class="col-md-9 placeholder">
+						<span class="glyphicon glyphicon-home"></span>
+						<span class="header_link">www.aprohirdetes.com</span>
+						<ul class="header-tabs tabs1">
+							<li><a href="">Apró</a></li>
+							<li><a href="">Ingatlan</a></li>
+							<li><a href="">Jármű</a></li>
+							<li><a href="">Állás</a></li>
+						</ul>
 					</div>
-					<div class="row">
-						<div class="col-md-9">
-							<div class="header_logo"></div>
-						</div>
-						<div class="col-md-3">
-							<div class="login_header">&raquo; Bejelentkezés</div>
-							<div class="login_body">
-								<form>
-									<label>email:</label>
-									<input type="text" class="form-control" placeholder="E-mail cím">
-									<input type="password" class="form-control" placeholder="Jelszó">
-								</form>
+					<div class="col-md-3 placeholder">
+						<ul class="header-tabs tabs2">
+							<li><a href="">Belépés</a></li>
+							<li><a href="">Regisztráció</a></li>
+						</ul>
+					</div>						
+				</div>
+				<div class="row placeholders">
+					<div class="col-md-9 placeholder">
+						<div class="header_logo"></div>
+					</div>
+					<div class="col-md-3 placeholder">
+						<form class="form-signin" role="form">
+							<h2 class="form-signin-heading">&raquo; Bejelentkezés</h2>
+							<div class="form-signin-placeholder placeholder">
+								<label class="sr-only" for="signinEmail">Email cím</label>
+								<input type="email" class="form-control input-sm" id="signinEmail" autofocus="" required="" placeholder="E-mail cím">
+								<label class="sr-only" for="signinPassword">Email cím</label>
+								<input type="password" class="form-control input-sm" id="signinPassword" required="" placeholder="Jelszó">
 							</div>
-						</div>						
+						</form>
+					</div>						
+				</div>
+				<div class="search_container">
+					<div class="well">
+						<div class="input-group">
+							<input type="text" class="form-control" id="searchQuery" placeholder="Keresett kifejezés">
+							<label class="sr-only" for="searchQuery">Keresett kifejezés</label>
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit">Keresés</button>
+							</span>
+						</div>
 					</div>
-					<div>maradék</div>
-				</header>
-				<div>
-					<label>Name:</label>
-					<input type="text" ng-model="yourName" placeholder="Enter a name here">
-					<hr>
-					<h1>Hello {{yourName}}!</h1>
+				</div>
+				<div class="row footer_container">
+					<div class="footer_links1">Rólunk | Kapcsolat | Adatvédelmi irányelvek</div>
+					<div class="footer_links2">hirdetés feladás </div>
 				</div>
 			</div>
 			<div class="col-md-2">
-				2
+				
 			</div>
 		</div>
 	</div>
