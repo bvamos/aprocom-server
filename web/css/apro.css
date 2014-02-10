@@ -115,3 +115,8 @@ div.footer_links2 {
 	color: #fff;
 	margin: 40px 0 0 10px;
 }
+
+div.footer_links2>a {
+	color: #fff;
+	text-decoration: none;
+}
