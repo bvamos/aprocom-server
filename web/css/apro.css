@@ -64,6 +64,12 @@ div.header_logo {
 	margin-top: -15px;
 }
 
+div.header_date {
+	position: absolute;
+	bottom: 0;
+	float: right;
+}
+
 form.form-signin {
 	background-color: #ee8301;
 	color: #fff;
@@ -99,6 +105,10 @@ div.form-signin-placeholder>input[type="password"] {
 
 div.search_container {
 	padding: 20px 0 20px 0;
+}
+
+div.search_container>div.well {
+	margin: 0;
 }
 
 div.footer_container {
