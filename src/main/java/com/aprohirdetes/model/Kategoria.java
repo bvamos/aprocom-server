@@ -1,47 +1,39 @@
 package com.aprohirdetes.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.aprohirdetes.utils.MongoUtils;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Reference;
 
-public class Kategoria extends BasicDBObject {
+@Entity("kategoria")
+public class Kategoria {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3053186992065105902L;
-	private static HashMap<String, Kategoria> CACHE_BY_ID = new HashMap<String, Kategoria>();
-	private static HashMap<String, Kategoria> CACHE_BY_URLNEV = new HashMap<String, Kategoria>();
+	@Id private ObjectId id;
 	
-	/**
-	 * 
-	 */
-	public static void loadCache() {
-		CACHE_BY_ID.clear();
-		CACHE_BY_URLNEV.clear();
+	private String nev;
+	private String urlNev;
+	private int sorrend = 1;
+	
+	private ObjectId szuloId;
+	
+	@Reference(idOnly=true) private List<Kategoria> alkategoriak = new ArrayList<Kategoria>();
+	
+	public Kategoria() {
 		
-		DB db = MongoUtils.getMongoDB();
-		if(db != null) {
-			DBCollection collKategoria = db.getCollection("kategoria");
-			collKategoria.setObjectClass(Kategoria.class);
-			
-			DBCursor cursor = collKategoria.find();
-			try {
-			   while(cursor.hasNext()) {
-				   Kategoria obj = (Kategoria) cursor.next();
-			       CACHE_BY_ID.put(obj.getString("_id"), obj);
-			       CACHE_BY_URLNEV.put(obj.getString("urlNev"), obj);
-			   }
-			} finally {
-			   cursor.close();
-			}
-		}
-		
-		System.out.println(CACHE_BY_ID);
 	}
 	
+	public ObjectId getId() {
+		return id;
+	}
+	
+	public String getIdAsString() {
+		return id.toString();
+	}
+	
+	public ObjectId getSzuloId() {
+		return this.szuloId;
+	}
 }

@@ -13,7 +13,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
-import com.aprohirdetes.model.Kategoria;
+import com.aprohirdetes.model.KategoriaHelper;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Configuration;
@@ -86,14 +86,14 @@ public class AproApplication extends Application {
 		APP_CONFIG.load(new StringReader(response.getEntityAsText()));
 		System.out.println(APP_CONFIG);
 		
-		//Loading Template (Freemarker) configuration
+		// Loading Template (Freemarker) configuration
 		Configuration cfg = new Configuration();
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 		cfg.setDefaultEncoding("UTF-8");
 		TPL_CONFIG = cfg;
 		
 		// Loading Kategoriak into memory cache
-		Kategoria.loadCache();
+		KategoriaHelper.loadCache();
 	}
 
 	@Override
