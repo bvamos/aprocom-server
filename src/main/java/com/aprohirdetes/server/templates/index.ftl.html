@@ -84,6 +84,18 @@
 							<button type="submit" class="btn btn-default">Keresés</button>
 						</form>
 					</div>
+				<div>
+				<div>
+					<ul>
+					<#list kategoriaMap as kategoria>
+						<li>${kategoria.nev}</li>
+						<ul>
+						<#list kategoria.alkategoriak as alkategoria>
+							<li>${alkategoria.nev}</li>
+						</#list>
+						</ul>
+					</#list>
+					</ul>
 				</div>
 				<div class="row footer_container">
 					<div class="footer_links1"><a href="">Rólunk</a> | <a href="">Kapcsolat</a> | <a href="">Adatvédelmi irányelvek</a></div>
