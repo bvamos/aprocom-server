@@ -13,6 +13,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
+import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.KategoriaHelper;
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -94,6 +95,9 @@ public class AproApplication extends Application {
 		
 		// Loading Kategoriak into memory cache
 		KategoriaHelper.loadCache();
+		
+		// Loading Helysegek into memory cache
+		HelysegCache.loadCache();
 	}
 
 	@Override

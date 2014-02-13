@@ -20,6 +20,8 @@ import org.restlet.resource.ClientResource;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.RootResource;
+import com.aprohirdetes.model.Helyseg;
+import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaHelper;
 import com.aprohirdetes.utils.MongoUtils;
@@ -68,9 +70,12 @@ public class RootServerResource extends ServerResource implements RootResource {
 			o.put("alkategoriak", alkategoriak);
 		}
 		
+		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
+		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put("content", getApplication().getName());
-		dataModel.put("kategoriaMap", kategoriaList);
+		dataModel.put("kategoriaList", kategoriaList);
+		dataModel.put("helysegList", helysegList);
 		
 		Representation mailFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();
 		

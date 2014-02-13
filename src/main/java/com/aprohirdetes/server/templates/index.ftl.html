@@ -16,8 +16,6 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
-			<div class="col-md-10">
 				<section id="banner_top">
 					<div class="banner_border_out">
 						<div class="banner_border_in">
@@ -60,7 +58,7 @@
 						</form>
 					</div>						
 				</div>
-				<div class="search_container">
+				<!-- div class="row search_container">
 					<div class="well">
 						<div class="input-group">
 							<input type="text" class="form-control" id="searchQuery" placeholder="Keresett kifejezés">
@@ -70,23 +68,35 @@
 							</span>
 						</div>
 					</div>
-				</div>
+				</div -->
 				<div class="search_container">
 					<div class="well">
 						<form class="form-inline" role="form">
-							<div class="form-group" style="width: 70%;">
+							<div class="form-group" style="width: 60%;">
 							  <label class="sr-only" for="exampleInputEmail2">Keresett kifejezés</label>
-							  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Keresett kifejezés">
+							  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Keresett kifejezés" style="width: 100%;">
 							</div>
-							<select  class="form-control">
-								<option value="1">Option1 </option>
+							<select class="form-control" style="width: 10%;">
+								<option value="kinal">Kínál</option>
+								<option value="keres">Keres</option>
+							</select>
+							<select class="form-control" style="width: 15%;">
+								<#list helysegList as helyseg>
+								<option value="1">${helyseg.nev}</option>
+									<#list helyseg.alhelysegList as alhelyseg>
+									<option value="1">&nbsp;&nbsp;${alhelyseg.nev}</option>
+										<#list alhelyseg.alhelysegList as alalhelyseg>
+										<option value="1">&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+										</#list>
+									</#list>
+								</#list>
 							</select>
 							<button type="submit" class="btn btn-default">Keresés</button>
 						</form>
 					</div>
 				</div>
-				<div>
-					<#list kategoriaMap as kategoria>
+				<div class="row category_container">
+					<#list kategoriaList as kategoria>
 					<ul class="category-main">
 						<li><a href="">${kategoria.nev}</a></li>
 						<ul class="category-sub">
@@ -101,11 +111,6 @@
 					<div class="footer_links1"><a href="">Rólunk</a> | <a href="">Kapcsolat</a> | <a href="">Adatvédelmi irányelvek</a></div>
 					<div class="footer_links2"><a href="">hirdetés feladás</a> </div>
 				</div>
-			</div>
-			<div class="col-md-2">
-				
-			</div>
-		</div>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

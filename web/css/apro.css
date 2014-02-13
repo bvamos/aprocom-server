@@ -65,9 +65,12 @@ div.header_logo {
 }
 
 div.header_date {
+	font-size: 12px;
 	position: absolute;
 	bottom: 0;
-	float: right;
+	width: 170px;
+	text-align: right;
+	color: #7e7e7e;
 }
 
 form.form-signin {
@@ -115,6 +118,7 @@ div.footer_container {
 	background-image: url("../images/footer_background.png");
 	background-repeat: no-repeat;
 	height: 61px;
+	margin-bottom: 10px;
 }
 
 div.footer_links1 {
@@ -131,6 +135,12 @@ div.footer_links2>a {
 	text-decoration: none;
 }
 
+div.category_container {
+	background-image: url("../images/subcategory_background.png");
+	margin-bottom: 20px;
+	border-radius: 4px;
+}
+
 ul.category-main {
 	display: inline-table;
 	list-style: none outside none;
@@ -140,12 +150,13 @@ ul.category-main {
 
 ul.category-main>li {
 	background-color: #5095da;
+	background: linear-gradient(#4b81bf, #6cb8ff);
 	padding: 5px;
 }
 
 ul.category-main>li>a {
 	text-transform: uppercase;
-	text-shadow: 2px 2px #3e7bbc;
+	text-shadow: 1px 2px #3e7bbc;
 	font-stretch: condensed;
 	color: #fff;
 	padding: 5px;
@@ -155,9 +166,9 @@ ul.category-main>li>a {
 
 ul.category-sub {
 	list-style: none outside none;
-	background-image: url("../images/subcategory_background.png");	
+	/*background-image: url("../images/subcategory_background.png");*/	
 	margin: 0;
-	padding: 0 5px 0 5px;
+	padding: 0 10px 0 10px;
 }
 
 ul.category-sub>li>a {
