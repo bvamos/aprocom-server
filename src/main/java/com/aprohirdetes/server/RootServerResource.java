@@ -1,9 +1,12 @@
 package com.aprohirdetes.server;
 
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -73,7 +76,8 @@ public class RootServerResource extends ServerResource implements RootResource {
 		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put("content", getApplication().getName());
+		dataModel.put("siteName", getApplication().getName());
+		dataModel.put("currentDate", new SimpleDateFormat("yyyy. MMMM dd., EEEE", new Locale("hu")).format(new Date()));
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		

@@ -4,6 +4,7 @@ div.placeholder {
 
 #banner_top {
 	margin-bottom: 10px;
+	display: none;
 }
 
 div.banner_border_out {
@@ -18,7 +19,7 @@ div.banner_border_in {
 	min-height: 60px; 
 }
 
-header {
+#header_tabs_container {
 	margin-top: 10px;
 }
 
@@ -55,7 +56,7 @@ ul.tabs2>li>a {
 	background-color: #bfbfbf;
 }
 
-div.header_logo {
+#header_container {
 	height: 143px;
 	background-image: url("../images/header_background.png");
 	background-repeat: no-repeat;
@@ -66,11 +67,19 @@ div.header_logo {
 
 div.header_date {
 	font-size: 12px;
-	position: absolute;
-	bottom: 0;
 	width: 170px;
+	margin-top: 90px;
 	text-align: right;
 	color: #7e7e7e;
+	float: left;
+}
+
+div.header_text {
+	color: #fff;
+	float: right;
+	width: 300px;
+	margin-top: 20px;
+	font-weight: bold;
 }
 
 form.form-signin {
@@ -122,23 +131,46 @@ div.footer_container {
 }
 
 div.footer_links1 {
-	float: right;
+	float: left;
 }
 
 div.footer_links2 {
-	color: #fff;
-	margin: 40px 0 0 10px;
+	margin-top: 0px;
+	height: 20px;
+	float: right;
+	padding-right: 5px;
 }
 
-div.footer_links2>a {
-	color: #fff;
+div.footer_links3 {
+	height: 20px;
+	float: right;
+	clear: right;
+	margin-top: 21px;
+	padding: 0 5px 0 5px;
+	border-radius: 5px 0 0 0;
+	background-color: #fff;
+}
+
+div.footer_links3>a {
 	text-decoration: none;
+}
+
+div.footer_links4 {
+	margin-top: 21px;
+	height: 20px;
+	float: left;
+	padding-left: 10px;
+}
+
+div.footer_links4>a {
+	text-decoration: none;
+	color: #fff;
 }
 
 div.category_container {
 	background-image: url("../images/subcategory_background.png");
 	margin-bottom: 20px;
-	border-radius: 4px;
+	border-radius: 0px;
 }
 
 ul.category-main {
@@ -146,11 +178,13 @@ ul.category-main {
 	list-style: none outside none;
 	padding: 0;
 	margin: 5px;
+	min-width: 180px;
 }
 
 ul.category-main>li {
 	background-color: #5095da;
-	background: linear-gradient(#4b81bf, #6cb8ff);
+	background: linear-gradient(#5097d9, #6cb8ff);
+	border-left: 4px solid #4b81bf;
 	padding: 5px;
 }
 

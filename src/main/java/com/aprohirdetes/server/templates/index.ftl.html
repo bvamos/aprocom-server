@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>${content}</title>
+	<title>${siteName}</title>
 	<meta name="description" content="Ingyenes apróhirdetések">
 	<meta name="keywords" content="apróhirdetés" />
 	
@@ -23,7 +23,7 @@
 						</div>
 					</div>
 				</section>
-				<div class="row placeholders">
+				<div id="header_tabs_container" class="row placeholders">
 					<div class="col-md-9 placeholder">
 						<span class="glyphicon glyphicon-home"></span>
 						<span class="header_link">www.aprohirdetes.com</span>
@@ -42,9 +42,9 @@
 					</div>						
 				</div>
 				<div class="row placeholders">
-					<div class="col-md-9 placeholder">
-						<div class="header_logo"></div>
-						<div class="header_date">2014. február 10. hétfő<br>Balázs</div>
+					<div id="header_container" class="col-md-9 placeholder">
+						<div class="header_date">${currentDate}<br>Balázs</div>
+						<div class="header_text">Hirdessen az Apróhirdetés.com-on könnyen, gyorsan, ingyen, kötelező regisztráció nélkül!</div>
 					</div>
 					<div class="col-md-3 placeholder">
 						<form class="form-signin" role="form">
@@ -58,40 +58,30 @@
 						</form>
 					</div>						
 				</div>
-				<!-- div class="row search_container">
+				kereses/{{hirdetesTipus}}/?q={{hirdetesKulcsszo}}
+				<div class="row search_container">
 					<div class="well">
-						<div class="input-group">
-							<input type="text" class="form-control" id="searchQuery" placeholder="Keresett kifejezés">
-							<label class="sr-only" for="searchQuery">Keresett kifejezés</label>
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="submit">Keresés</button>
-							</span>
-						</div>
-					</div>
-				</div -->
-				<div class="search_container">
-					<div class="well">
-						<form class="form-inline" role="form">
+						<form class="form-inline" role="form" method="get" target="kereses/{{hirdetesTipus}}/?q={{hirdetesKulcsszo}}">
 							<div class="form-group" style="width: 60%;">
-							  <label class="sr-only" for="exampleInputEmail2">Keresett kifejezés</label>
-							  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Keresett kifejezés" style="width: 100%;">
+							  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
+							  <input type="search" class="form-control" id="searchQuery" name="q" value="kereses/{{hirdetesTipus}}/?q={{hirdetesKulcsszo}}" placeholder="Keresett kifejezés" style="width: 100%;" ng-model="hirdetesKulcsszo">
 							</div>
-							<select class="form-control" style="width: 10%;">
+							<select class="form-control" style="width: 10%;" ng-model="hirdetesTipus">
 								<option value="kinal">Kínál</option>
 								<option value="keres">Keres</option>
 							</select>
-							<select class="form-control" style="width: 15%;">
+							<select class="form-control" style="width: 15%;" ng-model="hirdetesHelyseg">
 								<#list helysegList as helyseg>
-								<option value="1">${helyseg.nev}</option>
+								<option value="${helyseg.urlNev}">${helyseg.nev}</option>
 									<#list helyseg.alhelysegList as alhelyseg>
-									<option value="1">&nbsp;&nbsp;${alhelyseg.nev}</option>
+									<option value="${alhelyseg.urlNev}">&nbsp;&nbsp;${alhelyseg.nev}</option>
 										<#list alhelyseg.alhelysegList as alalhelyseg>
-										<option value="1">&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+										<option value="${alalhelyseg.urlNev}">&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
 										</#list>
 									</#list>
 								</#list>
 							</select>
-							<button type="submit" class="btn btn-default">Keresés</button>
+							<button type="submit" class="btn btn-default" style="width: 10%;">Keresés</button>
 						</form>
 					</div>
 				</div>
@@ -108,8 +98,10 @@
 					</#list>
 				</div>
 				<div class="row footer_container">
-					<div class="footer_links1"><a href="">Rólunk</a> | <a href="">Kapcsolat</a> | <a href="">Adatvédelmi irányelvek</a></div>
-					<div class="footer_links2"><a href="">hirdetés feladás</a> </div>
+					<div class="footer_links1"></div>
+					<div class="footer_links2"><a href="">Rólunk</a> | <a href="">Kapcsolat</a> | <a href="">Adatvédelmi irányelvek</a></div>
+					<div class="footer_links3">Hosting: <a href="http://www.zuriel.net/" target="_blank">ZURIEL.net</a></div>
+					<div class="footer_links4"><a href="">hirdetés feladás</a> </div>	
 				</div>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
