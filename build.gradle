@@ -3,3 +3,7 @@ apply plugin: 'war'
 dependencies {
 	compile fileTree(dir: 'web/WEB-INF/lib', includes: ['*.jar'])
 }
+
+war {
+	baseName 'aprocom-server'
+}
