@@ -26,7 +26,7 @@ import com.aprohirdetes.common.RootResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Kategoria;
-import com.aprohirdetes.model.KategoriaHelper;
+import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.MongoUtils;
 import com.mongodb.DBObject;
 
@@ -67,10 +67,10 @@ public class RootServerResource extends ServerResource implements RootResource {
 	}
 
 	public Representation representHtml() {
-		ArrayList<DBObject> kategoriaList = KategoriaHelper.getKategoriaListByParentId(null);
-		for(DBObject o : kategoriaList) {
-			ArrayList<DBObject> alkategoriak = KategoriaHelper.getKategoriaListByParentId(o.get("_id").toString());
-			o.put("alkategoriak", alkategoriak);
+		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
+		for(Kategoria o : kategoriaList) {
+			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
+			o.setAlkategoriaList(alkategoriak);
 		}
 		
 		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);

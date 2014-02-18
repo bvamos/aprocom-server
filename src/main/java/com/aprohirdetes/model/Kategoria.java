@@ -1,12 +1,12 @@
 package com.aprohirdetes.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
+import org.mongodb.morphia.annotations.NotSaved;
 
 @Entity("kategoria")
 public class Kategoria {
@@ -19,10 +19,24 @@ public class Kategoria {
 	
 	private ObjectId szuloId;
 	
-	@Reference(idOnly=true) private List<Kategoria> alkategoriak = new ArrayList<Kategoria>();
+	@NotSaved private List<Kategoria> alkategoriaList = new LinkedList<Kategoria>();
 	
 	public Kategoria() {
 		
+	}
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(urlNev);
+		
+		sb.append("{");
+		for(Kategoria ak : getAlkategoriaList()) {
+			sb.append(ak.getUrlNev());
+		}
+		sb.append("} ");
+		
+		return sb.toString();
 	}
 	
 	public ObjectId getId() {
@@ -35,5 +49,37 @@ public class Kategoria {
 	
 	public ObjectId getSzuloId() {
 		return this.szuloId;
+	}
+
+	public String getNev() {
+		return nev;
+	}
+
+	public void setNev(String nev) {
+		this.nev = nev;
+	}
+
+	public String getUrlNev() {
+		return urlNev;
+	}
+
+	public void setUrlNev(String urlNev) {
+		this.urlNev = urlNev;
+	}
+
+	public int getSorrend() {
+		return sorrend;
+	}
+
+	public void setSorrend(int sorrend) {
+		this.sorrend = sorrend;
+	}
+	
+	public List<Kategoria> getAlkategoriaList() {
+		return alkategoriaList;
+	}
+	
+	public void setAlkategoriaList(List<Kategoria> alkategoriaList) {
+		this.alkategoriaList = alkategoriaList;
 	}
 }

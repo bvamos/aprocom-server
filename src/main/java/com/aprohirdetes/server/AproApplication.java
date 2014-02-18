@@ -14,7 +14,7 @@ import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
 import com.aprohirdetes.model.HelysegCache;
-import com.aprohirdetes.model.KategoriaHelper;
+import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Configuration;
@@ -39,6 +39,9 @@ public class AproApplication extends Application {
 		Router router = new Router(getContext());
 
 		router.attach("/", RootServerResource.class);
+		
+		router.attach("/kereses/{hirdetesTipus}/{kategoriaList}/", KeresesServerResource.class);
+		router.attach("/kereses/{hirdetesTipus}/{helysegList}/{kategoriaList}/", KeresesServerResource.class);
 		
 		String cssUri = "war:///css";
 		Directory cssDirectory = new Directory(getContext(), cssUri);
@@ -94,7 +97,7 @@ public class AproApplication extends Application {
 		TPL_CONFIG = cfg;
 		
 		// Loading Kategoriak into memory cache
-		KategoriaHelper.loadCache();
+		KategoriaCache.loadCache();
 		
 		// Loading Helysegek into memory cache
 		HelysegCache.loadCache();
