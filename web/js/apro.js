@@ -4,7 +4,7 @@ function SearchCtrl($scope, $http) {
 	};
 }
 
-function submitKereses(tipus, helyseg) {
-	document.forms.KeresesForm.action = 'kereses/' + tipus + '/' + helyseg + '/';
+function submitKereses(tipus, helyseg, kategoria) {
+	document.forms.KeresesForm.action = 'kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/';
 	document.forms.KeresesForm.submit();
 }

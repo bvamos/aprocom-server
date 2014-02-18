@@ -59,16 +59,15 @@
 						</form>
 					</div>						
 				</div>
-				kereses/{{hirdetesTipus}}/?q={{hirdetesKulcsszo}}
 				<div class="row search_container" ng-controller="SearchCtrl">
 					<div class="well">
-						<form class="form-inline" role="form" method="get" ng-submit="_submitKereses()" id="KeresesForm" onSubmit="submitKereses(this.hirdetesTipus.value, this.hirdetesHelyseg.value)">
-							<div class="form-group" style="width: 60%;">
+						<form class="form-inline" role="form" method="get" ng-submit="_submitKereses()" id="KeresesForm" onSubmit="submitKereses(this.hirdetesTipus.value, this.hirdetesHelyseg.value, this.hirdetesKategoria.value)">
+							<div class="form-group" style="width: 45%;">
 							  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
 							  <input type="search" class="form-control" id="searchQuery" name="q" value="kereses/{{hirdetesTipus}}/?q={{hirdetesKulcsszo}}" placeholder="Keresett kifejezés" style="width: 100%;" ng-model="hirdetesKulcsszo">
 							</div>
 							<select class="form-control" style="width: 10%;" ng-model="hirdetesTipus" id="hirdetesTipus">
-								<option value="kinal">Kínál</option>
+								<option value="kinal" selected>Kínál</option>
 								<option value="keres">Keres</option>
 							</select>
 							<select class="form-control" style="width: 15%;" ng-model="hirdetesHelyseg" id="hirdetesHelyseg">
@@ -79,6 +78,14 @@
 										<#list alhelyseg.alhelysegList as alalhelyseg>
 										<option value="${alalhelyseg.urlNev}">&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
 										</#list>
+									</#list>
+								</#list>
+							</select>
+							<select class="form-control" style="width: 15%;" ng-model="hirdetesKategoria" id="hirdetesKategoria">
+								<#list kategoriaList as kategoria>
+								<option value="${kategoria.urlNev}">${kategoria.nev}</option>
+									<#list kategoria.alkategoriaList as alkategoria>
+									<option value="${alkategoria.urlNev}">&nbsp;&nbsp;${alkategoria.nev}</option>
 									</#list>
 								</#list>
 							</select>
