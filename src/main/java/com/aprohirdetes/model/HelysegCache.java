@@ -29,18 +29,13 @@ public class HelysegCache {
 		Query<Helyseg> query = datastore.createQuery(Helyseg.class).order("sorrend");
 		
 		for(Helyseg level1 : query.asList()) {
-			System.out.println(level1.getNev());
-			
 			Query<Helyseg> query1 = datastore.createQuery(Helyseg.class).filter("szuloId", level1.getId()).order("sorrend");
 			level1.setAlhelysegList(query1.asList());
 			
 			for(Helyseg level2 : query1.asList()) {
-				System.out.print(level2.getNev() + " ");
-				
 				Query<Helyseg> query2 = datastore.createQuery(Helyseg.class).filter("szuloId", level2.getId()).order("sorrend");
 				level2.setAlhelysegList(query2.asList());
 			}
-			System.out.println();
 			CACHE_BY_ID.put(level1.getIdAsString(), level1);
 			CACHE_BY_URLNEV.put(level1.getUrlNev(), level1);
 			
@@ -58,6 +53,21 @@ public class HelysegCache {
 			} else {
 				if(obj.getSzuloId() != null && parentId.equals(obj.getSzuloId().toString())) {
 					ret.add(obj);
+				}
+			}
+		}
+		
+		return ret;
+	}
+	
+	public static ArrayList<Helyseg> getHelysegListByUrlNevList(String urlNevList) {
+		ArrayList<Helyseg> ret = new ArrayList<Helyseg>();
+		
+		if(urlNevList != null) {
+			for(String urlNev : urlNevList.split("\\+")) {
+				Helyseg h = CACHE_BY_URLNEV.get(urlNev); 
+				if(h != null) {
+					ret.add(h);
 				}
 			}
 		}

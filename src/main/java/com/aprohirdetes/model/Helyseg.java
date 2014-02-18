@@ -25,6 +25,20 @@ public class Helyseg {
 		
 	}
 	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(urlNev);
+		
+		sb.append("{");
+		for(Helyseg h : getAlhelysegList()) {
+			sb.append(h.getUrlNev());
+		}
+		sb.append("} ");
+		
+		return sb.toString();
+	}
+	
 	public ObjectId getId() {
 		return id;
 	}
