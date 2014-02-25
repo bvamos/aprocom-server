@@ -69,7 +69,7 @@
 						<form class="form-inline" role="form" method="get" ng-submit="_submitKereses()" id="KeresesForm" onSubmit="submitKereses(this.hirdetesTipus.value, this.hirdetesHelyseg.value, this.hirdetesKategoria.value)">
 							<div class="form-group" style="width: 45%;">
 							  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
-							  <input type="search" class="form-control" id="searchQuery" name="q" value="kereses/{{hirdetesTipus}}/?q={{hirdetesKulcsszo}}" placeholder="Keresett kifejezés" style="width: 100%;" ng-model="hirdetesKulcsszo">
+							  <input type="search" class="form-control" id="searchQuery" name="q" value="${q}" placeholder="Keresett kifejezés" style="width: 100%;" ng-model="hirdetesKulcsszo">
 							</div>
 							<select class="form-control" style="width: 10%;" ng-model="hirdetesTipus" id="hirdetesTipus">
 								<option value="kinal" selected>Kínál</option>
@@ -98,17 +98,53 @@
 						</form>
 					</div>
 				</div>
-				<div class="row category_container">
-					<#list kategoriaList as kategoria>
-					<ul class="category-main">
-						<li><a href="">${kategoria.nev}</a></li>
-						<ul class="category-sub">
-						<#list kategoria.alkategoriaList as alkategoria>
-							<li><a href="">${alkategoria.nev}</a></li>
-						</#list>
-						</ul>
-					</ul>
+				<div class="row">
+					<div class="hirdeteslista-container">
+						<span>${hirdetesek_szama} hirdetés</span>
+						<span>${page}. oldal</span>
+					</div>
+				</div>
+				<div class="row">
+					<#list hirdetesList as hirdetes>
+					<div class="hirdetes-container">
+						<div class="hirdetes-header">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%">
+								<tr>
+									<td class="hirdetes-cim">${hirdetes.cim} (${hirdetes.egyebMezok.tipusNev})</td>
+									<td class="hirdetes-kategoria">Kategoria</td>
+								</tr>
+							</table>
+						</div>
+						<div class="hirdetes-body">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%">
+								<tr>
+									<td class="hirdetes-szoveg">{hirdetes.szoveg}</td>
+									<td class="hirdetes-mezok">Attributumok</td>
+									<td class="hirdetes-kepek" rowspan="2">Kepek</td>
+								</tr>
+								<tr>
+									<td class="hirdetes-hirdeto" colspan="2">Hirdeto adatai</td>
+								</tr>
+							</table>
+						</div>
+						<div class="hirdetes-footer">
+							<table cellpadding="0" cellspacing="0" border="0" width="100%">
+								<tr>
+									<td class="hirdetes-muveletek">Muveletek</td>
+									<td class="hirdetes-ar">${hirdetes.ar} Ft</td>
+								</tr>
+							</table>
+						</div>
+					</div>
 					</#list>
+				</div>
+				<div class="row">
+					<div>
+						<ul class="pager">
+							<li class="previous"><a href="">&larr; Előző</a></li>
+							<li class="next"><a href="">Következő &rarr;</a></li>
+						</ul>
+					</div>
 				</div>
 				<div class="row footer_container">
 					<div class="footer_links1"></div>

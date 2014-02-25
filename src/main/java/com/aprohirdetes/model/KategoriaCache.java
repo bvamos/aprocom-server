@@ -74,6 +74,12 @@ public class KategoriaCache {
 				Kategoria k = CACHE_BY_URLNEV.get(urlNev);
 				if(k != null) {
 					ret.add(k);
+					
+					if(!k.getAlkategoriaList().isEmpty()) {
+						for(Kategoria k1 : k.getAlkategoriaList()) {
+							ret.addAll(getKategoriaListByUrlNevList(k1.getUrlNev()));
+						}
+					}
 				}
 			}
 		}

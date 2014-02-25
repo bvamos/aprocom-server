@@ -1,6 +1,5 @@
 package com.aprohirdetes.server;
 
-import java.io.File;
 import java.io.StringReader;
 import java.util.Properties;
 
@@ -89,12 +88,20 @@ public class AproApplication extends Application {
 		}
 		
 		APP_CONFIG.load(new StringReader(response.getEntityAsText()));
+		
+		// Check application configuration
+		try {
+			Integer.parseInt(APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE"));
+		} catch(NumberFormatException nfe) {
+			APP_CONFIG.setProperty("SEARCH_DEFAULT_PAGESIZE", "10");
+		}
 		System.out.println(APP_CONFIG);
 		
 		// Loading Template (Freemarker) configuration
 		Configuration cfg = new Configuration();
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		cfg.setDirectoryForTemplateLoading(new File("C:\\Users\\bvamos\\Documents\\GitHub\\aprocom-server\\src\\main\\java\\com\\aprohirdetes\\server\\templates\\"));
+		cfg.setClassForTemplateLoading(getClass(), "templates/");
+		//cfg.setDirectoryForTemplateLoading(new File("C:\\Users\\bvamos\\Documents\\GitHub\\aprocom-server\\src\\main\\java\\com\\aprohirdetes\\server\\templates\\"));
 		cfg.setDefaultEncoding("UTF-8");
 		TPL_CONFIG = cfg;
 		

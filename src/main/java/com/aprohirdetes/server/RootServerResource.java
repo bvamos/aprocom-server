@@ -76,6 +76,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
+		dataModel.put("appContext", "/aprocom-server");
 		dataModel.put("siteName", getApplication().getName());
 		dataModel.put("currentDate", new SimpleDateFormat("yyyy. MMMM dd., EEEE", new Locale("hu")).format(new Date()));
 		dataModel.put("kategoriaList", kategoriaList);

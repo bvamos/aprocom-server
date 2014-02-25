@@ -68,6 +68,11 @@ public class HelysegCache {
 				Helyseg h = CACHE_BY_URLNEV.get(urlNev); 
 				if(h != null) {
 					ret.add(h);
+					if(h.getAlhelysegList() != null && !h.getAlhelysegList().isEmpty()) {
+						for(Helyseg h1 : h.getAlhelysegList()) {
+							ret.addAll(getHelysegListByUrlNevList(h1.getUrlNev()));
+						}
+					}
 				}
 			}
 		}

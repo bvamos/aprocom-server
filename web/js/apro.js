@@ -3,8 +3,3 @@ function SearchCtrl($scope, $http) {
 		$http.get('kereses/'+$scope.hirdetesTipus+'/?q='+$scope.hirdetesKulcsszo);
 	};
 }
-
-function submitKereses(tipus, helyseg, kategoria) {
-	document.forms.KeresesForm.action = 'kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/';
-	document.forms.KeresesForm.submit();
-}
