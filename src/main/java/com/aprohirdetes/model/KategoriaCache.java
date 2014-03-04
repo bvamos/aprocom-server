@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
@@ -13,10 +14,10 @@ import com.aprohirdetes.utils.MongoUtils;
 
 public class KategoriaCache {
 
-	private static Map<String, Kategoria> CACHE_BY_ID = new LinkedHashMap<String, Kategoria>();
+	private static Map<ObjectId, Kategoria> CACHE_BY_ID = new LinkedHashMap<ObjectId, Kategoria>();
 	private static Map<String, Kategoria> CACHE_BY_URLNEV = new LinkedHashMap<String, Kategoria>();
 	
-	public static Map<String, Kategoria> getCacheById() {
+	public static Map<ObjectId, Kategoria> getCacheById() {
 		return CACHE_BY_ID;
 	}
 	
@@ -42,7 +43,7 @@ public class KategoriaCache {
 				Query<Kategoria> query2 = datastore.createQuery(Kategoria.class).filter("szuloId", level2.getId()).order("sorrend");
 				level2.setAlkategoriaList(query2.asList());
 			}
-			CACHE_BY_ID.put(level1.getIdAsString(), level1);
+			CACHE_BY_ID.put(level1.getId(), level1);
 			CACHE_BY_URLNEV.put(level1.getUrlNev(), level1);
 			
 		}

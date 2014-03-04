@@ -3,6 +3,7 @@ package com.aprohirdetes.model;
 import java.util.HashMap;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -18,6 +19,9 @@ public class Hirdetes {
 	
 	private ObjectId helysegId;
 	private ObjectId kategoriaId;
+	private ObjectId hirdetoId;
+	
+	@Embedded private Hirdeto hirdeto;
 
 	private HashMap<String, String> egyebMezok = new HashMap<String, String>();
 	
@@ -57,6 +61,30 @@ public class Hirdetes {
 		this.ar = ar;
 	}
 
+	public ObjectId getHelysegId() {
+		return helysegId;
+	}
+
+	public void setHelysegId(ObjectId helysegId) {
+		this.helysegId = helysegId;
+	}
+
+	public ObjectId getKategoriaId() {
+		return kategoriaId;
+	}
+
+	public void setKategoriaId(ObjectId kategoriaId) {
+		this.kategoriaId = kategoriaId;
+	}
+
+	public ObjectId getHirdetoId() {
+		return hirdetoId;
+	}
+
+	public void setHirdetoId(ObjectId hirdetoId) {
+		this.hirdetoId = hirdetoId;
+	}
+
 	public HashMap<String, String> getEgyebMezok() {
 		return egyebMezok;
 	}
@@ -65,5 +93,7 @@ public class Hirdetes {
 		this.egyebMezok = egyebMezok;
 	}
 
-	
+	public long getFeladasDatuma() {
+		return id.getTime();
+	}
 }

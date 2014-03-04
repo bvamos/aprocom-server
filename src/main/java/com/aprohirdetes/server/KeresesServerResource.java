@@ -26,8 +26,10 @@ import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
+import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class KeresesServerResource extends ServerResource implements
@@ -41,6 +43,7 @@ public class KeresesServerResource extends ServerResource implements
 	
 	private String query;
 	private int page;
+	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE", "10"));
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -57,7 +60,7 @@ public class KeresesServerResource extends ServerResource implements
 		
 		this.tipus = ("keres".equals((String) this.getRequestAttributes().get("hirdetesTipus"))) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
 		
-		this.query = getQueryValue("q");
+		this.query = getQueryValue("q")==null ? "" : getQueryValue("q");
 		
 		// Set current page
 		try {
@@ -83,8 +86,6 @@ public class KeresesServerResource extends ServerResource implements
 			helysegIdList.add(kat.getId());
 		}
 		
-		System.out.println(this.tipus);
-		
 		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		
@@ -93,15 +94,30 @@ public class KeresesServerResource extends ServerResource implements
 				query.criteria("helysegId").in(helysegIdList),
 				query.criteria("kategoriaId").in(kategoriaIdList)
 				);
-		query.offset(this.page * Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE", "10")));
+		query.offset(this.page * this.pageSize - this.pageSize);
 		query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE", "10")));
+		query.order("-id");
 		
 		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
-		for(Hirdetes h : query.asList()) {
+		for(Hirdetes h : query) {
+			System.out.println(h.getKategoriaId());
+			
 			h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
+			
+			Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
+			h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? kat.getNev() : "");
+			h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
+			
+			Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());
+			h.getEgyebMezok().put("helysegNev", (hely!=null) ? hely.getNev() : "");
+			h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
+			
+			h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
+			
 			hirdetesList.add(h);
 		}
-
+		
+		// Legordulokhoz adatok feltoltese
 		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
 		for(Kategoria o : kategoriaList) {
 			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
@@ -110,10 +126,15 @@ public class KeresesServerResource extends ServerResource implements
 		
 		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
 		
+		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put("appContext", "/aprocom-server");
-		dataModel.put("siteName", getApplication().getName());
-		dataModel.put("currentDate", new SimpleDateFormat("yyyy. MMMM dd., EEEE", new Locale("hu")).format(new Date()));
+		
+		Map<String, String> appDataModel = new HashMap<String, String>();
+		appDataModel.put("contextRoot", "/aprocom-server");
+		appDataModel.put("htmlTitle", getApplication().getName());
+		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		
+		dataModel.put("app", appDataModel);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesList", hirdetesList);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,15 +10,11 @@
 	
 	<link rel="stylesheet" href="${appContext}/css/apro.css"/>
 	<link rel="stylesheet" href="${appContext}/css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
 	<script type="text/javascript">
-	function submitKereses(tipus, helyseg, kategoria) {
-		document.forms.KeresesForm.action = '${appContext}/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/';
-		document.forms.KeresesForm.submit();
-	}
+		var appContext = '${appContext}';
 	</script>
+	<script type="text/javascript" src="${appContext}/js/apro.js"></script> 
 </head>
 <body>
 	<div class="container">
@@ -64,18 +60,18 @@
 						</form>
 					</div>						
 				</div>
-				<div class="row search_container" ng-controller="SearchCtrl">
+				<div class="row search_container">
 					<div class="well">
-						<form class="form-inline" role="form" method="get" ng-submit="_submitKereses()" id="KeresesForm" onSubmit="submitKereses(this.hirdetesTipus.value, this.hirdetesHelyseg.value, this.hirdetesKategoria.value)">
+						<form class="form-inline" role="form" method="get" id="KeresesForm" onSubmit="submitKereses()">
 							<div class="form-group" style="width: 45%;">
 							  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
-							  <input type="search" class="form-control" id="searchQuery" name="q" value="kereses/{{hirdetesTipus}}/?q={{hirdetesKulcsszo}}" placeholder="Keresett kifejezés" style="width: 100%;" ng-model="hirdetesKulcsszo">
+							  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="" placeholder="Keresett kifejezés" style="width: 100%;">
 							</div>
-							<select class="form-control" style="width: 10%;" ng-model="hirdetesTipus" id="hirdetesTipus">
+							<select class="form-control" style="width: 10%;" id="hirdetesTipus">
 								<option value="kinal" selected>Kínál</option>
 								<option value="keres">Keres</option>
 							</select>
-							<select class="form-control" style="width: 15%;" ng-model="hirdetesHelyseg" id="hirdetesHelyseg">
+							<select class="form-control" style="width: 15%;" id="hirdetesHelyseg">
 								<#list helysegList as helyseg>
 								<option value="${helyseg.urlNev}">${helyseg.nev}</option>
 									<#list helyseg.alhelysegList as alhelyseg>
@@ -86,7 +82,7 @@
 									</#list>
 								</#list>
 							</select>
-							<select class="form-control" style="width: 15%;" ng-model="hirdetesKategoria" id="hirdetesKategoria">
+							<select class="form-control" style="width: 15%;" id="hirdetesKategoria">
 								<#list kategoriaList as kategoria>
 								<option value="${kategoria.urlNev}">${kategoria.nev}</option>
 									<#list kategoria.alkategoriaList as alkategoria>
@@ -101,10 +97,10 @@
 				<div class="row category_container">
 					<#list kategoriaList as kategoria>
 					<ul class="category-main">
-						<li><a href="">${kategoria.nev}</a></li>
+						<li><a href="javascript:setKategoria('${kategoria.urlNev}');">${kategoria.nev}</a></li>
 						<ul class="category-sub">
 						<#list kategoria.alkategoriaList as alkategoria>
-							<li><a href="">${alkategoria.nev}</a></li>
+							<li><a href="javascript:setKategoria('${alkategoria.urlNev}');">${alkategoria.nev}</a></li>
 						</#list>
 						</ul>
 					</ul>
@@ -118,8 +114,7 @@
 				</div>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="${appContext}/js/jquery-1.11.0.js"></script>
     <script src="${appContext}/js/bootstrap.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 </body>
 </html>

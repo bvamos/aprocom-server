@@ -242,6 +242,10 @@ div.hirdetes-footer {
 	color: #000;
 }
 
+.hirdetes-cim>span {
+	font-weight: normal;
+}
+
 .hirdetes-kategoria {
 	color: #fff;
 	text-align: right;

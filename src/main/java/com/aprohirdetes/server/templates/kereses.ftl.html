@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>${siteName}</title>
+	<title>${app.htmlTitle}</title>
 	<meta name="description" content="Ingyenes apróhirdetések">
 	<meta name="keywords" content="apróhirdetés" />
 	
-	<link rel="stylesheet" href="${appContext}/css/apro.css"/>
-	<link rel="stylesheet" href="${appContext}/css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="${app.contextRoot}/css/apro.css"/>
+	<link rel="stylesheet" href="${app.contextRoot}/css/bootstrap.min.css"/>
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
 	<script type="text/javascript">
-	function submitKereses(tipus, helyseg, kategoria) {
-		document.forms.KeresesForm.action = '${appContext}/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/';
-		document.forms.KeresesForm.submit();
-	}
+	var p = ${page};
+	var appContext = '${app.contextRoot}';
 	</script>
+	<script type="text/javascript" src="${app.contextRoot}/js/apro.js"></script> 
 </head>
 <body>
 	<div class="container">
@@ -49,7 +46,7 @@
 				</div>
 				<div class="row placeholders">
 					<div id="header_container" class="col-md-9 placeholder">
-						<div class="header_date">${currentDate}<br>Balázs</div>
+						<div class="header_date">${app.datum}<br>Balázs</div>
 						<div class="header_text">Hirdessen az Apróhirdetés.com-on könnyen, gyorsan, ingyen, kötelező regisztráció nélkül!</div>
 					</div>
 					<div class="col-md-3 placeholder">
@@ -64,18 +61,18 @@
 						</form>
 					</div>						
 				</div>
-				<div class="row search_container" ng-controller="SearchCtrl">
+				<div class="row search_container">
 					<div class="well">
-						<form class="form-inline" role="form" method="get" ng-submit="_submitKereses()" id="KeresesForm" onSubmit="submitKereses(this.hirdetesTipus.value, this.hirdetesHelyseg.value, this.hirdetesKategoria.value)">
+						<form class="form-inline" role="form" method="get" id="KeresesForm" onSubmit="submitKereses()">
 							<div class="form-group" style="width: 45%;">
-							  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
-							  <input type="search" class="form-control" id="searchQuery" name="q" value="${q}" placeholder="Keresett kifejezés" style="width: 100%;" ng-model="hirdetesKulcsszo">
+							  <label class="sr-only" for="hirdetesKulcsszo">Keresett kifejezés</label>
+							  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="${q}" placeholder="Keresett kifejezés" style="width: 100%;">
 							</div>
-							<select class="form-control" style="width: 10%;" ng-model="hirdetesTipus" id="hirdetesTipus">
+							<select class="form-control" style="width: 10%;" id="hirdetesTipus">
 								<option value="kinal" selected>Kínál</option>
 								<option value="keres">Keres</option>
 							</select>
-							<select class="form-control" style="width: 15%;" ng-model="hirdetesHelyseg" id="hirdetesHelyseg">
+							<select class="form-control" style="width: 15%;" id="hirdetesHelyseg">
 								<#list helysegList as helyseg>
 								<option value="${helyseg.urlNev}">${helyseg.nev}</option>
 									<#list helyseg.alhelysegList as alhelyseg>
@@ -86,7 +83,7 @@
 									</#list>
 								</#list>
 							</select>
-							<select class="form-control" style="width: 15%;" ng-model="hirdetesKategoria" id="hirdetesKategoria">
+							<select class="form-control" style="width: 15%;" id="hirdetesKategoria">
 								<#list kategoriaList as kategoria>
 								<option value="${kategoria.urlNev}">${kategoria.nev}</option>
 									<#list kategoria.alkategoriaList as alkategoria>
@@ -110,8 +107,8 @@
 						<div class="hirdetes-header">
 							<table cellpadding="0" cellspacing="0" border="0" width="100%">
 								<tr>
-									<td class="hirdetes-cim">${hirdetes.cim} (${hirdetes.egyebMezok.tipusNev})</td>
-									<td class="hirdetes-kategoria">Kategoria</td>
+									<td class="hirdetes-cim">${hirdetes.cim} (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
+									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}</td>
 								</tr>
 							</table>
 						</div>
@@ -141,8 +138,8 @@
 				<div class="row">
 					<div>
 						<ul class="pager">
-							<li class="previous"><a href="">&larr; Előző</a></li>
-							<li class="next"><a href="">Következő &rarr;</a></li>
+							<li class="previous"><a href="javascript:prevPage();">&larr; Előző</a></li>
+							<li class="next"><a href="javascript:nextPage();">Következő &rarr;</a></li>
 						</ul>
 					</div>
 				</div>
@@ -154,8 +151,7 @@
 				</div>
 	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="${appContext}/js/bootstrap.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="${app.contextRoot}/js/jquery-1.11.0.js"></script>
+    <script src="${app.contextRoot}/js/bootstrap.min.js"></script>
 </body>
 </html>

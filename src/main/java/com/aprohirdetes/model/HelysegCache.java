@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
@@ -13,10 +14,10 @@ import com.aprohirdetes.utils.MongoUtils;
 
 public class HelysegCache {
 
-	private static Map<String, Helyseg> CACHE_BY_ID = new LinkedHashMap<String, Helyseg>();
+	private static Map<ObjectId, Helyseg> CACHE_BY_ID = new LinkedHashMap<ObjectId, Helyseg>();
 	private static Map<String, Helyseg> CACHE_BY_URLNEV = new LinkedHashMap<String, Helyseg>();
 	
-	public static Map<String, Helyseg> getCacheById() {
+	public static Map<ObjectId, Helyseg> getCacheById() {
 		return CACHE_BY_ID;
 	}
 	
@@ -36,7 +37,7 @@ public class HelysegCache {
 				Query<Helyseg> query2 = datastore.createQuery(Helyseg.class).filter("szuloId", level2.getId()).order("sorrend");
 				level2.setAlhelysegList(query2.asList());
 			}
-			CACHE_BY_ID.put(level1.getIdAsString(), level1);
+			CACHE_BY_ID.put(level1.getId(), level1);
 			CACHE_BY_URLNEV.put(level1.getUrlNev(), level1);
 			
 		}

@@ -78,7 +78,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		dataModel.put("appContext", "/aprocom-server");
 		dataModel.put("siteName", getApplication().getName());
-		dataModel.put("currentDate", new SimpleDateFormat("yyyy. MMMM dd., EEEE", new Locale("hu")).format(new Date()));
+		dataModel.put("currentDate", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		
