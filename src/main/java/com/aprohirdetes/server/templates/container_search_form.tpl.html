@@ -1,0 +1,34 @@
+		<div class="row search_container">
+			<div class="well">
+				<form class="form-inline" role="form" method="get" id="KeresesForm" onSubmit="submitKereses()">
+					<div class="form-group" style="width: 45%;">
+					  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
+					  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="" placeholder="Keresett kifejezés" style="width: 100%;">
+					</div>
+					<select class="form-control" style="width: 10%;" id="hirdetesTipus">
+						<option value="kinal" selected>Kínál</option>
+						<option value="keres">Keres</option>
+					</select>
+					<select class="form-control" style="width: 15%;" id="hirdetesHelyseg">
+						<#list helysegList as helyseg>
+						<option value="${helyseg.urlNev}">${helyseg.nev}</option>
+							<#list helyseg.alhelysegList as alhelyseg>
+							<option value="${alhelyseg.urlNev}">&nbsp;&nbsp;${alhelyseg.nev}</option>
+								<#list alhelyseg.alhelysegList as alalhelyseg>
+								<option value="${alalhelyseg.urlNev}">&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+								</#list>
+							</#list>
+						</#list>
+					</select>
+					<select class="form-control" style="width: 15%;" id="hirdetesKategoria">
+						<#list kategoriaList as kategoria>
+						<option value="${kategoria.urlNev}">${kategoria.nev}</option>
+							<#list kategoria.alkategoriaList as alkategoria>
+							<option value="${alkategoria.urlNev}">&nbsp;&nbsp;${alkategoria.nev}</option>
+							</#list>
+						</#list>
+					</select>
+					<button type="submit" class="btn btn-default" style="width: 10%;">Keresés</button>
+				</form>
+			</div>
+		</div>

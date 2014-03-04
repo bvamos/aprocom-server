@@ -1,81 +1,8 @@
 <#include "html_header.tpl.html"/>
 	<div class="container">
-				<section id="banner_top">
-					<div class="banner_border_out">
-						<div class="banner_border_in">
-						Banner
-						</div>
-					</div>
-				</section>
-				<div id="header_tabs_container" class="row placeholders">
-					<div class="col-md-9 placeholder">
-						<span class="glyphicon glyphicon-home"></span>
-						<span class="header_link">www.aprohirdetes.com</span>
-						<ul class="header-tabs tabs1">
-							<li><a href="">Apró</a></li>
-							<li><a href="">Ingatlan</a></li>
-							<li><a href="">Jármű</a></li>
-							<li><a href="">Állás</a></li>
-						</ul>
-					</div>
-					<div class="col-md-3 placeholder">
-						<ul class="header-tabs tabs2">
-							<li><a href="">Belépés</a></li>
-							<li><a href="">Regisztráció</a></li>
-						</ul>
-					</div>						
-				</div>
-				<div class="row placeholders">
-					<div id="header_container" class="col-md-9 placeholder">
-						<div class="header_date">${app.datum}<br>Balázs</div>
-						<div class="header_text">Hirdessen az Apróhirdetés.com-on könnyen, gyorsan, ingyen, kötelező regisztráció nélkül!</div>
-					</div>
-					<div class="col-md-3 placeholder">
-						<form class="form-signin" role="form">
-							<h2 class="form-signin-heading">&raquo; Bejelentkezés</h2>
-							<div class="form-signin-placeholder placeholder">
-								<label class="sr-only" for="signinEmail">Email cím</label>
-								<input type="email" class="form-control input-sm" id="signinEmail" autofocus="" required="" placeholder="E-mail cím">
-								<label class="sr-only" for="signinPassword">Email cím</label>
-								<input type="password" class="form-control input-sm" id="signinPassword" required="" placeholder="Jelszó">
-							</div>
-						</form>
-					</div>						
-				</div>
-				<div class="row search_container">
-					<div class="well">
-						<form class="form-inline" role="form" method="get" id="KeresesForm" onSubmit="submitKereses()">
-							<div class="form-group" style="width: 45%;">
-							  <label class="sr-only" for="hirdetesKulcsszo">Keresett kifejezés</label>
-							  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="${q}" placeholder="Keresett kifejezés" style="width: 100%;">
-							</div>
-							<select class="form-control" style="width: 10%;" id="hirdetesTipus">
-								<option value="kinal" selected>Kínál</option>
-								<option value="keres">Keres</option>
-							</select>
-							<select class="form-control" style="width: 15%;" id="hirdetesHelyseg">
-								<#list helysegList as helyseg>
-								<option value="${helyseg.urlNev}">${helyseg.nev}</option>
-									<#list helyseg.alhelysegList as alhelyseg>
-									<option value="${alhelyseg.urlNev}">&nbsp;&nbsp;${alhelyseg.nev}</option>
-										<#list alhelyseg.alhelysegList as alalhelyseg>
-										<option value="${alalhelyseg.urlNev}">&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
-										</#list>
-									</#list>
-								</#list>
-							</select>
-							<select class="form-control" style="width: 15%;" id="hirdetesKategoria">
-								<#list kategoriaList as kategoria>
-								<option value="${kategoria.urlNev}">${kategoria.nev}</option>
-									<#list kategoria.alkategoriaList as alkategoria>
-									<option value="${alkategoria.urlNev}">&nbsp;&nbsp;${alkategoria.nev}</option>
-									</#list>
-								</#list>
-							</select>
-							<button type="submit" class="btn btn-default" style="width: 10%;">Keresés</button>
-						</form>
-					</div>
-				</div>
+<#include "page_header_banner.tpl.html"/>
+<#include "page_header.tpl.html"/>
+<#include "container_search_form.tpl.html"/>
 				<div class="row">
 					<div class="hirdeteslista-container">
 						<span>${hirdetesek_szama} hirdetés</span>
@@ -124,11 +51,6 @@
 						</ul>
 					</div>
 				</div>
-				<div class="row footer_container">
-					<div class="footer_links1"></div>
-					<div class="footer_links2"><a href="">Rólunk</a> | <a href="">Kapcsolat</a> | <a href="">Adatvédelmi irányelvek</a></div>
-					<div class="footer_links3">Hosting: <a href="http://www.zuriel.net/" target="_blank">ZURIEL.net</a></div>
-					<div class="footer_links4"><a href="">hirdetés feladás</a> </div>	
-				</div>
+<#include "page_footer.tpl.html"/>
 	</div>
 <#include "html_footer.tpl.html"/>
