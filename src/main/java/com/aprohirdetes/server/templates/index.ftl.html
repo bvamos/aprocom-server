@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>${siteName}</title>
-	<meta name="description" content="Ingyenes apróhirdetések">
-	<meta name="keywords" content="apróhirdetés" />
-	
-	<link rel="stylesheet" href="${appContext}/css/apro.css"/>
-	<link rel="stylesheet" href="${appContext}/css/bootstrap.min.css"/>
-	
-	<script type="text/javascript">
-		var appContext = '${appContext}';
-	</script>
-	<script type="text/javascript" src="${appContext}/js/apro.js"></script> 
-</head>
-<body>
+<#include "html_header.tpl.html"/>
 	<div class="container">
 				<section id="banner_top">
 					<div class="banner_border_out">
@@ -45,7 +27,7 @@
 				</div>
 				<div class="row placeholders">
 					<div id="header_container" class="col-md-9 placeholder">
-						<div class="header_date">${currentDate}<br>Balázs</div>
+						<div class="header_date">${app.datum}<br>Balázs</div>
 						<div class="header_text">Hirdessen az Apróhirdetés.com-on könnyen, gyorsan, ingyen, kötelező regisztráció nélkül!</div>
 					</div>
 					<div class="col-md-3 placeholder">
@@ -113,8 +95,4 @@
 					<div class="footer_links4"><a href="">hirdetés feladás</a> </div>	
 				</div>
 	</div>
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="${appContext}/js/jquery-1.11.0.js"></script>
-    <script src="${appContext}/js/bootstrap.min.js"></script>
-</body>
-</html>
+<#include "html_footer.tpl.html"/>

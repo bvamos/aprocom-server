@@ -1,5 +1,6 @@
 package com.aprohirdetes.server;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,11 +14,9 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
-import org.restlet.data.LocalReference;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
-import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -26,11 +25,12 @@ import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
-import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
+
+import freemarker.template.Template;
 
 public class KeresesServerResource extends ServerResource implements
 		KeresesResource {
@@ -72,7 +72,7 @@ public class KeresesServerResource extends ServerResource implements
 		}
 	}
 
-	public Representation representHtml() {
+	public Representation representHtml() throws IOException {
 		
 		ArrayList<ObjectId> kategoriaIdList = new ArrayList<ObjectId>();
 		for(Kategoria kat : kategoriaList) {
@@ -142,8 +142,8 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("q", this.query);
 		dataModel.put("page", this.page);
 		
-		Representation keresesFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/kereses.ftl.html").get();
-		return new TemplateRepresentation(keresesFtl, dataModel, MediaType.TEXT_HTML);
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("kereses.ftl.html");
+		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
 }

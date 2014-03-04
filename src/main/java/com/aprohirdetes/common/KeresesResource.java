@@ -1,10 +1,12 @@
 package com.aprohirdetes.common;
 
+import java.io.IOException;
+
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 
 public interface KeresesResource {
 
 	@Get("html")
-	public Representation representHtml();
+	public Representation representHtml() throws IOException;
 }

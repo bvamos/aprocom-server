@@ -1,5 +1,6 @@
 package com.aprohirdetes.common;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 import org.restlet.representation.Representation;
@@ -14,6 +15,6 @@ public interface RootResource {
 	public Representation representJson() throws UnknownHostException;
 	
 	@Get("html")
-	public Representation representHtml();
+	public Representation representHtml() throws IOException;
 	
 }

@@ -1,5 +1,6 @@
 package com.aprohirdetes.server;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,12 +15,10 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.mapping.Mapper;
 import org.mongodb.morphia.query.Query;
-import org.restlet.data.LocalReference;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
-import org.restlet.resource.ClientResource;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.RootResource;
@@ -29,6 +28,8 @@ import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.MongoUtils;
 import com.mongodb.DBObject;
+
+import freemarker.template.Template;
 
 public class RootServerResource extends ServerResource implements RootResource {
 
@@ -66,7 +67,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		return rep;
 	}
 
-	public Representation representHtml() {
+	public Representation representHtml() throws IOException {
 		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
 		for(Kategoria o : kategoriaList) {
 			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
@@ -75,16 +76,23 @@ public class RootServerResource extends ServerResource implements RootResource {
 		
 		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
 		
+		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put("appContext", "/aprocom-server");
-		dataModel.put("siteName", getApplication().getName());
-		dataModel.put("currentDate", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		
+		Map<String, String> appDataModel = new HashMap<String, String>();
+		appDataModel.put("contextRoot", "/aprocom-server");
+		appDataModel.put("htmlTitle", getApplication().getName());
+		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		
+		dataModel.put("app", appDataModel);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		
-		Representation mailFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();
+		// Without global configuration object
+		//Representation indexFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();
+		Template indexFtl = AproApplication.TPL_CONFIG.getTemplate("index.ftl.html");
 		
-		return new TemplateRepresentation(mailFtl, dataModel, MediaType.TEXT_HTML);
+		return new TemplateRepresentation(indexFtl, dataModel, MediaType.TEXT_HTML);
 	}
 
 }

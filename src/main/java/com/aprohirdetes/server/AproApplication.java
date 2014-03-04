@@ -17,6 +17,7 @@ import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.MongoUtils;
 
+import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 
@@ -100,7 +101,8 @@ public class AproApplication extends Application {
 		// Loading Template (Freemarker) configuration
 		Configuration cfg = new Configuration();
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		cfg.setClassForTemplateLoading(getClass(), "templates/");
+		//cfg.setClassForTemplateLoading(getClass(), "templates/");
+		cfg.setTemplateLoader(new ClassTemplateLoader(getClass(), "templates/"));
 		//cfg.setDirectoryForTemplateLoading(new File("C:\\Users\\bvamos\\Documents\\GitHub\\aprocom-server\\src\\main\\java\\com\\aprohirdetes\\server\\templates\\"));
 		cfg.setDefaultEncoding("UTF-8");
 		TPL_CONFIG = cfg;
