@@ -70,6 +70,7 @@ public class KeresesServerResource extends ServerResource implements
 		} catch(NumberFormatException nfe) {
 			this.page = 1;
 		}
+		
 	}
 
 	public Representation representHtml() throws IOException {
