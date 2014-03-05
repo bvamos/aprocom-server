@@ -25,15 +25,16 @@
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetesCim">Rövid megnevezés</label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" id="hirdetesCim" autofocus="" required="" placeholder="">
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetesCim" autofocus="" required="" placeholder="" data-toggle="tooltip" data-placement="right" title="first tooltip">
+						<span class="help-block">Rövid, de beszédes cimsor, ami par szoban osszefoglalja a hirdetes tartalmat.</span>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetesHelyseg">Ország, megye, település</label>
-					<div class="col-sm-9">
-						<select class="form-control" style="width: 15%;" id="hirdetesHelyseg">
+					<div class="col-sm-7">
+						<select class="form-control" id="hirdetesHelyseg">
 							<#list helysegList as helyseg>
 							<option value="${helyseg.urlNev}">${helyseg.nev}</option>
 								<#list helyseg.alhelysegList as alhelyseg>
@@ -49,8 +50,8 @@
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetesKategoria">Kategória</label>
-					<div class="col-sm-9">
-						<select class="form-control" style="width: 15%;" id="hirdetesKategoria">
+					<div class="col-sm-7">
+						<select class="form-control" id="hirdetesKategoria">
 							<#list kategoriaList as kategoria>
 							<option value="${kategoria.urlNev}">${kategoria.nev}</option>
 								<#list kategoria.alkategoriaList as alkategoria>
@@ -63,14 +64,21 @@
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdeteSzoveg">Hirdetés szövege</label>
-					<div class="col-sm-9">
+					<div class="col-sm-7">
 						<textarea class="form-control" rows="5" id="hirdetesSzoveg"></textarea>
 					</div>
 				</div>
 				
 				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetesEgyebInfo">Egyéb információ</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetesEgyebInfo" placeholder="http://">
+					</div>
+				</div>
+				
+				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetesAr">Ár</label>
-					<div class="col-sm-9">
+					<div class="col-sm-2">
 						<input type="number" class="form-control" id="hirdetesAr" required="">
 					</div>
 				</div>
@@ -78,7 +86,66 @@
 			<h3>Hirdető adatai</h3>
 				
 				<div class="form-group">
-					<div class="col-sm-offset-3 colsm-9">
+					<label class="col-sm-3 control-label" for="hirdetoNev">Név</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetoNev">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoCim">Cim</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetoCim">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cim</label>
+					<div class="col-sm-7">
+						<input type="email" class="form-control" id="hirdetoEmail" placeholder="http://">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoTelefon">Telefonszam</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetoTelefon" placeholder="+36-xx-xxxxxxx">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoFelhasznalonev">Felhasznalonev</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetoFelhasznalonev" required="">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoJelszo">Jelszó</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control" id="hirdetoJelszo" required="">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoJelszo2">Jelszó ujbol</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control" id="hirdetoJelszo2" required="">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="checkbox col-sm-7 col-sm-offset-3">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value=""> Hirlevél
+							</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-3 colsm-7">
 						<button type="submit" class="btn btn-primary">Mehet</button>
 					</div>
 				</div>
