@@ -44,6 +44,8 @@ public class AproApplication extends Application {
 		router.attach("/kereses/{hirdetesTipus}/{kategoriaList}/", KeresesServerResource.class);
 		router.attach("/kereses/{hirdetesTipus}/{helysegList}/{kategoriaList}/", KeresesServerResource.class);
 		
+		router.attach("/feladas", FeladasServerResource.class);
+		
 		String cssUri = "war:///css";
 		Directory cssDirectory = new Directory(getContext(), cssUri);
 		cssDirectory.setListingAllowed(true);
