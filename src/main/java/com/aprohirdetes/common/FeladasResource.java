@@ -13,5 +13,5 @@ public interface FeladasResource {
 	public Representation representHtml() throws IOException;
 	
 	@Post
-	public Representation accept(Form form);
+	public Representation accept(Form form) throws IOException;
 }

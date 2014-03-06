@@ -12,7 +12,7 @@ public class Hirdeto {
 	private String nev;
 	private String email;
 	private String iranyitoSzam;
-	private String varos;
+	private String telepules;
 	private String cim;
 	private String orszag;
 	private String telefon;
@@ -53,12 +53,12 @@ public class Hirdeto {
 		this.iranyitoSzam = iranyitoSzam;
 	}
 
-	public String getVaros() {
-		return varos;
+	public String getTelepules() {
+		return telepules;
 	}
 
-	public void setVaros(String varos) {
-		this.varos = varos;
+	public void setTelepules(String telepules) {
+		this.telepules = telepules;
 	}
 
 	public String getCim() {

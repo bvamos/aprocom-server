@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
+import org.mongodb.morphia.Morphia;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
-import org.restlet.data.Parameter;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ServerResource;
@@ -18,9 +20,11 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.FeladasResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
+import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
-
+import com.aprohirdetes.utils.MongoUtils;
 import freemarker.template.Template;
 
 public class FeladasServerResource extends ServerResource implements
@@ -55,14 +59,49 @@ public class FeladasServerResource extends ServerResource implements
 	}
 
 	@Override
-	public Representation accept(Form form) {
-		Representation rep = null;
+	public Representation accept(Form form) throws IOException {
+		String message = "";
 		
-		for (Parameter entry : form) {
-			System.out.println(entry.getName() + "=" + entry.getValue());
-		}
+		System.out.println(form.toString());
 		
-		return rep;
+		Hirdetes hi = new Hirdetes();
+		hi.setTipus(Integer.parseInt(form.getFirstValue("hirdetesTipus", "2")));
+		hi.setCim(form.getFirstValue("hirdetesCim"));
+		hi.setKategoriaId(KategoriaCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesKategoria")).getId());
+		hi.setHelysegId(HelysegCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesHelyseg")).getId());
+		hi.setSzoveg(form.getFirstValue("hirdetesSzoveg"));
+		hi.setEgyebInfo(form.getFirstValue("hirdetesEgyebInfo"));
+		hi.setAr(Integer.parseInt(form.getFirstValue("hirdetesAr", "0")));
+		
+		Hirdeto ho = new Hirdeto();
+		ho.setNev(form.getFirstValue("hirdetoNev"));
+		ho.setEmail(form.getFirstValue("hirdetoEmail"));
+		ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
+		ho.setOrszag(form.getFirstValue("hirdetoOrszag"));
+		ho.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
+		ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
+		ho.setCim(form.getFirstValue("hirdetoCim"));
+		
+		hi.setHirdeto(ho);
+		
+		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Key<Hirdetes> id = datastore.save(hi);
+		
+		message = "A Hirdetés feladása sikeresen megtörtént: " + id.toString();
+		
+		// Adatmodell a Freemarker sablonhoz
+		Map<String, Object> dataModel = new HashMap<String, Object>();
+		
+		Map<String, String> appDataModel = new HashMap<String, String>();
+		appDataModel.put("contextRoot", "/aprocom-server");
+		appDataModel.put("htmlTitle", getApplication().getName());
+		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		
+		dataModel.put("app", appDataModel);
+		dataModel.put("uzenet", message);
+		
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas_eredmeny.ftl.html");
+		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
 }

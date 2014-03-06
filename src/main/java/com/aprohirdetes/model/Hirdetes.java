@@ -15,6 +15,7 @@ public class Hirdetes {
 	private int tipus = 1;
 	private String cim;
 	private String szoveg;
+	private String egyebInfo;
 	private int ar;
 	
 	private ObjectId helysegId;
@@ -53,6 +54,14 @@ public class Hirdetes {
 		this.szoveg = szoveg;
 	}
 
+	public String getEgyebInfo() {
+		return egyebInfo;
+	}
+
+	public void setEgyebInfo(String egyebInfo) {
+		this.egyebInfo = egyebInfo;
+	}
+
 	public int getAr() {
 		return ar;
 	}
@@ -85,6 +94,14 @@ public class Hirdetes {
 		this.hirdetoId = hirdetoId;
 	}
 
+	public Hirdeto getHirdeto() {
+		return hirdeto;
+	}
+	
+	public void setHirdeto(Hirdeto hirdeto) {
+		this.hirdeto = hirdeto;
+	}
+	
 	public HashMap<String, String> getEgyebMezok() {
 		return egyebMezok;
 	}
