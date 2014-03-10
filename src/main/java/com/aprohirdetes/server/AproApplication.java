@@ -1,5 +1,6 @@
 package com.aprohirdetes.server;
 
+import java.io.File;
 import java.io.StringReader;
 import java.util.Properties;
 
@@ -114,6 +115,9 @@ public class AproApplication extends Application {
 		
 		// Loading Helysegek into memory cache
 		HelysegCache.loadCache();
+		
+		// Create work directory structure
+		createWorkDir(APP_CONFIG.getProperty("WORKDIR"));
 	}
 
 	@Override
@@ -124,5 +128,42 @@ public class AproApplication extends Application {
 		MongoUtils.closeDB();
 		
 		super.stop();
+	}
+	
+	/**
+	 * Ellenorzi, hogy a munkakonyvtar letezik-e, ha nem, letrehozza
+	 * 
+	 * @param workDirPath Munkakonyvtar teljes eleresi utja
+	 */
+	private synchronized void createWorkDir(String workDirPath) {
+		// Munkakonyvtar
+		File workDirFile = new File(workDirPath);
+		if(!workDirFile.exists() || !workDirFile.isDirectory()) {
+			getLogger().warning("Work directory does not exist, create it: " + workDirPath);
+			if(!workDirFile.mkdirs()) {
+				getLogger().severe("ERROR while creating Work directory: " + workDirPath);
+			}
+		}
+		
+		// Konyvtar a kepeknek
+		String imagesDirPath = workDirPath + File.separator + "images";
+		File imagesDirFile = new File(imagesDirPath);
+		if(!imagesDirFile.exists() || !imagesDirFile.isDirectory()) {
+			getLogger().warning("Directory for images does not exist, create it: " + imagesDirPath);
+			if(!imagesDirFile.mkdirs()) {
+				getLogger().severe("ERROR while creating directory for images: " + imagesDirPath);
+			}
+		}
+		
+		// Ideiglenes konyvtar a kepek feltoltesehez
+		String imagesTempDirPath = workDirPath + File.separator + "images_upload";
+		File imagesTempDirFile = new File(imagesTempDirPath);
+		if(!imagesTempDirFile.exists() || !imagesTempDirFile.isDirectory()) {
+			getLogger().warning("Temporary directory for uploading images does not exist, create it: " + imagesTempDirPath);
+			if(!imagesTempDirFile.mkdirs()) {
+				getLogger().severe("ERROR while creating temporary directory for uploading images: " + imagesTempDirPath);
+			}
+		}
+				
 	}
 }
