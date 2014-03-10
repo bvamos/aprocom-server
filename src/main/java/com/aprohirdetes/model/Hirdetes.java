@@ -30,6 +30,14 @@ public class Hirdetes {
 		
 	}
 	
+	public ObjectId getId() {
+		return id;
+	}
+	
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+	
 	public int getTipus() {
 		return tipus;
 	}
@@ -47,7 +55,7 @@ public class Hirdetes {
 	}
 
 	public String getSzoveg() {
-		return szoveg;
+		return szoveg == null ? "" : szoveg;
 	}
 
 	public void setSzoveg(String szoveg) {

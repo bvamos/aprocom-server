@@ -52,6 +52,10 @@ ul.tabs1>li>a {
 	background-color: #a7a7a7;
 }
 
+ul.tabs1>li.feladas-tab>a {
+	background: linear-gradient(#5097d9, #6cb8ff);
+}
+
 ul.tabs2>li>a {
 	background-color: #bfbfbf;
 }
@@ -252,7 +256,7 @@ div.hirdetes-footer {
 }
 
 .hirdetes-szoveg {
-	
+	padding: 10px;
 }
 
 .hirdetes-mezok {
@@ -270,4 +274,9 @@ div.hirdetes-footer {
 .hirdetes-ar {
 	text-align: right;
 	font-weight: bold;
+}
+
+.hirdetes-hirdeto-header {
+	color: #338be5;
+	padding-left: 10px;
 }

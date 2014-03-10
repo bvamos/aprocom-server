@@ -8,15 +8,18 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.Morphia;
+import org.restlet.data.Cookie;
+import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
+import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
-
 import com.aprohirdetes.common.FeladasResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
@@ -25,10 +28,32 @@ import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.MongoUtils;
+
 import freemarker.template.Template;
 
 public class FeladasServerResource extends ServerResource implements
 		FeladasResource {
+
+	private ObjectId hirdetesId = null;
+	
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+		
+		// Cookie-ban taroljuk a hirdetes azonositojat az elso latogataskor es beolvassuk.
+		// A hirdetes mentesekor a cookie-t toroljuk.
+		// Ha a cookie regebbi, mint 1 ora, akkor ujat generalunk
+		Cookie sessionCookie = getRequest().getCookies().getFirst("FeladasSession");
+		if(sessionCookie != null) {
+			hirdetesId = new ObjectId(sessionCookie.getValue());
+			System.out.println("Feladas Session cookie letezik: " + sessionCookie.getValue());
+			long currentDate = new Date().getTime();
+			if(hirdetesId.getTime()<currentDate-3600000) {
+				System.out.println("Feladas Session cookie tul regi: " + sessionCookie.getValue());
+				hirdetesId = new ObjectId();
+			}
+		}
+	}
 
 	@Override
 	public Representation representHtml() throws IOException {
@@ -51,8 +76,21 @@ public class FeladasServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("page", 1);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
+		
+		if(hirdetesId == null) {
+			System.out.println("Uj Feladas Session cookie generalasa");
+			hirdetesId = new ObjectId();
+			
+			CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
+			cookieSetting.setAccessRestricted(true);
+			cookieSetting.setPath("/aprocom-server/feladas");
+			cookieSetting.setComment("Session Id");
+			cookieSetting.setMaxAge(3600);
+			getResponse().getCookieSettings().add(cookieSetting);
+		}
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
@@ -65,6 +103,7 @@ public class FeladasServerResource extends ServerResource implements
 		System.out.println(form.toString());
 		
 		Hirdetes hi = new Hirdetes();
+		hi.setId(hirdetesId);
 		hi.setTipus(Integer.parseInt(form.getFirstValue("hirdetesTipus", "2")));
 		hi.setCim(form.getFirstValue("hirdetesCim"));
 		hi.setKategoriaId(KategoriaCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesKategoria")).getId());

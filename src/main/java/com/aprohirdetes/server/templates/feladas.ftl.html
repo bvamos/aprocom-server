@@ -1,7 +1,7 @@
-<#include "html_header.tpl.html"/>
+<#include "html_header.ftl.html"/>
 	<div class="container">
-<#include "page_header_banner.tpl.html"/>
-<#include "page_header.tpl.html"/>
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
 		<div class="row">
 			<form class="form-horizontal" role="form" method="post">
 			<h3>Hirdetés adatai</h3>
@@ -24,7 +24,7 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="col-sm-3 control-label" for="hirdetesCim">Rövid megnevezés</label>
+					<label class="col-sm-3 control-label" for="hirdetesCim">Rövid leírás</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="hirdetesCim" name="hirdetesCim" autofocus="" required="" placeholder="" data-toggle="tooltip" data-placement="right" title="first tooltip">
 						<span class="help-block">Rövid, de beszédes címsor, ami pár szóban összefoglalja a hirdetés tartalmát.</span>
@@ -79,7 +79,10 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetesAr">Ár</label>
 					<div class="col-sm-2">
-						<input type="number" class="form-control" id="hirdetesAr" name="hirdetesAr" required="">
+						<div class="input-group">
+							<input type="number" class="form-control" id="hirdetesAr" name="hirdetesAr" required="">
+							<span class="input-group-addon">Ft</span>
+						</div>
 					</div>
 				</div>
 				
@@ -103,6 +106,7 @@
 					<label class="col-sm-3 control-label" for="hirdetoTelefon">Telefonszám</label>
 					<div class="col-sm-3">
 						<input type="text" class="form-control" id="hirdetoTelefon" name="hirdetoTelefon" placeholder="+36-xx-xxxxxxx">
+						<span class="help-block">Telefonszám formátuma: +36-99-1234567</span>
 					</div>
 				</div>
 				
@@ -157,7 +161,88 @@
 					</div>
 				</div>
 			</form>
+			
+			<h4>Képek</h4>
+			
+				<input type="file" class="" id="hirdetesKepUpload1" name="hirdetesKepUpload1">
+				
+				<div class="form-group">
+					<div class="col-sm-6 col-md-4 col-lg-2">
+						<div class="thumbnail">
+							<img class="img-thumbnail" id="hirdetesKep1" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
+							<div class="caption">
+								<input type="text" class="form-control input-sm" id="hirdetesKepLeiras1" name="hirdetesKepLeiras1" placeholder="Kép leírása">
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary btn-xs">Feltöltés</button>
+								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-2">
+						<div class="thumbnail">
+							<img class="img-thumbnail" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
+							<div class="caption">
+								<input type="text" class="form-control input-sm" id="hirdetesKepLeiras2" name="hirdetesKepLeiras2">
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary btn-xs">Feltöltés</button>
+								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-2">
+						<div class="thumbnail">
+							<img class="img-thumbnail" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
+							<div class="caption">
+								<input type="text" class="form-control input-sm" id="hirdetesKepLeiras3" name="hirdetesKepLeiras3">
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary btn-xs">Feltöltés</button>
+								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-2">
+						<div class="thumbnail">
+							<img class="img-thumbnail" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
+							<div class="caption">
+								<input type="text" class="form-control input-sm" id="hirdetesKepLeiras4" name="hirdetesKepLeiras4">
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary btn-xs">Feltöltés</button>
+								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-2">
+						<div class="thumbnail">
+							<img class="img-thumbnail" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
+							<div class="caption">
+								<input type="text" class="form-control input-sm" id="hirdetesKepLeiras5" name="hirdetesKepLeiras5">
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary btn-xs">Feltöltés</button>
+								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4 col-lg-2">
+						<div class="thumbnail">
+							<img class="img-thumbnail" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
+							<div class="caption">
+								<input type="text" class="form-control input-sm" id="hirdetesKepLeiras6" name="hirdetesKepLeiras6">
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary btn-xs">Feltöltés</button>
+								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			
 		</div>
-<#include "page_footer.tpl.html"/>
+<#include "page_footer.ftl.html"/>
 	</div>
-<#include "html_footer.tpl.html"/>
+<#include "html_footer.ftl.html"/>

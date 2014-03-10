@@ -1,8 +1,8 @@
-<#include "html_header.tpl.html"/>
+<#include "html_header.ftl.html"/>
 	<div class="container">
-<#include "page_header_banner.tpl.html"/>
-<#include "page_header.tpl.html"/>
-<#include "container_search_form.tpl.html"/>
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+<#include "container_search_form.ftl.html"/>
 				<div class="row">
 					<div class="hirdeteslista-container">
 						<span>${hirdetesek_szama} hirdetés</span>
@@ -16,19 +16,35 @@
 							<table cellpadding="0" cellspacing="0" border="0" width="100%">
 								<tr>
 									<td class="hirdetes-cim">${hirdetes.cim} (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
-									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}</td>
+									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}
+									| ${hirdetes.egyebMezok.helysegNev}</td>
 								</tr>
 							</table>
 						</div>
 						<div class="hirdetes-body">
 							<table cellpadding="0" cellspacing="0" border="0" width="100%">
 								<tr>
-									<td class="hirdetes-szoveg">${hirdetes.szoveg}</td>
-									<td class="hirdetes-mezok">Attributumok</td>
-									<td class="hirdetes-kepek" rowspan="2">Kepek</td>
+									<td class="hirdetes-szoveg">${hirdetes.szoveg!""}</td>
+									<td class="hirdetes-mezok">
+										<#if hirdetes.attributumok??>
+										
+										</#if>
+									</td>
+									<td class="hirdetes-kepek" rowspan="2">
+										<#if hirdetes.kepek??>
+										
+										</#if>
+									</td>
 								</tr>
 								<tr>
-									<td class="hirdetes-hirdeto" colspan="2">Hirdeto adatai</td>
+									<td class="hirdetes-hirdeto" colspan="2">
+										<#if hirdetes.hirdeto??>
+										<div>
+											<span class="hirdetes-hirdeto-header">hirdető: </span>
+											<span>${hirdetes.hirdeto.nev!""}</span>
+										</div>
+										</#if>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -51,6 +67,6 @@
 						</ul>
 					</div>
 				</div>
-<#include "page_footer.tpl.html"/>
+<#include "page_footer.ftl.html"/>
 	</div>
-<#include "html_footer.tpl.html"/>
+<#include "html_footer.ftl.html"/>

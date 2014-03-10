@@ -35,11 +35,26 @@ import freemarker.template.Template;
 public class KeresesServerResource extends ServerResource implements
 		KeresesResource {
 
-	private int tipus = 1;
-	private String kategoriaUrlNevList = null;
-	private List<Kategoria> kategoriaList = new LinkedList<Kategoria>();
-	private String helysegUrlNevList = null;
-	private List<Helyseg> helysegList = new LinkedList<Helyseg>();
+	/**
+	 * Hirdetes tipusa. 1=Keres, 2=Kinal
+	 */
+	private int tipus = HirdetesTipus.KINAL;
+	/**
+	 * A kivalasztott kategoriak URL neveit tartalmazo, + jellel elvalasztott lista. Az URL-bol jon.
+	 */
+	private String selectedKategoriaUrlNevListString = null;
+	/**
+	 * A kivalasztott Kategoria objektumokat tartalmazo lista
+	 */
+	private List<Kategoria> selectedKategoriaList = new LinkedList<Kategoria>();
+	/**
+	 * Kivalasztott kategoriak URL neveit tartalmazo, + jellel elvalasztott lista. Az URL-bol jon.
+	 */
+	private String selectedHelysegUrlNevListString = null;
+	/**
+	 * A kivalasztott Helyseg objektumokat tartalmazo lista
+	 */
+	private List<Helyseg> selectedHelysegList = new LinkedList<Helyseg>();
 	
 	private String query;
 	private int page;
@@ -49,14 +64,14 @@ public class KeresesServerResource extends ServerResource implements
 	protected void doInit() throws ResourceException {
 		super.doInit();
 		
-		this.kategoriaUrlNevList = (String) this.getRequestAttributes().get("kategoriaList");
-		this.kategoriaList = KategoriaCache.getKategoriaListByUrlNevList(this.kategoriaUrlNevList);
+		this.selectedKategoriaUrlNevListString = (String) this.getRequestAttributes().get("kategoriaList");
+		this.selectedKategoriaList = KategoriaCache.getKategoriaListByUrlNevList(this.selectedKategoriaUrlNevListString);
 		
-		this.helysegUrlNevList = (String) this.getRequestAttributes().get("helysegList");
-		if(this.helysegUrlNevList == null || this.helysegUrlNevList.isEmpty()) {
-			this.helysegUrlNevList = "magyarorszag";
+		this.selectedHelysegUrlNevListString = (String) this.getRequestAttributes().get("helysegList");
+		if(this.selectedHelysegUrlNevListString == null || this.selectedHelysegUrlNevListString.isEmpty()) {
+			this.selectedHelysegUrlNevListString = "magyarorszag";
 		}
-		this.helysegList = HelysegCache.getHelysegListByUrlNevList(this.helysegUrlNevList);
+		this.selectedHelysegList = HelysegCache.getHelysegListByUrlNevList(this.selectedHelysegUrlNevListString);
 		
 		this.tipus = ("keres".equals((String) this.getRequestAttributes().get("hirdetesTipus"))) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
 		
@@ -74,35 +89,48 @@ public class KeresesServerResource extends ServerResource implements
 	}
 
 	public Representation representHtml() throws IOException {
-		
-		ArrayList<ObjectId> kategoriaIdList = new ArrayList<ObjectId>();
-		for(Kategoria kat : kategoriaList) {
-			System.out.println(kat.toString());
-			kategoriaIdList.add(kat.getId());
+		/**
+		 * Kivalasztott kategoriak Id-jait tartalmazo lista. A kereseshez kell.
+		 */
+		ArrayList<ObjectId> selectedKategoriaIdList = new ArrayList<ObjectId>();
+		/**
+		 * Kivalasztott kategoriak UrlNeveit tartalmazo lista. A legordulo menuhoz kell, hogy be tudjuk allitani a kivalasztott elemeket.
+		 */
+		ArrayList<String> selectedKategoriaUrlNevList = new ArrayList<String>();
+		for(Kategoria kat : selectedKategoriaList) {
+			selectedKategoriaIdList.add(kat.getId());
+			selectedKategoriaUrlNevList.add(kat.getUrlNev());
 		}
 		
-		ArrayList<ObjectId> helysegIdList = new ArrayList<ObjectId>();
-		for(Helyseg kat : helysegList) {
-			System.out.println(kat.toString());
-			helysegIdList.add(kat.getId());
+		/**
+		 * Kivalasztott helysegek Id-jait tartalmazo lista. A kereseshez kell.
+		 */
+		ArrayList<ObjectId> selectedHelysegIdList = new ArrayList<ObjectId>();
+		/**
+		 * Kivalasztott helysegek UrlNeveit tartalmazo lista. A legordulo menuhoz kell, hogy be tudjuk allitani a kivalasztott elemeket.
+		 */
+		ArrayList<String> selectedHelysegUrlNevList = new ArrayList<String>();
+		for(Helyseg helyseg : selectedHelysegList) {
+			selectedHelysegIdList.add(helyseg.getId());
+			selectedHelysegUrlNevList.add(helyseg.getUrlNev());
 		}
 		
+		// Kereses Morphiaval
 		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		
 		query.and(
-				query.criteria("tipus").equal(this.tipus),
-				query.criteria("helysegId").in(helysegIdList),
-				query.criteria("kategoriaId").in(kategoriaIdList)
-				);
+			query.criteria("tipus").equal(this.tipus),
+			query.criteria("helysegId").in(selectedHelysegIdList),
+			query.criteria("kategoriaId").in(selectedKategoriaIdList)
+		);
 		query.offset(this.page * this.pageSize - this.pageSize);
 		query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE", "10")));
 		query.order("-id");
 		
+		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese egyeb adatokkal a megjeleniteshez
 		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 		for(Hirdetes h : query) {
-			System.out.println(h.getKategoriaId());
-			
 			h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
 			
 			Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());

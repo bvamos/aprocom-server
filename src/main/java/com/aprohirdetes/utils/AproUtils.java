@@ -22,6 +22,12 @@ public class AproUtils {
 		} else if(elteltIdo>=60 && elteltIdo<3600){
 			long perc = elteltIdo/60;
 			ret = perc + " perce";
+		} else if(elteltIdo>=3600 && elteltIdo<86400) {
+			long ora = elteltIdo/3600;
+			ret = ora + " órája";
+		} else if(elteltIdo>=86400 && elteltIdo<2592000) {
+			long nap = elteltIdo/86400;
+			ret = nap + " napja";
 		} else {
 			ret = new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date(feladasDatuma));
 		}
