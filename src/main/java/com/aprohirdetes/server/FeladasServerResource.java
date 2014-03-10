@@ -104,13 +104,21 @@ public class FeladasServerResource extends ServerResource implements
 		
 		Hirdetes hi = new Hirdetes();
 		hi.setId(hirdetesId);
-		hi.setTipus(Integer.parseInt(form.getFirstValue("hirdetesTipus", "2")));
+		try {
+			hi.setTipus(Integer.parseInt(form.getFirstValue("hirdetesTipus", "2")));
+		} catch (NumberFormatException nfe) {
+			hi.setTipus(2);
+		}
 		hi.setCim(form.getFirstValue("hirdetesCim"));
 		hi.setKategoriaId(KategoriaCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesKategoria")).getId());
 		hi.setHelysegId(HelysegCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesHelyseg")).getId());
 		hi.setSzoveg(form.getFirstValue("hirdetesSzoveg"));
 		hi.setEgyebInfo(form.getFirstValue("hirdetesEgyebInfo"));
-		hi.setAr(Integer.parseInt(form.getFirstValue("hirdetesAr", "0")));
+		try {
+			hi.setAr(Integer.parseInt(form.getFirstValue("hirdetesAr", "0")));
+		} catch (NumberFormatException nfe) {
+			hi.setAr(0);
+		}
 		
 		Hirdeto ho = new Hirdeto();
 		ho.setNev(form.getFirstValue("hirdetoNev"));
