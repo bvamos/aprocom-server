@@ -47,6 +47,8 @@ public class AproApplication extends Application {
 		
 		router.attach("/feladas", FeladasServerResource.class);
 		
+		router.attach("/api/v1/kepFeltoltes/{hirdetesId}", com.aprohirdetes.server.apiv1.KepFeltoltesServerResource.class);
+		
 		String cssUri = "war:///css";
 		Directory cssDirectory = new Directory(getContext(), cssUri);
 		cssDirectory.setListingAllowed(true);
