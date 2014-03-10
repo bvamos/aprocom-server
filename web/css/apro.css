@@ -280,3 +280,8 @@ div.hirdetes-footer {
 	color: #338be5;
 	padding-left: 10px;
 }
+
+.bar {
+    height: 18px;
+    background: green;
+}

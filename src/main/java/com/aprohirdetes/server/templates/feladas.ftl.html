@@ -164,6 +164,11 @@
 			
 			<h4>Képek</h4>
 			
+				<input id="fileupload" type="file" name="files[]" data-url="${app.contextRoot}/api/v1/kepUpload/${feladasSession!''}" multiple>
+				<div id="progress">
+					<div class="bar" style="width: 0%;"></div>
+				</div>
+			
 				<input type="file" class="" id="hirdetesKepUpload1" name="hirdetesKepUpload1">
 				
 				<div class="form-group">

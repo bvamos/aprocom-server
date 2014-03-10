@@ -92,6 +92,8 @@ public class FeladasServerResource extends ServerResource implements
 			getResponse().getCookieSettings().add(cookieSetting);
 		}
 		
+		dataModel.put("feladasSession", hirdetesId.toString());
+		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
