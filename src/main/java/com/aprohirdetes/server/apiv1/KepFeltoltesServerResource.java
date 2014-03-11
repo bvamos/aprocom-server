@@ -7,12 +7,12 @@ import java.util.List;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.bson.types.ObjectId;
+import org.json.JSONObject;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.ext.fileupload.RestletFileUpload;
-import org.restlet.representation.FileRepresentation;
+import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
-import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -39,9 +39,10 @@ public class KepFeltoltesServerResource extends ServerResource implements
 		if (entity != null) {
 			if (MediaType.MULTIPART_FORM_DATA.equals(entity.getMediaType(),
 					true)) {
-				String fileName = AproApplication.APP_CONFIG.getProperty("WORKDIR") 
+				String fileName = hirdetesId + "_" + new ObjectId().toString();
+				String fileNamePath = AproApplication.APP_CONFIG.getProperty("WORKDIR") 
 						+ File.separator + "images_upload" 
-						+ File.separator + hirdetesId;
+						+ File.separator + fileName;
 
 				// The Apache FileUpload project parses HTTP requests which
 				// conform to RFC 1867, "Form-based File Upload in HTML". That
@@ -52,7 +53,7 @@ public class KepFeltoltesServerResource extends ServerResource implements
 
 				// 1/ Create a factory for disk-based file items
 				DiskFileItemFactory factory = new DiskFileItemFactory();
-				factory.setSizeThreshold(1000240);
+				factory.setSizeThreshold(10002400);
 
 				// 2/ Create a new file upload handler based on the Restlet
 				// FileUpload extension that will parse Restlet requests and
@@ -64,7 +65,7 @@ public class KepFeltoltesServerResource extends ServerResource implements
 				// list of FileItems
 				items = upload.parseRequest(getRequest());
 
-				// Process only the uploaded item called "fileToUpload" and
+				// Process only the uploaded item called "files[]" and
 				// save it on disk
 				boolean found = false;
 				for (final Iterator<FileItem> it = items.iterator(); it
@@ -72,22 +73,22 @@ public class KepFeltoltesServerResource extends ServerResource implements
 					FileItem fi = it.next();
 					if (fi.getFieldName().equals("files[]")) {
 						found = true;
-						File file = new File(fileName);
+						File file = new File(fileNamePath);
 						fi.write(file);
 					}
 				}
 
 				// Once handled, the content of the uploaded file is sent
 				// back to the client.
+				JSONObject response = new JSONObject();
 				if (found) {
-					// Create a new representation based on disk file.
-					// The content is arbitrarily sent as plain text.
-					rep = new FileRepresentation(new File(fileName),
-							MediaType.TEXT_PLAIN, 0);
+					// Create a new representation
+					response.put("fileName", fileName);
+					rep = new JsonRepresentation(response);
 				} else {
 					// Some problem occurs, sent back a simple line of text.
-					rep = new StringRepresentation("no file uploaded",
-							MediaType.TEXT_PLAIN);
+					response.put("error", "No file uploaded");
+					rep = new JsonRepresentation(response);
 				}
 			}
 		} else {
