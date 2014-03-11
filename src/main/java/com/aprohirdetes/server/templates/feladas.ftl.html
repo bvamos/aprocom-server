@@ -154,20 +154,15 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="form-group">
-					<div class="col-sm-offset-3 colsm-7">
-						<button type="submit" class="btn btn-primary">Mehet</button>
-					</div>
-				</div>
-			</form>
 			
 			<h4>Képek</h4>
 			
 				<input id="fileupload" type="file" name="files[]" data-url="${app.contextRoot}/api/v1/kepFeltoltes/${feladasSession!''}" multiple>
-				<div id="progress">
-					<div class="bar" style="width: 0%;"></div>
+				<div id="progress" class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					</div>
 				</div>
+				
 			
 				<div class="form-group">
 					<div class="col-sm-6 col-md-4 col-lg-2">
@@ -220,7 +215,13 @@
 					</div>
 				</div>
 				
-			
+				<div class="form-group">
+					<div class="col-sm-offset-3 colsm-7">
+						<button type="submit" class="btn btn-primary">Mehet</button>
+					</div>
+				</div>
+			</form>
+		
 		</div>
 <#include "page_footer.ftl.html"/>
 	</div>

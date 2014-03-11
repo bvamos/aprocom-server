@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
@@ -83,11 +84,21 @@ public class KepFeltoltesServerResource extends ServerResource implements
 				JSONObject response = new JSONObject();
 				if (found) {
 					// Create a new representation
-					response.put("fileName", fileName);
+					JSONArray files = new JSONArray();
+					JSONObject file = new JSONObject();
+					file.put("name", fileName);
+					file.put("size", 11);
+					files.put(file);
+					response.put("files", files);
 					rep = new JsonRepresentation(response);
 				} else {
 					// Some problem occurs, sent back a simple line of text.
-					response.put("error", "No file uploaded");
+					JSONArray files = new JSONArray();
+					JSONObject file = new JSONObject();
+					file.put("name", fileName);
+					file.put("error", "No file uploaded");
+					files.put(file);
+					response.put("files", files);
 					rep = new JsonRepresentation(response);
 				}
 			}
