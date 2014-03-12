@@ -12,13 +12,13 @@
 	$(function () {
 	    $('#fileupload').fileupload({
 	        dataType: 'json',
-	        limitMultiFileUploads: 6,
+	        singleFileUploads: false,
 	        /*add: function (e, data) {
 	        	$('#progress .bar').css('width', '0%');
 	        },*/
 	        done: function (e, data) {
 	        	$.each(data.result.files, function (index, file) {
-	               alert(file.name);
+	               $('#hirdetesKep' + file.sorszam).attr('src', file.url);
 	            });
 	        },
 	    	progressall: function (e, data) {

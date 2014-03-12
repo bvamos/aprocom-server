@@ -1,6 +1,7 @@
 package com.aprohirdetes.server;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Properties;
 
@@ -34,6 +35,7 @@ public class AproApplication extends Application {
 		setDescription("Apróhirdetés.com - Ingyenes apróhirdető portál");
 		setOwner("Vámos Balázs");
 		setAuthor("Vámos Balázs");
+		
 	}
 
 	@Override
@@ -68,6 +70,11 @@ public class AproApplication extends Application {
 		Directory imagesDirectory = new Directory(getContext(), imagesUri);
 		imagesDirectory.setListingAllowed(true);
 		router.attach("/images", imagesDirectory);
+		
+		String staticImagesUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + File.separator + "images_upload" + File.separator;
+		Directory staticImagesDirectory = new Directory(getContext(), staticImagesUri);
+		staticImagesDirectory.setListingAllowed(true);
+		router.attach("/static/images", staticImagesDirectory);
 
 		return router;
 	}
@@ -76,8 +83,6 @@ public class AproApplication extends Application {
 	public synchronized void start() throws Exception {
 		getLogger().info("Starting application...");
 
-		super.start();
-		
 		// Loading application configuration
 		final String configFile = "/WEB-INF/apro.properties";
 	
@@ -89,26 +94,41 @@ public class AproApplication extends Application {
 		
 		if(response.getStatus() != Status.SUCCESS_OK) {
 			getLogger().severe("ERROR: Config file not found: " + configFile);
-			stop();
-			return;
+		} else {
+			try {
+				APP_CONFIG.load(new StringReader(response.getEntityAsText()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		APP_CONFIG.load(new StringReader(response.getEntityAsText()));
-		
 		// Check application configuration
+		if(APP_CONFIG.isEmpty()) {
+			getLogger().severe("Configuration is empty. Exiting.");
+			stop();
+			return;
+		} else {
+			getLogger().info("Configuration: " + APP_CONFIG);
+		}
+		
+		// Create work directory structure
+		createWorkDir(APP_CONFIG.getProperty("WORKDIR"));
+
+		// Default configuration
 		try {
 			Integer.parseInt(APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE"));
 		} catch(NumberFormatException nfe) {
 			APP_CONFIG.setProperty("SEARCH_DEFAULT_PAGESIZE", "10");
 		}
-		System.out.println(APP_CONFIG);
+		
+		// Start application
+		super.start();
 		
 		// Loading Template (Freemarker) configuration
 		Configuration cfg = new Configuration();
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		//cfg.setClassForTemplateLoading(getClass(), "templates/");
 		cfg.setTemplateLoader(new ClassTemplateLoader(getClass(), "templates/"));
-		//cfg.setDirectoryForTemplateLoading(new File("C:\\Users\\bvamos\\Documents\\GitHub\\aprocom-server\\src\\main\\java\\com\\aprohirdetes\\server\\templates\\"));
 		cfg.setDefaultEncoding("UTF-8");
 		TPL_CONFIG = cfg;
 		
@@ -117,9 +137,6 @@ public class AproApplication extends Application {
 		
 		// Loading Helysegek into memory cache
 		HelysegCache.loadCache();
-		
-		// Create work directory structure
-		createWorkDir(APP_CONFIG.getProperty("WORKDIR"));
 	}
 
 	@Override

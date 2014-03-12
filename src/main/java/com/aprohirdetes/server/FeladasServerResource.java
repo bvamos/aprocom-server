@@ -85,6 +85,7 @@ public class FeladasServerResource extends ServerResource implements
 			hirdetesId = new ObjectId();
 			
 			CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
+			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
 			cookieSetting.setPath("/aprocom-server/feladas");
 			cookieSetting.setComment("Session Id");
@@ -101,8 +102,6 @@ public class FeladasServerResource extends ServerResource implements
 	@Override
 	public Representation accept(Form form) throws IOException {
 		String message = "";
-		
-		System.out.println(form.toString());
 		
 		Hirdetes hi = new Hirdetes();
 		hi.setId(hirdetesId);
@@ -137,6 +136,15 @@ public class FeladasServerResource extends ServerResource implements
 		Key<Hirdetes> id = datastore.save(hi);
 		
 		message = "A Hirdetés feladása sikeresen megtörtént: " + id.toString();
+		
+		// Cookie torlese
+		CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
+		cookieSetting.setVersion(0);
+		cookieSetting.setAccessRestricted(true);
+		cookieSetting.setPath("/aprocom-server/feladas");
+		cookieSetting.setComment("Session Id");
+		cookieSetting.setMaxAge(0);
+		getResponse().getCookieSettings().add(cookieSetting);
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
