@@ -157,8 +157,13 @@
 			
 			<h4>Képek</h4>
 			
-				<input id="fileupload" type="file" name="files[]" data-url="${app.contextRoot}/api/v1/kepFeltoltes/${feladasSession!''}" multiple>
-				<div id="progress" class="progress">
+				<span class="btn btn-success fileinput-button">
+					<i class="glyphicon glyphicon-plus"></i>
+					<span>Képek feltöltése</span>
+					<input id="fileupload" type="file" name="files[]" data-url="${app.contextRoot}/api/v1/kepFeltoltes/${feladasSession!''}" multiple>
+				</span>
+				<br></br>
+				<div id="progress" class="progress progress-striped">
 					<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 					</div>
 				</div>
@@ -167,50 +172,38 @@
 				<div class="form-group">
 					<div class="col-sm-6 col-md-4 col-lg-2">
 						<div class="thumbnail">
-							<img class="img-thumbnail" id="hirdetesKep1" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
-							<div>
-								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
-							</div>
+							<button type="button" class="close" aria-hidden="true">&times;</button>
+							<img class="" id="hirdetesKep1" alt="Tölts fel képet!" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4 col-lg-2">
 						<div class="thumbnail">
-							<img class="img-thumbnail" id="hirdetesKep2" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
-							<div>
-								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
-							</div>
+							<button type="button" class="close" aria-hidden="true">&times;</button>
+							<img class="" id="hirdetesKep2" alt="Tölts fel képet!" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4 col-lg-2">
 						<div class="thumbnail">
-							<img class="img-thumbnail" id="hirdetesKep3" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
-							<div>
-								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
-							</div>
+							<button type="button" class="close" aria-hidden="true">&times;</button>
+							<img class="" id="hirdetesKep3" alt="Tölts fel képet!" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4 col-lg-2">
 						<div class="thumbnail">
-							<img class="img-thumbnail" id="hirdetesKep4" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
-							<div>
-								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
-							</div>
+							<button type="button" class="close" aria-hidden="true">&times;</button>
+							<img class="" id="hirdetesKep4" alt="Tölts fel képet!" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4 col-lg-2">
 						<div class="thumbnail">
-							<img class="img-thumbnail" id="hirdetesKep5" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
-							<div>
-								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
-							</div>
+							<button type="button" class="close" aria-hidden="true">&times;</button>
+							<img class="" id="hirdetesKep5" alt="Tölts fel képet!" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4 col-lg-2">
 						<div class="thumbnail">
-							<img class="img-thumbnail" id="hirdetesKep6" alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
-							<div>
-								<button type="button" class="btn btn-danger btn-xs">Törlés</button>
-							</div>
+							<button type="button" class="close" aria-hidden="true">&times;</button>
+							<img class="" id="hirdetesKep6" alt="Tölts fel képet!" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PHN2…wiPjE0MHgxNDA8L3RleHQ+PC9zdmc+"></img>
 						</div>
 					</div>
 				</div>

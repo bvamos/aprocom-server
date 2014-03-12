@@ -50,8 +50,8 @@ public class KepFeltoltesServerResource extends ServerResource implements
 				String fileName = hirdetesId.toString() + "_" + kepId.toString();
 				String fileNamePath = AproApplication.APP_CONFIG
 						.getProperty("WORKDIR")
-						+ File.separator
-						+ "images_upload" + File.separator + fileName;
+						+ "/"
+						+ "images_upload" + "/" + fileName;
 
 				// The Apache FileUpload project parses HTTP requests which
 				// conform to RFC 1867, "Form-based File Upload in HTML". That
