@@ -19,6 +19,7 @@
 	        done: function (e, data) {
 	        	$.each(data.result.files, function (index, file) {
 	               $('#hirdetesKep' + file.sorszam).attr('src', file.url);
+	               $('#uploadMessage').value = 'A kep sikeresen feltöltődött: ' + file.eredetiFileNev;
 	            });
 	        },
 	    	progressall: function (e, data) {

@@ -1,5 +1,6 @@
 package com.aprohirdetes.server;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.Query;
 import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
@@ -20,10 +22,12 @@ import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
+
 import com.aprohirdetes.common.FeladasResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
@@ -67,6 +71,16 @@ public class FeladasServerResource extends ServerResource implements
 		
 		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
 		
+		// Kepek
+		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
+		
+		query.criteria("hirdetesId").equal(hirdetesId);
+		HashMap<Integer, String> hirdetesKepMap = new HashMap<Integer, String>();
+		for(HirdetesKep hk : query) {
+			hirdetesKepMap.put(hk.getSorszam(), getRequest().getRootRef().toString() + "/static/images/" + hk.getFileNev());
+		}
+		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
@@ -79,6 +93,7 @@ public class FeladasServerResource extends ServerResource implements
 		dataModel.put("page", 1);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
+		dataModel.put("kepMap", hirdetesKepMap);
 		
 		if(hirdetesId == null) {
 			System.out.println("Uj Feladas Session cookie generalasa");
@@ -134,6 +149,26 @@ public class FeladasServerResource extends ServerResource implements
 		
 		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 		Key<Hirdetes> id = datastore.save(hi);
+		
+		// Kepek atmasolasa a vegleges helyükre
+		Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
+		query.criteria("hirdetesId").equal(hirdetesId);
+		
+		for(HirdetesKep hk : query) {
+			String fileNamePath = AproApplication.APP_CONFIG
+					.getProperty("WORKDIR")
+					+ "/"
+					+ "images_upload" + "/" + hk.getFileNev();
+			String destFileNamePath = AproApplication.APP_CONFIG
+					.getProperty("WORKDIR")
+					+ "/"
+					+ "images" + "/" + hk.getFileNev();
+			File kepFile = new File(fileNamePath);
+			if(kepFile.renameTo(new File(destFileNamePath))) {
+				kepFile.delete();
+			}
+		}
+
 		
 		message = "A Hirdetés feladása sikeresen megtörtént: " + id.toString();
 		
