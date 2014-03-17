@@ -32,7 +32,9 @@
 									</td>
 									<td class="hirdetes-kepek" rowspan="2">
 										<#if hirdetes.kepek??>
-										
+											<#list hirdetes.kepek as kep>
+												<img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140">
+											</#list>
 										</#if>
 									</td>
 								</tr>

@@ -24,6 +24,7 @@ import com.aprohirdetes.common.KeresesResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
@@ -128,7 +129,7 @@ public class KeresesServerResource extends ServerResource implements
 		query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE", "10")));
 		query.order("-id");
 		
-		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese egyeb adatokkal a megjeleniteshez
+		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 		for(Hirdetes h : query) {
 			h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
@@ -142,6 +143,14 @@ public class KeresesServerResource extends ServerResource implements
 			h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
 			
 			h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
+			
+			// Kepek
+			Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
+			kepekQuery.criteria("hirdetesId").equal(h.getId());
+			
+			for(HirdetesKep kep : kepekQuery) {
+				h.getKepek().add(kep);
+			}
 			
 			hirdetesList.add(h);
 		}

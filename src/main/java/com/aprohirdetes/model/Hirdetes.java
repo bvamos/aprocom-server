@@ -1,6 +1,7 @@
 package com.aprohirdetes.model;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
@@ -23,6 +24,8 @@ public class Hirdetes {
 	private ObjectId hirdetoId;
 	
 	@Embedded private Hirdeto hirdeto;
+	
+	private LinkedList<HirdetesKep> kepek = new LinkedList<HirdetesKep>();
 
 	private HashMap<String, String> egyebMezok = new HashMap<String, String>();
 	
@@ -120,5 +123,13 @@ public class Hirdetes {
 
 	public long getFeladasDatuma() {
 		return id.getTime();
+	}
+
+	public LinkedList<HirdetesKep> getKepek() {
+		return kepek;
+	}
+
+	public void setKepek(LinkedList<HirdetesKep> kepek) {
+		this.kepek = kepek;
 	}
 }

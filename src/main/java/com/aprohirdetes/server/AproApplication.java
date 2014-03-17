@@ -71,7 +71,12 @@ public class AproApplication extends Application {
 		imagesDirectory.setListingAllowed(true);
 		router.attach("/images", imagesDirectory);
 		
-		String staticImagesUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + File.separator + "images_upload" + File.separator;
+		String staticImagesUploadUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + File.separator + "images_upload" + File.separator;
+		Directory staticImagesUploadDirectory = new Directory(getContext(), staticImagesUploadUri);
+		staticImagesUploadDirectory.setListingAllowed(true);
+		router.attach("/static/images_upload", staticImagesUploadDirectory);
+		
+		String staticImagesUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + File.separator + "images" + File.separator;
 		Directory staticImagesDirectory = new Directory(getContext(), staticImagesUri);
 		staticImagesDirectory.setListingAllowed(true);
 		router.attach("/static/images", staticImagesDirectory);

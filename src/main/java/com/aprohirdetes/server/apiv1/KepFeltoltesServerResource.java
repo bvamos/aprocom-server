@@ -108,9 +108,13 @@ public class KepFeltoltesServerResource extends ServerResource implements
 							JSONObject fileJson = new JSONObject();
 							fileJson.put("fileNev", kep.getFileNev());
 							fileJson.put("eredetiFileNev", item.getName());
-							fileJson.put("fileMeret", item.getSize());
-							fileJson.put("url", getRequest().getRootRef().toString() + "/static/images/" + kep.getFileNev());
-							fileJson.put("sorszam", kep.getSorszam());
+							if(id != null) {
+								fileJson.put("fileMeret", item.getSize());
+								fileJson.put("url", getRequest().getRootRef().toString() + "/static/images_upload/" + kep.getFileNev());
+								fileJson.put("sorszam", kep.getSorszam());
+							} else {
+								fileJson.put("hibaUzenet", "Hiba történt a kép mentése közben.");
+							}
 							filesJson.put(fileJson);
 						} catch (Exception e) {
 							JSONObject fileJson = new JSONObject();
