@@ -30,11 +30,39 @@
 										
 										</#if>
 									</td>
-									<td class="hirdetes-kepek" rowspan="2">
-										<#if hirdetes.kepek??>
+									<td class="hirdetes-kepek" rowspan="2" width="300">
+										<#if hirdetes.kepek?has_content >
+											<#assign i=1 >
+												<div id="carousel-${hirdetes.id}" class="carousel slide" data-ride="carousel" data-interval="false" style="width: 300px; height: 200px;">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-${hirdetes.id}" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-${hirdetes.id}" data-slide-to="1"></li>
+    <li data-target="#carousel-${hirdetes.id}" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
 											<#list hirdetes.kepek as kep>
-												<img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140">
+												<#if i==1 >
+    <div class="item active">
+    											<#else>
+    <div class="item">
+    											</#if>
+    											<#assign i=i+1>
+      <img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140">
+    </div>
 											</#list>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-${hirdetes.id}" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-${hirdetes.id}" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
 										</#if>
 									</td>
 								</tr>
