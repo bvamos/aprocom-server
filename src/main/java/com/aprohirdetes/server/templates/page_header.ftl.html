@@ -1,12 +1,17 @@
+<#if hirdetesTipus=1>
+	<#assign hirdetesTipusNev='keres'>
+<#else>
+	<#assign hirdetesTipusNev='kinal'>
+</#if>
 		<div id="header_tabs_container" class="row placeholders">
 			<div class="col-md-9 placeholder">
 				<span class="glyphicon glyphicon-home"></span>
 				<span class="header_link"><a href="${app.contextRoot}/">www.aprohirdetes.com</a></span>
 				<ul class="header-tabs tabs1">
 					<li><a href="${app.contextRoot}/">Apró</a></li>
-					<li><a href="${app.contextRoot}/kereses/kinal/magyarorszag/ingatlan/">Ingatlan</a></li>
-					<li><a href="${app.contextRoot}/kereses/kinal/magyarorszag/jarmu/">Jármű</a></li>
-					<li><a href="${app.contextRoot}/kereses/kinal/magyarorszag/allas/">Állás</a></li>
+					<li><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/ingatlan/">Ingatlan</a></li>
+					<li><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/jarmu/">Jármű</a></li>
+					<li><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/allas/">Állás</a></li>
 					<li class="feladas-tab"><a href="${app.contextRoot}/feladas">Hirdetés feladása</a></li>
 				</ul>
 			</div>

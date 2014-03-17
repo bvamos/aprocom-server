@@ -6,8 +6,8 @@
 					  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="" placeholder="Keresett kifejezés" style="width: 100%;">
 					</div>
 					<select class="form-control" style="width: 10%;" id="hirdetesTipus">
-						<option value="kinal" selected>Kínál</option>
-						<option value="keres">Keres</option>
+						<option value="kinal" <#if hirdetesTipus=2>selected</#if>>Kínál</option>
+						<option value="keres" <#if hirdetesTipus=1>selected</#if>>Keres</option>
 					</select>
 					<select class="form-control" style="width: 15%;" id="hirdetesHelyseg">
 						<#list helysegList as helyseg>

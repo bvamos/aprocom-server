@@ -24,6 +24,7 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.RootResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
+import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.MongoUtils;
@@ -87,6 +88,9 @@ public class RootServerResource extends ServerResource implements RootResource {
 		dataModel.put("app", appDataModel);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
+		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
+		dataModel.put("hirdetesKategoria", null);
+		dataModel.put("hirdetesHelyseg", null);
 		
 		// Without global configuration object
 		//Representation indexFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();

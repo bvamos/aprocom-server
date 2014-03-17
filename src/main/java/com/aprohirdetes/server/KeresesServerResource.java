@@ -39,7 +39,7 @@ public class KeresesServerResource extends ServerResource implements
 	/**
 	 * Hirdetes tipusa. 1=Keres, 2=Kinal
 	 */
-	private int tipus = HirdetesTipus.KINAL;
+	private int hirdetesTipus = HirdetesTipus.KINAL;
 	/**
 	 * A kivalasztott kategoriak URL neveit tartalmazo, + jellel elvalasztott lista. Az URL-bol jon.
 	 */
@@ -74,7 +74,7 @@ public class KeresesServerResource extends ServerResource implements
 		}
 		this.selectedHelysegList = HelysegCache.getHelysegListByUrlNevList(this.selectedHelysegUrlNevListString);
 		
-		this.tipus = ("keres".equals((String) this.getRequestAttributes().get("hirdetesTipus"))) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
+		this.hirdetesTipus = ("keres".equals((String) this.getRequestAttributes().get("hirdetesTipus"))) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
 		
 		this.query = getQueryValue("q")==null ? "" : getQueryValue("q");
 		
@@ -121,7 +121,7 @@ public class KeresesServerResource extends ServerResource implements
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		
 		query.and(
-			query.criteria("tipus").equal(this.tipus),
+			query.criteria("tipus").equal(this.hirdetesTipus),
 			query.criteria("helysegId").in(selectedHelysegIdList),
 			query.criteria("kategoriaId").in(selectedKategoriaIdList)
 		);
@@ -176,6 +176,9 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesList", hirdetesList);
+		dataModel.put("hirdetesTipus", this.hirdetesTipus);
+		dataModel.put("hirdetesKategoria", selectedKategoriaUrlNevList);
+		dataModel.put("hirdetesHelyseg", selectedHelysegUrlNevList);
 		dataModel.put("hirdetesek_szama", query.countAll());
 		dataModel.put("q", this.query);
 		dataModel.put("page", this.page);
