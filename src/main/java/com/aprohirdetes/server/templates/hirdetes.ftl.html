@@ -2,15 +2,8 @@
 	<div class="container">
 <#include "page_header_banner.ftl.html"/>
 <#include "page_header.ftl.html"/>
-<#include "container_search_form.ftl.html"/>
 				<div class="row">
-					<div class="hirdeteslista-container">
-						<span>${hirdetesek_szama} hirdetés</span>
-						<span>${page}. oldal</span>
-					</div>
-				</div>
-				<div class="row">
-					<#list hirdetesList as hirdetes>
+				<#if hirdetes?? >
 					<div class="hirdetes-container">
 						<div class="hirdetes-header">
 							<table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -62,15 +55,9 @@
 							</table>
 						</div>
 					</div>
-					</#list>
-				</div>
-				<div class="row">
-					<div>
-						<ul class="pager">
-							<li class="previous"><a href="javascript:prevPage();">&larr; Előző</a></li>
-							<li class="next"><a href="javascript:nextPage();">Következő &rarr;</a></li>
-						</ul>
-					</div>
+				<#else>
+					<p class="bg-danger">${hibaUzenet}</p>
+				</#if>
 				</div>
 <#include "page_footer.ftl.html"/>
 	</div>
