@@ -89,8 +89,8 @@ public class RootServerResource extends ServerResource implements RootResource {
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
-		dataModel.put("hirdetesKategoria", null);
-		dataModel.put("hirdetesHelyseg", null);
+		dataModel.put("hirdetesKategoria", "ingatlan");
+		dataModel.put("hirdetesHelyseg", "magyarorszag");
 		
 		// Without global configuration object
 		//Representation indexFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();
