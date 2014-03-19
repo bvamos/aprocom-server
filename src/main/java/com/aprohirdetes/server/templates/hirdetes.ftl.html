@@ -2,63 +2,65 @@
 	<div class="container">
 <#include "page_header_banner.ftl.html"/>
 <#include "page_header.ftl.html"/>
-				<div class="row">
 				<#if hirdetes?? >
 					<div class="hirdetes-container">
-						<div class="hirdetes-header">
-							<table cellpadding="0" cellspacing="0" border="0" width="100%">
-								<tr>
-									<td class="hirdetes-cim">${hirdetes.cim} (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
-									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}
-									| ${hirdetes.egyebMezok.helysegNev}</td>
-								</tr>
-							</table>
+						<div class="page-header">
+							<h1>${hirdetes.cim} <small>${hirdetes.egyebMezok.tipusNev}</small></h1>
 						</div>
-						<div class="hirdetes-body">
-							<table cellpadding="0" cellspacing="0" border="0" width="100%">
-								<tr>
-									<td class="hirdetes-szoveg">${hirdetes.szoveg!""}</td>
-									<td class="hirdetes-mezok">
-										<#if hirdetes.attributumok??>
-										
-										</#if>
-									</td>
-									<td class="hirdetes-kepek" rowspan="2">
-										<#if hirdetes.kepek??>
-											<#list hirdetes.kepek as kep>
-												<img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140">
-											</#list>
-										</#if>
-									</td>
-								</tr>
-								<tr>
-									<td class="hirdetes-hirdeto" colspan="2">
-										<#if hirdetes.hirdeto??>
-										<div>
-											<span class="hirdetes-hirdeto-header">hirdető: </span>
-											<span>${hirdetes.hirdeto.nev!""}</span>
-										</div>
-										</#if>
-									</td>
-								</tr>
-							</table>
+						<h2><span class="label label-warning">${hirdetes.ar} Ft</span></h2>
+						
+						<h3>Hirdetés adatai</h3>
+						<div><b>Helység: </b>${hirdetes.egyebMezok.helysegNev}</div>
+						<div><b>Kategória: </b>${hirdetes.egyebMezok.kategoriaNev}</div>
+						<div><b>Feladás időpontja: </b>${hirdetes.egyebMezok.feladvaSzoveg}</div>
+
+						<br>
+						<div class="panel panel-default">
+							<div class="panel-body">${hirdetes.szoveg!""}</div>
+							<#if hirdetes.attributumok??>
+							<ul class="list-group">
+								<li class="list-group-item"><b>Ajtók száma: </b>78</li>
+								<li class="list-group-item"><b>Ajtók száma: </b>78</li>
+								<li class="list-group-item"><b>Ajtók száma: </b>78</li>
+							</ul>
+							</#if>
 						</div>
-						<div class="hirdetes-footer">
-							<table cellpadding="0" cellspacing="0" border="0" width="100%">
-								<tr>
-									<td class="hirdetes-muveletek"><span>Műveletek: </span>
-									Mutasd <a href="">itt</a>,
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}">új lapon</a>,
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}" target="_blank">új ablakban</a> </td>
-									<td class="hirdetes-ar">${hirdetes.ar} Ft</td>
-								</tr>
-							</table>
+						
+						<#if hirdetes.kepek?has_content >
+							<div>
+							<#list hirdetes.kepek as kep>
+							<img src="${app.contextRoot}/static/images/${kep.fileNev}" height="300">
+							</#list>
+							</div>
+						<#else>
+							<div class="alert alert-warning">Sajnos a hirdető nem töltött fel képeket a hirdetéshez.</div>
+						</#if>
+						
+						<#if hirdetes.hirdeto??>
+						<h3>Hirdető adatai</h3>
+						<div>
+							<span class="hirdetes-hirdeto-header">Hirdető: </span>
+							<span>${hirdetes.hirdeto.nev!""}</span>
 						</div>
+						<div>
+							<span class="hirdetes-hirdeto-header">Telefon: </span>
+							<span>${hirdetes.hirdeto.telefon!""}</span>
+						</div>
+						<div>
+							<span class="hirdetes-hirdeto-header">Email: </span>
+							<span>${hirdetes.hirdeto.email!""}</span>
+						</div>
+						<div>
+							<span class="hirdetes-hirdeto-header">Cím: </span>
+							<span>${hirdetes.hirdeto.iranyitoSzam!""} ${hirdetes.hirdeto.telepules!""}, ${hirdetes.hirdeto.cim!""}</span>
+						</div>
+						</#if>
 					</div>
 				<#else>
-					<p class="bg-danger">${hibaUzenet}</p>
+				<h1>Nincs ilyen hirdetés</h1>
+				<p class="bg-danger">${hibaUzenet}</p>
 				</#if>
-				</div>
+				<br>
 <#include "page_footer.ftl.html"/>
 	</div>
 <#include "html_footer.ftl.html"/>

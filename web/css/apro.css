@@ -214,72 +214,80 @@ ul.category-sub>li>a {
 	text-decoration: none;
 }
 
-div.hirdeteslista-container {
+div.hirdeteslista-header {
 	background-color: #d5d5d5;
 	border-left: 5px solid #ababab;
 	padding: 10px;
 	margin-bottom: 10px;
 }
 
-div.hirdetes-container {
+div.hirdeteslista-container {
 	
 }
 
-div.hirdetes-header {
+div.hirdeteslista-container div.hirdetes-header {
 	background-color: #ccc;
 	padding: 5px;
 }
 
-div.hirdetes-body {
+div.hirdeteslista-container div.hirdetes-body {
 	background-color: #f9f9f9;
 }
 
-div.hirdetes-footer {
+div.hirdeteslista-container>div.hirdetes-footer {
 	background: url("../images/subcategory_background.png");
 	border-bottom: 1px solid #ccc;
 	margin-bottom: 20px;
 	padding: 5px;
 }
 
-.hirdetes-cim {
+div.hirdeteslista-container .hirdetes-cim {
 	font-weight: bold;
 	color: #000;
 }
 
-.hirdetes-cim>span {
+div.hirdeteslista-container .hirdetes-cim>span {
 	font-weight: normal;
 }
 
-.hirdetes-kategoria {
+div.hirdeteslista-container .hirdetes-kategoria {
 	color: #fff;
 	text-align: right;
 }
 
-.hirdetes-szoveg {
+div.hirdeteslista-container .hirdetes-szoveg {
 	padding: 10px;
 }
 
-.hirdetes-mezok {
+div.hirdeteslista-container .hirdetes-mezok {
 	
 }
 
-.hirdetes-kepek {
+div.hirdeteslista-container .hirdetes-kepek {
 	background: url("../images/subcategory_background.png");
 	padding: 10px;
 }
 
-.hirdetes-muveletek {
+div.hirdeteslista-container .hirdetes-muveletek {
 	
 }
 
-.hirdetes-ar {
+div.hirdeteslista-container .hirdetes-muveletek>span {
+	font-weight: bold;
+}
+
+div.hirdeteslista-container .hirdetes-ar {
 	text-align: right;
 	font-weight: bold;
 }
 
-.hirdetes-hirdeto-header {
+div.hirdeteslista-container .hirdetes-hirdeto-header {
 	color: #338be5;
 	padding-left: 10px;
+}
+
+div.hirdetes-container .hirdetes-hirdeto-header {
+	font-weight: bold;
 }
 
 .bar {
