@@ -3,7 +3,7 @@
 				<form class="form-inline" role="form" method="get" id="KeresesForm" onSubmit="submitKereses()">
 					<div class="form-group" style="width: 45%;">
 					  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
-					  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="${q?html}" placeholder="Keresett kifejezés" style="width: 100%;">
+					  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="${q!''?html}" placeholder="Keresett kifejezés" style="width: 100%;">
 					</div>
 					<select class="form-control" style="width: 10%;" id="hirdetesTipus">
 						<option value="kinal" <#if hirdetesTipus=2>selected</#if>>Kínál</option>

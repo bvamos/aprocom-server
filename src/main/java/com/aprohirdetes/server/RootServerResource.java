@@ -19,6 +19,7 @@ import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
+import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.RootResource;
@@ -33,6 +34,13 @@ import com.mongodb.DBObject;
 import freemarker.template.Template;
 
 public class RootServerResource extends ServerResource implements RootResource {
+
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+		
+		//System.out.println(getRequest().getRootRef().toString());
+	}
 
 	public String representText() throws UnknownHostException {
 		Datastore ds = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
@@ -59,9 +67,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 			dbObjectList.add(dbObj);
 		}
 		
-		System.out.println(dbObjectList);
 		JSONArray json = new JSONArray(dbObjectList);
-		System.out.println(json);
 		
 		rep = new JsonRepresentation(json);
 		
@@ -81,7 +87,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", "/aprocom-server");
+		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		

@@ -63,7 +63,7 @@ public class HirdetesServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", "/aprocom-server");
+		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
 		appDataModel.put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
 		appDataModel.put("description", hirdetes.getCim());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));

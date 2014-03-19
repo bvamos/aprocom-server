@@ -87,12 +87,11 @@ public class FeladasServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		// TODO: Servlet context
-		appDataModel.put("contextRoot", "/aprocom-server");
+		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés feladása");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("page", 1);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
@@ -105,7 +104,7 @@ public class FeladasServerResource extends ServerResource implements
 			CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
 			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(appDataModel.get("contextRoot") + "/feladas");
+			cookieSetting.setPath(getRequest().getRootRef().toString() + "/feladas");
 			cookieSetting.setComment("Session Id");
 			cookieSetting.setMaxAge(3600);
 			getResponse().getCookieSettings().add(cookieSetting);
@@ -179,7 +178,7 @@ public class FeladasServerResource extends ServerResource implements
 		CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
 		cookieSetting.setVersion(0);
 		cookieSetting.setAccessRestricted(true);
-		cookieSetting.setPath("/aprocom-server/feladas");
+		cookieSetting.setPath(getRequest().getRootRef().toString() + "/feladas");
 		cookieSetting.setComment("Session Id");
 		cookieSetting.setMaxAge(0);
 		getResponse().getCookieSettings().add(cookieSetting);
@@ -188,7 +187,7 @@ public class FeladasServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", "/aprocom-server");
+		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
