@@ -5,8 +5,12 @@
 <#include "container_search_form.ftl.html"/>
 				<div class="row">
 					<div class="hirdeteslista-header">
+						<#if (hirdetesek_szama>0) >
 						<span>${hirdetesek_szama} hirdetés</span>
-						<span>${page}. oldal</span>
+						<span>${aktualisOldal}. oldal</span>
+						<#else>
+						<span>Nincs a feltételeknek megfelelő hirdetés.</span>
+						</#if>
 					</div>
 				</div>
 				<div class="row">
@@ -92,14 +96,20 @@
 					</div>
 					</#list>
 				</div>
+				<#if (hirdetesek_szama>0) >
 				<div class="row">
 					<div>
 						<ul class="pager">
+							<#if (aktualisOldal>1) >
 							<li class="previous"><a href="javascript:prevPage();">&larr; Előző</a></li>
+							</#if>
+							<#if (aktualisOldal<osszesOldal) >
 							<li class="next"><a href="javascript:nextPage();">Következő &rarr;</a></li>
+							</#if>
 						</ul>
 					</div>
 				</div>
+				</#if>
 <#include "page_footer.ftl.html"/>
 	</div>
 <#include "html_footer.ftl.html"/>

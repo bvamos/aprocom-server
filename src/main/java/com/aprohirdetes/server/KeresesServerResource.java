@@ -181,7 +181,8 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("hirdetesHelyseg", selectedHelysegUrlNevList);
 		dataModel.put("hirdetesek_szama", query.countAll());
 		dataModel.put("q", this.query);
-		dataModel.put("page", this.page);
+		dataModel.put("aktualisOldal", this.page);
+		dataModel.put("osszesOldal", (query.countAll()/this.pageSize)+1);
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("kereses.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
