@@ -407,33 +407,35 @@ public class AproData {
 		Datastore datastore = new Morphia().createDatastore(
 				MongoUtils.getMongo(), "aprocom");
 
-		for(int i=0; i<1000; i++) {
-		Hirdetes hi = new Hirdetes();
-		hi.setTipus(HirdetesTipus.KINAL);
-		hi.setCim(getRandomCim());
-		hi.setKategoriaId(KategoriaCache.getRandomKategoria().getId());
-		hi.setHelysegId(HelysegCache.getRandomHelyseg().getId());
-		hi.setSzoveg(getRandomCim() + ", mivel " + getRandomCim() + " Mindezt azért, mert " + getRandomCim());
-		//hi.setEgyebInfo();
-		try {
-			hi.setAr((int)Math.round(Math.random() * 100000));
-		} catch (NumberFormatException nfe) {
-			hi.setAr(0);
-		}
-
-		Hirdeto ho = new Hirdeto();
-		ho.setNev("Vámos Balázs");
-		ho.setEmail("bvamos@zuriel.net");
-		ho.setTelefon("+36-30-6388093");
-		ho.setOrszag("Magyarország");
-		ho.setIranyitoSzam("9700");
-		ho.setTelepules("Szombathely");
-		ho.setCim("Kassak L. 11.");
-
-		hi.setHirdeto(ho);
-
-		Key<Hirdetes> id = datastore.save(hi);
-		System.out.println(id);
+		for(int i=0; i<1000000; i++) {
+			Hirdetes hi = new Hirdetes();
+			hi.setTipus(HirdetesTipus.KINAL);
+			hi.setCim(getRandomCim());
+			hi.setKategoriaId(KategoriaCache.getRandomKategoria().getId());
+			hi.setHelysegId(HelysegCache.getRandomHelyseg().getId());
+			hi.setSzoveg(getRandomCim() + ", mivel " + getRandomCim() + " Mindezt azért, mert " + getRandomCim());
+			//hi.setEgyebInfo();
+			try {
+				hi.setAr((int)Math.round(Math.random() * 100000));
+			} catch (NumberFormatException nfe) {
+				hi.setAr(0);
+			}
+			
+			hi.tokenize();
+	
+			Hirdeto ho = new Hirdeto();
+			ho.setNev("Vámos Balázs");
+			ho.setEmail("bvamos@zuriel.net");
+			ho.setTelefon("+36-30-6388093");
+			ho.setOrszag("Magyarország");
+			ho.setIranyitoSzam("9700");
+			ho.setTelepules("Szombathely");
+			ho.setCim("Kassak L. 11.");
+	
+			hi.setHirdeto(ho);
+	
+			Key<Hirdetes> id = datastore.save(hi);
+			System.out.println(id);
 		}
 	}
 

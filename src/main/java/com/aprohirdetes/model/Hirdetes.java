@@ -1,12 +1,16 @@
 package com.aprohirdetes.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+
+import com.aprohirdetes.utils.IndexUtils;
 
 @Entity("hirdetes")
 public class Hirdetes {
@@ -28,6 +32,8 @@ public class Hirdetes {
 	private LinkedList<HirdetesKep> kepek = new LinkedList<HirdetesKep>();
 
 	private HashMap<String, String> egyebMezok = new HashMap<String, String>();
+	
+	private List<String> kulcsszavak = new ArrayList<String>();
 	
 	public Hirdetes() {
 		
@@ -131,5 +137,10 @@ public class Hirdetes {
 
 	public void setKepek(LinkedList<HirdetesKep> kepek) {
 		this.kepek = kepek;
+	}
+	
+	public void tokenize() {
+		this.kulcsszavak.addAll(IndexUtils.tokenize(this.cim));
+		this.kulcsszavak.addAll(IndexUtils.tokenize(this.szoveg));
 	}
 }

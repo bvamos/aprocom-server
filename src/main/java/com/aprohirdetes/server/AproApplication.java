@@ -52,10 +52,16 @@ public class AproApplication extends Application {
 		
 		router.attach("/feladas", FeladasServerResource.class);
 		
-		router.attach("/api/v1/kepFeltoltes/{hirdetesId}", com.aprohirdetes.server.apiv1.KepFeltoltesServerResource.class);
+		// Statikus oldalak
+		router.attach("/adatkezeles", AdatvedelemServerResource.class);
+		router.attach("/kapcsolat", KapcsolatServerResource.class);
+		router.attach("/sugo", SugoServerResource.class);
 		
+		// API
+		router.attach("/api/v1/kepFeltoltes/{hirdetesId}", com.aprohirdetes.server.apiv1.KepFeltoltesServerResource.class);
 		router.attach("/api/v1/session/belepes", com.aprohirdetes.server.apiv1.SessionBelepesServerResource.class);
 		
+		// Statikus konyvtarak
 		String cssUri = "war:///css";
 		Directory cssDirectory = new Directory(getContext(), cssUri);
 		cssDirectory.setListingAllowed(true);
@@ -76,12 +82,12 @@ public class AproApplication extends Application {
 		imagesDirectory.setListingAllowed(true);
 		router.attach("/images", imagesDirectory);
 		
-		String staticImagesUploadUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + File.separator + "images_upload" + File.separator;
+		String staticImagesUploadUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + "/images_upload";
 		Directory staticImagesUploadDirectory = new Directory(getContext(), staticImagesUploadUri);
 		staticImagesUploadDirectory.setListingAllowed(true);
 		router.attach("/static/images_upload", staticImagesUploadDirectory);
 		
-		String staticImagesUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + File.separator + "images" + File.separator;
+		String staticImagesUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + "/images";
 		Directory staticImagesDirectory = new Directory(getContext(), staticImagesUri);
 		staticImagesDirectory.setListingAllowed(true);
 		router.attach("/static/images", staticImagesDirectory);

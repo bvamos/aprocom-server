@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -31,11 +30,6 @@ import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.CommandResult;
-import com.mongodb.DBObject;
-
 import freemarker.template.Template;
 
 public class KeresesServerResource extends ServerResource implements
@@ -64,7 +58,7 @@ public class KeresesServerResource extends ServerResource implements
 	
 	private String kulcsszo;
 	private int page;
-	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE", "10"));
+	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "10"));
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -125,107 +119,49 @@ public class KeresesServerResource extends ServerResource implements
 		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 		long hirdetesekSzama = 0;
-		if(!kulcsszo.isEmpty()) {
-			// Full text kereses
-			DBObject textCmd = new BasicDBObject();
-			textCmd.put("text", "hirdetes");
-			textCmd.put("search", this.kulcsszo);
-			textCmd.put("language", "hungarian");
-			textCmd.put("limit", 200);
-			DBObject filter = new BasicDBObject();
-			filter.put("kategoriaId", selectedKategoriaIdList);
-			textCmd.put("filter", filter);
-			System.out.println(textCmd);
-			CommandResult result = datastore.getDB().command(textCmd);
-			System.out.println(result);
-			
-			if(result.ok()) {
-				BasicDBList query = (BasicDBList) result.get("results");
-				Iterator<Object> it = query.iterator();
-				
-				// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
-				while(it.hasNext()) {
-					Hirdetes h = new Hirdetes();
-					BasicDBObject o1 = (BasicDBObject) it.next();
-					BasicDBObject o = (BasicDBObject) o1.get("obj");
-					//System.out.println(o);
-					
-					h.setId(o.getObjectId("_id"));
-					h.setTipus(o.getInt("tipus"));
-					h.setCim(o.getString("cim"));
-					h.setSzoveg(o.getString("szoveg"));
-					h.setAr(o.getInt("ar"));
-					h.setKategoriaId(o.getObjectId("kategoriaId"));
-					h.setHelysegId(o.getObjectId("helysegId"));
-					//h.setHirdetoId(hirdetoId);
-					
-					h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
-					
-					Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
-					h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? kat.getNev() : "");
-					h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
-					
-					Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());
-					h.getEgyebMezok().put("helysegNev", (hely!=null) ? hely.getNev() : "");
-					h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
-					
-					h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
-					
-					// Kepek
-					Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
-					kepekQuery.criteria("hirdetesId").equal(h.getId());
-					
-					for(HirdetesKep kep : kepekQuery) {
-						h.getKepek().add(kep);
-					}
-					
-					hirdetesList.add(h);
-					hirdetesekSzama++;
-				}
-							
-			} else {
-				getLogger().severe(result.getErrorMessage());
-			}
-		} else {
-			// Kereses Morphiaval
-			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
-			
-			query.and(
-				query.criteria("tipus").equal(this.hirdetesTipus),
-				query.criteria("helysegId").in(selectedHelysegIdList),
-				query.criteria("kategoriaId").in(selectedKategoriaIdList)
-			);
-			query.offset(this.page * this.pageSize - this.pageSize);
-			query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE", "10")));
-			query.order("-id");
-			
-			// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
-			for(Hirdetes h : query) {
-				h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
-				
-				Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
-				h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? kat.getNev() : "");
-				h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
-				
-				Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());
-				h.getEgyebMezok().put("helysegNev", (hely!=null) ? hely.getNev() : "");
-				h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
-				
-				h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
-				
-				// Kepek
-				Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
-				kepekQuery.criteria("hirdetesId").equal(h.getId());
-				
-				for(HirdetesKep kep : kepekQuery) {
-					h.getKepek().add(kep);
-				}
-				
-				hirdetesList.add(h);
-			}
-			
-			hirdetesekSzama = query.countAll();
+		
+		// Kereses Morphiaval
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		
+		query.criteria("tipus").equal(this.hirdetesTipus);
+		query.criteria("helysegId").in(selectedHelysegIdList);
+		query.criteria("kategoriaId").in(selectedKategoriaIdList);
+		if(!this.kulcsszo.isEmpty()) {
+			query.criteria("kulcsszavak").equal(kulcsszo);
 		}
+		
+		query.offset(this.page * this.pageSize - this.pageSize);
+		query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20")));
+		query.order("-id");
+		
+		System.out.println(query);
+		
+		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
+		for(Hirdetes h : query) {
+			h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
+			
+			Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
+			h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? kat.getNev() : "");
+			h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
+			
+			Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());
+			h.getEgyebMezok().put("helysegNev", (hely!=null) ? hely.getNev() : "");
+			h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
+			
+			h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
+			
+			// Kepek
+			Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
+			kepekQuery.criteria("hirdetesId").equal(h.getId());
+			
+			for(HirdetesKep kep : kepekQuery) {
+				h.getKepek().add(kep);
+			}
+			
+			hirdetesList.add(h);
+		}
+		
+		hirdetesekSzama = query.countAll();
 		
 		// Legordulokhoz adatok feltoltese
 		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
