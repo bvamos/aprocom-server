@@ -3,6 +3,7 @@ package com.aprohirdetes.model;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
@@ -86,5 +87,11 @@ public class KategoriaCache {
 		}
 		
 		return ret;
+	}
+	
+	public static Kategoria getRandomKategoria() {
+		Random generator = new Random();
+		Object[] values = CACHE_BY_ID.values().toArray();
+		return (Kategoria) values[generator.nextInt(values.length)];
 	}
 }

@@ -3,6 +3,7 @@ package com.aprohirdetes.model;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
@@ -79,5 +80,11 @@ public class HelysegCache {
 		}
 		
 		return ret;
+	}
+	
+	public static Helyseg getRandomHelyseg() {
+		Random generator = new Random();
+		Object[] values = CACHE_BY_ID.values().toArray();
+		return (Helyseg) values[generator.nextInt(values.length)];
 	}
 }

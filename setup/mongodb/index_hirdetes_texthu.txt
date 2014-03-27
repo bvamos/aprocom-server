@@ -1,0 +1,1 @@
+db.hirdetes.ensureIndex( { cim: "text", szoveg:"text"}, {name:"texthu", sparse:true, default_language:"hungarian"})
