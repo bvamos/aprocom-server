@@ -19,7 +19,8 @@
 						<div class="hirdetes-header">
 							<table cellpadding="0" cellspacing="0" border="0" width="100%">
 								<tr>
-									<td class="hirdetes-cim">${hirdetes.cim} (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
+									<td class="hirdetes-cim"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">${hirdetes.cim}</a>
+									 (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
 									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}
 									| ${hirdetes.egyebMezok.helysegNev}</td>
 								</tr>

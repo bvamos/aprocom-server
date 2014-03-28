@@ -250,6 +250,10 @@ div.hirdeteslista-container .hirdetes-cim>span {
 	font-weight: normal;
 }
 
+div.hirdeteslista-container .hirdetes-cim>a {
+	color: #000;
+}
+
 div.hirdeteslista-container .hirdetes-kategoria {
 	color: #fff;
 	text-align: right;
