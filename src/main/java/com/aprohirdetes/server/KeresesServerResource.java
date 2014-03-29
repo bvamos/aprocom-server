@@ -59,6 +59,7 @@ public class KeresesServerResource extends ServerResource implements
 	private String kulcsszo;
 	private int page;
 	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "10"));
+	private int sorrend;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -86,6 +87,13 @@ public class KeresesServerResource extends ServerResource implements
 			this.page = 1;
 		}
 		
+		try {
+			this.sorrend = Integer.parseInt(
+				(getQueryValue("s") == null || getQueryValue("s").isEmpty()) ? "0"  : getQueryValue("s")
+			);
+		} catch(NumberFormatException nfe) {
+			this.sorrend = 0;
+		}
 	}
 
 	public Representation representHtml() throws IOException {
@@ -132,7 +140,17 @@ public class KeresesServerResource extends ServerResource implements
 		
 		query.offset(this.page * this.pageSize - this.pageSize);
 		query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20")));
-		query.order("-id");
+		
+		// Rendezes
+		if(this.sorrend==2) {
+			query.order("id");
+		} else if(this.sorrend==3) {
+			query.order("ar");
+		} else if(this.sorrend==4) {
+			query.order("-ar");
+		} else {
+			query.order("-id");
+		}
 		
 		System.out.println(query);
 		
@@ -191,6 +209,7 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("q", this.kulcsszo);
 		dataModel.put("aktualisOldal", this.page);
 		dataModel.put("osszesOldal", (hirdetesekSzama/this.pageSize)+1);
+		dataModel.put("sorrend", this.sorrend);
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("kereses.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);

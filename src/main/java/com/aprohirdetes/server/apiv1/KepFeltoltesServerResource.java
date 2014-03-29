@@ -3,6 +3,8 @@ package com.aprohirdetes.server.apiv1;
 import java.io.File;
 import java.util.List;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.bson.types.ObjectId;
@@ -79,10 +81,6 @@ public class KepFeltoltesServerResource extends ServerResource implements
 				for (FileItem item : items) {
 					if (!item.isFormField()) {
 						try {
-							// Kep file mentese
-							File file = new File(fileNamePath + getSuffix(item.getName()));
-							item.write(file);
-							
 							// Letezo kepek lekerdezese
 							Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 							Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
@@ -94,11 +92,21 @@ public class KepFeltoltesServerResource extends ServerResource implements
 								throw new Exception("Maximum 6 kepet lehet feltolteni.");
 							}
 							
+							// Kep file mentese
+							File file = new File(fileNamePath + getSuffix(item.getName()));
+							item.write(file);
+							
+							// Thumbnail keszitese
+							Thumbnails.of(file)
+					        	.size(160, 160)
+					        	.toFile(new File(fileNamePath + "_thumb" + getSuffix(item.getName())));
+							
 							// Adatok adatbazisba mentese
 							HirdetesKep kep = new HirdetesKep();
 							kep.setId(kepId);
 							kep.setSorszam((int)sorszam+1);
 							kep.setFileNev(fileName + getSuffix(item.getName()));
+							kep.setThumbFileNev(fileName + "_thumb" + getSuffix(item.getName()));
 							kep.setMeret(item.getSize());
 							kep.setHirdetesId(hirdetesId);
 							
@@ -107,6 +115,7 @@ public class KepFeltoltesServerResource extends ServerResource implements
 							// Valasz
 							JSONObject fileJson = new JSONObject();
 							fileJson.put("fileNev", kep.getFileNev());
+							fileJson.put("thumbFileNev", kep.getThumbFileNev());
 							fileJson.put("eredetiFileNev", item.getName());
 							if(id != null) {
 								fileJson.put("fileMeret", item.getSize());

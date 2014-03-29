@@ -1,7 +1,6 @@
-	
 function submitKereses() {
 	var kform = document.forms.KeresesForm;
-	if(typeof p === 'undefined') p = 1;
+	if(typeof window.p === 'undefined') window.p = 1;
 	
 	var kulcsszo = kform.hirdetesKulcsszo.value;
 	var tipus = kform.hirdetesTipus.value;
@@ -10,7 +9,8 @@ function submitKereses() {
 	
 	kform.action = appContext + '/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/?';
 	if(kulcsszo.length>0) kform.action = kform.action + 'q=' + kulcsszo;
-	if(p>1) kform.action = kform.action + '&p=' + p;
+	if(p>1) kform.action = kform.action + '&p=' + window.p;
+	if(this.s>0) kform.action = kform.action + '&s=' + window.s;
 	
 	window.location = kform.action;
 	return false;
@@ -22,14 +22,20 @@ function setKategoria(kategoria) {
 	submitKereses();
 }
 
+function setSorrend(sorrend) {
+	window.s = sorrend;
+	window.p = 1;
+	submitKereses();
+}
+
 function nextPage() {
-	p = p+1;
+	window.p = window.p+1;
 	submitKereses();
 }
 
 function prevPage() {
-	if(p>1) {
-		p--;
+	if(window.p>1) {
+		window.p--;
 		submitKereses();
 	}
 }

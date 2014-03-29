@@ -407,7 +407,7 @@ public class AproData {
 		Datastore datastore = new Morphia().createDatastore(
 				MongoUtils.getMongo(), "aprocom");
 
-		for(int i=0; i<1000000; i++) {
+		for(int i=0; i<10000; i++) {
 			Hirdetes hi = new Hirdetes();
 			hi.setTipus(HirdetesTipus.KINAL);
 			hi.setCim(getRandomCim());

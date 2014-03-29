@@ -8,6 +8,14 @@
 						<#if (hirdetesek_szama>0) >
 						<span>${hirdetesek_szama} hirdetés</span>
 						<span>${aktualisOldal}. oldal</span>
+						<span style="float: right;">
+							<select onchange="javascript:setSorrend(this.value);">
+								<option value="1" <#if sorrend==1>selected</#if>>Legújabb elől</option>
+								<option value="2" <#if sorrend==2>selected</#if>>Legrégebbi elől</option>
+								<option value="3" <#if sorrend==3>selected</#if>>Legolcsóbb elől</option>
+								<option value="4" <#if sorrend==4>selected</#if>>Legdrágább elől</option>
+							</select>
+						</span>
 						<#else>
 						<span>Nincs a feltételeknek megfelelő hirdetés.</span>
 						</#if>
@@ -37,37 +45,53 @@
 									</td>
 									<td class="hirdetes-kepek" rowspan="2" width="300">
 										<#if hirdetes.kepek?has_content >
-											<#assign i=1 >
-												<div id="carousel-${hirdetes.id}" class="carousel slide" data-ride="carousel" data-interval="false" style="width: 300px; height: 200px;">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-${hirdetes.id}" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-${hirdetes.id}" data-slide-to="1"></li>
-    <li data-target="#carousel-${hirdetes.id}" data-slide-to="2"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-											<#list hirdetes.kepek as kep>
-												<#if i==1 >
-    <div class="item active">
-    											<#else>
-    <div class="item">
-    											</#if>
-    											<#assign i=i+1>
-      <img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140">
-    </div>
-											</#list>
-  </div>
-
-  <!-- Controls -->
-  <a class="left carousel-control" href="#carousel-${hirdetes.id}" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-  </a>
-  <a class="right carousel-control" href="#carousel-${hirdetes.id}" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
-</div>
+										<!-- 
+											<div id="carousel-${hirdetes.id}" class="carousel slide" data-ride="carousel" data-interval="false" style="width: 300px; height: 200px;">
+												<!- - Indicators - ->
+												<ol class="carousel-indicators">
+												<#assign i=1 >
+												<#list hirdetes.kepek as kep>
+													<#if i==1 >
+													<li data-target="#carousel-${hirdetes.id}" data-slide-to="1" class="active"></li>
+												  	<#else>
+													<li data-target="#carousel-${hirdetes.id}" data-slide-to="${i}"></li>
+												  	</#if>
+												  	<#assign i=i+1>
+												</#list>
+												</ol>
+												
+												<!- - Wrapper for slides - ->
+												<div class="carousel-inner">
+												<#assign i=1 >
+												<#list hirdetes.kepek as kep>
+													<#if i==1 >
+												  	<div class="item active">
+												  	<#else>
+												  	<div class="item">
+												  	</#if>
+												    <img src="${app.contextRoot}/static/images/$ {kep.thumbFileNev}" height="140">
+												</div>
+												  	<#assign i=i+1>
+												</#list>
+												</div>
+												
+												<!- - Controls - ->
+												<a class="left carousel-control" href="#carousel-${hirdetes.id}" data-slide="prev">
+													<span class="glyphicon glyphicon-chevron-left"></span>
+												</a>
+												<a class="right carousel-control" href="#carousel-${hirdetes.id}" data-slide="next">
+													<span class="glyphicon glyphicon-chevron-right"></span>
+												</a>
+											</div>
+											 -->
+											 <#assign kep=hirdetes.kepek[1] >
+											 <div>
+											 <#if kep.thumbFileNev?? >
+											 <img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;">
+											 <#elseif kep.fileNev?? >
+											 <img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;">
+											 </#if>
+											 </div>
 										</#if>
 									</td>
 								</tr>
@@ -87,8 +111,8 @@
 							<table cellpadding="0" cellspacing="0" border="0" width="100%">
 								<tr>
 									<td class="hirdetes-muveletek"><span>Műveletek: </span>
-									Mutasd <a href="">itt</a>,
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}">külön oldalon</a>,
+									Mutasd 
+									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}">új oldalon</a>,
 									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">új ablakban</a> </td>
 									<td class="hirdetes-ar">${hirdetes.ar} Ft</td>
 								</tr>

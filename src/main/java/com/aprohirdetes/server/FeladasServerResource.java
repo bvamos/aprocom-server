@@ -157,6 +157,7 @@ public class FeladasServerResource extends ServerResource implements
 		query.criteria("hirdetesId").equal(hirdetesId);
 		
 		for(HirdetesKep hk : query) {
+			// Normal meretu kep
 			String fileNamePath = AproApplication.APP_CONFIG
 					.getProperty("WORKDIR")
 					+ "/"
@@ -169,21 +170,47 @@ public class FeladasServerResource extends ServerResource implements
 			if(kepFile.renameTo(new File(destFileNamePath))) {
 				kepFile.delete();
 			}
+			
+			// Thumbnail
+			String thumbFileNamePath = AproApplication.APP_CONFIG
+					.getProperty("WORKDIR")
+					+ "/"
+					+ "images_upload" + "/" + hk.getThumbFileNev();
+			String destThumbFileNamePath = AproApplication.APP_CONFIG
+					.getProperty("WORKDIR")
+					+ "/"
+					+ "images" + "/" + hk.getThumbFileNev();
+			kepFile = new File(thumbFileNamePath);
+			if(kepFile.renameTo(new File(destThumbFileNamePath))) {
+				kepFile.delete();
+			}
 		}
 
 		
 		message = "A Hirdetés feladása sikeresen megtörtént: " + id.toString();
 		
 		// Cookie torlese
-		CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
-		cookieSetting.setVersion(0);
-		cookieSetting.setAccessRestricted(true);
-		cookieSetting.setPath(getRequest().getRootRef().toString() + "/feladas");
-		cookieSetting.setComment("Session Id");
-		cookieSetting.setMaxAge(0);
-		getResponse().getCookieSettings().add(cookieSetting);
+		try {
+			CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
+			cookieSetting.setVersion(0);
+			cookieSetting.setAccessRestricted(true);
+			cookieSetting.setPath(getRequest().getRootRef().toString() + "/feladas");
+			cookieSetting.setComment("Session Id");
+			cookieSetting.setMaxAge(0);
+			getResponse().getCookieSettings().add(cookieSetting);
+		} catch(NullPointerException npe) {
+			
+		}
 		
 		// Adatmodell a Freemarker sablonhoz
+		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
+		for(Kategoria o : kategoriaList) {
+			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
+			o.setAlkategoriaList(alkategoriak);
+		}
+		
+		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
+
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
@@ -193,6 +220,11 @@ public class FeladasServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("uzenet", message);
+		dataModel.put("kategoriaList", kategoriaList);
+		dataModel.put("helysegList", helysegList);
+		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
+		dataModel.put("hirdetesKategoria", "ingatlan");
+		dataModel.put("hirdetesHelyseg", "magyarorszag");
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas_eredmeny.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);

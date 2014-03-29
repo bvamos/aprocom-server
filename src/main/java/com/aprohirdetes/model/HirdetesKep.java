@@ -17,6 +17,7 @@ public class HirdetesKep {
 	
 	private int sorszam;
 	private String fileNev;
+	private String thumbFileNev;
 	private long fileMeret;
 	private String contentType;
 	
@@ -48,6 +49,14 @@ public class HirdetesKep {
 
 	public void setFileNev(String fileNev) {
 		this.fileNev = fileNev;
+	}
+
+	public String getThumbFileNev() {
+		return thumbFileNev;
+	}
+
+	public void setThumbFileNev(String thumbFileNev) {
+		this.thumbFileNev = thumbFileNev;
 	}
 
 	public long getMeret() {
