@@ -98,15 +98,15 @@ public class KepFeltoltesServerResource extends ServerResource implements
 							
 							// Thumbnail keszitese
 							Thumbnails.of(file)
-					        	.size(160, 160)
-					        	.toFile(new File(fileNamePath + "_thumb" + getSuffix(item.getName())));
+					        	.size(140, 140)
+					        	.toFile(new File(fileNamePath + ".thumbnail" + getSuffix(item.getName())));
 							
 							// Adatok adatbazisba mentese
 							HirdetesKep kep = new HirdetesKep();
 							kep.setId(kepId);
 							kep.setSorszam((int)sorszam+1);
 							kep.setFileNev(fileName + getSuffix(item.getName()));
-							kep.setThumbFileNev(fileName + "_thumb" + getSuffix(item.getName()));
+							kep.setThumbFileNev(fileName + ".thumbnail" + getSuffix(item.getName()));
 							kep.setMeret(item.getSize());
 							kep.setHirdetesId(hirdetesId);
 							

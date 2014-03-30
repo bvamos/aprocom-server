@@ -143,16 +143,20 @@ public class KeresesServerResource extends ServerResource implements
 		
 		// Rendezes
 		if(this.sorrend==2) {
+			// Feladas ideje szerint novekvo: Legregebbi elol
 			query.order("id");
 		} else if(this.sorrend==3) {
+			// Ar szerint novekvo: Legolcsobb elol
 			query.order("ar");
 		} else if(this.sorrend==4) {
+			// Ar szerint csokkeno: Legdragabb elol
 			query.order("-ar");
 		} else {
+			// Feladas ideje szerint csokkeno: Legujabb elol
 			query.order("-id");
 		}
 		
-		System.out.println(query);
+		//System.out.println(query);
 		
 		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 		for(Hirdetes h : query) {
