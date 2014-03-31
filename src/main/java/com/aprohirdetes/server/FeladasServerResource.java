@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
@@ -40,6 +42,7 @@ public class FeladasServerResource extends ServerResource implements
 		FeladasResource {
 
 	private ObjectId hirdetesId = null;
+	private String contextPath = "";
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -48,7 +51,7 @@ public class FeladasServerResource extends ServerResource implements
 		// Cookie-ban taroljuk a hirdetes azonositojat az elso latogataskor es beolvassuk.
 		// A hirdetes mentesekor a cookie-t toroljuk.
 		// Ha a cookie regebbi, mint 1 ora, akkor ujat generalunk
-		Cookie sessionCookie = getRequest().getCookies().getFirst("FeladasSession");
+		Cookie sessionCookie = getRequest().getCookies().getFirst("AproFeladasSession");
 		if(sessionCookie != null) {
 			hirdetesId = new ObjectId(sessionCookie.getValue());
 			System.out.println("Feladas Session cookie letezik: " + sessionCookie.getValue());
@@ -58,6 +61,9 @@ public class FeladasServerResource extends ServerResource implements
 				hirdetesId = new ObjectId();
 			}
 		}
+		
+		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		contextPath = sc.getContextPath();
 	}
 
 	@Override
@@ -101,12 +107,12 @@ public class FeladasServerResource extends ServerResource implements
 			System.out.println("Uj Feladas Session cookie generalasa");
 			hirdetesId = new ObjectId();
 			
-			CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
+			CookieSetting cookieSetting = new CookieSetting("AproFeladasSession", hirdetesId.toString());
 			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(getRequest().getRootRef().toString() + "/feladas");
+			cookieSetting.setPath(contextPath + "/feladas");
 			cookieSetting.setComment("Session Id");
-			cookieSetting.setMaxAge(3600);
+			cookieSetting.setMaxAge(3600*24);
 			getResponse().getCookieSettings().add(cookieSetting);
 		}
 		
@@ -191,10 +197,10 @@ public class FeladasServerResource extends ServerResource implements
 		
 		// Cookie torlese
 		try {
-			CookieSetting cookieSetting = new CookieSetting("FeladasSession", hirdetesId.toString());
+			CookieSetting cookieSetting = new CookieSetting("AproFeladasSession", hirdetesId.toString());
 			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(getRequest().getRootRef().toString() + "/feladas");
+			cookieSetting.setPath(contextPath + "/feladas");
 			cookieSetting.setComment("Session Id");
 			cookieSetting.setMaxAge(0);
 			getResponse().getCookieSettings().add(cookieSetting);

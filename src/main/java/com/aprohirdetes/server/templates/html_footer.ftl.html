@@ -32,22 +32,34 @@
 	    });
 	});
 	
+	$('#signinEmail').keypress(function(event) {
+        if (event.keyCode == 13) {
+        	$('#signinPassword').focus();
+        }
+    });
+	
+	$('#signinPassword').keypress(function(event) {
+        if (event.keyCode == 13) {
+        	$('#belepesButton').click();
+        }
+    });
+	
 	$('#belepesButton').click(function(){
-		var data = { felhasznaloNev: "birka", jelszo: "ketbirka" };
-		alert(JSON.stringify(data));
+		var data = new Object();
+		data.felhasznaloNev = $('#signinEmail').val();
+		data.jelszo = $('#signinPassword').val();
+		
 		$.ajax({
 	        type: "POST",
 	        url: "${app.contextRoot}/api/v1/session/belepes",
 	        data: JSON.stringify(data),
 	        contentType: "application/json; charset=utf-8",
-	        dataType: "json",
-	        success: function(data){
-	        	alert(data);
-	        },
-	        failure: function(errMsg) {
-	            alert(errMsg);
-	        }
-		});
+	        dataType: "json"
+		}).done(function(data){
+        	alert(data.sessionId);
+        }).fail(function(jqXHR, textStatus) {
+            alert("Hibás felhasználónév vagy jelszó!");
+        });
 	});
     </script>
 </body>

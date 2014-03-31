@@ -86,14 +86,14 @@ div.header_text {
 	font-weight: bold;
 }
 
-form.form-signin {
+div.form-signin {
 	background-color: #ee8301;
 	color: #fff;
 	margin: 2px 0 0 2px;
-	height: 126px;
+	height: 124px;
 }
 
-form.form-signin>h2 {
+h2.form-signin-heading {
 	background-color: #e36703;
 	color: #fff;
 	font-stretch: condensed;
@@ -105,6 +105,9 @@ form.form-signin>h2 {
 
 div.form-signin-placeholder {
 	padding: 6px;
+	display: block;
+	float: left;
+	width: 70%;
 }
 
 div.form-signin-placeholder>input[type="email"] {
@@ -117,6 +120,18 @@ div.form-signin-placeholder>input[type="password"] {
     margin-bottom: 5px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+}
+
+div.form-signin-button {
+	width: 20%;
+	height: 90px;
+	display: block;
+	float: left;
+}
+
+div.form-signin-button button {
+	margin-top: 20px;
+	margin-left: 5px;
 }
 
 div.search_container {

@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.restlet.data.CookieSetting;
+import org.restlet.resource.Resource;
+
 public class AproUtils {
 
 	/**
@@ -33,5 +36,22 @@ public class AproUtils {
 		}
 		
 		return ret;
+	}
+	
+	public static void removeSessionCookie(Resource resource, String sessionId) {
+		// Cookie torlese
+		try {
+			CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
+			cookieSetting.setVersion(0);
+			cookieSetting.setAccessRestricted(true);
+			cookieSetting.setPath(resource.getRequest().getRootRef().toString() + "/");
+			cookieSetting.setComment("Session Id");
+			cookieSetting.setMaxAge(0);
+			resource.getResponse().getCookieSettings().add(cookieSetting);
+			
+			System.out.println("AproSession cookie torolve");
+		} catch(NullPointerException npe) {
+			
+		}
 	}
 }
