@@ -43,6 +43,8 @@ public class SessionBelepesServerResource extends ServerResource implements
 				getResponse().getCookieSettings().add(cookieSetting);
 
 				rep = new JsonRepresentation(requestJson.toString());
+			} else {
+				//rep = new JsonRepresentation();
 			}
 		} else {
 			// POST request with no entity.

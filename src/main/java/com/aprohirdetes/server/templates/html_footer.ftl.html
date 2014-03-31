@@ -31,6 +31,24 @@
 		    }
 	    });
 	});
+	
+	$('#belepesButton').click(function(){
+		var data = { felhasznaloNev: "birka", jelszo: "ketbirka" };
+		alert(JSON.stringify(data));
+		$.ajax({
+	        type: "POST",
+	        url: "${app.contextRoot}/api/v1/session/belepes",
+	        data: JSON.stringify(data),
+	        contentType: "application/json; charset=utf-8",
+	        dataType: "json",
+	        success: function(data){
+	        	alert(data);
+	        },
+	        failure: function(errMsg) {
+	            alert(errMsg);
+	        }
+		});
+	});
     </script>
 </body>
 </html>
