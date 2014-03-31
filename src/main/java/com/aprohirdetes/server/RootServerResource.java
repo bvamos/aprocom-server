@@ -28,6 +28,7 @@ import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 import com.mongodb.DBObject;
 
@@ -97,6 +98,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
+		dataModel.put("session", AproUtils.getSession(this));
 		
 		// Without global configuration object
 		//Representation indexFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();

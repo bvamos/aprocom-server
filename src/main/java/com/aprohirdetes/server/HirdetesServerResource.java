@@ -69,6 +69,7 @@ public class HirdetesServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("session", AproUtils.getSession(this));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		
 		// Hirdetes adatai

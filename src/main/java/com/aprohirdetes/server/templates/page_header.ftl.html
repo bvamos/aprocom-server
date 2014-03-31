@@ -17,7 +17,11 @@
 			</div>
 			<div class="col-md-3 placeholder">
 				<ul class="header-tabs tabs2">
-					<li><a href="${app.contextRoot}/">Belépés</a></li>
+					<#if session?? >
+					<li><a id="kilepesLink" role="button">Kilépés</a></li>
+					<#else>
+					<li><a id="belepesLink" role="button">Belépés</a></li>
+					</#if>
 					<li><a href="${app.contextRoot}/">Regisztráció</a></li>
 				</ul>
 			</div>						
@@ -29,7 +33,13 @@
 			</div>
 			<div class="col-md-3 placeholder">
 				<div class="form-signin">
-					<h2 class="form-signin-heading">&raquo; Bejelentkezés</h2>
+				<#if session?? >
+					<h2 class="form-signin-heading">&raquo; Felhasználó</h2>
+					<div class="form-signin-placeholder placeholder">
+					${session.felhasznaloNev!"Névtelen"}
+					</div>
+				<#else>
+					<h2 class="form-signin-heading">&raquo; Bejelentkezés email címmel</h2>
 					<div class="form-signin-placeholder placeholder">
 						<label class="sr-only" for="signinEmail">Email cím</label>
 						<input type="email" class="form-control input-sm" id="signinEmail" autofocus="" required="" placeholder="E-mail cím">
@@ -39,6 +49,7 @@
 					<div class="form-signin-button">
 						<button class="btn btn-default" id="belepesButton">OK</button>
 					</div>
+				</#if>
 				</div>
 			</div>						
 		</div>

@@ -46,6 +46,7 @@ ul.header-tabs>li>a {
 	text-transform: uppercase;
 	text-shadow: 1px 1px #202020;
 	font-stretch: condensed;
+	cursor: pointer;
 }
 
 ul.tabs1>li>a {

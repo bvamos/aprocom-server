@@ -203,6 +203,7 @@ public class KeresesServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("session", AproUtils.getSession(this));
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesList", hirdetesList);

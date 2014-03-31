@@ -8,6 +8,9 @@ import javax.servlet.ServletContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
+import org.mongodb.morphia.Morphia;
 import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
 import org.restlet.data.Status;
@@ -17,6 +20,10 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.APISessionBelepesResource;
+import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
+import com.aprohirdetes.server.AproApplication;
+import com.aprohirdetes.utils.MongoUtils;
 
 public class SessionBelepesServerResource extends ServerResource implements
 		APISessionBelepesResource {
@@ -55,10 +62,11 @@ public class SessionBelepesServerResource extends ServerResource implements
 				return rep;
 			}
 
-			if ("birka".equals(felhasznaloNev)) {
+			if (SessionHelper.authenticate(felhasznaloNev, jelszo)) {
 				sessionId = UUID.randomUUID().toString();
 				getLogger().info("Sikeres belepes. AproSession: " + sessionId);
 				
+				// Session Cookie
 				CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
 				cookieSetting.setVersion(0);
 				cookieSetting.setAccessRestricted(true);
@@ -66,7 +74,16 @@ public class SessionBelepesServerResource extends ServerResource implements
 				cookieSetting.setComment("Session Id");
 				cookieSetting.setMaxAge(3600*24*7);
 				getResponse().getCookieSettings().add(cookieSetting);
+				
+				// Session mentese az adatbaziba
+				Session session = new Session();
+				session.setSessionId(sessionId);
+				session.setFelhasznaloNev(felhasznaloNev);
+				
+				Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+				Key<Session> id = datastore.save(session);
 
+				// Valasz
 				repData.put("felhasznaloNev", this.felhasznaloNev);
 				repData.put("sessionId", sessionId);
 				

@@ -4,8 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
 import org.restlet.resource.Resource;
+
+import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
 
 public class AproUtils {
 
@@ -53,5 +57,20 @@ public class AproUtils {
 		} catch(NullPointerException npe) {
 			
 		}
+	}
+	
+	public static Session getSession(Resource resource) {
+		Session session = null;
+		String sessionId = null;
+		
+		Cookie sessionCookie = resource.getRequest().getCookies().getFirst("AproSession");
+		if(sessionCookie != null) {
+			sessionId = sessionCookie.getValue();
+			resource.getLogger().info("getSession: " + sessionId);
+		}
+		
+		session = SessionHelper.load(sessionId);
+		
+		return session;
 	}
 }

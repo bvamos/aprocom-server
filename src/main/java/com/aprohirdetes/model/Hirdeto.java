@@ -17,6 +17,8 @@ public class Hirdeto {
 	private String orszag;
 	private String telefon;
 	
+	private String jelszo;
+	
 	public Hirdeto() {
 		
 	}
@@ -83,6 +85,14 @@ public class Hirdeto {
 
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
+	}
+
+	public String getJelszo() {
+		return jelszo;
+	}
+
+	public void setJelszo(String jelszo) {
+		this.jelszo = jelszo;
 	}
 	
 }

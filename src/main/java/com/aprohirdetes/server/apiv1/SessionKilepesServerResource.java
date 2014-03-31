@@ -2,9 +2,13 @@ package com.aprohirdetes.server.apiv1;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Cookie;
+import org.restlet.data.CookieSetting;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -19,6 +23,7 @@ public class SessionKilepesServerResource extends ServerResource implements
 
 	private String sessionId;
 	private String felhasznaloNev;
+	private String contextPath = "";
 
 	@Override
 	protected void doInit() throws ResourceException {
@@ -30,6 +35,9 @@ public class SessionKilepesServerResource extends ServerResource implements
 			sessionId = sessionCookie.getValue();
 			System.out.println("AproSession cookie letezik: " + sessionCookie.getValue());
 		}
+		
+		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		contextPath = sc.getContextPath();
 	}
 
 	public Representation accept(JsonRepresentation entity) throws Exception {
@@ -44,7 +52,21 @@ public class SessionKilepesServerResource extends ServerResource implements
 			}
 
 			if (this.sessionId != null) {
-				AproUtils.removeSessionCookie(this, this.sessionId);
+				getLogger().info("Session cookie torlese: " + this.sessionId);
+				//AproUtils.removeSessionCookie(this, this.sessionId);
+				try {
+					CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
+					cookieSetting.setVersion(0);
+					cookieSetting.setAccessRestricted(true);
+					cookieSetting.setPath(contextPath + "/");
+					cookieSetting.setComment("Session Id");
+					cookieSetting.setMaxAge(0);
+					getResponse().getCookieSettings().add(cookieSetting);
+					
+					System.out.println("AproSession cookie torolve");
+				} catch(NullPointerException npe) {
+					
+				}
 				repData.put("msg", "Session lezarva");
 				rep = new JsonRepresentation(repData);
 			}

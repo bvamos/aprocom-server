@@ -56,9 +56,30 @@
 	        contentType: "application/json; charset=utf-8",
 	        dataType: "json"
 		}).done(function(data){
-        	alert(data.sessionId);
+        	window.location.reload();
         }).fail(function(jqXHR, textStatus) {
             alert("Hibás felhasználónév vagy jelszó!");
+        });
+	});
+	
+	$('#belepesLink').on("click", function(){
+		$('#belepesButton').click();
+	});
+	
+	$('#kilepesLink').on("click", function(){
+		var data = new Object();
+		data.felhasznaloNev = '${(session.felhasznaloNev)!""}';
+		
+		$.ajax({
+	        type: "POST",
+	        url: "${app.contextRoot}/api/v1/session/kilepes",
+	        data: JSON.stringify(data),
+	        contentType: "application/json; charset=utf-8",
+	        dataType: "json"
+		}).done(function(data){
+        	window.location.reload();
+        }).fail(function(jqXHR, textStatus) {
+            alert("Hiba történt a kilépés közben: " + textStatus);
         });
 	});
     </script>
