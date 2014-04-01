@@ -56,7 +56,7 @@
 	        contentType: "application/json; charset=utf-8",
 	        dataType: "json"
 		}).done(function(data){
-        	window.location.reload();
+        	window.location = '${app.contextRoot}/';
         }).fail(function(jqXHR, textStatus) {
             alert("Hibás felhasználónév vagy jelszó!");
         });

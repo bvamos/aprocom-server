@@ -9,7 +9,6 @@ import javax.servlet.ServletContext;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Key;
 import org.mongodb.morphia.Morphia;
 import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
@@ -81,7 +80,7 @@ public class SessionBelepesServerResource extends ServerResource implements
 				session.setFelhasznaloNev(felhasznaloNev);
 				
 				Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
-				Key<Session> id = datastore.save(session);
+				datastore.save(session);
 
 				// Valasz
 				repData.put("felhasznaloNev", this.felhasznaloNev);

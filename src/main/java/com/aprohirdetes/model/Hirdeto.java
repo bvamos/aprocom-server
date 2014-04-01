@@ -3,6 +3,7 @@ package com.aprohirdetes.model;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Indexed;
 
 @Entity("hirdeto")
 public class Hirdeto {
@@ -10,7 +11,7 @@ public class Hirdeto {
 	@Id private ObjectId id;
 	
 	private String nev;
-	private String email;
+	@Indexed(unique=true) private String email;
 	private String iranyitoSzam;
 	private String telepules;
 	private String cim;

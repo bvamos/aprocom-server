@@ -1,11 +1,15 @@
 package com.aprohirdetes.model;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 
 import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.utils.MongoUtils;
+import com.aprohirdetes.utils.PasswordHash;
 
 public class SessionHelper {
 
@@ -35,12 +39,22 @@ public class SessionHelper {
 		Query<Hirdeto> query = datastore.createQuery(Hirdeto.class);
 		
 		query.criteria("email").equal(felhasznaloNev);
-		query.criteria("jelszo").equal(jelszo);
+		//query.criteria("jelszo").equal(AproUtils.getPasswordHash(jelszo));
 		
 		Hirdeto hirdeto = query.get();
+		System.out.println(query);
 		
 		if(hirdeto!=null) {
-			return true;
+			String jelszoHash = hirdeto.getJelszo();
+			try {
+				return PasswordHash.validatePassword(jelszo, jelszoHash);
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeySpecException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return false;

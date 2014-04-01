@@ -52,6 +52,9 @@ public class AproApplication extends Application {
 		
 		router.attach("/feladas", FeladasServerResource.class);
 		
+		// Felhasznaloi oldalak
+		router.attach("/regisztracio", RegisztracioServerResource.class);
+		
 		// Statikus oldalak
 		router.attach("/adatkezeles", AdatvedelemServerResource.class);
 		router.attach("/kapcsolat", KapcsolatServerResource.class);

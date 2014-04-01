@@ -16,7 +16,6 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.APISessionKilepesResource;
-import com.aprohirdetes.utils.AproUtils;
 
 public class SessionKilepesServerResource extends ServerResource implements
 		APISessionKilepesResource {
@@ -63,10 +62,14 @@ public class SessionKilepesServerResource extends ServerResource implements
 					cookieSetting.setMaxAge(0);
 					getResponse().getCookieSettings().add(cookieSetting);
 					
-					System.out.println("AproSession cookie torolve");
+					System.out.println("AproSession cookie torolve: " + felhasznaloNev);
 				} catch(NullPointerException npe) {
 					
 				}
+				
+				// TODO: Session torlese az adatbazisbol
+				
+				// Response
 				repData.put("msg", "Session lezarva");
 				rep = new JsonRepresentation(repData);
 			}

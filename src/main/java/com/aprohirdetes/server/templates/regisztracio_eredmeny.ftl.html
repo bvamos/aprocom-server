@@ -1,0 +1,17 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<h3>Regisztráció</h3>
+			
+			<#if uzenet?? >
+			<div class="alert alert-success">${uzenet}</div>
+			</#if>
+			<#if hibaUzenet?? >
+			<div class="alert alert-danger">${hibaUzenet}</div>
+			</#if>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>
