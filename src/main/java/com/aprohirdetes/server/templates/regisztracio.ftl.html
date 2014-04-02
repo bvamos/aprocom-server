@@ -8,26 +8,35 @@
 				
 				<#if hibaUzenet?? >
 				<div class="alert alert-danger">${hibaUzenet}</div>
+				<#else>
+				<div class="alert alert-info"><b>Miért érdemes regisztrálni?</b><br>
+				<ul>
+					<li>Az előre kitöltött felhasználói adatok gyorsabbá teszik a hirdetések feladását
+					<li>Egy helyen kezelheti az összes hirdetését 
+				</ul>
+				<p>Ugyanakkor az Apróhirdetés.com-on nem szükséges a regisztráció a hirdetések feladásához. Egyszerűen kattintson a
+				<a href="${app.contextRoot}/feladas">Hirdetés feladása</a> fülre, adja meg a hirdetés és a hirdető adatait, és a hirdetése hamarosn megjenik
+				a listában!</div>
 				</#if>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoNev">Név</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control" id="hirdetoNev" name="hirdetoNev">
+						<input type="text" class="form-control" id="hirdetoNev" name="hirdetoNev" value="${(hirdeto.nev)!''}">
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cím</label>
 					<div class="col-sm-7">
-						<input type="email" class="form-control" id="hirdetoEmail" name="hirdetoEmail" placeholder="@" required="">
+						<input type="email" class="form-control" id="hirdetoEmail" name="hirdetoEmail" value="${(hirdeto.email)!''}" placeholder="@" required="">
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoTelefon">Telefonszám</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="hirdetoTelefon" name="hirdetoTelefon" placeholder="+36-xx-xxxxxxx">
+						<input type="text" class="form-control" id="hirdetoTelefon" name="hirdetoTelefon" value="${(hirdeto.telefon)!''}" placeholder="+36-xx-xxxxxxx">
 						<span class="help-block">Telefonszám formátuma: +36-99-1234567</span>
 					</div>
 				</div>
@@ -35,21 +44,21 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoIranyitoSzam">Irányítószám</label>
 					<div class="col-sm-2">
-						<input type="text" class="form-control" id="hirdetoIranyitoSzam" name="hirdetoIranyitoSzam">
+						<input type="text" class="form-control" id="hirdetoIranyitoSzam" name="hirdetoIranyitoSzam" value="${(hirdeto.iranyitoSzam)!''}">
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoTelepules">Település</label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" id="hirdetoTelepules" name="hirdetoTelepules">
+						<input type="text" class="form-control" id="hirdetoTelepules" name="hirdetoTelepules" value="${(hirdeto.telepules)!''}">
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoCim">Cím</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control" id="hirdetoCim" name="hirdetoCim">
+						<input type="text" class="form-control" id="hirdetoCim" name="hirdetoCim" value="${(hirdeto.cim)!''}">
 					</div>
 				</div>
 				
@@ -71,7 +80,7 @@
 					<div class="checkbox col-sm-7 col-sm-offset-3">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" value="" name="hirdetoHirlevel"> Hírlevél
+								<input type="checkbox" value="hirlevel" name="hirdetoHirlevel" checked="checked"> Hírlevél
 							</label>
 						</div>
 					</div>

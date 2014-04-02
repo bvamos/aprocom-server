@@ -68,6 +68,12 @@ public class KategoriaCache {
 		return ret;
 	}
 	
+	/**
+	 * Visszadja a Kategoriak listajat az URL-ben szereplo, + jellel elvalasztott lista alapjan.
+	 * Ehhez a cache-t hasznalja es belerakja az alkategoriakat is.
+	 * @param urlNevList '+' jellel elvalasztott lista, az URL-ben szerepel a kategoriak megadasara
+	 * @return ArrayList<Kategoria> Kategoriak listaja
+	 */
 	public static ArrayList<Kategoria> getKategoriaListByUrlNevList(String urlNevList) {
 		ArrayList<Kategoria> ret = new ArrayList<Kategoria>();
 		
@@ -89,6 +95,32 @@ public class KategoriaCache {
 		return ret;
 	}
 	
+	/**
+	 * Visszadja a Kategirak nevet, vesszovel elvalasztva a '+' jellel elvalasztott, URL-ben megadott
+	 * lista alapjan. Arra hasznalom, hogy a HTML title tagben megjelenítsem az eppen keresett kategoriak neveit,
+	 * @param urlNevList
+	 * @return
+	 */
+	public static String getKategoriaNevekByUrlNevList(String urlNevList) {
+		String ret = "";
+		
+		if(urlNevList != null) {
+			for(String urlNev : urlNevList.split("\\+")) {
+				Kategoria k = CACHE_BY_URLNEV.get(urlNev);
+				if(k != null) {
+					if(ret.length()>0) ret += ", ";
+					ret += k.getNev();
+				}
+			}
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * Visszaad egy Kategoriat veletlenszeruen. Teszteleshez, adatfeltolteshez hasznalom.
+	 * @return Kategoria 
+	 */
 	public static Kategoria getRandomKategoria() {
 		Random generator = new Random();
 		Object[] values = CACHE_BY_ID.values().toArray();

@@ -107,6 +107,9 @@ public class RegisztracioServerResource extends ServerResource implements
 			e.printStackTrace();
 		}
 		
+		// TODO: Validacio
+		
+		// Mentes
 		try {
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 			datastore.save(ho);
@@ -158,6 +161,7 @@ public class RegisztracioServerResource extends ServerResource implements
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
+		dataModel.put("hirdeto", ho);
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

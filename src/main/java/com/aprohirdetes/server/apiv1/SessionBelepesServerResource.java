@@ -63,7 +63,7 @@ public class SessionBelepesServerResource extends ServerResource implements
 
 			if (SessionHelper.authenticate(felhasznaloNev, jelszo)) {
 				sessionId = UUID.randomUUID().toString();
-				getLogger().info("Sikeres belepes. AproSession: " + sessionId);
+				getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + sessionId);
 				
 				// Session Cookie
 				CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);

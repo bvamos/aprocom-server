@@ -17,11 +17,14 @@ public class Hirdeto {
 	private String cim;
 	private String orszag;
 	private String telefon;
+	private boolean hirlevel;
 	
 	private String jelszo;
+	private boolean hitelesitve;
 	
 	public Hirdeto() {
-		
+		setHirlevel(true);
+		setHitelesitve(true);
 	}
 	
 	public ObjectId getId() {
@@ -88,12 +91,28 @@ public class Hirdeto {
 		this.telefon = telefon;
 	}
 
+	public boolean isHirlevel() {
+		return hirlevel;
+	}
+
+	public void setHirlevel(boolean hirlevel) {
+		this.hirlevel = hirlevel;
+	}
+
 	public String getJelszo() {
 		return jelszo;
 	}
 
 	public void setJelszo(String jelszo) {
 		this.jelszo = jelszo;
+	}
+
+	public boolean isHitelesitve() {
+		return hitelesitve;
+	}
+
+	public void setHitelesitve(boolean hitelesitve) {
+		this.hitelesitve = hitelesitve;
 	}
 	
 }

@@ -42,7 +42,6 @@ public class SessionHelper {
 		//query.criteria("jelszo").equal(AproUtils.getPasswordHash(jelszo));
 		
 		Hirdeto hirdeto = query.get();
-		System.out.println(query);
 		
 		if(hirdeto!=null) {
 			String jelszoHash = hirdeto.getJelszo();

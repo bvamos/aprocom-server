@@ -199,7 +199,7 @@ public class KeresesServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
-		appDataModel.put("htmlTitle", getApplication().getName());
+		appDataModel.put("htmlTitle", getApplication().getName() + " " + KategoriaCache.getKategoriaNevekByUrlNevList(this.selectedKategoriaUrlNevListString));
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);

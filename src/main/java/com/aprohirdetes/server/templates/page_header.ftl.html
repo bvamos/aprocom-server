@@ -36,7 +36,9 @@
 				<#if session?? >
 					<h2 class="form-signin-heading">&raquo; Felhasználó</h2>
 					<div class="form-signin-placeholder placeholder">
-					${session.felhasznaloNev!"Névtelen"}
+						<div><b>Email cím: </b>${session.felhasznaloNev!""}</div>
+						<div><b>Név: </b>${session.nev!""}</div>
+						<div><b>Hirdetések száma: </b>${session.hirdetesek!"0"}</div>
 					</div>
 				<#else>
 					<h2 class="form-signin-heading">&raquo; Bejelentkezés email címmel</h2>
