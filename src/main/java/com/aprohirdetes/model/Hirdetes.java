@@ -28,15 +28,14 @@ public class Hirdetes {
 	private ObjectId hirdetoId;
 	
 	@Embedded private Hirdeto hirdeto;
-	
 	private LinkedList<HirdetesKep> kepek = new LinkedList<HirdetesKep>();
-
 	private HashMap<String, String> egyebMezok = new HashMap<String, String>();
-	
 	private List<String> kulcsszavak = new ArrayList<String>();
+	private boolean hitelesitve;
 	
 	public Hirdetes() {
-		
+		setAr(0);
+		setHitelesitve(true);
 	}
 	
 	public ObjectId getId() {
@@ -139,6 +138,14 @@ public class Hirdetes {
 		this.kepek = kepek;
 	}
 	
+	public boolean isHitelesitve() {
+		return hitelesitve;
+	}
+
+	public void setHitelesitve(boolean hitelesitve) {
+		this.hitelesitve = hitelesitve;
+	}
+
 	public void tokenize() {
 		this.kulcsszavak.addAll(IndexUtils.tokenize(this.cim));
 		this.kulcsszavak.addAll(IndexUtils.tokenize(this.szoveg));

@@ -2,6 +2,8 @@ package com.aprohirdetes.server;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +38,7 @@ import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
+import com.aprohirdetes.utils.PasswordHash;
 
 import freemarker.template.Template;
 
@@ -154,6 +157,15 @@ public class FeladasServerResource extends ServerResource implements
 		ho.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
 		ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
 		ho.setCim(form.getFirstValue("hirdetoCim"));
+		try {
+			ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		hi.setHirdeto(ho);
 		
