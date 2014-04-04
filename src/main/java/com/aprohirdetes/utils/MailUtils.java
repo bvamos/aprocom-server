@@ -10,6 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.server.AproApplication;
 
 public class MailUtils {
 
@@ -17,14 +18,20 @@ public class MailUtils {
 		boolean ret = false;
 		
 		// Sender's email ID needs to be mentioned
-		String from = "info@aprohirdetes.com";
+		String from = AproApplication.APP_CONFIG.getProperty("MAIL.FROM") != null ? AproApplication.APP_CONFIG.getProperty("MAIL.FROM") : "info@aprohirdetes.com";
 
 		// Assuming you are sending email from localhost
-		String host = "localhost";
+		String host = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST") != null ? AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST") : "localhost";
 
 		// Setup mail server
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", host);
+		
+		// SMTP authentication
+		if (AproApplication.APP_CONFIG.getProperty("MAIL.USER") != null) {
+			properties.setProperty("mail.user", AproApplication.APP_CONFIG.getProperty("MAIL.USER"));
+			properties.setProperty("mail.password", AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD")==null ? "" : AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD"));
+		}
 
 		// Get the default Session object.
 		Session session = Session.getDefaultInstance(properties);
