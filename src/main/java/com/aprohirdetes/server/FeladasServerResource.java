@@ -37,6 +37,7 @@ import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
 
@@ -129,8 +130,19 @@ public class FeladasServerResource extends ServerResource implements
 
 	@Override
 	public Representation accept(Form form) throws IOException {
+		System.out.println(form);
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas_eredmeny.ftl.html");
 		String message = "";
+		String errorMessage = "";
+		boolean validated = true;
 		
+		// Validacio
+		if(!form.getFirstValue("hirdetoJelszo").equals(form.getFirstValue("hirdetoJelszo2"))) {
+			errorMessage = "A két jelszó nem egyforma.";
+			validated = false;
+		};
+		
+		// Model
 		Hirdetes hi = new Hirdetes();
 		hi.setId(hirdetesId);
 		try {
@@ -169,57 +181,66 @@ public class FeladasServerResource extends ServerResource implements
 		
 		hi.setHirdeto(ho);
 		
-		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
-		Key<Hirdetes> id = datastore.save(hi);
-		
-		// Kepek atmasolasa a vegleges helyükre
-		Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
-		query.criteria("hirdetesId").equal(hirdetesId);
-		
-		for(HirdetesKep hk : query) {
-			// Normal meretu kep
-			String fileNamePath = AproApplication.APP_CONFIG
-					.getProperty("WORKDIR")
-					+ "/"
-					+ "images_upload" + "/" + hk.getFileNev();
-			String destFileNamePath = AproApplication.APP_CONFIG
-					.getProperty("WORKDIR")
-					+ "/"
-					+ "images" + "/" + hk.getFileNev();
-			File kepFile = new File(fileNamePath);
-			if(kepFile.renameTo(new File(destFileNamePath))) {
-				kepFile.delete();
+		// Hirdetes mentese
+		if(validated) {
+			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			Key<Hirdetes> id = datastore.save(hi);
+			
+			// Kepek atmasolasa a vegleges helyükre
+			Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
+			query.criteria("hirdetesId").equal(hirdetesId);
+			
+			for(HirdetesKep hk : query) {
+				// Normal meretu kep
+				String fileNamePath = AproApplication.APP_CONFIG
+						.getProperty("WORKDIR")
+						+ "/"
+						+ "images_upload" + "/" + hk.getFileNev();
+				String destFileNamePath = AproApplication.APP_CONFIG
+						.getProperty("WORKDIR")
+						+ "/"
+						+ "images" + "/" + hk.getFileNev();
+				File kepFile = new File(fileNamePath);
+				if(kepFile.renameTo(new File(destFileNamePath))) {
+					kepFile.delete();
+				}
+				
+				// Thumbnail
+				String thumbFileNamePath = AproApplication.APP_CONFIG
+						.getProperty("WORKDIR")
+						+ "/"
+						+ "images_upload" + "/" + hk.getThumbFileNev();
+				String destThumbFileNamePath = AproApplication.APP_CONFIG
+						.getProperty("WORKDIR")
+						+ "/"
+						+ "images" + "/" + hk.getThumbFileNev();
+				kepFile = new File(thumbFileNamePath);
+				if(kepFile.renameTo(new File(destThumbFileNamePath))) {
+					kepFile.delete();
+				}
+			}
+	
+			
+			message = "A Hirdetés mentése sikeresen megtörtént.";
+			getLogger().info("Sikeres hirdetesfeladas. " + id.toString());
+			if(!MailUtils.sendMailHirdetesFeladva(hi)) {
+				getLogger().severe("Hiba a hirdetes feladva level kikuldese kozben. ID: " + hi.getId());
 			}
 			
-			// Thumbnail
-			String thumbFileNamePath = AproApplication.APP_CONFIG
-					.getProperty("WORKDIR")
-					+ "/"
-					+ "images_upload" + "/" + hk.getThumbFileNev();
-			String destThumbFileNamePath = AproApplication.APP_CONFIG
-					.getProperty("WORKDIR")
-					+ "/"
-					+ "images" + "/" + hk.getThumbFileNev();
-			kepFile = new File(thumbFileNamePath);
-			if(kepFile.renameTo(new File(destThumbFileNamePath))) {
-				kepFile.delete();
+			// Cookie torlese
+			try {
+				CookieSetting cookieSetting = new CookieSetting("AproFeladasSession", hirdetesId.toString());
+				cookieSetting.setVersion(0);
+				cookieSetting.setAccessRestricted(true);
+				cookieSetting.setPath(contextPath + "/feladas");
+				cookieSetting.setComment("Session Id");
+				cookieSetting.setMaxAge(0);
+				getResponse().getCookieSettings().add(cookieSetting);
+			} catch(NullPointerException npe) {
+				
 			}
-		}
-
-		
-		message = "A Hirdetés feladása sikeresen megtörtént: " + id.toString();
-		
-		// Cookie torlese
-		try {
-			CookieSetting cookieSetting = new CookieSetting("AproFeladasSession", hirdetesId.toString());
-			cookieSetting.setVersion(0);
-			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(contextPath + "/feladas");
-			cookieSetting.setComment("Session Id");
-			cookieSetting.setMaxAge(0);
-			getResponse().getCookieSettings().add(cookieSetting);
-		} catch(NullPointerException npe) {
-			
+		} else {
+			ftl = AproApplication.TPL_CONFIG.getTemplate("feladas.ftl.html");
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -241,13 +262,14 @@ public class FeladasServerResource extends ServerResource implements
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
 		dataModel.put("uzenet", message);
+		dataModel.put("hibaUzenet", errorMessage);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
+		dataModel.put("hirdetes", hi);
 		
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas_eredmeny.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
