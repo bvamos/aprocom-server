@@ -13,6 +13,11 @@ import com.aprohirdetes.utils.PasswordHash;
 
 public class SessionHelper {
 
+	/**
+	 * Betolti a Session objektumot az adatbazisbol
+	 * @param sessionId
+	 * @return
+	 */
 	public static Session load(String sessionId) {
 		Session session = null;
 		
@@ -26,27 +31,34 @@ public class SessionHelper {
 		return session;
 	}
 	
-	public static boolean authenticate(String felhasznaloNev, String jelszo) {
+	/**
+	 * Felhasznalonev es jelszo alapjan autentikal egy Hirdetot 
+	 * @param felhasznaloNev
+	 * @param jelszo
+	 * @return Hirdeto
+	 */
+	public static Hirdeto authenticate(String felhasznaloNev, String jelszo) {
+		Hirdeto ret = null;
+		
 		if(felhasznaloNev == null || felhasznaloNev.isEmpty()) {
-			return false;
+			return ret;
 		}
 		
 		if(jelszo == null || jelszo.isEmpty()) {
-			return false;
+			return ret;
 		}
 		
 		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 		Query<Hirdeto> query = datastore.createQuery(Hirdeto.class);
 		
 		query.criteria("email").equal(felhasznaloNev);
-		//query.criteria("jelszo").equal(AproUtils.getPasswordHash(jelszo));
 		
 		Hirdeto hirdeto = query.get();
 		
 		if(hirdeto!=null) {
 			String jelszoHash = hirdeto.getJelszo();
 			try {
-				return PasswordHash.validatePassword(jelszo, jelszoHash);
+				ret = PasswordHash.validatePassword(jelszo, jelszoHash) ? hirdeto : null;
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -56,6 +68,6 @@ public class SessionHelper {
 			}
 		}
 		
-		return false;
+		return ret;
 	}
 }

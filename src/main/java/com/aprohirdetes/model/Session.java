@@ -5,7 +5,6 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Transient;
 
 @Entity("session")
 public class Session {
@@ -14,12 +13,11 @@ public class Session {
 	
 	private String sessionId;
 	private String felhasznaloNev;
+	private ObjectId hirdetoId;
 	private long kezdet;
 	private long lejarat;
 	private long utolsoKeres;
 	
-	@Transient private Hirdeto hirdeto;
-
 	public Session() {
 		long time = new Date().getTime();
 		this.kezdet = time;
@@ -43,6 +41,14 @@ public class Session {
 		this.felhasznaloNev = felhasznaloNev;
 	}
 	
+	public ObjectId getHirdetoId() {
+		return hirdetoId;
+	}
+
+	public void setHirdetoId(ObjectId hirdetoId) {
+		this.hirdetoId = hirdetoId;
+	}
+
 	public long getLejarat() {
 		return lejarat;
 	}
@@ -67,11 +73,4 @@ public class Session {
 		return kezdet;
 	}
 	
-	public Hirdeto getHirdeto() {
-		return hirdeto;
-	}
-	
-	public void setHirdeto(Hirdeto hirdeto) {
-		this.hirdeto = hirdeto;
-	}
 }

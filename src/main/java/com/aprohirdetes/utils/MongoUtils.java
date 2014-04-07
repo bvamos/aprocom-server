@@ -1,6 +1,10 @@
 package com.aprohirdetes.utils;
 
 import java.net.UnknownHostException;
+
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
+
 import com.aprohirdetes.server.AproApplication;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
@@ -81,5 +85,9 @@ public class MongoUtils {
 			MONGO_CLIENT.close();
 			MONGO_CLIENT = null;
 		}
+	}
+	
+	public static Datastore getDatastore() {
+		return new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 	}
 }

@@ -21,7 +21,9 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.RegisztracioResource;
+import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
+import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
@@ -34,7 +36,8 @@ public class ProfilServerResource extends ServerResource implements
 		RegisztracioResource {
 
 	private String contextPath = "";
-	private Session session;
+	private Session session = null;
+	private Hirdeto hirdeto = null;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -44,6 +47,9 @@ public class ProfilServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 		
 		this.session = AproUtils.getSession(this);
+		if(this.session != null) {
+			this.hirdeto = HirdetoHelper.load(this.session.getHirdetoId());
+		}
 	}
 
 	@Override
@@ -58,8 +64,9 @@ public class ProfilServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("session", this.session);
-		dataModel.put("hirdeto", session.getHirdeto());
+		dataModel.put("hirdeto", this.hirdeto);
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
@@ -73,23 +80,24 @@ public class ProfilServerResource extends ServerResource implements
 		
 		// TODO: Email cim ellenorzese, vagy hagyjuk a unique indexre?
 		
-		Hirdeto ho = new Hirdeto();
-		ho.setNev(form.getFirstValue("hirdetoNev"));
-		ho.setEmail(form.getFirstValue("hirdetoEmail"));
-		ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
-		ho.setOrszag(form.getFirstValue("hirdetoOrszag"));
-		ho.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
-		ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
-		ho.setCim(form.getFirstValue("hirdetoCim"));
+		hirdeto.setNev(form.getFirstValue("hirdetoNev"));
+		hirdeto.setEmail(form.getFirstValue("hirdetoEmail"));
+		hirdeto.setTelefon(form.getFirstValue("hirdetoTelefon"));
+		hirdeto.setOrszag(form.getFirstValue("hirdetoOrszag"));
+		hirdeto.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
+		hirdeto.setTelepules(form.getFirstValue("hirdetoTelepules"));
+		hirdeto.setCim(form.getFirstValue("hirdetoCim"));
 		
-		try {
-			ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(form.getFirstValue("hirdetoJelszo") != null && !form.getFirstValue("hirdetoJelszo").isEmpty()) {
+			try {
+				hirdeto.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeySpecException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		// TODO: Validacio
@@ -97,7 +105,7 @@ public class ProfilServerResource extends ServerResource implements
 		// Mentes
 		try {
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
-			datastore.save(ho);
+			datastore.save(hirdeto);
 			
 			message = "Az adatokat módosítottuk";
 		} catch (MongoException me) {
@@ -106,7 +114,7 @@ public class ProfilServerResource extends ServerResource implements
 			} else {
 				errorMessage = "Hiba történt az adatok mentése közben.";
 			}
-			ftl = AproApplication.TPL_CONFIG.getTemplate("regisztracio.ftl.html");
+			ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -118,10 +126,11 @@ public class ProfilServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("uzenet", message);
 		dataModel.put("hibaUzenet", errorMessage);
 		dataModel.put("session", this.session);
-		dataModel.put("hirdeto", ho);
+		dataModel.put("hirdeto", hirdeto);
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

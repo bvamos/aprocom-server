@@ -19,6 +19,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.APISessionBelepesResource;
+import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.server.AproApplication;
@@ -61,7 +62,8 @@ public class SessionBelepesServerResource extends ServerResource implements
 				return rep;
 			}
 
-			if (SessionHelper.authenticate(felhasznaloNev, jelszo)) {
+			Hirdeto hirdeto = null;
+			if ((hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo)) != null) {
 				sessionId = UUID.randomUUID().toString();
 				getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + sessionId);
 				
@@ -77,6 +79,7 @@ public class SessionBelepesServerResource extends ServerResource implements
 				// Session mentese az adatbaziba
 				Session session = new Session();
 				session.setSessionId(sessionId);
+				session.setHirdetoId(hirdeto.getId());
 				session.setFelhasznaloNev(felhasznaloNev);
 				
 				Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
