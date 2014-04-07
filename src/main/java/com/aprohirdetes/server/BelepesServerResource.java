@@ -1,14 +1,13 @@
 package com.aprohirdetes.server;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
@@ -22,22 +21,20 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.RegisztracioResource;
+import com.aprohirdetes.common.BelepesResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.HirdetesTipus;
-import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
-import com.aprohirdetes.utils.PasswordHash;
-import com.mongodb.MongoException;
-
 import freemarker.template.Template;
 
-public class RegisztracioServerResource extends ServerResource implements
-		RegisztracioResource {
+public class BelepesServerResource extends ServerResource implements
+		BelepesResource {
 
 	private String contextPath = "";
 	
@@ -66,7 +63,7 @@ public class RegisztracioServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Regisztráció");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
@@ -76,7 +73,7 @@ public class RegisztracioServerResource extends ServerResource implements
 		dataModel.put("helysegList", helysegList);
 		
 		
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("regisztracio.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
@@ -84,57 +81,36 @@ public class RegisztracioServerResource extends ServerResource implements
 	public Representation accept(Form form) throws IOException {
 		String message = null;
 		String errorMessage = null;
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("regisztracio_eredmeny.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
 		
-		// TODO: Email cim ellenorzese, vagy hagyjuk a unique indexre?
+		String felhasznaloNev = form.getFirstValue("signinEmail");
+		String jelszo = form.getFirstValue("signinPassword");
+		String sessionId;
 		
-		Hirdeto ho = new Hirdeto();
-		ho.setNev(form.getFirstValue("hirdetoNev"));
-		ho.setEmail(form.getFirstValue("hirdetoEmail"));
-		ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
-		ho.setOrszag(form.getFirstValue("hirdetoOrszag"));
-		ho.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
-		ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
-		ho.setCim(form.getFirstValue("hirdetoCim"));
-		
-		try {
-			ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// TODO: Validacio
-		
-		// Mentes
-		try {
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
-			datastore.save(ho);
+		if (SessionHelper.authenticate(felhasznaloNev, jelszo)) {
+			sessionId = UUID.randomUUID().toString();
+			getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + sessionId);
 			
-			message = "Köszönjük a regisztraciot!";
-		} catch (MongoException me) {
-			if(me.getCode()==11000) {
-				errorMessage = "A megadott email cim mar letezik!";
-			} else {
-				errorMessage = "Hiba törtent a regisztracio közben.";
-			}
-			ftl = AproApplication.TPL_CONFIG.getTemplate("regisztracio.ftl.html");
-		}
-		
-		// Cookie torlese, kileptetes, ha van ervenyes session
-		try {
-			CookieSetting cookieSetting = new CookieSetting("AproSession", AproUtils.getSession(this).getSessionId());
+			// Session Cookie
+			CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
 			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
 			cookieSetting.setPath(contextPath + "/");
 			cookieSetting.setComment("Session Id");
-			cookieSetting.setMaxAge(0);
+			cookieSetting.setMaxAge(3600*24*7);
 			getResponse().getCookieSettings().add(cookieSetting);
-		} catch(NullPointerException npe) {
 			
+			// Session mentese az adatbaziba
+			Session session = new Session();
+			session.setSessionId(sessionId);
+			session.setFelhasznaloNev(felhasznaloNev);
+			
+			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			datastore.save(session);
+
+			redirectPermanent("");
+		} else {
+			errorMessage = "Hibás felhasználonév vagy jelszó";
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -150,18 +126,18 @@ public class RegisztracioServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Regisztráció");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("uzenet", message);
 		dataModel.put("hibaUzenet", errorMessage);
+		dataModel.put("email", felhasznaloNev);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
-		dataModel.put("hirdeto", ho);
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

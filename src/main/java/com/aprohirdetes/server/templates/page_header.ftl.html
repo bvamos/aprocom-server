@@ -18,9 +18,9 @@
 			<div class="col-md-3 placeholder">
 				<ul class="header-tabs tabs2">
 					<#if session?? >
-					<li><a id="kilepesLink" role="button">Kilépés</a></li>
+					<li><a href="${app.contextRoot}/profil">Profil</a></li>
 					<#else>
-					<li><a id="belepesLink" role="button">Profil</a></li>
+					<li><a href="${app.contextRoot}/belepes">Belépés</a></li>
 					</#if>
 					<li><a href="${app.contextRoot}/regisztracio">Regisztráció</a></li>
 				</ul>

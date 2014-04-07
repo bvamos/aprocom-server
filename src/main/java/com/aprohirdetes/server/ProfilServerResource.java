@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -14,7 +13,6 @@ import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -23,12 +21,8 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.RegisztracioResource;
-import com.aprohirdetes.model.Helyseg;
-import com.aprohirdetes.model.HelysegCache;
-import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
-import com.aprohirdetes.model.Kategoria;
-import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
@@ -36,10 +30,11 @@ import com.mongodb.MongoException;
 
 import freemarker.template.Template;
 
-public class RegisztracioServerResource extends ServerResource implements
+public class ProfilServerResource extends ServerResource implements
 		RegisztracioResource {
 
 	private String contextPath = "";
+	private Session session;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -47,36 +42,26 @@ public class RegisztracioServerResource extends ServerResource implements
 		
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
+		
+		this.session = AproUtils.getSession(this);
 	}
 
 	@Override
 	public Representation representHtml() throws IOException {
-		
-		// Legordulokhoz adatok feltoltese
-		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
-		for(Kategoria o : kategoriaList) {
-			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
-			o.setAlkategoriaList(alkategoriak);
-		}
-		
-		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Regisztráció");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
-		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
-		dataModel.put("kategoriaList", kategoriaList);
-		dataModel.put("helysegList", helysegList);
+		dataModel.put("session", this.session);
+		dataModel.put("hirdeto", session.getHirdeto());
 		
-		
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("regisztracio.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
@@ -84,7 +69,7 @@ public class RegisztracioServerResource extends ServerResource implements
 	public Representation accept(Form form) throws IOException {
 		String message = null;
 		String errorMessage = null;
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("regisztracio_eredmeny.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		
 		// TODO: Email cim ellenorzese, vagy hagyjuk a unique indexre?
 		
@@ -114,53 +99,28 @@ public class RegisztracioServerResource extends ServerResource implements
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 			datastore.save(ho);
 			
-			message = "Köszönjük a regisztraciot!";
+			message = "Az adatokat módosítottuk";
 		} catch (MongoException me) {
 			if(me.getCode()==11000) {
-				errorMessage = "A megadott email cim mar letezik!";
+				errorMessage = "A megadott email cím már létezik!";
 			} else {
-				errorMessage = "Hiba törtent a regisztracio közben.";
+				errorMessage = "Hiba történt az adatok mentése közben.";
 			}
 			ftl = AproApplication.TPL_CONFIG.getTemplate("regisztracio.ftl.html");
 		}
 		
-		// Cookie torlese, kileptetes, ha van ervenyes session
-		try {
-			CookieSetting cookieSetting = new CookieSetting("AproSession", AproUtils.getSession(this).getSessionId());
-			cookieSetting.setVersion(0);
-			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(contextPath + "/");
-			cookieSetting.setComment("Session Id");
-			cookieSetting.setMaxAge(0);
-			getResponse().getCookieSettings().add(cookieSetting);
-		} catch(NullPointerException npe) {
-			
-		}
-		
 		// Adatmodell a Freemarker sablonhoz
-		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
-		for(Kategoria o : kategoriaList) {
-			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
-			o.setAlkategoriaList(alkategoriak);
-		}
-		
-		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
-
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Regisztráció");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("uzenet", message);
 		dataModel.put("hibaUzenet", errorMessage);
-		dataModel.put("kategoriaList", kategoriaList);
-		dataModel.put("helysegList", helysegList);
-		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
-		dataModel.put("hirdetesKategoria", "ingatlan");
-		dataModel.put("hirdetesHelyseg", "magyarorszag");
+		dataModel.put("session", this.session);
 		dataModel.put("hirdeto", ho);
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);

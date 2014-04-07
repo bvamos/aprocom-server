@@ -1,0 +1,45 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<h3>Belépés email címmel</h3>
+			
+			<form class="form-horizontal" role="form" method="post">
+				<#if hibaUzenet?? >
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cím</label>
+					<div class="col-sm-7">
+						<input type="email" class="form-control" id="signinEmail" name="signinEmail" value="${(email)!''}" placeholder="E-mail cím" required="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoJelszo">Jelszó</label>
+					<div class="col-sm-4">
+						<input type="password" class="form-control" id="signinPassword" name="signinPassword" autofocus="" required="" placeholder="Jelszó">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="checkbox col-sm-7 col-sm-offset-3">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="megjegyez" name="BelepesMegjegyez" checked="checked"> Jegyezzen meg
+							</label>
+						</div>
+					</div>
+				</div>
+			
+				<div class="form-group">
+					<div class="col-sm-offset-3 colsm-7">
+						<button type="submit" class="btn btn-success btn-lg">Belépek</button>
+					</div>
+				</div>
+			</form>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>

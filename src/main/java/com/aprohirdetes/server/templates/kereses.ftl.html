@@ -100,7 +100,7 @@
 										<#if hirdetes.hirdeto??>
 										<div>
 											<span class="hirdetes-hirdeto-header">hirdető: </span>
-											<span>${hirdetes.hirdeto.nev!""}, ${hirdetes.hirdeto.telepules!""}</span>
+											<span>${(hirdetes.hirdeto.nev)!"Nincs név"}, ${hirdetes.hirdeto.telepules!""}</span>
 										</div>
 										</#if>
 									</td>
