@@ -57,6 +57,7 @@ public class AproApplication extends Application {
 		router.attach("/kilepes", KilepesServerResource.class);
 		router.attach("/regisztracio", RegisztracioServerResource.class);
 		router.attach("/felhasznalo/profil", ProfilServerResource.class);
+		router.attach("/felhasznalo/hirdetesek", HirdetesekServerResource.class);
 		
 		// Statikus oldalak
 		router.attach("/adatkezeles", AdatvedelemServerResource.class);

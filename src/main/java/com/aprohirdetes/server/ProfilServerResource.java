@@ -54,6 +54,7 @@ public class ProfilServerResource extends ServerResource implements
 
 	@Override
 	public Representation representHtml() throws IOException {
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -65,10 +66,14 @@ public class ProfilServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
-		dataModel.put("session", this.session);
-		dataModel.put("hirdeto", this.hirdeto);
 		
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
+		if(this.session == null) {
+			ftl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
+		} else {
+			dataModel.put("session", this.session);
+			dataModel.put("hirdeto", this.hirdeto);
+		}
+		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
