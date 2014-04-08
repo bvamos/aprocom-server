@@ -108,7 +108,6 @@ public class FeladasServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", this.session);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
@@ -118,6 +117,8 @@ public class FeladasServerResource extends ServerResource implements
 		if(this.session != null) {
 			Hirdetes hi = new Hirdetes();
 			hi.setHirdeto(HirdetoHelper.load(session.getHirdetoId()));
+			
+			dataModel.put("session", this.session);
 			dataModel.put("hirdetes", hi);
 		}
 

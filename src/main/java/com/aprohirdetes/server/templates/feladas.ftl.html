@@ -93,7 +93,9 @@
 				
 			<h3>Hirdető adatai</h3>
 			
+				<#if session?? >
 				<div class="alert alert-info">Az adatait előre kitöltöttük, de bármelyik mező megváltoztatható hirdetésenként!</div>
+				</#if>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoNev">Név</label>
