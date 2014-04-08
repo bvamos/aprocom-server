@@ -118,6 +118,38 @@ public class KategoriaCache {
 	}
 	
 	/**
+	 * Visszaadja a Kategoria nevek lancolatat egy stringkent a megadott KAtegoriatol felfele
+	 * @param kategoriaId
+	 * @return
+	 */
+	public static String getKategoriaNevChain(ObjectId kategoriaId) {
+		String ret = "";
+		
+		if(kategoriaId == null) {
+			return ret;
+		}
+		
+		Kategoria kategoria = CACHE_BY_ID.get(kategoriaId);
+		
+		if(kategoria == null) {
+			return ret;
+		}
+		
+		// Szulo kategoria neve
+		for(Kategoria kat : CACHE_BY_ID.values()) {
+			if(kat.getId().equals(kategoria.getSzuloId())) {
+				ret = kat.getNev() + " &raquo; ";
+				break;
+			}
+		}
+		
+		// Megadott kategoria neve
+		ret +=  kategoria.getNev();
+		
+		return ret;
+	}
+	
+	/**
 	 * Visszaad egy Kategoriat veletlenszeruen. Teszteleshez, adatfeltolteshez hasznalom.
 	 * @return Kategoria 
 	 */

@@ -22,15 +22,17 @@
 				<table class="table table-striped">
 					<thead>
 					<tr>
-						<th>Cim</th>
-						<th>Ar</th>
+						<th>Cím</th>
+						<th>Kategória</th>
+						<th>Ár</th>
 					</tr>
 					</thead>
 					<tbody>
 				<#list hirdetesList as hirdetes>
 					<tr>
 						<td>${hirdetes.cim}</td>
-						<td align="right">${hirdetes.ar}</td>
+						<td>${(hirdetes.egyebMezok.kategoria)!''}</td>
+						<td align="right">${hirdetes.ar} Ft</td>
 					</tr>
 				</#list>
 					</tbody>

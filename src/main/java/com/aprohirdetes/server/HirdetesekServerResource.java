@@ -2,6 +2,7 @@ package com.aprohirdetes.server;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -20,6 +21,7 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.HirdetesResource;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
+import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
@@ -68,7 +70,14 @@ public class HirdetesekServerResource extends ServerResource implements
 			
 			query.criteria("hirdetoId").equal(this.session.getHirdetoId());
 			
-			dataModel.put("hirdetesList", query.asList());
+			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
+			for(Hirdetes h : query) {
+				h.getEgyebMezok().put("kategoria", KategoriaCache.getKategoriaNevChain(h.getKategoriaId()));
+				
+				hirdetesList.add(h);
+			}
+			
+			dataModel.put("hirdetesList", hirdetesList);
 		}
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);

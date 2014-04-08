@@ -82,6 +82,38 @@ public class HelysegCache {
 		return ret;
 	}
 	
+	/**
+	 * Visszaadja a Kategoria nevek lancolatat egy stringkent a megadott KAtegoriatol felfele
+	 * @param kategoriaId
+	 * @return
+	 */
+	public static String getHelysegNevChain(ObjectId helysegId) {
+		String ret = "";
+		
+		if(helysegId == null) {
+			return ret;
+		}
+		
+		Helyseg helyseg = CACHE_BY_ID.get(helysegId);
+		
+		if(helyseg == null) {
+			return ret;
+		}
+		
+		// Szulo neve
+		for(Helyseg o : CACHE_BY_ID.values()) {
+			if(o.getId().equals(helyseg.getSzuloId())) {
+				ret = o.getNev() + " &raquo; ";
+				break;
+			}
+		}
+		
+		// Megadott Helyseg neve
+		ret +=  helyseg.getNev();
+		
+		return ret;
+	}
+	
 	public static Helyseg getRandomHelyseg() {
 		Random generator = new Random();
 		Object[] values = CACHE_BY_ID.values().toArray();
