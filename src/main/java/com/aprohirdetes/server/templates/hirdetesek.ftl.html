@@ -19,9 +19,22 @@
 				<div class="alert alert-danger">${hibaUzenet}</div>
 				</#if>
 					
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th>Cim</th>
+						<th>Ar</th>
+					</tr>
+					</thead>
+					<tbody>
 				<#list hirdetesList as hirdetes>
-					<div>${hirdetes.cim}</div>
+					<tr>
+						<td>${hirdetes.cim}</td>
+						<td align="right">${hirdetes.ar}</td>
+					</tr>
 				</#list>
+					</tbody>
+				</table>
 			</div>
 		</div>
 <#include "page_footer.ftl.html"/>
