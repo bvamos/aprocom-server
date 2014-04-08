@@ -77,6 +77,7 @@ div.header_date {
 	text-align: right;
 	color: #7e7e7e;
 	float: left;
+	clear: both;
 }
 
 div.header_text {
@@ -85,6 +86,12 @@ div.header_text {
 	width: 300px;
 	margin-top: 20px;
 	font-weight: bold;
+}
+
+#header-share {
+	float: right;
+	bottom: 0;
+	clear: both;
 }
 
 div.form-signin {
