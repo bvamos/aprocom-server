@@ -34,8 +34,10 @@ import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
+import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
@@ -48,6 +50,7 @@ public class FeladasServerResource extends ServerResource implements
 
 	private ObjectId hirdetesId = null;
 	private String contextPath = "";
+	private Session session;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -66,6 +69,8 @@ public class FeladasServerResource extends ServerResource implements
 				hirdetesId = new ObjectId();
 			}
 		}
+		
+		session = AproUtils.getSession(this);
 		
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
@@ -103,12 +108,20 @@ public class FeladasServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", this.session);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("kepMap", hirdetesKepMap);
 		
+		// Felhasznalo adatainak kitoltese az ures formon
+		if(this.session != null) {
+			Hirdetes hi = new Hirdetes();
+			hi.setHirdeto(HirdetoHelper.load(session.getHirdetoId()));
+			dataModel.put("hirdetes", hi);
+		}
+
+		// Cookie a feladashoz, ez tarolja a session id-t, amivel a kepek feltolteset megoldjuk
 		if(hirdetesId == null) {
 			System.out.println("Uj Feladas Session cookie generalasa");
 			hirdetesId = new ObjectId();
@@ -137,10 +150,14 @@ public class FeladasServerResource extends ServerResource implements
 		boolean validated = true;
 		
 		// Validacio
-		if(!form.getFirstValue("hirdetoJelszo").equals(form.getFirstValue("hirdetoJelszo2"))) {
-			errorMessage = "A két jelszó nem egyforma.";
-			validated = false;
-		};
+		
+		if(this.session == null) {
+			// Csak akkor foglalkozunk a jelszoval, ha nincs belepett felhasznalo 
+			if(!form.getFirstValue("hirdetoJelszo").equals(form.getFirstValue("hirdetoJelszo2"))) {
+				errorMessage = "A két jelszó nem egyforma";
+				validated = false;
+			}
+		}
 		
 		// Model
 		Hirdetes hi = new Hirdetes();
@@ -162,6 +179,10 @@ public class FeladasServerResource extends ServerResource implements
 		}
 		
 		Hirdeto ho = new Hirdeto();
+		if(this.session != null) {
+			// Van belepett felhasznalo, az ID-t elmentjuk
+			hi.setHirdetoId(this.session.getHirdetoId());
+		}
 		ho.setNev(form.getFirstValue("hirdetoNev"));
 		ho.setEmail(form.getFirstValue("hirdetoEmail"));
 		ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
@@ -169,14 +190,17 @@ public class FeladasServerResource extends ServerResource implements
 		ho.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
 		ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
 		ho.setCim(form.getFirstValue("hirdetoCim"));
-		try {
-			ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		if(this.session == null) {
+			try {
+				ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeySpecException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		hi.setHirdeto(ho);
@@ -260,7 +284,7 @@ public class FeladasServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", this.session);
 		dataModel.put("uzenet", message);
 		dataModel.put("hibaUzenet", errorMessage);
 		dataModel.put("kategoriaList", kategoriaList);

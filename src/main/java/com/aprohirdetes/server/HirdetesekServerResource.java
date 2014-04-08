@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
@@ -16,9 +18,12 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.HirdetesResource;
+import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.utils.MongoUtils;
+
 import freemarker.template.Template;
 
 public class HirdetesekServerResource extends ServerResource implements
@@ -56,6 +61,14 @@ public class HirdetesekServerResource extends ServerResource implements
 			ftl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
 		} else {
 			dataModel.put("session", this.session);
+
+			// Hirdetesek lekerdezese
+			Datastore datastore = MongoUtils.getDatastore();
+			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+			
+			query.criteria("hirdetoId").equal(this.session.getHirdetoId());
+			
+			dataModel.put("hirdetesList", query.asList());
 		}
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);

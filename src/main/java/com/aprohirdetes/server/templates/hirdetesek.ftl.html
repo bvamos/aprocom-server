@@ -19,7 +19,9 @@
 				<div class="alert alert-danger">${hibaUzenet}</div>
 				</#if>
 					
-			
+				<#list hirdetesList as hirdetes>
+					<div>${hirdetes.cim}</div>
+				</#list>
 			</div>
 		</div>
 <#include "page_footer.ftl.html"/>
