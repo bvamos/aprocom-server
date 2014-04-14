@@ -21,6 +21,8 @@ public class Kategoria {
 	
 	@NotSaved private List<Kategoria> alkategoriaList = new LinkedList<Kategoria>();
 	
+	private int hirdetesekSzama = 0;
+	
 	public Kategoria() {
 		
 	}
@@ -81,5 +83,13 @@ public class Kategoria {
 	
 	public void setAlkategoriaList(List<Kategoria> alkategoriaList) {
 		this.alkategoriaList = alkategoriaList;
+	}
+
+	public int getHirdetesekSzama() {
+		return hirdetesekSzama;
+	}
+
+	public void setHirdetesekSzama(int hirdetesekSzama) {
+		this.hirdetesekSzama = hirdetesekSzama;
 	}
 }

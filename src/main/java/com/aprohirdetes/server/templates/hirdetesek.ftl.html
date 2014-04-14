@@ -25,14 +25,16 @@
 						<th>Cím</th>
 						<th>Kategória</th>
 						<th>Ár</th>
+						<th>Feladva</th>
 					</tr>
 					</thead>
 					<tbody>
 				<#list hirdetesList as hirdetes>
 					<tr>
-						<td>${hirdetes.cim}</td>
+						<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}" target="_blank">${hirdetes.cim}</a></td>
 						<td>${(hirdetes.egyebMezok.kategoria)!''}</td>
 						<td align="right">${hirdetes.ar} Ft</td>
+						<td>${(hirdetes.egyebMezok.feladva)!''}</td>
 					</tr>
 				</#list>
 					</tbody>

@@ -78,11 +78,11 @@ public class HirdetesServerResource extends ServerResource implements
 			hirdetes.getEgyebMezok().put("tipusNev", (hirdetes.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
 			
 			Kategoria kat = KategoriaCache.getCacheById().get(hirdetes.getKategoriaId());
-			hirdetes.getEgyebMezok().put("kategoriaNev", (kat!=null) ? kat.getNev() : "");
+			hirdetes.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChain(hirdetes.getKategoriaId()) : "");
 			hirdetes.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
 			
 			Helyseg hely = HelysegCache.getCacheById().get(hirdetes.getHelysegId());
-			hirdetes.getEgyebMezok().put("helysegNev", (hely!=null) ? hely.getNev() : "");
+			hirdetes.getEgyebMezok().put("helysegNev", (hely!=null) ? HelysegCache.getHelysegNevChain(hirdetes.getHelysegId()) : "");
 			hirdetes.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
 			
 			hirdetes.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(hirdetes.getFeladasDatuma()));

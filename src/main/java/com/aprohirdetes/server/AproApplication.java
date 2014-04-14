@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.restlet.Application;
 import org.restlet.Request;
@@ -17,6 +18,7 @@ import org.restlet.routing.Router;
 
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.server.task.KategoriaCountTask;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -161,6 +163,9 @@ public class AproApplication extends Application {
 		
 		// Loading Helysegek into memory cache
 		HelysegCache.loadCache();
+		
+		// Hirdetesek szamanak szamolasa idozitve a hatterben
+		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 1, 300, TimeUnit.SECONDS);
 	}
 
 	@Override

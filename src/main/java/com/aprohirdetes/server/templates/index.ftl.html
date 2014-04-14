@@ -9,7 +9,7 @@
 				<li><a href="javascript:setKategoria('${kategoria.urlNev}');">${kategoria.nev}</a></li>
 				<ul class="category-sub">
 				<#list kategoria.alkategoriaList as alkategoria>
-					<li><a href="javascript:setKategoria('${alkategoria.urlNev}');">${alkategoria.nev}</a></li>
+					<li><a href="javascript:setKategoria('${alkategoria.urlNev}');">${alkategoria.nev} <span class="badge pull-right">${alkategoria.hirdetesekSzama!0}</span></a></li>
 				</#list>
 				</ul>
 			</ul>

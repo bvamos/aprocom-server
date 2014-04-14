@@ -73,6 +73,7 @@ public class HirdetesekServerResource extends ServerResource implements
 			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 			for(Hirdetes h : query) {
 				h.getEgyebMezok().put("kategoria", KategoriaCache.getKategoriaNevChain(h.getKategoriaId()));
+				h.getEgyebMezok().put("feladva", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date(h.getId().getTime())));
 				
 				hirdetesList.add(h);
 			}

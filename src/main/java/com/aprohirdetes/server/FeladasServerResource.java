@@ -16,7 +16,6 @@ import javax.servlet.ServletContext;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
@@ -89,7 +88,7 @@ public class FeladasServerResource extends ServerResource implements
 		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
 		
 		// Kepek
-		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Datastore datastore = MongoUtils.getDatastore();
 		Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
 		
 		query.criteria("hirdetesId").equal(hirdetesId);
@@ -179,6 +178,9 @@ public class FeladasServerResource extends ServerResource implements
 			hi.setAr(0);
 		}
 		
+		// Kulcsszavak kigyujtese
+		hi.tokenize();
+		
 		Hirdeto ho = new Hirdeto();
 		if(this.session != null) {
 			// Van belepett felhasznalo, az ID-t elmentjuk
@@ -208,7 +210,7 @@ public class FeladasServerResource extends ServerResource implements
 		
 		// Hirdetes mentese
 		if(validated) {
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			Datastore datastore = MongoUtils.getDatastore();
 			Key<Hirdetes> id = datastore.save(hi);
 			
 			// Kepek atmasolasa a vegleges helyükre

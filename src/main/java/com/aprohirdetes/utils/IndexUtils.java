@@ -13,8 +13,8 @@ public class IndexUtils {
 			Arrays.asList("a", "az", "egy", "be", "ki", "le", "fel", "meg",
 					"el", "át", "rá", "ide", "oda", "szét", "össze", "vissza",
 					"de", "hát", "és", "vagy", "hogy", "van", "lesz", "volt",
-					"csak", "nem", "igen", "mint", "én", "te", "õ", "mi", "ti",
-					"õk", "ön"));
+					"csak", "nem", "igen", "mint", "én", "te", "ő", "mi", "ti",
+					"ők", "ön", "pl", "stb", "még", "aha"));
 
 	/**
 	 * Egy adott szoveg tokenekre bontasat vegzi. 
@@ -31,7 +31,7 @@ public class IndexUtils {
 		}
 
 		for (String s : text.split("\\s")) {
-			String word = s.replaceAll("[\\.,:;'\"]", "").toLowerCase();
+			String word = s.replaceAll("[\\.,:;'\"\\!\\?]", "").toLowerCase();
 
 			if (!IndexUtils.STOPWORDS_HU.contains(word) && !ret.contains(word)) {
 				ret.add(word);
