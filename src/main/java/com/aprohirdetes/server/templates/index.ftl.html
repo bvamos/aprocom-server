@@ -6,7 +6,7 @@
 		<div class="row category_container">
 			<#list kategoriaList as kategoria>
 			<ul class="category-main">
-				<li><a href="javascript:setKategoria('${kategoria.urlNev}');">${kategoria.nev}</a></li>
+				<li><a href="javascript:setKategoria('${kategoria.urlNev}');">${kategoria.nev} <span class="badge">${kategoria.hirdetesekSzama!0}</span></a></li>
 				<ul class="category-sub">
 				<#list kategoria.alkategoriaList as alkategoria>
 					<li><a href="javascript:setKategoria('${alkategoria.urlNev}');">${alkategoria.nev} <span class="badge pull-right">${alkategoria.hirdetesekSzama!0}</span></a></li>

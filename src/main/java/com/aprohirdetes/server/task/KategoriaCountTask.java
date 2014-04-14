@@ -44,6 +44,15 @@ public class KategoriaCountTask implements Runnable {
 			kat.setHirdetesekSzama((Integer) rec.get("count"));
 		}
 		
+		// Alkategoriak dbszamainak hozzadasa a fo kategoriahoz
+		for(Kategoria kat : KategoriaCache.getCacheById().values()) {
+			int count = kat.getHirdetesekSzama();
+			for(Kategoria alKat : kat.getAlkategoriaList()) {
+				count += KategoriaCache.getCacheById().get(alKat.getId()).getHirdetesekSzama();
+			}
+			kat.setHirdetesekSzama(count);
+		}
+		
 		this.logger.info("KategoriaCountTask end");
 	}
 
