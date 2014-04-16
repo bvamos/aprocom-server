@@ -34,6 +34,7 @@ public class BelepesServerResource extends ServerResource implements
 
 	private String contextPath = "";
 	private Hirdeto hirdeto = null;
+	private String referrer = null;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -41,6 +42,8 @@ public class BelepesServerResource extends ServerResource implements
 		
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
+		
+		referrer = getQueryValue("referrer");
 	}
 
 	@Override
@@ -95,8 +98,12 @@ public class BelepesServerResource extends ServerResource implements
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 			datastore.save(session);
 
-			// Atiranyitas a Hirdeto profiljara
-			redirectPermanent(contextPath + "/felhasznalo/profil");
+			// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
+			if("feladas".equalsIgnoreCase(this.referrer)) {
+				redirectPermanent(contextPath + "/feladas");
+			} else {
+				redirectPermanent(contextPath + "/felhasznalo/profil");
+			}
 		} else {
 			errorMessage = "Hibás felhasználónév vagy jelszó";
 		}

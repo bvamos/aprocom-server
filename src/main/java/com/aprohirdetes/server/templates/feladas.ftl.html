@@ -95,6 +95,8 @@
 			
 				<#if session?? >
 				<div class="alert alert-info">Az adatait előre kitöltöttük, de bármelyik mező megváltoztatható hirdetésenként!</div>
+				<#else>
+				<div class="alert alert-info">Ha már regisztrált nálunk, <a href="${app.contextRoot}/belepes?referrer=feladas">lépjen be</a>, és kitöltjük az adatait Ön helyett! Ha még nem, <a href="${app.contextRoot}/regisztracio">regisztráljon</a>, érdemes!</div>
 				</#if>
 				
 				<div class="form-group">
