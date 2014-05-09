@@ -26,6 +26,12 @@ jar {
 }
 
 war {
+    webInf {
+    	from ("web/WEB-INF") {
+			include: "apro.properties"
+    		filter(ReplaceTokens, tokens: ['version': project.version])
+    	}
+    }
 	from 'web'
 	from('src/main/java/com/aprohirdetes/server/templates') {
 		include '*.html' into('WEB-INF/classes/com/aprohirdetes/server/templates')
@@ -36,32 +42,11 @@ war {
         	'Implementation-Title': 'Aprohirdetes.com', 
         	'Implementation-Version': version, 
         )
-    }
+    }    
 }
 
 def getDate() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMddHHmmss')
     return formattedDate
-}
-
-sourceSets {
-	aproproperties {
-		resources {
-			include 'web/WEB-INF/apro.properties'
-		}
-	}
-}
-
-
-afterEvaluate {
-	configure(propProcessResourcesTasks()) {
-		filter(ReplaceTokens, tokens: [version: project.version, gradleVersion: project.gradle.gradleVersion])
-	}
-}
-
-def propProcessResourcesTasks() {
-	sourceSets.aproproperties.processResourcesTaskName.collect {
-		tasks[it]
-	}
 }
