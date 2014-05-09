@@ -54,7 +54,7 @@ def getDate() {
     return formattedDate
 }
 
-ant.propertyfile(file:"src/main/resources/build.properties", comment:'Build Properties') {
+ant.propertyfile(file:"src/main/resources/package.properties", comment:'Build Properties') {
 	ant.entry(key:'version',value:version)
 	ant.entry(key:'buildTag',value:env.BUILD_TAG)
 	ant.entry(key:'buildTime', value:env.BUILD_ID)
