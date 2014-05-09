@@ -10,6 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.server.AproApplication;
 
 public class MailUtils {
@@ -71,6 +72,19 @@ public class MailUtils {
 		if(email != null && !email.isEmpty()) {
 			String subject = "Hirdetés feladva: " + hi.getCim();
 			String body = "Hirdetését sikeresen feladta. Azonosító: " + hi.getId();
+			
+			ret = MailUtils.sendMail(email, subject, body);
+		}
+		return ret;
+	}
+	
+	public static boolean sendMailUjJelszo(Hirdeto ho, String jelszo) {
+		boolean ret = false;
+		
+		String email = ho.getEmail();
+		if(email != null && !email.isEmpty()) {
+			String subject = "Új jelszót generáltunk";
+			String body = "Kérésére új jelszót generáltunk: " + jelszo;
 			
 			ret = MailUtils.sendMail(email, subject, body);
 		}

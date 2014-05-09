@@ -1,0 +1,35 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<h3>Elfelejtettem a jelszavam</h3>
+			
+			<form class="form-horizontal" role="form" method="post">
+				<#if hibaUzenet?? >
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+				<#if uzenet?? >
+				<div class="alert alert-success">${uzenet}</div>
+				<#else>
+				<div class="alert alert-info">Kérjük adja meg a belépéshez használt email címét, és a lenti gombra kattintva
+				egy új jelszót küldünk Önnek a megadott email címre.</div>
+				</#if>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cím</label>
+					<div class="col-sm-7">
+						<input type="email" class="form-control" id="email" name="email" value="${(email)!''}" placeholder="E-mail cím" required="">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-3 colsm-7">
+						<button type="submit" class="btn btn-success btn-lg">Új jelszót kérek</button>
+					</div>
+				</div>
+			</form>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>

@@ -44,3 +44,9 @@ def getDate() {
     def formattedDate = date.format('yyyyMMddHHmmss')
     return formattedDate
 }
+
+afterEvaluate {
+	configure(allProcessResourcesTasks()) {
+		filter(ReplaceTokens, tokens: [version: project.version, gradleVersion: project.gradle.gradleVersion])
+	}
+}
