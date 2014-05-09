@@ -50,3 +50,9 @@ afterEvaluate {
 		filter(ReplaceTokens, tokens: [version: project.version, gradleVersion: project.gradle.gradleVersion])
 	}
 }
+
+def allProcessResourcesTasks() {
+	sourceSets.all.processResourcesTaskName.collect {
+		tasks[it]
+	}
+}
