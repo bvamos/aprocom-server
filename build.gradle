@@ -30,7 +30,7 @@ jar {
 war {
     webInf {
     	from ("web/WEB-INF") {
-			include: "apro.properties"
+			include 'apro.properties'
     		filter(ReplaceTokens, tokens: ['version': project.version])
     	}
     }
