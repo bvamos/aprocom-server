@@ -5,6 +5,7 @@ apply plugin: 'war'
 
 sourceCompatibility = 1.6
 version = "1." + getDate()
+env = System.getenv()
 
 dependencies {
 	compile fileTree(dir: 'web/WEB-INF/lib', includes: ['*.jar'])
@@ -51,4 +52,10 @@ def getDate() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMddHHmmss')
     return formattedDate
+}
+
+ant.propertyfile(file:"src/main/resources/build.properties", comment:'Build Properties') {
+	ant.entry(key:'version',value:version)
+	ant.entry(key:'buildTag',value:env.BUILD_TAG)
+	ant.entry(key:'buildTime', value:env.BUILD_ID)
 }
