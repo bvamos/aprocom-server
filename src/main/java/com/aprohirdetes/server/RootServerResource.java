@@ -91,6 +91,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("kategoriaList", kategoriaList);

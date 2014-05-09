@@ -28,6 +28,7 @@ import freemarker.template.DefaultObjectWrapper;
 public class AproApplication extends Application {
 
 	public static Properties APP_CONFIG = new Properties();
+	public static Properties PACKAGE_CONFIG = new Properties();
 	public static Configuration TPL_CONFIG;
 	
 	public AproApplication() {
@@ -137,6 +138,25 @@ public class AproApplication extends Application {
 			return;
 		} else {
 			getLogger().info("Configuration: " + APP_CONFIG);
+		}
+		
+		// Loading package configuration
+		final String packageConfigFile = "/WEB-INF/classes/package.properties";
+	
+		getLogger().info("Loading package configuration from " + packageConfigFile);
+		Request packageRequest = new Request(Method.GET, "war://" + packageConfigFile);
+		packageRequest.setProtocol(Protocol.WAR);
+		response = c.handle(packageRequest);
+		
+		if(response.getStatus() != Status.SUCCESS_OK) {
+			getLogger().severe("ERROR: Package Config file not found: " + packageConfigFile);
+		} else {
+			try {
+				PACKAGE_CONFIG.load(new StringReader(response.getEntityAsText()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		// Create work directory structure
