@@ -45,14 +45,23 @@ def getDate() {
     return formattedDate
 }
 
+sourceSets {
+	aproproperties {
+		resources {
+			include 'web/WEB-INF/apro.properties'
+		}
+	}
+}
+
+
 afterEvaluate {
-	configure(allProcessResourcesTasks()) {
+	configure(propProcessResourcesTasks()) {
 		filter(ReplaceTokens, tokens: [version: project.version, gradleVersion: project.gradle.gradleVersion])
 	}
 }
 
-def allProcessResourcesTasks() {
-	sourceSets.all.processResourcesTaskName.collect {
+def propProcessResourcesTasks() {
+	sourceSets.aproproperties.processResourcesTaskName.collect {
 		tasks[it]
 	}
 }
