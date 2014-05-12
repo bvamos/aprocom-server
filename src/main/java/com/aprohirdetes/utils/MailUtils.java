@@ -1,9 +1,11 @@
 package com.aprohirdetes.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -23,26 +25,35 @@ public class MailUtils {
 
 		// Assuming you are sending email from localhost
 		String host = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST") != null ? AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST") : "localhost";
+		String port = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.PORT") != null ? AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.PORT") : "25";
 
 		// Setup mail server
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", host);
+		properties.setProperty("mail.smtp.port", port);
 		
 		// SMTP authentication
 		if (AproApplication.APP_CONFIG.getProperty("MAIL.USER") != null) {
-			properties.setProperty("mail.user", AproApplication.APP_CONFIG.getProperty("MAIL.USER"));
-			properties.setProperty("mail.password", AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD")==null ? "" : AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD"));
+			properties.put("mail.smtp.auth", "true");
+			properties.put("mail.smtp.starttls.enable","true");
+			properties.put("mail.user", AproApplication.APP_CONFIG.getProperty("MAIL.USER"));
+			properties.put("mail.password", AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD")==null ? "" : AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD"));
 		}
 
 		// Get the default Session object.
-		Session session = Session.getDefaultInstance(properties);
+		Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(AproApplication.APP_CONFIG.getProperty("MAIL.USER"), AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD"));
+			}
+		});
+		session.setDebug(true);
 
 		try {
 			// Create a default MimeMessage object.
 			MimeMessage message = new MimeMessage(session);
 
 			// Set From: header field of the header.
-			message.setFrom(new InternetAddress(from));
+			message.setFrom(new InternetAddress(from, "Apróhirdetés.com", "utf-8"));
 
 			// Set To: header field of the header.
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
@@ -52,13 +63,14 @@ public class MailUtils {
 			message.setSubject(messageSubject);
 
 			// Send the actual HTML message, as big as you like
-			message.setContent(messageBody, "text/html");
+			//message.setContent(messageBody, "text/html");
+			message.setText(messageBody);
 
 			// Send message
 			Transport.send(message);
 			System.out.println("Level elkuldve. Cimzett: " + toAddress);
 			ret = true;
-		} catch (MessagingException mex) {
+		} catch (MessagingException | UnsupportedEncodingException mex) {
 			mex.printStackTrace();
 		}
 		
@@ -71,7 +83,14 @@ public class MailUtils {
 		String email = hi.getHirdeto().getEmail();
 		if(email != null && !email.isEmpty()) {
 			String subject = "Hirdetés feladva: " + hi.getCim();
-			String body = "Hirdetését sikeresen feladta. Azonosító: " + hi.getId();
+			String body = "Kedves " + hi.getHirdeto().getNev() + "!\n\n"
+					+ "Köszönjük, hogy az Apróhirdetés.com-ot választotta!\n"
+					+ "Hirdetését sikeresen feladta, de ahhoz, hogy megjelenjen az oldalunkon,"
+					+ "kérjük kattintson az alábbi linkre, vagy másolja böngészője címsorába!\n"
+					+ "Aktiválás:\n"
+					+ "http://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
+					+ "Üdvözlettel,\n"
+					+ "Apróhirdetés.com";
 			
 			ret = MailUtils.sendMail(email, subject, body);
 		}
@@ -84,7 +103,11 @@ public class MailUtils {
 		String email = ho.getEmail();
 		if(email != null && !email.isEmpty()) {
 			String subject = "Új jelszót generáltunk";
-			String body = "Kérésére új jelszót generáltunk: " + jelszo;
+			String body = "Kedves " + ho.getNev() + "!\n\n"
+					+ "Kérésére új jelszót generáltunk: " + jelszo + "\n"
+					+ "Belépés: http://www.aprohirdetes.com/belepes\n\n"
+					+ "Üdvözlettel,\n"
+					+ "Apróhirdetés.com";
 			
 			ret = MailUtils.sendMail(email, subject, body);
 		}

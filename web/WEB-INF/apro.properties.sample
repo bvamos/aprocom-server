@@ -7,7 +7,7 @@ WORKDIR = /opt/aprohirdetes.com
 
 SEARCH.DEFAULT_PAGESIZE = 20
 
-MAIL.FROM = Apróhirdetés.com <info@aprohirdetes.com>
+MAIL.FROM = info@aprohirdetes.com
 MAIL.SMTP.HOST = localhost
 MAIL.USER =
 MAIL.PASSWORD = 
