@@ -54,6 +54,7 @@ public class AproApplication extends Application {
 		router.attach("/hirdetes/{hirdetesId}/{hirdetesCim}", HirdetesServerResource.class);
 		
 		router.attach("/feladas", FeladasServerResource.class);
+		router.attach("/aktivalas/{hirdetesId}", AktivalasServerResource.class);
 		
 		// Felhasznaloi oldalak
 		router.attach("/belepes", BelepesServerResource.class);

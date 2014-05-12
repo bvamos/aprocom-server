@@ -145,8 +145,8 @@ public class FeladasServerResource extends ServerResource implements
 	public Representation accept(Form form) throws IOException {
 		System.out.println(form);
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas_eredmeny.ftl.html");
-		String message = "";
-		String errorMessage = "";
+		String uzenet = "";
+		String hibaUzenet = "";
 		boolean validated = true;
 		
 		// Validacio
@@ -154,7 +154,7 @@ public class FeladasServerResource extends ServerResource implements
 		if(this.session == null) {
 			// Csak akkor foglalkozunk a jelszoval, ha nincs belepett felhasznalo 
 			if(!form.getFirstValue("hirdetoJelszo").equals(form.getFirstValue("hirdetoJelszo2"))) {
-				errorMessage = "A két jelszó nem egyforma";
+				hibaUzenet = "A két jelszó nem egyforma";
 				validated = false;
 			}
 		}
@@ -248,7 +248,8 @@ public class FeladasServerResource extends ServerResource implements
 			}
 	
 			
-			message = "A Hirdetés mentése sikeresen megtörtént.";
+			uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
+					+ "Kérjük, kattintson a levélben lévő linkre, és hirdetése megjelenik oldalunkon!";
 			getLogger().info("Sikeres hirdetesfeladas. " + id.toString());
 			if(!MailUtils.sendMailHirdetesFeladva(hi)) {
 				getLogger().severe("Hiba a hirdetes feladva level kikuldese kozben. ID: " + hi.getId());
@@ -288,8 +289,8 @@ public class FeladasServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", this.session);
-		dataModel.put("uzenet", message);
-		dataModel.put("hibaUzenet", errorMessage);
+		dataModel.put("uzenet", uzenet);
+		dataModel.put("hibaUzenet", hibaUzenet);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
