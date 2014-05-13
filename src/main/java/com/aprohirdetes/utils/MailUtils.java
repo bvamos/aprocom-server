@@ -70,8 +70,10 @@ public class MailUtils {
 			Transport.send(message);
 			System.out.println("Level elkuldve. Cimzett: " + toAddress);
 			ret = true;
-		} catch (MessagingException | UnsupportedEncodingException mex) {
-			mex.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 		
 		return ret;
