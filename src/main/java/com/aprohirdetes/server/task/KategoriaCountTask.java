@@ -13,6 +13,7 @@ import com.mongodb.DBObject;
 
 /**
  * Megszamolja a hirdetesek szamat kategoriankent, es beirja a KategoriaCache-be.
+ * Az alkategoriak darabszamainak osszeget meg hozzadja a szulo kategoria darabszamahoz.
  * Idozitve fut, a TaskService kezeli.
  * 
  * @author bvamos
@@ -39,6 +40,12 @@ public class KategoriaCountTask implements Runnable {
 		
 		AggregationOutput output = hirdetesCollection.aggregate(group);
 		
+		// Fokategoriak nullazasa
+		for(Kategoria kat : KategoriaCache.getCacheById().values()) {
+			kat.setHirdetesekSzama(0);
+		}
+		
+		// Osszegyujtott darabszamok beirasa
 		for(DBObject rec : output.results()) {
 			Kategoria kat = KategoriaCache.getCacheById().get(rec.get("_id"));
 			kat.setHirdetesekSzama((Integer) rec.get("count"));
@@ -48,7 +55,7 @@ public class KategoriaCountTask implements Runnable {
 		for(Kategoria kat : KategoriaCache.getCacheById().values()) {
 			int count = kat.getHirdetesekSzama();
 			for(Kategoria alKat : kat.getAlkategoriaList()) {
-				count += KategoriaCache.getCacheById().get(alKat.getId()).getHirdetesekSzama();
+				count += alKat.getHirdetesekSzama();
 			}
 			kat.setHirdetesekSzama(count);
 		}
