@@ -58,7 +58,7 @@ public class KeresesServerResource extends ServerResource implements
 	
 	private String kulcsszo;
 	private int page;
-	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "10"));
+	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20"));
 	private int sorrend;
 	
 	@Override

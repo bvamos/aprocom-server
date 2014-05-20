@@ -17,7 +17,7 @@
 							</select>
 						</span>
 						<#else>
-						<span>Nincs a feltételeknek megfelelő hirdetés.</span>
+						<span>Nincs a feltételeknek megfelelő hirdetés. :-(</span>
 						</#if>
 					</div>
 				</div>
@@ -112,8 +112,7 @@
 							<table border="0" width="100%">
 								<tr>
 									<td class="hirdetes-muveletek"><span>Műveletek: </span>
-									Mutasd 
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}">új oldalon</a>,
+									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}">részletek itt</a>,
 									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">új ablakban</a> </td>
 									<td class="hirdetes-ar">${hirdetes.ar} Ft</td>
 								</tr>

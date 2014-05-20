@@ -114,10 +114,10 @@ public class RegisztracioServerResource extends ServerResource implements
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 			datastore.save(ho);
 			
-			message = "Köszönjük a regisztraciot!";
+			message = "Köszönjük, hogy regisztráltál nálunk!";
 		} catch (MongoException me) {
 			if(me.getCode()==11000) {
-				errorMessage = "A megadott email cim mar letezik!";
+				errorMessage = "A megadott email cím már létezik!";
 			} else {
 				errorMessage = "Hiba törtent a regisztracio közben.";
 			}

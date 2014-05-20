@@ -30,7 +30,7 @@
 					<label class="col-sm-3 control-label" for="hirdetesCim">Rövid leírás</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="hirdetesCim" name="hirdetesCim" autofocus="" required="" placeholder="" value="${(hirdetes.cim)!''}" data-toggle="tooltip" data-placement="right" title="first tooltip">
-						<span class="help-block">Rövid, de beszédes címsor, ami pár szóban összefoglalja a hirdetés tartalmát.</span>
+						<span class="help-block">Rövid, de beszédes címsor, ami pár szóban összefoglalja a hirdetésed tartalmát.</span>
 					</div>
 				</div>
 				
@@ -48,7 +48,7 @@
 								</#list>
 							</#list>
 						</select>
-						<span class="help-block">Válassza ki a legközelebb eső települést! Kereséskor a nagyobb földrajzi egység magában foglalja a kisebbeket, tehát pl. Budapestet megadva feltételként, az összes kerületbe feladott hirdetés meg fog jelenni.</span>
+						<span class="help-block">Válaszd ki a hozzád legközelebb eső települést! Kereséskor a nagyobb földrajzi egység magában foglalja a kisebbeket, tehát pl. Budapestet megadva feltételként, az összes kerületbe feladott hirdetés meg fog jelenni.</span>
 					</div>
 				</div>
 				
@@ -94,9 +94,9 @@
 			<h3>Hirdető adatai</h3>
 			
 				<#if session?? >
-				<div class="alert alert-info">Az adatait előre kitöltöttük, de bármelyik mező megváltoztatható hirdetésenként!</div>
+				<div class="alert alert-info">Az adataidat előre kitöltöttük, de bármelyik mező megváltoztatható hirdetésenként!</div>
 				<#else>
-				<div class="alert alert-info">Ha már regisztrált nálunk, <a href="${app.contextRoot}/belepes?referrer=feladas">lépjen be</a>, és kitöltjük az adatait Ön helyett! Ha még nem, <a href="${app.contextRoot}/regisztracio">regisztráljon</a>, érdemes!</div>
+				<div class="alert alert-info">Ha már regisztráltál nálunk, <a href="${app.contextRoot}/belepes?referrer=feladas">lépj be</a>, és kitöltjük az adataidat helyetted! Ha még nem, <a href="${app.contextRoot}/regisztracio">regisztrálj</a>, érdemes!</div>
 				</#if>
 				
 				<div class="form-group">
@@ -162,7 +162,7 @@
 					<div class="checkbox col-sm-7 col-sm-offset-3">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" value="" name="hirdetoHirlevel" checked="checked"> Hírlevél
+								<input type="checkbox" value="" name="hirdetoHirlevel" checked="checked"> Hírlevelet kérek
 							</label>
 						</div>
 					</div>

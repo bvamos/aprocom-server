@@ -249,7 +249,7 @@ public class FeladasServerResource extends ServerResource implements
 	
 			
 			uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
-					+ "Kérjük, kattintson a levélben lévő linkre, és hirdetése megjelenik oldalunkon!";
+					+ "Kérjük, kattints a levélben lévő linkre, és hirdetésed megjelenik oldalunkon!";
 			getLogger().info("Sikeres hirdetesfeladas. " + id.toString());
 			if(!MailUtils.sendMailHirdetesFeladva(hi)) {
 				getLogger().severe("Hiba a hirdetes feladva level kikuldese kozben. ID: " + hi.getId());

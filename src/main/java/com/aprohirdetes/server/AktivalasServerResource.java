@@ -49,7 +49,7 @@ public class AktivalasServerResource extends ServerResource implements
 		if (this.hirdetesId != null) {
 			// TODO: Aktivalni kellene a hirdetest
 			getLogger().info("Hirdetes aktivalva: " + this.hirdetesId.toString());
-			uzenet = "Hirdetését sikeresen aktiváltuk, azonnal megjelenik az Apróhirdetés.com-on. Köszönjük, hogy minket választott!";
+			uzenet = "Hirdetésedet sikeresen aktiváltuk, azonnal megjelenik az Apróhirdetés.com-on. Köszönjük, hogy minket választottál!";
 		} else {
 			hibaUzenet = "A megadott hirdetés nem létezik, vagy már sikeresen aktiválva lett.";
 		}

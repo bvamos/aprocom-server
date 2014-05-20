@@ -54,7 +54,7 @@ public class UjJelszoServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Elfelejtettem a jelszavam");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Ajaj, elfelejtettem a jelszavam");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
 		dataModel.put("app", appDataModel);
@@ -99,7 +99,14 @@ public class UjJelszoServerResource extends ServerResource implements
 			
 			datastore.save(hirdeto);
 		} else {
-			errorMessage = "A megadott email címmel sajnos nincs regisztrált Hirdetőnk!";
+			errorMessage = "A megadott email címmel sajnos nincs regisztrált Hirdetőnk! Kattintson a fenti Regisztráció fülre gyorsan!";
+		}
+		
+		// Varjunk picit, hogy ne lehessen ezer ilyen kerest benyomni egy masodperc alatt
+		try {
+		    Thread.sleep(3000);
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
 		}
 
 		// Adatmodell a Freemarker sablonhoz
