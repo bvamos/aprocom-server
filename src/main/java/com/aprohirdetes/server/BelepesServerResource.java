@@ -97,6 +97,9 @@ public class BelepesServerResource extends ServerResource implements
 			
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 			datastore.save(session);
+			
+			// Utolso belepes mentese
+			datastore.update(this.hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
 
 			// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
 			if("feladas".equalsIgnoreCase(this.referrer)) {

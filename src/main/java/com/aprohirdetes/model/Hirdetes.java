@@ -33,9 +33,12 @@ public class Hirdetes {
 	private List<String> kulcsszavak = new ArrayList<String>();
 	private boolean hitelesitve;
 	
+	private int regiId;
+	
 	public Hirdetes() {
 		setAr(0);
 		setHitelesitve(true);
+		setRegiId(-1);
 	}
 	
 	public ObjectId getId() {
@@ -144,6 +147,14 @@ public class Hirdetes {
 
 	public void setHitelesitve(boolean hitelesitve) {
 		this.hitelesitve = hitelesitve;
+	}
+
+	public int getRegiId() {
+		return regiId;
+	}
+
+	public void setRegiId(int regiId) {
+		this.regiId = regiId;
 	}
 
 	public void tokenize() {

@@ -239,7 +239,7 @@ ul.category-sub>li>a {
 }
 
 div.hirdeteslista-header {
-	background-color: #d5d5d5;
+	background-color: #e3e3e3;
 	border-left: 5px solid #ababab;
 	padding: 10px;
 	margin-bottom: 10px;
@@ -276,10 +276,11 @@ div.hirdeteslista-container .hirdetes-cim>span {
 
 div.hirdeteslista-container .hirdetes-cim>a {
 	color: #000;
+	font-size: 16px;
 }
 
 div.hirdeteslista-container .hirdetes-kategoria {
-	color: #fff;
+	color: #338be5;
 	text-align: right;
 }
 

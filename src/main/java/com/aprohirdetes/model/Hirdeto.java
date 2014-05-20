@@ -1,5 +1,7 @@
 package com.aprohirdetes.model;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -21,14 +23,22 @@ public class Hirdeto {
 	
 	private String jelszo;
 	private boolean hitelesitve;
+	private Date utolsoBelepes;
+	
+	private int regiId;
 	
 	public Hirdeto() {
 		setHirlevel(true);
 		setHitelesitve(true);
+		setRegiId(-1);
 	}
 	
 	public ObjectId getId() {
 		return id;
+	}
+	
+	public void setId(ObjectId id) {
+		this.id = id;
 	}
 	
 	public String getIdAsString() {
@@ -113,6 +123,22 @@ public class Hirdeto {
 
 	public void setHitelesitve(boolean hitelesitve) {
 		this.hitelesitve = hitelesitve;
+	}
+
+	public Date getUtolsoBelepes() {
+		return utolsoBelepes;
+	}
+
+	public void setUtolsoBelepes(Date utolsoBelepes) {
+		this.utolsoBelepes = utolsoBelepes;
+	}
+
+	public int getRegiId() {
+		return regiId;
+	}
+
+	public void setRegiId(int regiId) {
+		this.regiId = regiId;
 	}
 	
 }

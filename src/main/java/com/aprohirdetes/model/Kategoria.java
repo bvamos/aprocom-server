@@ -23,8 +23,10 @@ public class Kategoria {
 	
 	private int hirdetesekSzama = 0;
 	
+	private int regiId;
+	
 	public Kategoria() {
-		
+		setRegiId(-1);
 	}
 	
 	@Override
@@ -91,5 +93,13 @@ public class Kategoria {
 
 	public void setHirdetesekSzama(int hirdetesekSzama) {
 		this.hirdetesekSzama = hirdetesekSzama;
+	}
+
+	public int getRegiId() {
+		return regiId;
+	}
+
+	public void setRegiId(int regiId) {
+		this.regiId = regiId;
 	}
 }
