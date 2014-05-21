@@ -107,7 +107,7 @@ public class BelepesServerResource extends ServerResource implements
 			if("feladas".equalsIgnoreCase(this.referrer)) {
 				redirectPermanent(contextPath + "/feladas");
 			} else {
-				redirectPermanent(contextPath + "/felhasznalo/profil");
+				redirectPermanent(contextPath + "/felhasznalo/hirdetesek");
 			}
 		} else {
 			errorMessage = "Hibás felhasználónév vagy jelszó";
@@ -120,6 +120,7 @@ public class BelepesServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("uzenet", message);
