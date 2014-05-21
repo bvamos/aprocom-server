@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -33,6 +35,7 @@ import freemarker.template.Template;
 public class HirdetesServerResource extends ServerResource implements
 		HirdetesResource {
 
+	private String contextPath = "";
 	/**
 	 * Hirdetes azonositoja
 	 */
@@ -56,6 +59,9 @@ public class HirdetesServerResource extends ServerResource implements
 		} catch(IllegalArgumentException iae) {
 			getLogger().severe("Hirdetes megjelenitese: nem jo az id formatuma: " + (String) this.getRequestAttributes().get("hirdetesId"));
 		}
+		
+		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		contextPath = sc.getContextPath();
 	}
 
 	public Representation representHtml() throws IOException {
@@ -63,7 +69,7 @@ public class HirdetesServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
+		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
 		appDataModel.put("description", hirdetes.getCim());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));

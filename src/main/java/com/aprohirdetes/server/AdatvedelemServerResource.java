@@ -8,9 +8,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
+import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.StaticHtmlResource;
@@ -25,6 +28,16 @@ import freemarker.template.Template;
 
 public class AdatvedelemServerResource extends ServerResource implements StaticHtmlResource {
 
+	private String contextPath = "";
+	
+	@Override
+	protected void doInit() throws ResourceException {
+		super.doInit();
+		
+		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		contextPath = sc.getContextPath();
+	}
+	
 	public Representation representHtml() {
 		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
 		for(Kategoria o : kategoriaList) {
@@ -38,7 +51,7 @@ public class AdatvedelemServerResource extends ServerResource implements StaticH
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
+		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		

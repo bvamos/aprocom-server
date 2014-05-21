@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.json.JSONArray;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -36,11 +38,15 @@ import freemarker.template.Template;
 
 public class RootServerResource extends ServerResource implements RootResource {
 
+	private String contextPath = "";
+	
 	@Override
 	protected void doInit() throws ResourceException {
 		super.doInit();
 		
 		//System.out.println(getRequest().getRootRef().toString());
+		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		contextPath = sc.getContextPath();
 	}
 
 	public String representText() throws UnknownHostException {
@@ -88,7 +94,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
+		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));

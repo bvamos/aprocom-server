@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -30,11 +32,13 @@ import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
+
 import freemarker.template.Template;
 
 public class KeresesServerResource extends ServerResource implements
 		KeresesResource {
 
+	private String contextPath = "";
 	/**
 	 * Hirdetes tipusa. 1=Keres, 2=Kinal
 	 */
@@ -94,6 +98,9 @@ public class KeresesServerResource extends ServerResource implements
 		} catch(NumberFormatException nfe) {
 			this.sorrend = 0;
 		}
+		
+		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		contextPath = sc.getContextPath();
 	}
 
 	public Representation representHtml() throws IOException {
@@ -198,7 +205,7 @@ public class KeresesServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
+		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " " + KategoriaCache.getKategoriaNevekByUrlNevList(this.selectedKategoriaUrlNevListString));
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		
