@@ -54,6 +54,7 @@ public class AdatvedelemServerResource extends ServerResource implements StaticH
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));

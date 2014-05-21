@@ -18,6 +18,7 @@ import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.AktivalasResource;
 import com.aprohirdetes.model.HirdetesTipus;
+
 import freemarker.template.Template;
 
 public class AktivalasServerResource extends ServerResource implements
@@ -61,6 +62,7 @@ public class AktivalasServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", this.contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Aktiválás");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);

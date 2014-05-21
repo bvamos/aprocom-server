@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
 import org.restlet.resource.Resource;
@@ -43,12 +45,15 @@ public class AproUtils {
 	}
 	
 	public static void removeSessionCookie(Resource resource, String sessionId) {
+		ServletContext sc = (ServletContext) resource.getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		String contextPath = sc.getContextPath();
+		
 		// Cookie torlese
 		try {
 			CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
 			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(resource.getRequest().getRootRef().toString() + "/");
+			cookieSetting.setPath(contextPath);
 			cookieSetting.setComment("Session Id");
 			cookieSetting.setMaxAge(0);
 			resource.getResponse().getCookieSettings().add(cookieSetting);

@@ -27,6 +27,7 @@ import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
+
 import freemarker.template.Template;
 
 public class BelepesServerResource extends ServerResource implements
@@ -56,6 +57,7 @@ public class BelepesServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
@@ -115,7 +117,7 @@ public class BelepesServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
+		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		

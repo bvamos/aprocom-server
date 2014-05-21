@@ -3,6 +3,8 @@ package com.aprohirdetes.server.apiv1;
 import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import net.coobird.thumbnailator.Thumbnails;
 
 import org.apache.commons.fileupload.FileItem;
@@ -30,6 +32,7 @@ import com.aprohirdetes.utils.MongoUtils;
 public class KepFeltoltesServerResource extends ServerResource implements
 		APIKepFeltoltesResource {
 
+	private String contextPath = "";
 	private ObjectId hirdetesId = null;
 
 	@Override
@@ -41,6 +44,9 @@ public class KepFeltoltesServerResource extends ServerResource implements
 		if (hirdetesIdString != null) {
 			hirdetesId = new ObjectId(hirdetesIdString);
 		}
+		
+		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		contextPath = sc.getContextPath();
 	}
 
 	public Representation accept(Representation entity) throws Exception {
@@ -119,7 +125,7 @@ public class KepFeltoltesServerResource extends ServerResource implements
 							fileJson.put("eredetiFileNev", item.getName());
 							if(id != null) {
 								fileJson.put("fileMeret", item.getSize());
-								fileJson.put("url", getRequest().getRootRef().toString() + "/static/images_upload/" + kep.getFileNev());
+								fileJson.put("url", contextPath + "/static/images_upload/" + kep.getFileNev());
 								fileJson.put("sorszam", kep.getSorszam());
 							} else {
 								fileJson.put("hibaUzenet", "Hiba történt a kép mentése közben.");

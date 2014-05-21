@@ -73,6 +73,7 @@ public class HirdetesServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
 		appDataModel.put("description", hirdetes.getCim());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));

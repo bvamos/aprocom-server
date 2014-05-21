@@ -94,7 +94,7 @@ public class FeladasServerResource extends ServerResource implements
 		query.criteria("hirdetesId").equal(hirdetesId);
 		HashMap<Integer, String> hirdetesKepMap = new HashMap<Integer, String>();
 		for(HirdetesKep hk : query) {
-			hirdetesKepMap.put(hk.getSorszam(), getRequest().getRootRef().toString() + "/static/images/" + hk.getFileNev());
+			hirdetesKepMap.put(hk.getSorszam(), contextPath + "/static/images/" + hk.getFileNev());
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -102,9 +102,10 @@ public class FeladasServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		// TODO: Servlet context
-		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
+		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés feladása");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
@@ -283,9 +284,10 @@ public class FeladasServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		appDataModel.put("contextRoot", getRequest().getRootRef().toString());
+		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
+		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", this.session);
