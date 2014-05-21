@@ -1,51 +1,133 @@
-{ "_id" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "nev" : "Magyarország", "urlNev" : "magyarorszag", "sorrend" : 1, "szuloId" : null }
-{ "_id" : { "$oid" : "52c9c0a65fe1c212d7e5e8b8" }, "nev" : "Ausztria", "urlNev" : "ausztria", "sorrend" : 2, "szuloId" : null }
-{ "_id" : { "$oid" : "52c9c10e5fe1c212d7e5e8b9" }, "nev" : "Horvátország", "urlNev" : "horvatorszag", "sorrend" : 3, "szuloId" : null }
+{ "_id" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "nev" : "Magyarország", "urlNev" : "magyarorszag", "sorrend" : 1, "szuloId" : null, "regiId" : 0 }
+{ "_id" : { "$oid" : "52c9c0a65fe1c212d7e5e8b8" }, "nev" : "Ausztria", "urlNev" : "ausztria", "sorrend" : 2, "szuloId" : null, "regiId" : 126 }
+{ "_id" : { "$oid" : "52c9c10e5fe1c212d7e5e8b9" }, "nev" : "Horvátország", "urlNev" : "horvatorszag", "sorrend" : 3, "szuloId" : null, "regiId" : 127 }
 { "_id" : { "$oid" : "52c9c1325fe1c212d7e5e8ba" }, "nev" : "Szerbia", "urlNev" : "szerbia", "sorrend" : 4, "szuloId" : null }
-{ "_id" : { "$oid" : "52c9c1435fe1c212d7e5e8bb" }, "nev" : "Szlovénia", "urlNev" : "szlovenia", "sorrend" : 5, "szuloId" : null }
-{ "_id" : { "$oid" : "52c9c14f5fe1c212d7e5e8bc" }, "nev" : "Szlovákia", "urlNev" : "szlovakia", "sorrend" : 6, "szuloId" : null }
-{ "_id" : { "$oid" : "52c9c16a5fe1c212d7e5e8bd" }, "nev" : "Románia", "urlNev" : "romania", "sorrend" : 7, "szuloId" : null }
-{ "_id" : { "$oid" : "52c9c17c5fe1c212d7e5e8be" }, "nev" : "Ukrajna", "urlNev" : "ukrajna", "sorrend" : 8, "szuloId" : null }
-{ "_id" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "nev" : "Budapest", "urlNev" : "budapest", "sorrend" : 1, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c2f65fe1c212d7e5e8c0" }, "nev" : "Bács-Kiskun megye", "urlNev" : "bacs-kiskun-megye", "sorrend" : 2, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3085fe1c212d7e5e8c1" }, "nev" : "Baranya megye", "urlNev" : "baranya-megye", "sorrend" : 3, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "nev" : "Békés megye", "urlNev" : "bekes-megye", "sorrend" : 4, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3365fe1c212d7e5e8c3" }, "nev" : "Borsod-Abaúj-Zemplén megye", "urlNev" : "borsod-abauj-zemplen-megye", "sorrend" : 5, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c34e5fe1c212d7e5e8c4" }, "nev" : "Csongrád megye", "urlNev" : "csongrad-megye", "sorrend" : 6, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c37d5fe1c212d7e5e8c5" }, "nev" : "Fejér megye", "urlNev" : "fejer-megye", "sorrend" : 7, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3945fe1c212d7e5e8c6" }, "nev" : "Győr-Moson-Sopron megye", "urlNev" : "gyor-moson-sopron-megye", "sorrend" : 8, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3ac5fe1c212d7e5e8c7" }, "nev" : "Hajdú-Bihar megye", "urlNev" : "hajdu-bihar-megye", "sorrend" : 9, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3bc5fe1c212d7e5e8c8" }, "nev" : "Heves megye", "urlNev" : "heves-megye", "sorrend" : 10, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3d55fe1c212d7e5e8c9" }, "nev" : "Jász-Nagykun-Szolnok megye", "urlNev" : "jasz-nagykun-szolnok-megye", "sorrend" : 11, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c3f75fe1c212d7e5e8ca" }, "nev" : "Komárom-Esztergom megye", "urlNev" : "komarom-esztergom-megye", "sorrend" : 12, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c40c5fe1c212d7e5e8cb" }, "nev" : "Nógrád megye", "urlNev" : "nograd-megye", "sorrend" : 13, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c41d5fe1c212d7e5e8cc" }, "nev" : "Pest megye", "urlNev" : "pest-megye", "sorrend" : 14, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c42b5fe1c212d7e5e8cd" }, "nev" : "Somogy megye", "urlNev" : "somogy-megye", "sorrend" : 15, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c4445fe1c212d7e5e8ce" }, "nev" : "Szabolcs-Szatmár-Bereg megye", "urlNev" : "szabolcs-szatmar-bereg-megye", "sorrend" : 16, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c4555fe1c212d7e5e8cf" }, "nev" : "Tolna megye", "urlNev" : "tolna-megye", "sorrend" : 17, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "nev" : "Vas megye", "urlNev" : "vas-megye", "sorrend" : 18, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c4755fe1c212d7e5e8d1" }, "nev" : "Veszprém megye", "urlNev" : "veszprem-megye", "sorrend" : 19, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c4855fe1c212d7e5e8d2" }, "nev" : "Zala megye", "urlNev" : "zala-megye", "sorrend" : 20, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d3" }, "nev" : "Bp I. kerület", "urlNev" : "1-kerulet", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d4" }, "nev" : "Bp II. kerület", "urlNev" : "2-kerulet", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d5" }, "nev" : "Bp III. kerület", "urlNev" : "3-kerulet", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d6" }, "nev" : "Bp IV. kerület", "urlNev" : "4-kerulet", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d7" }, "nev" : "Bp V. kerület", "urlNev" : "5-kerulet", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d8" }, "nev" : "Bp VI. kerület", "urlNev" : "6-kerulet", "sorrend" : 6, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d9" }, "nev" : "Bp VII. kerület", "urlNev" : "7-kerulet", "sorrend" : 7, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8da" }, "nev" : "Bp VIII. kerület", "urlNev" : "8-kerulet", "sorrend" : 8, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8db" }, "nev" : "Bp IX. kerület", "urlNev" : "9-kerulet", "sorrend" : 9, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8dc" }, "nev" : "Bp X. kerület", "urlNev" : "10-kerulet", "sorrend" : 10, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8dd" }, "nev" : "Bp XI. kerület", "urlNev" : "11-kerulet", "sorrend" : 11, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8de" }, "nev" : "Bp XII. kerület", "urlNev" : "12-kerulet", "sorrend" : 12, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8df" }, "nev" : "Bp XIII. kerület", "urlNev" : "13-kerulet", "sorrend" : 13, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e0" }, "nev" : "Bp XIV. kerület", "urlNev" : "14-kerulet", "sorrend" : 14, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e1" }, "nev" : "Bp XV. kerület", "urlNev" : "15-kerulet", "sorrend" : 15, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e2" }, "nev" : "Bp XVI. kerület", "urlNev" : "16-kerulet", "sorrend" : 16, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e3" }, "nev" : "Bp XVII. kerület", "urlNev" : "17-kerulet", "sorrend" : 17, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e4" }, "nev" : "Bp XVIII. kerület", "urlNev" : "18-kerulet", "sorrend" : 18, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e5" }, "nev" : "Bp XIX. kerület", "urlNev" : "19-kerulet", "sorrend" : 19, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e6" }, "nev" : "Bp XX. kerület", "urlNev" : "20-kerulet", "sorrend" : 20, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e7" }, "nev" : "Bp XXI. kerület", "urlNev" : "21-kerulet", "sorrend" : 21, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e8" }, "nev" : "Bp XXII. kerület", "urlNev" : "22-kerulet", "sorrend" : 22, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
-{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e9" }, "nev" : "Bp XXIII. kerület", "urlNev" : "23-kerulet", "sorrend" : 23, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" } }
+{ "_id" : { "$oid" : "52c9c1435fe1c212d7e5e8bb" }, "nev" : "Szlovénia", "urlNev" : "szlovenia", "sorrend" : 5, "szuloId" : null, "regiId" : 129 }
+{ "_id" : { "$oid" : "52c9c14f5fe1c212d7e5e8bc" }, "nev" : "Szlovákia", "urlNev" : "szlovakia", "sorrend" : 6, "szuloId" : null, "regiId" : 128 }
+{ "_id" : { "$oid" : "52c9c16a5fe1c212d7e5e8bd" }, "nev" : "Románia", "urlNev" : "romania", "sorrend" : 7, "szuloId" : null, "regiId" : 130 }
+{ "_id" : { "$oid" : "52c9c17c5fe1c212d7e5e8be" }, "nev" : "Ukrajna", "urlNev" : "ukrajna", "sorrend" : 8, "szuloId" : null, "regiId" : 131 }
+{ "_id" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "nev" : "Budapest", "urlNev" : "budapest", "sorrend" : 1, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 20 }
+{ "_id" : { "$oid" : "52c9c2f65fe1c212d7e5e8c0" }, "nev" : "Bács-Kiskun megye", "urlNev" : "bacs-kiskun-megye", "sorrend" : 2, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 1 }
+{ "_id" : { "$oid" : "52c9c3085fe1c212d7e5e8c1" }, "nev" : "Baranya megye", "urlNev" : "baranya-megye", "sorrend" : 3, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 2 }
+{ "_id" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "nev" : "Békés megye", "urlNev" : "bekes-megye", "sorrend" : 4, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 3 }
+{ "_id" : { "$oid" : "52c9c3365fe1c212d7e5e8c3" }, "nev" : "Borsod-Abaúj-Zemplén megye", "urlNev" : "borsod-abauj-zemplen-megye", "sorrend" : 5, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 4 }
+{ "_id" : { "$oid" : "52c9c34e5fe1c212d7e5e8c4" }, "nev" : "Csongrád megye", "urlNev" : "csongrad-megye", "sorrend" : 6, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 5 }
+{ "_id" : { "$oid" : "52c9c37d5fe1c212d7e5e8c5" }, "nev" : "Fejér megye", "urlNev" : "fejer-megye", "sorrend" : 7, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 6 }
+{ "_id" : { "$oid" : "52c9c3945fe1c212d7e5e8c6" }, "nev" : "Győr-Moson-Sopron megye", "urlNev" : "gyor-moson-sopron-megye", "sorrend" : 8, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 7 }
+{ "_id" : { "$oid" : "52c9c3ac5fe1c212d7e5e8c7" }, "nev" : "Hajdú-Bihar megye", "urlNev" : "hajdu-bihar-megye", "sorrend" : 9, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 8 }
+{ "_id" : { "$oid" : "52c9c3bc5fe1c212d7e5e8c8" }, "nev" : "Heves megye", "urlNev" : "heves-megye", "sorrend" : 10, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 9 }
+{ "_id" : { "$oid" : "52c9c3d55fe1c212d7e5e8c9" }, "nev" : "Jász-Nagykun-Szolnok megye", "urlNev" : "jasz-nagykun-szolnok-megye", "sorrend" : 11, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 10 }
+{ "_id" : { "$oid" : "52c9c3f75fe1c212d7e5e8ca" }, "nev" : "Komárom-Esztergom megye", "urlNev" : "komarom-esztergom-megye", "sorrend" : 12, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 11 }
+{ "_id" : { "$oid" : "52c9c40c5fe1c212d7e5e8cb" }, "nev" : "Nógrád megye", "urlNev" : "nograd-megye", "sorrend" : 13, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 12 }
+{ "_id" : { "$oid" : "52c9c41d5fe1c212d7e5e8cc" }, "nev" : "Pest megye", "urlNev" : "pest-megye", "sorrend" : 14, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 13 }
+{ "_id" : { "$oid" : "52c9c42b5fe1c212d7e5e8cd" }, "nev" : "Somogy megye", "urlNev" : "somogy-megye", "sorrend" : 15, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 14 }
+{ "_id" : { "$oid" : "52c9c4445fe1c212d7e5e8ce" }, "nev" : "Szabolcs-Szatmár-Bereg megye", "urlNev" : "szabolcs-szatmar-bereg-megye", "sorrend" : 16, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 15 }
+{ "_id" : { "$oid" : "52c9c4555fe1c212d7e5e8cf" }, "nev" : "Tolna megye", "urlNev" : "tolna-megye", "sorrend" : 17, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 16 }
+{ "_id" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "nev" : "Vas megye", "urlNev" : "vas-megye", "sorrend" : 18, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 17 }
+{ "_id" : { "$oid" : "52c9c4755fe1c212d7e5e8d1" }, "nev" : "Veszprém megye", "urlNev" : "veszprem-megye", "sorrend" : 19, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 18 }
+{ "_id" : { "$oid" : "52c9c4855fe1c212d7e5e8d2" }, "nev" : "Zala megye", "urlNev" : "zala-megye", "sorrend" : 20, "szuloId" : { "$oid" : "52c9ba625fe1c212d7e5e8b7" }, "regiId" : 19 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d3" }, "nev" : "Bp I. kerület", "urlNev" : "1-kerulet", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 102 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d4" }, "nev" : "Bp II. kerület", "urlNev" : "2-kerulet", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 103 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d5" }, "nev" : "Bp III. kerület", "urlNev" : "3-kerulet", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 104 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d6" }, "nev" : "Bp IV. kerület", "urlNev" : "4-kerulet", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 105 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d7" }, "nev" : "Bp V. kerület", "urlNev" : "5-kerulet", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 106 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d8" }, "nev" : "Bp VI. kerület", "urlNev" : "6-kerulet", "sorrend" : 6, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 107 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8d9" }, "nev" : "Bp VII. kerület", "urlNev" : "7-kerulet", "sorrend" : 7, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 108 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8da" }, "nev" : "Bp VIII. kerület", "urlNev" : "8-kerulet", "sorrend" : 8, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 109 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8db" }, "nev" : "Bp IX. kerület", "urlNev" : "9-kerulet", "sorrend" : 9, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 110 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8dc" }, "nev" : "Bp X. kerület", "urlNev" : "10-kerulet", "sorrend" : 10, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 111 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8dd" }, "nev" : "Bp XI. kerület", "urlNev" : "11-kerulet", "sorrend" : 11, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 112 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8de" }, "nev" : "Bp XII. kerület", "urlNev" : "12-kerulet", "sorrend" : 12, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 113 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8df" }, "nev" : "Bp XIII. kerület", "urlNev" : "13-kerulet", "sorrend" : 13, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 114 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e0" }, "nev" : "Bp XIV. kerület", "urlNev" : "14-kerulet", "sorrend" : 14, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 115 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e1" }, "nev" : "Bp XV. kerület", "urlNev" : "15-kerulet", "sorrend" : 15, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 116 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e2" }, "nev" : "Bp XVI. kerület", "urlNev" : "16-kerulet", "sorrend" : 16, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 117 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e3" }, "nev" : "Bp XVII. kerület", "urlNev" : "17-kerulet", "sorrend" : 17, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 118 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e4" }, "nev" : "Bp XVIII. kerület", "urlNev" : "18-kerulet", "sorrend" : 18, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 119 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e5" }, "nev" : "Bp XIX. kerület", "urlNev" : "19-kerulet", "sorrend" : 19, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 120 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e6" }, "nev" : "Bp XX. kerület", "urlNev" : "20-kerulet", "sorrend" : 20, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 121 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e7" }, "nev" : "Bp XXI. kerület", "urlNev" : "21-kerulet", "sorrend" : 21, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 122 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e8" }, "nev" : "Bp XXII. kerület", "urlNev" : "22-kerulet", "sorrend" : 22, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 123 }
+{ "_id" : { "$oid" : "52c9c7a55fe1c212d7e5e8e9" }, "nev" : "Bp XXIII. kerület", "urlNev" : "23-kerulet", "sorrend" : 23, "szuloId" : { "$oid" : "52c9c28a5fe1c212d7e5e8bf" }, "regiId" : 124 }
+{ "_id" : { "$oid" : "5373c3348e7bd915aa874b26" }, "nev" : "Kecskemét és környéke", "urlNev" : "kecskemet", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c2f65fe1c212d7e5e8c0" }, "regiId" : 21 }
+{ "_id" : { "$oid" : "5373c3718e7bd915aa874b27" }, "nev" : "Kiskunhalas és környéke", "urlNev" : "kiskunhalas", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c2f65fe1c212d7e5e8c0" }, "regiId" : 22 }
+{ "_id" : { "$oid" : "5373c39f8e7bd915aa874b28" }, "nev" : "Baja és környéke", "urlNev" : "baja", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c2f65fe1c212d7e5e8c0" }, "regiId" : 23 }
+{ "_id" : { "$oid" : "5373c3c48e7bd915aa874b29" }, "nev" : "Kiskunfélegyháza és környéke", "urlNev" : "kiskunfelegyhaza", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c2f65fe1c212d7e5e8c0" }, "regiId" : 24 }
+{ "_id" : { "$oid" : "5373c4828e7bd915aa874b2a" }, "nev" : "Pécs és környéke", "urlNev" : "pecs", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3085fe1c212d7e5e8c1" }, "regiId" : 25 }
+{ "_id" : { "$oid" : "5373c4988e7bd915aa874b2b" }, "nev" : "Mohács és környéke", "urlNev" : "mohacs", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3085fe1c212d7e5e8c1" }, "regiId" : 26 }
+{ "_id" : { "$oid" : "5373c4ae8e7bd915aa874b2c" }, "nev" : "Szigetvár és környéke", "urlNev" : "szigetvar", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3085fe1c212d7e5e8c1" }, "regiId" : 27 }
+{ "_id" : { "$oid" : "5373c5088e7bd915aa874b2d" }, "nev" : "Békéscsaba és környéke", "urlNev" : "bekescsaba", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "regiId" : 28 }
+{ "_id" : { "$oid" : "5373c5228e7bd915aa874b2e" }, "nev" : "Szeghalom és környéke", "urlNev" : "szeghalom", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "regiId" : 29 }
+{ "_id" : { "$oid" : "5373c53f8e7bd915aa874b2f" }, "nev" : "Gyomaendrőd és környéke", "urlNev" : "gyomaendrod", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "regiId" : 30 }
+{ "_id" : { "$oid" : "5373c5568e7bd915aa874b30" }, "nev" : "Szarvas és környéke", "urlNev" : "szarvas", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "regiId" : 31 }
+{ "_id" : { "$oid" : "5373c5718e7bd915aa874b31" }, "nev" : "Orosháza és környéke", "urlNev" : "oroshaza", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "regiId" : 32 }
+{ "_id" : { "$oid" : "5373c58b8e7bd915aa874b32" }, "nev" : "Mezőhegyes és környéke", "urlNev" : "mezohegyes", "sorrend" : 6, "szuloId" : { "$oid" : "52c9c3175fe1c212d7e5e8c2" }, "regiId" : 33 }
+{ "_id" : { "$oid" : "537479263c67f09564fa47b5" }, "nev" : "Miskolc és környéke", "urlNev" : "miskolc", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3365fe1c212d7e5e8c3" }, "regiId" : 34 }
+{ "_id" : { "$oid" : "537479383c67f09564fa47b6" }, "nev" : "Ózd és környéke", "urlNev" : "ozd", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3365fe1c212d7e5e8c3" }, "regiId" : 35 }
+{ "_id" : { "$oid" : "5374795b3c67f09564fa47b7" }, "nev" : "Sátoraljaújhely és környéke", "urlNev" : "satoraljaujhely", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c3365fe1c212d7e5e8c3" }, "regiId" : 36 }
+{ "_id" : { "$oid" : "537479793c67f09564fa47b8" }, "nev" : "Mezőkövesd és környéke", "urlNev" : "mezokovesd", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c3365fe1c212d7e5e8c3" }, "regiId" : 37 }
+{ "_id" : { "$oid" : "5374799b3c67f09564fa47b9" }, "nev" : "Tiszaújváros és környéke", "urlNev" : "tiszaujvaros", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c3365fe1c212d7e5e8c3" }, "regiId" : 38 }
+{ "_id" : { "$oid" : "537479ca3c67f09564fa47ba" }, "nev" : "Szeged és környéke", "urlNev" : "szeged", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c34e5fe1c212d7e5e8c4" }, "regiId" : 39 }
+{ "_id" : { "$oid" : "537479e43c67f09564fa47bb" }, "nev" : "Hódmezővásárhely és környéke", "urlNev" : "hodmezovasarhely", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c34e5fe1c212d7e5e8c4" }, "regiId" : 40 }
+{ "_id" : { "$oid" : "537479f63c67f09564fa47bc" }, "nev" : "Szentes és környéke", "urlNev" : "szentes", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c34e5fe1c212d7e5e8c4" }, "regiId" : 41 }
+{ "_id" : { "$oid" : "53747a0b3c67f09564fa47bd" }, "nev" : "Kistelek és környéke", "urlNev" : "kistelek", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c34e5fe1c212d7e5e8c4" }, "regiId" : 42 }
+{ "_id" : { "$oid" : "53747f1e3c67f09564fa47be" }, "nev" : "Székesfehérvár és környéke", "urlNev" : "szekesfehervar", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c37d5fe1c212d7e5e8c5" }, "regiId" : 43 }
+{ "_id" : { "$oid" : "53747f333c67f09564fa47bf" }, "nev" : "Dunaújváros és környéke", "urlNev" : "dunaujvaros", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c37d5fe1c212d7e5e8c5" }, "regiId" : 44 }
+{ "_id" : { "$oid" : "53747f453c67f09564fa47c0" }, "nev" : "Enying és környéke", "urlNev" : "enying", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c37d5fe1c212d7e5e8c5" }, "regiId" : 45 }
+{ "_id" : { "$oid" : "53747f553c67f09564fa47c1" }, "nev" : "Bicske és környéke", "urlNev" : "bicske", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c37d5fe1c212d7e5e8c5" }, "regiId" : 46 }
+{ "_id" : { "$oid" : "53747fe13c67f09564fa47c2" }, "nev" : "Győr és környéke", "urlNev" : "gyor", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3945fe1c212d7e5e8c6" }, "regiId" : 47 }
+{ "_id" : { "$oid" : "53747ff33c67f09564fa47c3" }, "nev" : "Sopron és környéke", "urlNev" : "sopron", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c3945fe1c212d7e5e8c6" }, "regiId" : 48 }
+{ "_id" : { "$oid" : "537480243c67f09564fa47c4" }, "nev" : "Csorna és környéke", "urlNev" : "csorna", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c3945fe1c212d7e5e8c6" }, "regiId" : 49 }
+{ "_id" : { "$oid" : "5374803e3c67f09564fa47c5" }, "nev" : "Mosonmagyaróvár és környéke", "urlNev" : "mosonmagyarovar", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c3945fe1c212d7e5e8c6" }, "regiId" : 50 }
+{ "_id" : { "$oid" : "537480b33c67f09564fa47c6" }, "nev" : "Debrecen és környéke", "urlNev" : "debrecen", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3ac5fe1c212d7e5e8c7" }, "regiId" : 51 }
+{ "_id" : { "$oid" : "537480c43c67f09564fa47c7" }, "nev" : "Polgár és környéke", "urlNev" : "polgar", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c3ac5fe1c212d7e5e8c7" }, "regiId" : 52 }
+{ "_id" : { "$oid" : "537480dc3c67f09564fa47c8" }, "nev" : "Püspökladány és környéke", "urlNev" : "puspokladany", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c3ac5fe1c212d7e5e8c7" }, "regiId" : 53 }
+{ "_id" : { "$oid" : "5374a2113c67f09564fa47c9" }, "nev" : "Eger és környéke", "urlNev" : "eger", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3bc5fe1c212d7e5e8c8" }, "regiId" : 54 }
+{ "_id" : { "$oid" : "5374a2223c67f09564fa47ca" }, "nev" : "Gyöngyös és környéke", "urlNev" : "gyongyos", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3bc5fe1c212d7e5e8c8" }, "regiId" : 55 }
+{ "_id" : { "$oid" : "5374a2383c67f09564fa47cb" }, "nev" : "Füzesabony és környéke", "urlNev" : "fuzesabony", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c3bc5fe1c212d7e5e8c8" }, "regiId" : 56 }
+{ "_id" : { "$oid" : "5374a2673c67f09564fa47cc" }, "nev" : "Szolnok és környéke", "urlNev" : "szolnok", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3d55fe1c212d7e5e8c9" }, "regiId" : 57 }
+{ "_id" : { "$oid" : "5374a27e3c67f09564fa47cd" }, "nev" : "Jászberény és környéke", "urlNev" : "jaszbereny", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c3d55fe1c212d7e5e8c9" }, "regiId" : 58 }
+{ "_id" : { "$oid" : "5374a2943c67f09564fa47ce" }, "nev" : "Kunhegyes és környéke", "urlNev" : "kunhegyes", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c3d55fe1c212d7e5e8c9" }, "regiId" : 59 }
+{ "_id" : { "$oid" : "5374a2a83c67f09564fa47cf" }, "nev" : "Mezőtúr és környéke", "urlNev" : "mezotur", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c3d55fe1c212d7e5e8c9" }, "regiId" : 60 }
+{ "_id" : { "$oid" : "5374a2c03c67f09564fa47d0" }, "nev" : "Kunszentmárton és környéke", "urlNev" : "kunszentmarton", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c3d55fe1c212d7e5e8c9" }, "regiId" : 61 }
+{ "_id" : { "$oid" : "5374a2f23c67f09564fa47d1" }, "nev" : "Tatabánya és környéke", "urlNev" : "tatabanya", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c3f75fe1c212d7e5e8ca" }, "regiId" : 62 }
+{ "_id" : { "$oid" : "5374a3073c67f09564fa47d2" }, "nev" : "Komárom és környéke", "urlNev" : "komarom", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c3f75fe1c212d7e5e8ca" }, "regiId" : 63 }
+{ "_id" : { "$oid" : "5374a3193c67f09564fa47d3" }, "nev" : "Esztergom és környéke", "urlNev" : "esztergom", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c3f75fe1c212d7e5e8ca" }, "regiId" : 64 }
+{ "_id" : { "$oid" : "5374a34a3c67f09564fa47d4" }, "nev" : "Salgótarján és környéke", "urlNev" : "salgotarjan", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c40c5fe1c212d7e5e8cb" }, "regiId" : 65 }
+{ "_id" : { "$oid" : "5374a35c3c67f09564fa47d5" }, "nev" : "Rétság és környéke", "urlNev" : "retsag", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c40c5fe1c212d7e5e8cb" }, "regiId" : 66 }
+{ "_id" : { "$oid" : "5374a3743c67f09564fa47d6" }, "nev" : "Szécsény és környéke", "urlNev" : "szecseny", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c40c5fe1c212d7e5e8cb" }, "regiId" : 67 }
+{ "_id" : { "$oid" : "5374a3a63c67f09564fa47d7" }, "nev" : "Vác és környéke", "urlNev" : "vac", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c41d5fe1c212d7e5e8cc" }, "regiId" : 68 }
+{ "_id" : { "$oid" : "5374a3b73c67f09564fa47d8" }, "nev" : "Gödöllő és környéke", "urlNev" : "godollo", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c41d5fe1c212d7e5e8cc" }, "regiId" : 69 }
+{ "_id" : { "$oid" : "5374a3c93c67f09564fa47d9" }, "nev" : "Cegléd és környéke", "urlNev" : "cegled", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c41d5fe1c212d7e5e8cc" }, "regiId" : 70 }
+{ "_id" : { "$oid" : "5374a3da3c67f09564fa47da" }, "nev" : "Érd és környéke", "urlNev" : "erd", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c41d5fe1c212d7e5e8cc" }, "regiId" : 71 }
+{ "_id" : { "$oid" : "5374a3f13c67f09564fa47db" }, "nev" : "Dabas és környéke", "urlNev" : "dabas", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c41d5fe1c212d7e5e8cc" }, "regiId" : 72 }
+{ "_id" : { "$oid" : "5374a4123c67f09564fa47dc" }, "nev" : "Kaposvár és környéke", "urlNev" : "kaposvar", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c42b5fe1c212d7e5e8cd" }, "regiId" : 73 }
+{ "_id" : { "$oid" : "5374a4223c67f09564fa47dd" }, "nev" : "Barcs és környéke", "urlNev" : "barcs", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c42b5fe1c212d7e5e8cd" }, "regiId" : 74 }
+{ "_id" : { "$oid" : "5374a4353c67f09564fa47de" }, "nev" : "Csurgó és környéke", "urlNev" : "csurgo", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c42b5fe1c212d7e5e8cd" }, "regiId" : 75 }
+{ "_id" : { "$oid" : "5374a4453c67f09564fa47df" }, "nev" : "Marcali és környéke", "urlNev" : "marcali", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c42b5fe1c212d7e5e8cd" }, "regiId" : 76 }
+{ "_id" : { "$oid" : "5374a4543c67f09564fa47e0" }, "nev" : "Tab és környéke", "urlNev" : "tab", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c42b5fe1c212d7e5e8cd" }, "regiId" : 77 }
+{ "_id" : { "$oid" : "5374a5603c67f09564fa47e1" }, "nev" : "Nyíregyháza és környéke", "urlNev" : "nyiregyhaza", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c4445fe1c212d7e5e8ce" }, "regiId" : 78 }
+{ "_id" : { "$oid" : "5374a5753c67f09564fa47e2" }, "nev" : "Kisvárda és környéke", "urlNev" : "kisvarda", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c4445fe1c212d7e5e8ce" }, "regiId" : 79 }
+{ "_id" : { "$oid" : "5374a5943c67f09564fa47e3" }, "nev" : "Mátészalka és környéke", "urlNev" : "mateszalka", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c4445fe1c212d7e5e8ce" }, "regiId" : 80 }
+{ "_id" : { "$oid" : "5374a5ce3c67f09564fa47e4" }, "nev" : "Szekszárd és környéke", "urlNev" : "szekszard", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c4555fe1c212d7e5e8cf" }, "regiId" : 81 }
+{ "_id" : { "$oid" : "5374a5e13c67f09564fa47e5" }, "nev" : "Dombóvár és környéke", "urlNev" : "dombovar", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c4555fe1c212d7e5e8cf" }, "regiId" : 82 }
+{ "_id" : { "$oid" : "5374a6033c67f09564fa47e6" }, "nev" : "Tamási és környéke", "urlNev" : "tamasi", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c4555fe1c212d7e5e8cf" }, "regiId" : 83 }
+{ "_id" : { "$oid" : "5374a6153c67f09564fa47e7" }, "nev" : "Paks és környéke", "urlNev" : "paks", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c4555fe1c212d7e5e8cf" }, "regiId" : 84 }
+{ "_id" : { "$oid" : "5374a64f3c67f09564fa47e8" }, "nev" : "Szombathely és környéke", "urlNev" : "szombathely", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "regiId" : 85 }
+{ "_id" : { "$oid" : "5374a6613c67f09564fa47e9" }, "nev" : "Kőszeg és környéke", "urlNev" : "koszeg", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "regiId" : 86 }
+{ "_id" : { "$oid" : "5374a6743c67f09564fa47ea" }, "nev" : "Csepreg és környéke", "urlNev" : "csepreg", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "regiId" : 87 }
+{ "_id" : { "$oid" : "5374a6853c67f09564fa47eb" }, "nev" : "Sárvár és környéke", "urlNev" : "sarvar", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "regiId" : 88 }
+{ "_id" : { "$oid" : "5374a69e3c67f09564fa47ec" }, "nev" : "Celldömölk és környéke", "urlNev" : "celldomolk", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "regiId" : 89 }
+{ "_id" : { "$oid" : "5374a6af3c67f09564fa47ed" }, "nev" : "Körmend és környéke", "urlNev" : "kormend", "sorrend" : 6, "szuloId" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "regiId" : 90 }
+{ "_id" : { "$oid" : "5374a6c13c67f09564fa47ee" }, "nev" : "Szentgotthárd és környéke", "urlNev" : "szentgotthard", "sorrend" : 7, "szuloId" : { "$oid" : "52c9c4675fe1c212d7e5e8d0" }, "regiId" : 91 }
+{ "_id" : { "$oid" : "5374a7603c67f09564fa47ef" }, "nev" : "Veszprém és környéke", "urlNev" : "veszprem", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c4755fe1c212d7e5e8d1" }, "regiId" : 92 }
+{ "_id" : { "$oid" : "5374a7703c67f09564fa47f0" }, "nev" : "Tapolca és környéke", "urlNev" : "tapolca", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c4755fe1c212d7e5e8d1" }, "regiId" : 93 }
+{ "_id" : { "$oid" : "5374a77e3c67f09564fa47f1" }, "nev" : "Pápa és környéke", "urlNev" : "papa", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c4755fe1c212d7e5e8d1" }, "regiId" : 94 }
+{ "_id" : { "$oid" : "5374a78f3c67f09564fa47f2" }, "nev" : "Várpalota és környéke", "urlNev" : "varpalota", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c4755fe1c212d7e5e8d1" }, "regiId" : 95 }
+{ "_id" : { "$oid" : "5374a7a73c67f09564fa47f3" }, "nev" : "Balatonfüred és környéke", "urlNev" : "balatonfured", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c4755fe1c212d7e5e8d1" }, "regiId" : 96 }
+{ "_id" : { "$oid" : "5374a7cf3c67f09564fa47f4" }, "nev" : "Zalaegerszeg és környéke", "urlNev" : "zalaegerszeg", "sorrend" : 1, "szuloId" : { "$oid" : "52c9c4855fe1c212d7e5e8d2" }, "regiId" : 97 }
+{ "_id" : { "$oid" : "5374a7df3c67f09564fa47f5" }, "nev" : "Nagykanizsa és környéke", "urlNev" : "nagykanizsa", "sorrend" : 2, "szuloId" : { "$oid" : "52c9c4855fe1c212d7e5e8d2" }, "regiId" : 98 }
+{ "_id" : { "$oid" : "5374a7ef3c67f09564fa47f6" }, "nev" : "Lenti és környéke", "urlNev" : "lenti", "sorrend" : 3, "szuloId" : { "$oid" : "52c9c4855fe1c212d7e5e8d2" }, "regiId" : 99 }
+{ "_id" : { "$oid" : "5374a8003c67f09564fa47f7" }, "nev" : "Keszthely és környéke", "urlNev" : "keszthely", "sorrend" : 4, "szuloId" : { "$oid" : "52c9c4855fe1c212d7e5e8d2" }, "regiId" : 100 }
+{ "_id" : { "$oid" : "5374a81c3c67f09564fa47f8" }, "nev" : "Zalaszentgrót és környéke", "urlNev" : "zalaszentgrot", "sorrend" : 5, "szuloId" : { "$oid" : "52c9c4855fe1c212d7e5e8d2" }, "regiId" : 101 }
+{ "_id" : { "$oid" : "537a6242705cef347fff5294" }, "nev" : "Egyéb külföld", "urlNev" : "kulfold-egyeb", "sorrend" : 8, "szuloId" : null, "regiId" : 132 }

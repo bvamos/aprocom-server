@@ -1,78 +1,78 @@
-{ "_id" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "nev" : "Ingatlan", "urlNev" : "ingatlan", "sorrend" : 1, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9a36f44aee9ff29a64678" }, "nev" : "Lakás", "urlNev" : "lakas", "sorrend" : 1, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9a6c844aee655a135e660" }, "nev" : "Bazár", "urlNev" : "bazar", "sorrend" : 1, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9abe944aee655a135e661" }, "nev" : "Állás, munka", "urlNev" : "allas", "sorrend" : 3, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ac0e44aee655a135e662" }, "nev" : "Számítástechnika", "urlNev" : "szamitastechnika", "sorrend" : 4, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ac2444aee655a135e663" }, "nev" : "Gépek", "urlNev" : "gepek", "sorrend" : 5, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ac3544aee655a135e664" }, "nev" : "Jármű", "urlNev" : "jarmu", "sorrend" : 6, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ac4a44aee655a135e665" }, "nev" : "Elektronikai cikk", "urlNev" : "elekronika", "sorrend" : 7, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ac6844aee655a135e666" }, "nev" : "Állat, Növény", "urlNev" : "allat-noveny", "sorrend" : 8, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ac7844aee655a135e667" }, "nev" : "Oktatás", "urlNev" : "oktatas", "sorrend" : 9, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ac9744aee655a135e668" }, "nev" : "Szabadidő", "urlNev" : "szabadido", "sorrend" : 10, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9acac44aee655a135e669" }, "nev" : "Ideiglenes", "urlNev" : "ideiglenes", "sorrend" : 100, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9ad5244aee655a135e66a" }, "nev" : "Ház", "urlNev" : "haz", "sorrend" : 2, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9ad8f44aee655a135e66b" }, "nev" : "Albérlet", "urlNev" : "alberlet", "sorrend" : 3, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9ae4f44aee655a135e66c" }, "nev" : "Iroda, üzlethelyiség", "urlNev" : "iroda-uzlethelyiseg", "sorrend" : 4, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9ae6f44aee655a135e66d" }, "nev" : "Egyéb bérlemény", "urlNev" : "egyeb-berlemeny", "sorrend" : 5, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9ae8844aee655a135e66e" }, "nev" : "Nyaraló", "urlNev" : "nyaralo", "sorrend" : 6, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9ae9844aee655a135e66f" }, "nev" : "Garázs", "urlNev" : "garazs", "sorrend" : 7, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9aec744aee655a135e670" }, "nev" : "Telek, szántó, kiskert", "urlNev" : "telek-szanto-kiskert", "sorrend" : 8, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9aee044aee655a135e671" }, "nev" : "Szolgáltatás", "urlNev" : "ingatlan-szolgaltatas", "sorrend" : 9, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" } }
-{ "_id" : { "$oid" : "52d9af6344aee655a135e672" }, "nev" : "Vegyes", "urlNev" : "vegyes", "sorrend" : 1, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" } }
-{ "_id" : { "$oid" : "52d9af7a44aee655a135e673" }, "nev" : "Lakberendezés", "urlNev" : "lakberendezes", "sorrend" : 2, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" } }
-{ "_id" : { "$oid" : "52d9afa844aee655a135e674" }, "nev" : "Könyv, CD, DVD", "urlNev" : "konyv-cd-dvd", "sorrend" : 3, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" } }
-{ "_id" : { "$oid" : "52d9afd444aee655a135e675" }, "nev" : "Építőanyag", "urlNev" : "epotianyag", "sorrend" : 4, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" } }
-{ "_id" : { "$oid" : "52d9afec44aee655a135e676" }, "nev" : "Műtárgy", "urlNev" : "mutargy", "sorrend" : 5, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" } }
-{ "_id" : { "$oid" : "52d9b00744aee655a135e677" }, "nev" : "Ingyen elvihető", "urlNev" : "ingyen-elviheto", "sorrend" : 6, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" } }
-{ "_id" : { "$oid" : "52d9b03a44aee655a135e678" }, "nev" : "Baba, mama", "urlNev" : "baba-mama", "sorrend" : 9, "szuloId" : null }
-{ "_id" : { "$oid" : "52d9b1e644aee655a135e679" }, "nev" : "Ipari", "urlNev" : "allas-ipari", "sorrend" : 1, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b21744aee655a135e67a" }, "nev" : "Kereskedelmi", "urlNev" : "kereskedelmi", "sorrend" : 2, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b22b44aee655a135e67b" }, "nev" : "Szellemi", "urlNev" : "szellemi", "sorrend" : 3, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b24744aee655a135e67c" }, "nev" : "Távmunka", "urlNev" : "tavmunka", "sorrend" : 4, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b25644aee655a135e67d" }, "nev" : "Diákmunka", "urlNev" : "diakmunka", "sorrend" : 5, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b26944aee655a135e67e" }, "nev" : "Egyéb", "urlNev" : "allas-egyeb", "sorrend" : 6, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b28644aee655a135e67f" }, "nev" : "Tanítás", "urlNev" : "tanitas", "sorrend" : 7, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b29a44aee655a135e680" }, "nev" : "Szolgáltatás", "urlNev" : "allas-szolgaltatas", "sorrend" : 8, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52d9b2ae44aee655a135e681" }, "nev" : "Vállalkozás", "urlNev" : "vallalkozas", "sorrend" : 9, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" } }
-{ "_id" : { "$oid" : "52daaa3744aee655a135e682" }, "nev" : "Alkatrész", "urlNev" : "alkatresz", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" } }
-{ "_id" : { "$oid" : "52daaa8e44aee655a135e683" }, "nev" : "Szoftver", "urlNev" : "szoftver", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" } }
+{ "_id" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "nev" : "Ingatlan", "urlNev" : "ingatlan", "sorrend" : 1, "szuloId" : null, "regiId" : 15 }
+{ "_id" : { "$oid" : "52d9a36f44aee9ff29a64678" }, "nev" : "Lakás", "urlNev" : "lakas", "sorrend" : 1, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 40 }
+{ "_id" : { "$oid" : "52d9a6c844aee655a135e660" }, "nev" : "Bazár", "urlNev" : "bazar", "sorrend" : 1, "szuloId" : null, "regiId" : 1 }
+{ "_id" : { "$oid" : "52d9abe944aee655a135e661" }, "nev" : "Állás, munka", "urlNev" : "allas", "sorrend" : 3, "szuloId" : null, "regiId" : 20 }
+{ "_id" : { "$oid" : "52d9ac0e44aee655a135e662" }, "nev" : "Számítástechnika", "urlNev" : "szamitastechnika", "sorrend" : 4, "szuloId" : null, "regiId" : 25 }
+{ "_id" : { "$oid" : "52d9ac2444aee655a135e663" }, "nev" : "Gépek", "urlNev" : "gepek", "sorrend" : 5, "szuloId" : null, "regiId" : 12 }
+{ "_id" : { "$oid" : "52d9ac3544aee655a135e664" }, "nev" : "Jármű", "urlNev" : "jarmu", "sorrend" : 6, "szuloId" : null, "regiId" : 7 }
+{ "_id" : { "$oid" : "52d9ac4a44aee655a135e665" }, "nev" : "Elektronikai cikk", "urlNev" : "elekronika", "sorrend" : 7, "szuloId" : null, "regiId" : 29 }
+{ "_id" : { "$oid" : "52d9ac6844aee655a135e666" }, "nev" : "Állat, Növény", "urlNev" : "allat-noveny", "sorrend" : 8, "szuloId" : null, "regiId" : 34 }
+{ "_id" : { "$oid" : "52d9ac7844aee655a135e667" }, "nev" : "Oktatás", "urlNev" : "oktatas", "sorrend" : 9, "szuloId" : null, "regiId" : 57 }
+{ "_id" : { "$oid" : "52d9ac9744aee655a135e668" }, "nev" : "Szabadidő", "urlNev" : "szabadido", "sorrend" : 10, "szuloId" : null, "regiId" : 72 }
+{ "_id" : { "$oid" : "52d9acac44aee655a135e669" }, "nev" : "Ideiglenes", "urlNev" : "ideiglenes", "sorrend" : 100, "szuloId" : null, "regiId" : 64 }
+{ "_id" : { "$oid" : "52d9ad5244aee655a135e66a" }, "nev" : "Ház", "urlNev" : "haz", "sorrend" : 2, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 16 }
+{ "_id" : { "$oid" : "52d9ad8f44aee655a135e66b" }, "nev" : "Albérlet", "urlNev" : "alberlet", "sorrend" : 3, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 18 }
+{ "_id" : { "$oid" : "52d9ae4f44aee655a135e66c" }, "nev" : "Iroda, üzlethelyiség", "urlNev" : "iroda-uzlethelyiseg", "sorrend" : 4, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 42 }
+{ "_id" : { "$oid" : "52d9ae6f44aee655a135e66d" }, "nev" : "Egyéb bérlemény", "urlNev" : "egyeb-berlemeny", "sorrend" : 5, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 43 }
+{ "_id" : { "$oid" : "52d9ae8844aee655a135e66e" }, "nev" : "Nyaraló", "urlNev" : "nyaralo", "sorrend" : 6, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 41 }
+{ "_id" : { "$oid" : "52d9ae9844aee655a135e66f" }, "nev" : "Garázs", "urlNev" : "garazs", "sorrend" : 7, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 17 }
+{ "_id" : { "$oid" : "52d9aec744aee655a135e670" }, "nev" : "Telek, szántó, kiskert", "urlNev" : "telek-szanto-kiskert", "sorrend" : 8, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 19 }
+{ "_id" : { "$oid" : "52d9aee044aee655a135e671" }, "nev" : "Szolgáltatás", "urlNev" : "ingatlan-szolgaltatas", "sorrend" : 9, "szuloId" : { "$oid" : "52d3e4fcd1f386a6190b7a17" }, "regiId" : 77 }
+{ "_id" : { "$oid" : "52d9af6344aee655a135e672" }, "nev" : "Vegyes", "urlNev" : "vegyes", "sorrend" : 1, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" }, "regiId" : 2 }
+{ "_id" : { "$oid" : "52d9af7a44aee655a135e673" }, "nev" : "Lakberendezés", "urlNev" : "lakberendezes", "sorrend" : 2, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" }, "regiId" : 5 }
+{ "_id" : { "$oid" : "52d9afa844aee655a135e674" }, "nev" : "Könyv, CD, DVD", "urlNev" : "konyv-cd-dvd", "sorrend" : 3, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" }, "regiId" : 39 }
+{ "_id" : { "$oid" : "52d9afd444aee655a135e675" }, "nev" : "Építőanyag", "urlNev" : "epotianyag", "sorrend" : 4, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" }, "regiId" : 3 }
+{ "_id" : { "$oid" : "52d9afec44aee655a135e676" }, "nev" : "Műtárgy", "urlNev" : "mutargy", "sorrend" : 5, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" }, "regiId" : 76 }
+{ "_id" : { "$oid" : "52d9b00744aee655a135e677" }, "nev" : "Ingyen elvihető", "urlNev" : "ingyen-elviheto", "sorrend" : 6, "szuloId" : { "$oid" : "52d9a6c844aee655a135e660" }, "regiId" : 71 }
+{ "_id" : { "$oid" : "52d9b03a44aee655a135e678" }, "nev" : "Baba, mama", "urlNev" : "baba-mama", "sorrend" : 9, "szuloId" : null, "regiId" : 87 }
+{ "_id" : { "$oid" : "52d9b1e644aee655a135e679" }, "nev" : "Ipari", "urlNev" : "allas-ipari", "sorrend" : 1, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 21 }
+{ "_id" : { "$oid" : "52d9b21744aee655a135e67a" }, "nev" : "Kereskedelmi", "urlNev" : "kereskedelmi", "sorrend" : 2, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 22 }
+{ "_id" : { "$oid" : "52d9b22b44aee655a135e67b" }, "nev" : "Szellemi", "urlNev" : "szellemi", "sorrend" : 3, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 51 }
+{ "_id" : { "$oid" : "52d9b24744aee655a135e67c" }, "nev" : "Távmunka", "urlNev" : "tavmunka", "sorrend" : 4, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 24 }
+{ "_id" : { "$oid" : "52d9b25644aee655a135e67d" }, "nev" : "Diákmunka", "urlNev" : "diakmunka", "sorrend" : 5, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 47 }
+{ "_id" : { "$oid" : "52d9b26944aee655a135e67e" }, "nev" : "Egyéb", "urlNev" : "allas-egyeb", "sorrend" : 6, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 23 }
+{ "_id" : { "$oid" : "52d9b28644aee655a135e67f" }, "nev" : "Tanítás", "urlNev" : "tanitas", "sorrend" : 7, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 46 }
+{ "_id" : { "$oid" : "52d9b29a44aee655a135e680" }, "nev" : "Szolgáltatás", "urlNev" : "allas-szolgaltatas", "sorrend" : 8, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 52 }
+{ "_id" : { "$oid" : "52d9b2ae44aee655a135e681" }, "nev" : "Vállalkozás", "urlNev" : "vallalkozas", "sorrend" : 9, "szuloId" : { "$oid" : "52d9abe944aee655a135e661" }, "regiId" : 80 }
+{ "_id" : { "$oid" : "52daaa3744aee655a135e682" }, "nev" : "Alkatrész", "urlNev" : "alkatresz", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" }, "regiId" : 26 }
+{ "_id" : { "$oid" : "52daaa8e44aee655a135e683" }, "nev" : "Szoftver", "urlNev" : "szoftver", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" }, "regiId" : 27 }
 { "_id" : { "$oid" : "52daaabc44aee655a135e684" }, "nev" : "Hardver", "urlNev" : "hardver", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" } }
-{ "_id" : { "$oid" : "52daaad144aee655a135e685" }, "nev" : "Szolgáltatás", "urlNev" : "szamitastechnika-szolgaltatas", "sorrend" : 4, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" } }
-{ "_id" : { "$oid" : "52daaae444aee655a135e686" }, "nev" : "Internet", "urlNev" : "internet", "sorrend" : 5, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" } }
-{ "_id" : { "$oid" : "52daab4644aee655a135e687" }, "nev" : "Háztartási gép", "urlNev" : "haztartasi-gep", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac2444aee655a135e663" } }
-{ "_id" : { "$oid" : "52daab6244aee655a135e688" }, "nev" : "Munkagép", "urlNev" : "munkagep", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac2444aee655a135e663" } }
-{ "_id" : { "$oid" : "52daab8744aee655a135e689" }, "nev" : "Szerszám", "urlNev" : "szerszam", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac2444aee655a135e663" } }
-{ "_id" : { "$oid" : "52daadbc44aee655a135e68a" }, "nev" : "Személyautó", "urlNev" : "szemelyauto", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
+{ "_id" : { "$oid" : "52daaad144aee655a135e685" }, "nev" : "Szolgáltatás", "urlNev" : "szamitastechnika-szolgaltatas", "sorrend" : 4, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" }, "regiId" : 28 }
+{ "_id" : { "$oid" : "52daaae444aee655a135e686" }, "nev" : "Internet", "urlNev" : "internet", "sorrend" : 5, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" }, "regiId" : 44 }
+{ "_id" : { "$oid" : "52daab4644aee655a135e687" }, "nev" : "Háztartási gép", "urlNev" : "haztartasi-gep", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac2444aee655a135e663" }, "regiId" : 13 }
+{ "_id" : { "$oid" : "52daab6244aee655a135e688" }, "nev" : "Munkagép", "urlNev" : "munkagep", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac2444aee655a135e663" }, "regiId" : 14 }
+{ "_id" : { "$oid" : "52daab8744aee655a135e689" }, "nev" : "Szerszám", "urlNev" : "szerszam", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac2444aee655a135e663" }, "regiId" : 61 }
+{ "_id" : { "$oid" : "52daadbc44aee655a135e68a" }, "nev" : "Személyautó", "urlNev" : "szemelyauto", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" }, "regiId" : 8 }
 { "_id" : { "$oid" : "52daadf544aee655a135e68b" }, "nev" : "Kishaszon", "urlNev" : "kishaszon", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
-{ "_id" : { "$oid" : "52daae0844aee655a135e68c" }, "nev" : "Haszonjármű", "urlNev" : "haszonjarmu", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
+{ "_id" : { "$oid" : "52daae0844aee655a135e68c" }, "nev" : "Haszonjármű", "urlNev" : "haszonjarmu", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" }, "regiId" : 9 }
 { "_id" : { "$oid" : "52daae2844aee655a135e68d" }, "nev" : "Pótkocsi, utánfutó", "urlNev" : "potkocsi-utanfuto", "sorrend" : 4, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
-{ "_id" : { "$oid" : "52daae4144aee655a135e68e" }, "nev" : "Motor", "urlNev" : "motor", "sorrend" : 5, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
+{ "_id" : { "$oid" : "52daae4144aee655a135e68e" }, "nev" : "Motor", "urlNev" : "motor", "sorrend" : 5, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" }, "regiId" : 10 }
 { "_id" : { "$oid" : "52daae4e44aee655a135e68f" }, "nev" : "Busz", "urlNev" : "busz", "sorrend" : 6, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
 { "_id" : { "$oid" : "52daae6044aee655a135e690" }, "nev" : "Lakókocsi", "urlNev" : "lakokocsi", "sorrend" : 7, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
-{ "_id" : { "$oid" : "52daae8044aee655a135e691" }, "nev" : "Alkatrész", "urlNev" : "alkatresz", "sorrend" : 8, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
+{ "_id" : { "$oid" : "52daae8044aee655a135e691" }, "nev" : "Alkatrész", "urlNev" : "alkatresz", "sorrend" : 8, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" }, "regiId" : 38 }
 { "_id" : { "$oid" : "52daae9444aee655a135e692" }, "nev" : "Gumi, felni", "urlNev" : "gumi-felni", "sorrend" : 9, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
 { "_id" : { "$oid" : "52daaf8844aee655a135e693" }, "nev" : "Hajó", "urlNev" : "hajo", "sorrend" : 10, "szuloId" : { "$oid" : "52d9ac3544aee655a135e664" } }
-{ "_id" : { "$oid" : "52dab02c44aee655a135e694" }, "nev" : "Audio", "urlNev" : "audio", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" } }
-{ "_id" : { "$oid" : "52dab04244aee655a135e695" }, "nev" : "Video", "urlNev" : "video", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" } }
-{ "_id" : { "$oid" : "52dab05b44aee655a135e696" }, "nev" : "Telefon", "urlNev" : "telefon", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" } }
-{ "_id" : { "$oid" : "52dab08044aee655a135e697" }, "nev" : "Tablet", "urlNev" : "tablet", "sorrend" : 4, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" } }
-{ "_id" : { "$oid" : "52dab50e44aee655a135e698" }, "nev" : "Háziállat", "urlNev" : "haziallat", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac6844aee655a135e666" } }
-{ "_id" : { "$oid" : "52dab52144aee655a135e699" }, "nev" : "Haszonállat", "urlNev" : "haszonallat", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac6844aee655a135e666" } }
-{ "_id" : { "$oid" : "52dab53744aee655a135e69a" }, "nev" : "Növény", "urlNev" : "noveny", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac6844aee655a135e666" } }
-{ "_id" : { "$oid" : "52dab5f144aee655a135e69b" }, "nev" : "Tanfolyam", "urlNev" : "tanfolyam", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac7844aee655a135e667" } }
-{ "_id" : { "$oid" : "52dab60644aee655a135e69c" }, "nev" : "Korrepetálás", "urlNev" : "korrepetalas", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac7844aee655a135e667" } }
-{ "_id" : { "$oid" : "52dab61944aee655a135e69d" }, "nev" : "Egyéb", "urlNev" : "oktatas-egyeb", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac7844aee655a135e667" } }
-{ "_id" : { "$oid" : "52dab69a44aee655a135e69e" }, "nev" : "Fényképezés", "urlNev" : "fenykepezes", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" } }
-{ "_id" : { "$oid" : "52dab6ae44aee655a135e69f" }, "nev" : "Sportszer", "urlNev" : "sportszer", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" } }
-{ "_id" : { "$oid" : "52dab6bc44aee655a135e6a0" }, "nev" : "Hangszer", "urlNev" : "hangszer", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" } }
-{ "_id" : { "$oid" : "52dab6d544aee655a135e6a1" }, "nev" : "Nyaralás", "urlNev" : "nyaralas", "sorrend" : 4, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" } }
-{ "_id" : { "$oid" : "52dab6eb44aee655a135e6a2" }, "nev" : "Életmód", "urlNev" : "eletmod", "sorrend" : 5, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" } }
-{ "_id" : { "$oid" : "52dab73144aee655a135e6a3" }, "nev" : "Adó 1%", "urlNev" : "ado-1-szazaleka", "sorrend" : 1, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" } }
-{ "_id" : { "$oid" : "52dab74c44aee655a135e6a4" }, "nev" : "Valentin nap", "urlNev" : "valentin-nap", "sorrend" : 2, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" } }
-{ "_id" : { "$oid" : "52dab75d44aee655a135e6a5" }, "nev" : "Farsang", "urlNev" : "farsang", "sorrend" : 3, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" } }
+{ "_id" : { "$oid" : "52dab02c44aee655a135e694" }, "nev" : "Audio", "urlNev" : "audio", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" }, "regiId" : 30 }
+{ "_id" : { "$oid" : "52dab04244aee655a135e695" }, "nev" : "Video", "urlNev" : "video", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" }, "regiId" : 31 }
+{ "_id" : { "$oid" : "52dab05b44aee655a135e696" }, "nev" : "Telefon", "urlNev" : "telefon", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" }, "regiId" : 32 }
+{ "_id" : { "$oid" : "52dab08044aee655a135e697" }, "nev" : "Tablet", "urlNev" : "tablet", "sorrend" : 4, "szuloId" : { "$oid" : "52d9ac4a44aee655a135e665" }, "regiId" : 48 }
+{ "_id" : { "$oid" : "52dab50e44aee655a135e698" }, "nev" : "Háziállat", "urlNev" : "haziallat", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac6844aee655a135e666" }, "regiId" : 35 }
+{ "_id" : { "$oid" : "52dab52144aee655a135e699" }, "nev" : "Haszonállat", "urlNev" : "haszonallat", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac6844aee655a135e666" }, "regiId" : 36 }
+{ "_id" : { "$oid" : "52dab53744aee655a135e69a" }, "nev" : "Növény", "urlNev" : "noveny", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac6844aee655a135e666" }, "regiId" : 37 }
+{ "_id" : { "$oid" : "52dab5f144aee655a135e69b" }, "nev" : "Tanfolyam", "urlNev" : "tanfolyam", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac7844aee655a135e667" }, "regiId" : 58 }
+{ "_id" : { "$oid" : "52dab60644aee655a135e69c" }, "nev" : "Korrepetálás", "urlNev" : "korrepetalas", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac7844aee655a135e667" }, "regiId" : 59 }
+{ "_id" : { "$oid" : "52dab61944aee655a135e69d" }, "nev" : "Egyéb", "urlNev" : "oktatas-egyeb", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac7844aee655a135e667" }, "regiId" : 60 }
+{ "_id" : { "$oid" : "52dab69a44aee655a135e69e" }, "nev" : "Fényképezés", "urlNev" : "fenykepezes", "sorrend" : 1, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" }, "regiId" : 73 }
+{ "_id" : { "$oid" : "52dab6ae44aee655a135e69f" }, "nev" : "Sportszer", "urlNev" : "sportszer", "sorrend" : 2, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" }, "regiId" : 6 }
+{ "_id" : { "$oid" : "52dab6bc44aee655a135e6a0" }, "nev" : "Hangszer", "urlNev" : "hangszer", "sorrend" : 3, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" }, "regiId" : 4 }
+{ "_id" : { "$oid" : "52dab6d544aee655a135e6a1" }, "nev" : "Nyaralás", "urlNev" : "nyaralas", "sorrend" : 4, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" }, "regiId" : 74 }
+{ "_id" : { "$oid" : "52dab6eb44aee655a135e6a2" }, "nev" : "Életmód", "urlNev" : "eletmod", "sorrend" : 5, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" }, "regiId" : 86 }
+{ "_id" : { "$oid" : "52dab73144aee655a135e6a3" }, "nev" : "Adó 1%", "urlNev" : "ado-1-szazaleka", "sorrend" : 1, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" }, "regiId" : 67 }
+{ "_id" : { "$oid" : "52dab74c44aee655a135e6a4" }, "nev" : "Valentin nap", "urlNev" : "valentin-nap", "sorrend" : 2, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" }, "regiId" : 83 }
+{ "_id" : { "$oid" : "52dab75d44aee655a135e6a5" }, "nev" : "Farsang", "urlNev" : "farsang", "sorrend" : 3, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" }, "regiId" : 84 }
 { "_id" : { "$oid" : "52dab76e44aee655a135e6a6" }, "nev" : "Húsvét", "urlNev" : "husvet", "sorrend" : 4, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" } }
-{ "_id" : { "$oid" : "52dab77e44aee655a135e6a7" }, "nev" : "Karácsony", "urlNev" : "karacsony", "sorrend" : 5, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" } }
-{ "_id" : { "$oid" : "52dab79444aee655a135e6a8" }, "nev" : "Szilveszter", "urlNev" : "szilveszter", "sorrend" : 6, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" } }
+{ "_id" : { "$oid" : "52dab77e44aee655a135e6a7" }, "nev" : "Karácsony", "urlNev" : "karacsony", "sorrend" : 5, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" }, "regiId" : 81 }
+{ "_id" : { "$oid" : "52dab79444aee655a135e6a8" }, "nev" : "Szilveszter", "urlNev" : "szilveszter", "sorrend" : 6, "szuloId" : { "$oid" : "52d9acac44aee655a135e669" }, "regiId" : 82 }
 { "_id" : { "$oid" : "533dae4821ad39681203cbf5" }, "nev" : "Babakocsi", "urlNev" : "babakocsi", "sorrend" : 1, "szuloId" : { "$oid" : "52d9b03a44aee655a135e678" } }
 { "_id" : { "$oid" : "533daf0021ad39681203cbf6" }, "nev" : "Bababútor, kellék", "urlNev" : "bababutor", "sorrend" : 2, "szuloId" : { "$oid" : "52d9b03a44aee655a135e678" } }
 { "_id" : { "$oid" : "533daf3921ad39681203cbf7" }, "nev" : "Babakocsi, hordozó", "urlNev" : "babakocsi-hordozo", "sorrend" : 3, "szuloId" : { "$oid" : "52d9b03a44aee655a135e678" } }
@@ -80,3 +80,5 @@
 { "_id" : { "$oid" : "533daf8321ad39681203cbf9" }, "nev" : "Kismama ruha", "urlNev" : "kismamaruha", "sorrend" : 5, "szuloId" : { "$oid" : "52d9b03a44aee655a135e678" } }
 { "_id" : { "$oid" : "533dafb521ad39681203cbfa" }, "nev" : "Játék", "urlNev" : "gyerekjatek", "sorrend" : 6, "szuloId" : { "$oid" : "52d9b03a44aee655a135e678" } }
 { "_id" : { "$oid" : "533dafcd21ad39681203cbfb" }, "nev" : "Egyéb", "urlNev" : "baba-mama-egyeb", "sorrend" : 7, "szuloId" : { "$oid" : "52d9b03a44aee655a135e678" } }
+{ "_id" : { "$oid" : "5373c0378e7bd915aa874b25" }, "nev" : "Játékkonzol", "urlNev" : "jatekkonzol", "sorrend" : 6, "szuloId" : { "$oid" : "52d9ac0e44aee655a135e662" }, "regiId" : 85 }
+{ "_id" : { "$oid" : "53766eac705cef347fff5293" }, "nev" : "Kerékpár", "urlNev" : "kerekpar", "sorrend" : 6, "szuloId" : { "$oid" : "52d9ac9744aee655a135e668" }, "regiId" : 11 }
