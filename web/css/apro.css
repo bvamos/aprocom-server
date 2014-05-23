@@ -289,6 +289,10 @@ div.hirdeteslista-container .hirdetes-szoveg {
 	vertical-align: top;
 }
 
+div.hirdeteslista-container .hirdetes-szoveg span.kiemelt {
+	background-color: #ffff00; 
+}
+
 div.hirdeteslista-container .hirdetes-mezok {
 	
 }

@@ -179,6 +179,27 @@ public class KeresesServerResource extends ServerResource implements
 			
 			h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
 			
+			// Tagek
+			h.getEgyebMezok().put("tag", "");
+			
+			if(h.getAr()==0) {
+				String tag = h.getEgyebMezok().get("tag");
+				if(!tag.isEmpty()) {
+					tag += ";";
+				}
+				tag += "Ingyenes";
+				h.getEgyebMezok().put("tag", tag);
+			}
+			if(h.getId().getTime()+24*3600*1000 > new Date().getTime()) {
+				String tag = h.getEgyebMezok().get("tag");
+				if(!tag.isEmpty()) {
+					tag += ";";
+				}
+				tag += "Friss";
+				h.getEgyebMezok().put("tag", tag);
+			}
+
+			
 			// Kepek
 			Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
 			kepekQuery.criteria("hirdetesId").equal(h.getId());

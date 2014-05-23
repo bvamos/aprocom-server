@@ -37,7 +37,7 @@
 						<div class="hirdetes-body">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-szoveg">${hirdetes.szoveg!""}</td>
+									<td class="hirdetes-szoveg">${hirdetes.szoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i')!""}</td>
 									<td class="hirdetes-mezok">
 										<#if hirdetes.attributumok??>
 										
@@ -88,9 +88,9 @@
 											 <#assign kep=hirdetes.kepek[0] >
 											 <div>
 											 <#if kep.thumbFileNev?? >
-											 <img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;">
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
 											 <#elseif kep.fileNev?? >
-											 <img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;">
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
 											 </#if>
 											 </div>
 										</#if>
@@ -113,7 +113,9 @@
 								<tr>
 									<td class="hirdetes-muveletek"><span>Műveletek: </span>
 									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}">részletek itt</a>,
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">új ablakban</a> </td>
+									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">új ablakban</a> 
+									${hirdetes.egyebMezok.tag}
+									</td>
 									<td class="hirdetes-ar">${hirdetes.ar} Ft</td>
 								</tr>
 							</table>
