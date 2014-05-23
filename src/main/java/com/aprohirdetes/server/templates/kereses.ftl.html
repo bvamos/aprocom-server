@@ -113,8 +113,13 @@
 								<tr>
 									<td class="hirdetes-muveletek"><span>Műveletek: </span>
 									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}">részletek itt</a>,
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">új ablakban</a> 
-									${hirdetes.egyebMezok.tag}
+									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">új ablakban</a>
+									<#if hirdetes.egyebMezok.tag?? >
+									&nbsp;&nbsp;
+									<#list hirdetes.egyebMezok.tag?split(";") as tag>
+										<span class="label label-warning">${tag}</span>
+									</#list>
+									</#if>
 									</td>
 									<td class="hirdetes-ar">${hirdetes.ar} Ft</td>
 								</tr>
