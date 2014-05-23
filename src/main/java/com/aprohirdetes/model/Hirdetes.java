@@ -141,6 +141,10 @@ public class Hirdetes {
 		this.kepek = kepek;
 	}
 	
+	public List<String> getKulcsszavak() {
+		return kulcsszavak;
+	}
+	
 	public boolean isHitelesitve() {
 		return hitelesitve;
 	}

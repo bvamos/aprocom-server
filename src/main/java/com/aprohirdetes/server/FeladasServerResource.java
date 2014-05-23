@@ -144,7 +144,6 @@ public class FeladasServerResource extends ServerResource implements
 
 	@Override
 	public Representation accept(Form form) throws IOException {
-		System.out.println(form);
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas_eredmeny.ftl.html");
 		String uzenet = "";
 		String hibaUzenet = "";
