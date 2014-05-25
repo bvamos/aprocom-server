@@ -188,7 +188,7 @@ public class AproApplication extends Application {
 		HelysegCache.loadCache();
 		
 		// Hirdetesek szamanak szamolasa idozitve a hatterben
-		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 1, 300, TimeUnit.SECONDS);
+		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 1, 10, TimeUnit.MINUTES);
 	}
 
 	@Override
