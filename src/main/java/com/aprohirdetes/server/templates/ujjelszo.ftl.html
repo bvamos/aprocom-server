@@ -8,8 +8,7 @@
 			<form class="form-horizontal" role="form" method="post">
 				<#if hibaUzenet?? >
 				<div class="alert alert-danger">${hibaUzenet}</div>
-				</#if>
-				<#if uzenet?? >
+				<#elseif uzenet?? >
 				<div class="alert alert-success">${uzenet}</div>
 				<#else>
 				<div class="alert alert-info">Semmi gond, pillanatok alatt generálunk egy újat. Kérjük, add meg a belépéshez használt email címed, és a lenti gombra kattintva

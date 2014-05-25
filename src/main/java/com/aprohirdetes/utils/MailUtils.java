@@ -20,32 +20,48 @@ public class MailUtils {
 	public static boolean sendMail(String toAddress, String messageSubject, String messageBody) {
 		boolean ret = false;
 		
-		// Sender's email ID needs to be mentioned
-		String from = AproApplication.APP_CONFIG.getProperty("MAIL.FROM") != null ? AproApplication.APP_CONFIG.getProperty("MAIL.FROM") : "info@aprohirdetes.com";
+		String host = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST");
+		String port = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.PORT");
+		String from = AproApplication.APP_CONFIG.getProperty("MAIL.FROM");
+		final String user = AproApplication.APP_CONFIG.getProperty("MAIL.USER");
+		final String pass = AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD");
+		
+		// From
+		if(from == null || from.isEmpty()) {
+			from =  "info@aprohirdetes.com";
+		}
 
-		// Assuming you are sending email from localhost
-		String host = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST") != null ? AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST") : "localhost";
-		String port = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.PORT") != null ? AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.PORT") : "25";
+		// Host:Port
+		if(host == null || host.isEmpty()) {
+			host = "localhost";
+		}
+		if(port == null || port.isEmpty()) {
+			port = "25";
+		}
 
 		// Setup mail server
+		Session session = null;
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", host);
 		properties.setProperty("mail.smtp.port", port);
 		
 		// SMTP authentication
-		if (AproApplication.APP_CONFIG.getProperty("MAIL.USER") != null) {
+		if (user != null && !user.isEmpty()) {
 			properties.put("mail.smtp.auth", "true");
 			properties.put("mail.smtp.starttls.enable","true");
-			properties.put("mail.user", AproApplication.APP_CONFIG.getProperty("MAIL.USER"));
-			properties.put("mail.password", AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD")==null ? "" : AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD"));
+			properties.put("mail.user", user);
+			properties.put("mail.password", pass);
+			
+			session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(user, pass);
+				}
+			});
+		} else {
+			properties.put("mail.smtp.auth", "false");
+			session = Session.getDefaultInstance(properties);
 		}
 
-		// Get the default Session object.
-		Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(AproApplication.APP_CONFIG.getProperty("MAIL.USER"), AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD"));
-			}
-		});
 		session.setDebug(true);
 
 		try {
