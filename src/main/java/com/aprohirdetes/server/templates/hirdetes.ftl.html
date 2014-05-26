@@ -22,6 +22,9 @@
 						<br>
 						<div class="panel panel-default">
 							<div class="panel-body">${hirdetes.szoveg!""}</div>
+							<#if hirdetes.egyebInfo?? >
+							<p><a href="${hirdetes.egyebInfo}" target="_blank">${hirdetes.egyebInfo}</a></p>
+							</#if>
 							<#if hirdetes.attributumok??>
 							<ul class="list-group">
 								<li class="list-group-item"><b>Ajtók száma: </b>78</li>
