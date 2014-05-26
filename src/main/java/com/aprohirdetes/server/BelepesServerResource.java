@@ -104,10 +104,11 @@ public class BelepesServerResource extends ServerResource implements
 			datastore.update(this.hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
 
 			// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
+			// TODO: Relativ URL eseten kiegesziti, es h01.aprohirdtes.com lesz
 			if("feladas".equalsIgnoreCase(this.referrer)) {
-				redirectPermanent(contextPath + "/feladas");
+				redirectPermanent("https://www.aprohirdetes.com/feladas");
 			} else {
-				redirectPermanent(contextPath + "/felhasznalo/hirdetesek");
+				redirectPermanent("https://www.aprohirdetes.com/felhasznalo/hirdetesek");
 			}
 		} else {
 			errorMessage = "Hibás felhasználónév vagy jelszó";
