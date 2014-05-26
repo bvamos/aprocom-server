@@ -105,6 +105,9 @@ public class AproApplication extends Application {
 		Directory staticImagesDirectory = new Directory(getContext(), staticImagesUri);
 		staticImagesDirectory.setListingAllowed(true);
 		router.attach("/static/images", staticImagesDirectory);
+		
+		// Statikus file-ok
+		router.attach("/sitemap.xml", SitemapServerResource.class);
 
 		return router;
 	}
