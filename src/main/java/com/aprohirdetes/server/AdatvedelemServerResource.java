@@ -52,7 +52,9 @@ public class AdatvedelemServerResource extends ServerResource implements StaticH
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName());
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Adatkezelési szabályzat");
+		appDataModel.put("description", "Az Apróhirdetés.com adatkezelési szabályzata");
+		appDataModel.put("keywords", "adatkezelés, szabályzat, adatvédelem");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
