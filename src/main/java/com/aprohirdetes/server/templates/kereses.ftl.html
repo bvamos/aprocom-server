@@ -23,11 +23,12 @@
 				</div>
 				<div class="row">
 					<#list hirdetesList as hirdetes>
+						<#assign urlCim = hirdetes.cim?replace('/', '')?url >
 					<div class="hirdeteslista-container">
 						<div class="hirdetes-header">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-cim"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">${hirdetes.cim}</a>
+									<td class="hirdetes-cim"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank">${hirdetes.cim}</a>
 									 (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
 									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}
 									| ${hirdetes.egyebMezok.helysegNev}</td>
@@ -88,9 +89,9 @@
 											 <#assign kep=hirdetes.kepek[0] >
 											 <div>
 											 <#if kep.thumbFileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
 											 <#elseif kep.fileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
 											 </#if>
 											 </div>
 										</#if>
@@ -112,8 +113,8 @@
 							<table border="0" width="100%">
 								<tr>
 									<td class="hirdetes-muveletek"><span>Műveletek: </span>
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}">részletek itt</a>,
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${hirdetes.cim}" target="_blank">új ablakban</a>
+									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">részletek itt</a>,
+									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank">új ablakban</a>
 									<#if hirdetes.egyebMezok.tag?? >
 									&nbsp;&nbsp;
 									<#list hirdetes.egyebMezok.tag?split(";") as tag>

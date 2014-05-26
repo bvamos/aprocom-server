@@ -182,6 +182,7 @@ public class AproApplication extends Application {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 		cfg.setTemplateLoader(new ClassTemplateLoader(getClass(), "templates/"));
 		cfg.setDefaultEncoding("UTF-8");
+		cfg.setURLEscapingCharset("UTF-8");
 		TPL_CONFIG = cfg;
 		
 		// Loading Kategoriak into memory cache
