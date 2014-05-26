@@ -23,7 +23,7 @@
 						<div class="panel panel-default">
 							<div class="panel-body">${hirdetes.szoveg!""}</div>
 							<#if hirdetes.egyebInfo?? >
-							<p><a href="${hirdetes.egyebInfo}" target="_blank">${hirdetes.egyebInfo}</a></p>
+							<div class="panel-body">További információ: <a href="${hirdetes.egyebInfo}" target="_blank">${hirdetes.egyebInfo}</a></div>
 							</#if>
 							<#if hirdetes.attributumok??>
 							<ul class="list-group">
