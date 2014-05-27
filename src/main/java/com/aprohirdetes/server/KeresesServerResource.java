@@ -190,7 +190,8 @@ public class KeresesServerResource extends ServerResource implements
 				tag += "Ingyenes";
 				h.getEgyebMezok().put("tag", tag);
 			}
-			if(h.getId().getTime()+24*3600*1000 > new Date().getTime()) {
+			// Friss tag: 3 napig
+			if(h.getId().getTime()+3*24*3600*1000 > new Date().getTime()) {
 				String tag = h.getEgyebMezok().get("tag");
 				if(!tag.isEmpty()) {
 					tag += ";";
