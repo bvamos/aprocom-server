@@ -17,6 +17,14 @@ import com.aprohirdetes.server.AproApplication;
 
 public class MailUtils {
 
+	/**
+	 * Levelkuldes megadott cimzettnek
+	 * 
+	 * @param toAddress
+	 * @param messageSubject
+	 * @param messageBody
+	 * @return
+	 */
 	public static boolean sendMail(String toAddress, String messageSubject, String messageBody) {
 		boolean ret = false;
 		
@@ -84,7 +92,6 @@ public class MailUtils {
 
 			// Send message
 			Transport.send(message);
-			System.out.println("Level elkuldve. Cimzett: " + toAddress);
 			ret = true;
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -95,9 +102,17 @@ public class MailUtils {
 		return ret;
 	}
 	
+	/**
+	 * Visszaigazolo level kuldese aktivalo linkkel a hirdetesben megadott email cimre.
+	 * Plusz ertesito level nekunk.
+	 * 
+	 * @param hi Feladott Hirdetes
+	 * @return True, ha sikerult a levelet elkuldeni, kulonben False
+	 */
 	public static boolean sendMailHirdetesFeladva(Hirdetes hi) {
 		boolean ret = false;
 		
+		// Aktivalo level kuldese a megadott email cimre
 		String email = hi.getHirdeto().getEmail();
 		if(email != null && !email.isEmpty()) {
 			String subject = "Hirdetés feladva: " + hi.getCim();
@@ -106,12 +121,19 @@ public class MailUtils {
 					+ "Hirdetését sikeresen feladta, de ahhoz, hogy megjelenjen az oldalunkon,"
 					+ "kérjük kattintson az alábbi linkre, vagy másolja böngészője címsorába!\n"
 					+ "Aktiválás:\n"
-					+ "http://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
+					+ "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
 					+ "Üdvözlettel,\n"
 					+ "Apróhirdetés.com";
 			
 			ret = MailUtils.sendMail(email, subject, body);
 		}
+		
+		// Ertesites kuldese magamnak
+		String subject = "Uj hirdetes: " + hi.getCim();
+		String body = "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
+				+ "https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"/TEST\n\n";
+		MailUtils.sendMail(AproApplication.APP_CONFIG.getProperty("MAIL.FROM"), subject, body);
+		
 		return ret;
 	}
 	
@@ -123,7 +145,7 @@ public class MailUtils {
 			String subject = "Új jelszót generáltunk";
 			String body = "Kedves " + ho.getNev() + "!\n\n"
 					+ "Kérésére új jelszót generáltunk: " + jelszo + "\n"
-					+ "Belépés: http://www.aprohirdetes.com/belepes\n\n"
+					+ "Belépés: https://www.aprohirdetes.com/belepes\n\n"
 					+ "Üdvözlettel,\n"
 					+ "Apróhirdetés.com";
 			
