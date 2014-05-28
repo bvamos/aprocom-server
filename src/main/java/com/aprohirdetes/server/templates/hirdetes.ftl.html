@@ -37,7 +37,7 @@
 						<#if hirdetes.kepek?has_content >
 							<div>
 							<#list hirdetes.kepek as kep>
-							<img src="${app.contextRoot}/static/images/${kep.fileNev}" height="300">
+							<img src="${app.contextRoot}/static/images/${kep.fileNev}" height="300" alt="${hirdetes.cim?html}">
 							</#list>
 							</div>
 						<#else>
