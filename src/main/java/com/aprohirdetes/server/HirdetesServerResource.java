@@ -65,14 +65,14 @@ public class HirdetesServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 	}
 
+	@SuppressWarnings("unchecked")
 	public Representation representHtml() throws IOException {
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
-		appDataModel.put("description", hirdetes.getCim());
+		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
@@ -82,6 +82,11 @@ public class HirdetesServerResource extends ServerResource implements
 		
 		// Hirdetes adatai
 		if(hirdetes != null) {
+			// HTML Title modositasa
+			((HashMap<String, Object>) dataModel.get("app")).put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
+			((HashMap<String, Object>) dataModel.get("app")).put("description", hirdetes.getCim());
+			
+			// Mongo Datastore
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 			
 			// Megjelenes szamanak novelese
@@ -118,7 +123,7 @@ public class HirdetesServerResource extends ServerResource implements
 			// Nincs ilyen hirdetes
 			getLogger().severe("Nincs meg a megadott hirdetes: " + (String) this.getRequestAttributes().get("hirdetesId"));
 			
-			dataModel.put("hibaUzenet", "A megadott hirdetés nem található.");
+			dataModel.put("hibaUzenet", "A megadott hirdetés nem található. Valószinűleg oldalunk segítségével már vevőre lelt a meghirdetett termék vagy szolgáltatás.");
 		}
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("hirdetes.ftl.html");
