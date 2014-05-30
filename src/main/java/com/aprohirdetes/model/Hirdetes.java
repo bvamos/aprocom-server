@@ -32,12 +32,15 @@ public class Hirdetes {
 	private HashMap<String, String> egyebMezok = new HashMap<String, String>();
 	private List<String> kulcsszavak = new ArrayList<String>();
 	private boolean hitelesitve;
+	private int megjelenes;
 	
 	private int regiId;
+	
 	
 	public Hirdetes() {
 		setAr(0);
 		setHitelesitve(true);
+		setMegjelenes(0);
 		setRegiId(-1);
 	}
 	
@@ -151,6 +154,18 @@ public class Hirdetes {
 
 	public void setHitelesitve(boolean hitelesitve) {
 		this.hitelesitve = hitelesitve;
+	}
+
+	public int getMegjelenes() {
+		return megjelenes;
+	}
+
+	public void setMegjelenes(int megjelenes) {
+		this.megjelenes = megjelenes;
+	}
+
+	public void increaseMegjelenesByOne() {
+		this.megjelenes++;
 	}
 
 	public int getRegiId() {

@@ -13,6 +13,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
@@ -81,6 +82,16 @@ public class HirdetesServerResource extends ServerResource implements
 		
 		// Hirdetes adatai
 		if(hirdetes != null) {
+			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			
+			// Megjelenes szamanak novelese
+			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+			query.criteria("id").equal(this.hirdetesId);
+			UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("megjelenes", hirdetes.getMegjelenes()+1);
+			datastore.update(query, ops);
+		    hirdetes.increaseMegjelenesByOne();
+		    
+			
 			// Kereses eredmenyeben levo Hirdetes objektum feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 			hirdetes.getEgyebMezok().put("tipusNev", (hirdetes.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
 			
@@ -95,7 +106,6 @@ public class HirdetesServerResource extends ServerResource implements
 			hirdetes.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(hirdetes.getFeladasDatuma()));
 			
 			// Kepek
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 			Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
 			kepekQuery.criteria("hirdetesId").equal(hirdetes.getId());
 			

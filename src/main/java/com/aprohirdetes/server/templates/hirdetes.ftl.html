@@ -17,12 +17,11 @@
 						<div><b>Helység: </b>${hirdetes.egyebMezok.helysegNev}</div>
 						<div><b>Kategória: </b>${hirdetes.egyebMezok.kategoriaNev}</div>
 						<div><b>Feladás időpontja: </b>${hirdetes.egyebMezok.feladvaSzoveg}</div>
-						<div class="text-muted">Egyedi azonosító: ${hirdetes.id}</div>
 
 						<br>
 						<div class="panel panel-default">
 							<div class="panel-body">${hirdetes.szoveg!""}</div>
-							<#if (hirdetes.egyebInfo?length>0) >
+							<#if hirdetes.egyebInfo?? && (hirdetes.egyebInfo?length>0) >
 							<div class="panel-body">További információ: <a href="${hirdetes.egyebInfo}" target="_blank">${hirdetes.egyebInfo}</a></div>
 							</#if>
 							<#if hirdetes.attributumok??>
@@ -63,6 +62,10 @@
 							<span>${hirdetes.hirdeto.iranyitoSzam!""} ${hirdetes.hirdeto.telepules!""}, ${hirdetes.hirdeto.cim!""}</span>
 						</div>
 						</#if>
+						
+						<hr>
+						<div class="text-muted"><b>Megjelent eddig: </b>${hirdetes.megjelenes} alkalommal</div>
+						<div class="text-muted"><b>Egyedi azonosító: </b>${hirdetes.id}</div>
 					</div>
 				<#else>
 				<h1>Nincs ilyen hirdetés</h1>
