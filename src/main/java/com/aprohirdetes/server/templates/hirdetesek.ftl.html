@@ -26,6 +26,7 @@
 						<th>Kategória</th>
 						<th>Ár</th>
 						<th>Feladva</th>
+						<th>Megjelent</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -35,6 +36,7 @@
 						<td>${(hirdetes.egyebMezok.kategoria)!''}</td>
 						<td align="right">${hirdetes.ar} Ft</td>
 						<td>${(hirdetes.egyebMezok.feladva)!''}</td>
+						<td align="right">${hirdetes.megjelenes!'0'}</td>
 					</tr>
 				</#list>
 					</tbody>
