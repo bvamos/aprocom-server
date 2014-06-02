@@ -7,7 +7,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
-public interface FeladasResource {
+public interface FormResource {
 
 	@Get("html")
 	public Representation representHtml() throws IOException;

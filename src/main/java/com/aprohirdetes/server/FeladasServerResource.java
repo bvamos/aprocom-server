@@ -26,7 +26,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.FeladasResource;
+import com.aprohirdetes.common.FormResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
@@ -45,7 +45,7 @@ import com.aprohirdetes.utils.PasswordHash;
 import freemarker.template.Template;
 
 public class FeladasServerResource extends ServerResource implements
-		FeladasResource {
+		FormResource {
 
 	private ObjectId hirdetesId = null;
 	private String contextPath = "";

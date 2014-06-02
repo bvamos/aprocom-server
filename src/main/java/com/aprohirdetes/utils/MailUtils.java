@@ -153,4 +153,20 @@ public class MailUtils {
 		}
 		return ret;
 	}
+	
+	public static boolean sendMailKapcsolat(String fromNev, String fromEmail, String uzenet) {
+		boolean ret = false;
+		
+		if(fromEmail != null && !fromEmail.isEmpty()) {
+			String subject = "Üzenet a weboldalról";
+			String body = "Kedves Apróhirdetés.com!\n\n"
+					+ uzenet + "\n\n"
+					+ "Üdvözlettel,\n"
+					+ fromNev + " (" + fromEmail + ")\n";
+			
+			ret = MailUtils.sendMail("info@aprohirdetes.com", subject, body);
+		}
+		
+		return ret;
+	}
 }

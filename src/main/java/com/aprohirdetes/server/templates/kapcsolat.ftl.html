@@ -8,7 +8,43 @@
 			<p>Az Apróhirdetés.com szolgáltatást a ZURIEL Kft működteti. A ZURIEL Kft-ről a <a href="http://www.zuriel.hu/" target="_blank">www.zuriel.hu</a> weboldalon találsz bővebb információt.</p>
 			
 			<h2>Ügyfélszolgálat</h2>
-			<p>Bármilyen problémával ill. kérdéssel fordulj nyugodtan ügyfélszolgálatunkhoz az info@aprohirdetes.com e-mail címen.</p>
+			<p>Bármilyen problémával ill. kérdéssel fordulj nyugodtan ügyfélszolgálatunkhoz az <a href="mailto:info@aprohirdetes.com">info@aprohirdetes.com</a> e-mail címen, vagy használd az alábbi űrlapot!</p>
+			
+			<#if hibaUzenet?? >
+			<div class="alert alert-danger">${hibaUzenet}</div>
+			<#elseif uzenet?? >
+			<div class="alert alert-success">${uzenet}</div>
+			</#if>
+				
+			<form class="form-horizontal" role="form" method="post">
+			
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoNev">Név</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetoNev" name="hirdetoNev" value="${(hirdeto.nev)!''}">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cím</label>
+					<div class="col-sm-7">
+						<input type="email" class="form-control" id="hirdetoEmail" name="hirdetoEmail" value="${(hirdeto.email)!''}" placeholder="@" required="">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="uzenet">Üzenet</label>
+					<div class="col-sm-7">
+						<textarea class="form-control" rows="5" id="uzenet" name="uzenet"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-3 colsm-7">
+						<button type="submit" class="btn btn-success">Üzenet küldése</button>
+					</div>
+				</div>
+			</form>
 		</div>
 <#include "page_footer.ftl.html"/>
 	</div>
