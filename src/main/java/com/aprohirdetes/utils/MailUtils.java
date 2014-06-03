@@ -118,7 +118,7 @@ public class MailUtils {
 			String subject = "Hirdetés feladva: " + hi.getCim();
 			String body = "Kedves " + hi.getHirdeto().getNev() + "!\n\n"
 					+ "Köszönjük, hogy az Apróhirdetés.com-ot választotta!\n"
-					+ "Hirdetését sikeresen feladta, de ahhoz, hogy megjelenjen az oldalunkon,"
+					+ "Hirdetését sikeresen feladta, de ahhoz, hogy megjelenjen az oldalunkon, "
 					+ "kérjük kattintson az alábbi linkre, vagy másolja böngészője címsorába!\n"
 					+ "Aktiválás:\n"
 					+ "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
