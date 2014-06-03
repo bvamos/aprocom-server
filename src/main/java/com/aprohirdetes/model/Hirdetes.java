@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.NotSaved;
 
 import com.aprohirdetes.utils.IndexUtils;
 
@@ -28,14 +29,14 @@ public class Hirdetes {
 	private ObjectId hirdetoId;
 	
 	@Embedded private Hirdeto hirdeto;
-	private LinkedList<HirdetesKep> kepek = new LinkedList<HirdetesKep>();
-	private HashMap<String, String> egyebMezok = new HashMap<String, String>();
+	@NotSaved private LinkedList<HirdetesKep> kepek = new LinkedList<HirdetesKep>();
+	private HashMap<String, Object> attributumok = new HashMap<String, Object>();
+	@NotSaved private HashMap<String, String> egyebMezok = new HashMap<String, String>();
 	private List<String> kulcsszavak = new ArrayList<String>();
 	private boolean hitelesitve;
 	private int megjelenes;
 	
 	private int regiId;
-	
 	
 	public Hirdetes() {
 		setAr(0);
@@ -144,6 +145,14 @@ public class Hirdetes {
 		this.kepek = kepek;
 	}
 	
+	public HashMap<String, Object> getAttributumok() {
+		return attributumok;
+	}
+
+	public void setAttributumok(HashMap<String, Object> attributumok) {
+		this.attributumok = attributumok;
+	}
+
 	public List<String> getKulcsszavak() {
 		return kulcsszavak;
 	}

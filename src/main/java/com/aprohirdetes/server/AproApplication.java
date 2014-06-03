@@ -16,6 +16,7 @@ import org.restlet.data.Status;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 
+import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.server.task.KategoriaCountTask;
@@ -191,8 +192,12 @@ public class AproApplication extends Application {
 		// Loading Helysegek into memory cache
 		HelysegCache.loadCache();
 		
+		// Betoltjuk a Kategoriakhoz tartozo Attributumokat
+		getLogger().info("Loading AttributumCache");
+		AttributumCache.loadAttributumCache();
+		
 		// Hirdetesek szamanak szamolasa idozitve a hatterben
-		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 1, 10, TimeUnit.MINUTES);
+		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 10, 600, TimeUnit.SECONDS);
 	}
 
 	@Override
