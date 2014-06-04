@@ -25,6 +25,11 @@
 					<#assign i = 0>
 					<#list hirdetesList as hirdetes>
 						<#assign urlCim = hirdetes.cim?replace('/', '')?url >
+						<#if (q?length>0) >
+							<#assign hirdetesSzoveg = hirdetes.szoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i') >
+						<#else>
+							<#assign hirdetesSzoveg = hirdetes.szoveg >
+						</#if>
 					<div class="hirdeteslista-container">
 						<div class="hirdetes-header">
 							<table border="0" width="100%">
@@ -39,7 +44,7 @@
 						<div class="hirdetes-body">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-szoveg">${hirdetes.szoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i')!""}</td>
+									<td class="hirdetes-szoveg">${hirdetesSzoveg!""}</td>
 									<td class="hirdetes-mezok">
 										<#if hirdetes.attributumok??>
 										
@@ -128,9 +133,9 @@
 							</table>
 						</div>
 					</div>
+						<#assign i = i + 1 >
+						<#if (i==5) >
 					<!-- AdSense -->
-						<#assign i = i + 1>
-						<#if i==5>
 					<div>
 						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 						<!-- Aprohirdetes Lista -->
