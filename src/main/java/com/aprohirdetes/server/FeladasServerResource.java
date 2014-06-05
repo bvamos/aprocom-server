@@ -103,7 +103,8 @@ public class FeladasServerResource extends ServerResource implements
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		// TODO: Servlet context
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés feladása");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Ingyenes apróhirdetés feladása");
+		appDataModel.put("description", "Új, ingyenes apróhirdetés feladása képekkel, akár regisztráció nélkül!");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		

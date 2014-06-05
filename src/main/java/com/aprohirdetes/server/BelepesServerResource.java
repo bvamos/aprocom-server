@@ -56,6 +56,7 @@ public class BelepesServerResource extends ServerResource implements
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
+		appDataModel.put("description", "Hozzáférés a felhasználói oldalakhoz");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
