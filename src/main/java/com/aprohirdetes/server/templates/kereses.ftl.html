@@ -22,8 +22,15 @@
 					</div>
 				</div>
 				<div class="row">
+					<#assign sorszam = 1>
 					<#list hirdetesList as hirdetes>
 						<#assign urlCim = hirdetes.cim?replace('/', '')?url >
+						<#if (q?length>0) >
+							<#assign hirdetesSzoveg = hirdetes.szoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i') >
+						<#else>
+							<#assign hirdetesSzoveg = hirdetes.szoveg >
+						</#if>
+					<!-- ${sorszam} -->
 					<div class="hirdeteslista-container">
 						<div class="hirdetes-header">
 							<table border="0" width="100%">
@@ -38,7 +45,7 @@
 						<div class="hirdetes-body">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-szoveg">${hirdetes.szoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i')!""}</td>
+									<td class="hirdetes-szoveg">${hirdetesSzoveg!""}</td>
 									<td class="hirdetes-mezok">
 										<#if hirdetes.attributumok??>
 										
@@ -127,6 +134,21 @@
 							</table>
 						</div>
 					</div>
+						<#if (sorszam==5) >
+					<!-- AdSense -->
+					<div>
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- Aprohirdetes Lista -->
+						<ins class="adsbygoogle"
+						     style="display:inline-block;width:728px;height:90px"
+						     data-ad-client="ca-pub-5996170556312895"
+						     data-ad-slot="1590163608"></ins>
+						<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</div>
+						</#if>
+						<#assign sorszam = sorszam + 1 >
 					</#list>
 				</div>
 				<#if (hirdetesek_szama>0) >

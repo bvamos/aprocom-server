@@ -83,6 +83,28 @@ public class HelysegCache {
 	}
 	
 	/**
+	 * Visszadja a Helysegek nevet, vesszovel elvalasztva a '+' jellel elvalasztott, URL-ben megadott
+	 * lista alapjan. Arra hasznalom, hogy a HTML title tagben megjelenítsem az eppen keresett helysegek neveit.
+	 * @param urlNevList
+	 * @return
+	 */
+	public static String getHelysegNevekByUrlNevList(String urlNevList) {
+		String ret = "";
+		
+		if(urlNevList != null) {
+			for(String urlNev : urlNevList.split("\\+")) {
+				Helyseg k = CACHE_BY_URLNEV.get(urlNev);
+				if(k != null) {
+					if(ret.length()>0) ret += ", ";
+					ret += k.getNev();
+				}
+			}
+		}
+		
+		return ret;
+	}
+	
+	/**
 	 * Visszaadja a Kategoria nevek lancolatat egy stringkent a megadott KAtegoriatol felfele
 	 * @param kategoriaId
 	 * @return

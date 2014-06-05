@@ -61,7 +61,7 @@ public class AktivalasServerResource extends ServerResource implements
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", this.contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés aktiválása");
-		appDataModel.put("description", "Új hirdetés aktiválása");
+		appDataModel.put("description", "Új hirdetés aktiválása. A hirdetéseket ingyen feladhatod, de csak aktiválás után jelennek meg oldalunkon.");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		

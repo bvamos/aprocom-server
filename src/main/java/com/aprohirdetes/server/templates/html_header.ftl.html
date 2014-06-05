@@ -8,9 +8,16 @@
 	<meta name="description" content="${app.description!'Ingyenes, fényképes apróhirdetések: ingatlan, jármű, autó, állás, munka, pénz'}">
 	<meta name="keywords" content="${app.keywords!'apróhirdetés apró hirdetés használt olcsó eladó keres kínál ingyen'}" />
 	
+	<meta property="og:title" content="${(hirdetes.cim)!app.htmlTitle}"/>
+	<meta property="og:type" content="product"/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:description" content="${app.description!'Ingyenes, fényképes apróhirdetések: ingatlan, jármű, autó, állás, munka, pénz'}"/>
+	
 	<link rel="stylesheet" href="${app.contextRoot}/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="${app.contextRoot}/css/jquery.fileupload.css"/>
 	<link rel="stylesheet" href="${app.contextRoot}/css/apro.css"/>
+	<link rel="icon" type="image/x-icon" href="${app.contextRoot}/favicon.ico"/>
 
 	<script type="text/javascript">
 		var appContext = '${app.contextRoot}';
