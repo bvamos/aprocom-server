@@ -70,6 +70,10 @@ public class AproApplication extends Application {
 		router.attach("/kapcsolat", KapcsolatServerResource.class);
 		router.attach("/sugo", SugoServerResource.class);
 		
+		// RSS
+		router.attach("/rss/{hirdetesTipus}/{kategoriaList}/", RssServerResource.class);
+		router.attach("/rss/{hirdetesTipus}/{helysegList}/{kategoriaList}/", RssServerResource.class);
+		
 		// API
 		router.attach("/api/v1/kepFeltoltes/{hirdetesId}", com.aprohirdetes.server.apiv1.KepFeltoltesServerResource.class);
 		router.attach("/api/v1/session/belepes", com.aprohirdetes.server.apiv1.SessionBelepesServerResource.class);
