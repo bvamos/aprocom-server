@@ -9,6 +9,12 @@
 						<span>${hirdetesek_szama} hirdetés</span>
 						<span>${aktualisOldal}. oldal</span>
 						<span style="float: right;">
+							<#if hirdetesTipus=1 >
+								<#assign hirdetesTipusUrl = 'keres'>
+							<#else>
+								<#assign hirdetesTipusUrl = 'kinal'>
+							</#if>
+							<a href="${app.contextRoot}/rss/${hirdetesTipusUrl}/${hirdetesHelysegUrl}/${hirdetesKategoriaUrl}/"><img alt="RSS" src="${app.contextRoot}/images/rss.png" border="0" width="20" height="20" /></a>
 							<select onchange="javascript:setSorrend(this.value);">
 								<option value="1" <#if sorrend==1>selected</#if>>Legújabb elöl</option>
 								<option value="2" <#if sorrend==2>selected</#if>>Legrégebbi elöl</option>

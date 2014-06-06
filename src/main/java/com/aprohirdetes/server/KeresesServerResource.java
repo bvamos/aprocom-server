@@ -241,6 +241,8 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("hirdetesTipus", this.hirdetesTipus);
 		dataModel.put("hirdetesKategoria", selectedKategoriaUrlNevList);
 		dataModel.put("hirdetesHelyseg", selectedHelysegUrlNevList);
+		dataModel.put("hirdetesKategoriaUrl", selectedKategoriaUrlNevListString);
+		dataModel.put("hirdetesHelysegUrl", selectedHelysegUrlNevListString);
 		dataModel.put("hirdetesek_szama", hirdetesekSzama);
 		dataModel.put("q", this.kulcsszo);
 		dataModel.put("aktualisOldal", this.page);
