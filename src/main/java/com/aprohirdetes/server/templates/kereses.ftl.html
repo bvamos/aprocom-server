@@ -14,7 +14,7 @@
 							<#else>
 								<#assign hirdetesTipusUrl = 'kinal'>
 							</#if>
-							<a href="${app.contextRoot}/rss/${hirdetesTipusUrl}/${hirdetesHelysegUrl}/${hirdetesKategoriaUrl}/"><img alt="RSS" src="${app.contextRoot}/images/rss.png" border="0" width="20" height="20" /></a>
+							<a href="${app.contextRoot}/rss/${hirdetesTipusUrl}/${hirdetesHelysegUrl}/${hirdetesKategoriaUrl}/" target="_blank"><img alt="RSS" src="${app.contextRoot}/images/rss.png" border="0" width="20" height="20" /></a>
 							<select onchange="javascript:setSorrend(this.value);">
 								<option value="1" <#if sorrend==1>selected</#if>>Legújabb elöl</option>
 								<option value="2" <#if sorrend==2>selected</#if>>Legrégebbi elöl</option>
