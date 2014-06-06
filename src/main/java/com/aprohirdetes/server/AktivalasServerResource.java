@@ -36,7 +36,7 @@ public class AktivalasServerResource extends ServerResource implements
 		
 		String hirdetesIdString = (String) this.getRequestAttributes().get("hirdetesId");
 		try {
-			hirdetesId = new ObjectId(hirdetesIdString);
+			hirdetesId = new ObjectId(hirdetesIdString.replace("23afc87dd765476ad66c", ""));
 		} catch(IllegalArgumentException iae) {
 			getLogger().warning("Hibas hirdetesId: " + hirdetesIdString);
 		}
@@ -44,8 +44,8 @@ public class AktivalasServerResource extends ServerResource implements
 
 	@Override
 	public Representation representHtml() throws IOException {
-		String uzenet = "";
-		String hibaUzenet = "";
+		String uzenet = null;
+		String hibaUzenet = null;
 		
 		if (this.hirdetesId != null) {
 			// TODO: Aktivalni kellene a hirdetest
@@ -67,6 +67,7 @@ public class AktivalasServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
+		dataModel.put("hirdetesId", hirdetesId!=null ? hirdetesId.toString() : null);
 		dataModel.put("uzenet", uzenet);
 		dataModel.put("hibaUzenet", hibaUzenet);
 		
