@@ -37,11 +37,11 @@
 							<#assign hirdetesSzoveg = hirdetes.szoveg >
 						</#if>
 					<!-- ${sorszam} -->
-					<div class="hirdeteslista-container">
+					<div class="hirdeteslista-container" itemscope itemtype="http://schema.org/Product">
 						<div class="hirdetes-header">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-cim"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank">${hirdetes.cim}</a>
+									<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank">${hirdetes.cim}</a>
 									 (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
 									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}
 									| ${hirdetes.egyebMezok.helysegNev}</td>
@@ -51,7 +51,7 @@
 						<div class="hirdetes-body">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-szoveg">${hirdetesSzoveg!""}</td>
+									<td class="hirdetes-szoveg" itemprop="description">${hirdetesSzoveg!""}</td>
 									<td class="hirdetes-mezok">
 										<#if hirdetes.attributumok??>
 										
@@ -122,10 +122,10 @@
 								</tr>
 							</table>
 						</div>
-						<div class="hirdetes-footer">
+						<div class="hirdetes-footer" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-muveletek"><span>Műveletek: </span>
+									<td class="hirdetes-muveletek" itemprop="url"><span>Műveletek: </span>
 									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">részletek itt</a>,
 									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank">új ablakban</a>
 									<#if hirdetes.egyebMezok.tag?? >
@@ -135,7 +135,7 @@
 									</#list>
 									</#if>
 									</td>
-									<td class="hirdetes-ar">${hirdetes.ar} Ft</td>
+									<td class="hirdetes-ar" itemprop="price">${hirdetes.ar} <span itemprop="priceCurrency">Ft</span></td>
 								</tr>
 							</table>
 						</div>
