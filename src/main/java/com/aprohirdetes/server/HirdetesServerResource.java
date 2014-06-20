@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
@@ -21,6 +22,8 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.HirdetesResource;
+import com.aprohirdetes.model.Attributum;
+import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
@@ -109,6 +112,23 @@ public class HirdetesServerResource extends ServerResource implements
 			hirdetes.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
 			
 			hirdetes.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(hirdetes.getFeladasDatuma()));
+			
+			// Attributumok cimenek atirasa
+			LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(kat.getUrlNev());
+			HashMap<String, Object> attributumok = new HashMap<String, Object>();
+			for(String key : hirdetes.getAttributumok().keySet()) {
+				for(Attributum attr : attributumList) {
+					if(attr.getNev().equalsIgnoreCase(key)) {
+						Object o = hirdetes.getAttributumok().get(key);
+						if(attr.getMertekEgyseg() != null) {
+							o = new String(o.toString() + " " + attr.getMertekEgyseg());
+						}
+						attributumok.put(attr.getCim(), o);
+						break;
+					}
+				}
+			}
+			hirdetes.setAttributumok(attributumok);
 			
 			// Kepek
 			Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);

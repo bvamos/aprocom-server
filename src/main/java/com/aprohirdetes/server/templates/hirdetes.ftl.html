@@ -25,11 +25,15 @@
 							<div class="panel-body">További információ: <a href="${hirdetes.egyebInfo}" target="_blank">${hirdetes.egyebInfo}</a></div>
 							</#if>
 							<#if hirdetes.attributumok??>
-							<!-- ul class="list-group">
-								<li class="list-group-item"><b>Ajtók száma: </b>78</li>
-								<li class="list-group-item"><b>Ajtók száma: </b>78</li>
-								<li class="list-group-item"><b>Ajtók száma: </b>78</li>
-							</ul-->
+							<table class="table">
+								<#assign keys = hirdetes.attributumok?keys>
+								<#list keys as attributum>
+								<tr>
+									<td width="15%"><b>${attributum}:</b></td>
+									<td>${hirdetes.attributumok[attributum]}</td>
+								</tr>
+								</#list>
+							</table>
 							</#if>
 						</div>
 						

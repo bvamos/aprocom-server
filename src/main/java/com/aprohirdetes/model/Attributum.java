@@ -11,6 +11,7 @@ public class Attributum {
 	private Object alapErtek;
 	private Map<String, Object> ertekMap;
 	private boolean kotelezo;
+	private String mertekEgyseg;
 	
 	public Attributum(String nev, AttributumTipus tipus, String cim) {
 		setNev(nev);
@@ -75,6 +76,14 @@ public class Attributum {
 		this.kotelezo = kotelezo;
 	}
 	
+	public String getMertekEgyseg() {
+		return mertekEgyseg;
+	}
+
+	public void setMertekEgyseg(String mertekEgyseg) {
+		this.mertekEgyseg = mertekEgyseg;
+	}
+
 	public String toHtml() {
 		String ret = "";
 		
@@ -111,12 +120,19 @@ public class Attributum {
 		case NUMBER:
 			ret = "<div class=\"form-group\">\n" + 
 					"	<label class=\"col-sm-3 control-label\" for=\"" + getNev() + "\">" + getCim() + "</label>\n" + 
-					"	<div class=\"col-sm-7\">\n" + 
-					"		<input type=\"number\" class=\"form-control\" id=\"" + getNev() + "\" name=\"" + getNev() + "\" autofocus=\"\"";
+					"	<div class=\"col-sm-7\">\n";
+			if(getMertekEgyseg() != null) {
+				ret += "		<div class=\"input-group\">\n";
+			}
+			ret += "		<input type=\"number\" class=\"form-control\" id=\"" + getNev() + "\" name=\"" + getNev() + "\" autofocus=\"\"";
 			if(isKotelezo()) {
 				ret += " required=\"\""; 
 			}
 			ret +=  " placeholder=\"\" value=\"\">\n";
+			if(getMertekEgyseg() != null) {
+				ret += "		<span class=\"input-group-addon\">" + getMertekEgyseg() + "</span>" +
+						"		</div>\n";
+			}
 			if(getSegitseg() != null) {
 				ret += "		<span class=\"help-block\">" + getSegitseg() + "</span>\n";
 			}
@@ -126,6 +142,22 @@ public class Attributum {
 		case SELECT_MULTI:
 			break;
 		case SELECT_SINGLE:
+			ret = "<div class=\"form-group\">\n" + 
+					"	<label class=\"col-sm-3 control-label\" for=\"" + getNev() + "\">" + getCim() + "</label>\n" + 
+					"	<div class=\"col-sm-7\">\n" + 
+					"		<select class=\"form-control\" id=\"" + getNev() + "\" name=\"" + getNev() + "\">\n";
+			if(!isKotelezo()) {
+				ret += "			<option value=\"\">Válassz a listából</option>\n";
+			}
+			for(String ertek : getErtekMap().keySet()) {
+				ret += "			<option value=\"" + ertek + "\">" + getErtekMap().get(ertek).toString() + "</option>\n";
+			}
+			ret += "		</select>\n";
+			if(getSegitseg() != null) {
+				ret += "		<span class=\"help-block\">" + getSegitseg() + "</span>\n";
+			}
+			ret +=  "	</div>\n" + 
+					"</div>\n";
 			break;
 		case TEXTAREA:
 			break;
