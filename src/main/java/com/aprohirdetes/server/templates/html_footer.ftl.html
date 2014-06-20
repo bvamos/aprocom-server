@@ -82,6 +82,31 @@
             alert("Hiba történt a kilépés közben: " + textStatus);
         });
 	});
+	
+	$('#hirdetesKategoria').change(function(){
+		var kategoria = $('#hirdetesKategoria').val();
+		
+		$.get("${app.contextRoot}/api/v1/kategoriaAttributum/" + kategoria,
+			function(data){
+				if(data) {
+        			$('#attributumWrapper').html(data);
+				} else {
+					$('#attributumWrapper').html('<div class="alert alert-info">Ehhez a kategóriához nem tartoznak egyéb mezők.</div>');
+				}
+        	}
+		).fail(function() {
+			alert('Hiba');
+		});
+	});
     </script>
+    <script type="text/javascript">
+	window.___gcfg = {lang: 'hu'};
+	
+	(function() {
+	  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	  po.src = 'https://apis.google.com/js/platform.js';
+	  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
+	</script>
 </body>
 </html>

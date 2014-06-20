@@ -11,25 +11,21 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">Hirdetés típusa</label>
 					<div class="col-sm-9">
-						<div class="radio">
-							<label>
+							<label class="radio-inline">
 								<input type="radio" name="hirdetesTipus" id="hirdetesTipusKinal" value="2" checked>
 								Kínál
 							</label>
-						</div>
-						<div class="radio">
-							<label>
+							<label class="radio-inline">
 								<input type="radio" name="hirdetesTipus" id="hirdetesTipusKeres" value="1">
 								Keres
 							</label>
-						</div>
 					</div>
 				</div>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetesCim">Rövid leírás</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control" id="hirdetesCim" name="hirdetesCim" autofocus="" required="" placeholder="" value="${(hirdetes.cim)!''}" data-toggle="tooltip" data-placement="right" title="first tooltip">
+						<input type="text" class="form-control" id="hirdetesCim" name="hirdetesCim" autofocus="" required="" placeholder="" value="${(hirdetes.cim)!''}">
 						<span class="help-block">Rövid, de beszédes címsor, ami pár szóban összefoglalja a hirdetésed tartalmát.</span>
 					</div>
 				</div>
@@ -90,7 +86,12 @@
 						</div>
 					</div>
 				</div>
-				
+			
+			<h3>Egyéb mezők</h3>
+			<div id="attributumWrapper">
+				<div class="alert alert-info">Ehhez a kategóriához nem tartoznak egyéb mezők.</div>
+			</div>
+			
 			<h3>Hirdető adatai</h3>
 			
 				<#if session?? >

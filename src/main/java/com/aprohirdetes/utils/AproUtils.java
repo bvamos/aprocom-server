@@ -2,6 +2,7 @@ package com.aprohirdetes.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -10,6 +11,8 @@ import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
 import org.restlet.resource.Resource;
 
+import com.aprohirdetes.model.Attributum;
+import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 
@@ -79,4 +82,16 @@ public class AproUtils {
 		return session;
 	}
 	
+	public static String getAttributumHtmlByKategoria(String kategoriaUrlNev) {
+		StringBuilder ret = new StringBuilder();
+		
+		LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(kategoriaUrlNev);
+		if(attributumList != null) {
+			for(Attributum attr : attributumList) {
+				ret.append(attr.toHtml());
+			}
+		}
+		
+		return ret.toString();
+	}
 }

@@ -79,6 +79,7 @@ public class AproApplication extends Application {
 		router.attach("/api/v1/session/belepes", com.aprohirdetes.server.apiv1.SessionBelepesServerResource.class);
 		router.attach("/api/v1/session/kilepes", com.aprohirdetes.server.apiv1.SessionKilepesServerResource.class);
 		router.attach("/api/v1/admin/retokenize", com.aprohirdetes.server.apiv1.AdminRetokenizeServerResource.class);
+		router.attach("/api/v1/kategoriaAttributum/{kategoriaUrlNev}", com.aprohirdetes.server.apiv1.KategoriaAttributumServerResource.class);
 		
 		// Statikus konyvtarak
 		String cssUri = "war:///css";
