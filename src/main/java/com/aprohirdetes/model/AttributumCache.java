@@ -15,6 +15,44 @@ public class AttributumCache {
 
 	public static void loadAttributumCache() {
 		
+		// Ingatlanokkal kapcsolatos kozos attributumok
+		Attributum ingatlanAlapterulet = new Attributum("ingatlan-alapterulet", AttributumTipus.NUMBER, "Alapterület");
+		ingatlanAlapterulet.setKotelezo(true);
+		ingatlanAlapterulet.setMertekEgyseg("m&sup2;");
+		
+		Attributum ingatlanSzobakszama = new Attributum("ingatlan-szobakszama", AttributumTipus.NUMBER, "Szobák száma");
+		ingatlanSzobakszama.setKotelezo(true);
+		
+		Attributum ingatlanAllapot = new Attributum("ingatlan-allapot", AttributumTipus.SELECT_SINGLE, "Ingatlan állapota");
+		Map<String, Object> ingatlanAllapotErtekMap = new LinkedHashMap<String, Object>();
+		ingatlanAllapotErtekMap.put("ujepitesu", "Új építésű");
+		ingatlanAllapotErtekMap.put("uj", "Újszerű");
+		ingatlanAllapotErtekMap.put("felujitott", "Felújított");
+		ingatlanAllapotErtekMap.put("jo", "Jó/Beköltözhető");
+		ingatlanAllapotErtekMap.put("felujitando", "Felújítandó");
+		ingatlanAllapot.setErtekMap(ingatlanAllapotErtekMap);
+		
+		Attributum ingatlanKomfort = new Attributum("ingatlan-komfort", AttributumTipus.SELECT_SINGLE, "Komfortfokozat");
+		Map<String, Object> ingatlanKomfortErtekMap = new LinkedHashMap<String, Object>();
+		ingatlanKomfortErtekMap.put("luxus", "Luxus");
+		ingatlanKomfortErtekMap.put("osszkomfort", "Összkomfortos");
+		ingatlanKomfortErtekMap.put("komfortos", "Komfortos");
+		ingatlanKomfortErtekMap.put("komfortnelkuli", "Komfort nélküli");
+		ingatlanKomfort.setErtekMap(ingatlanKomfortErtekMap);
+		
+		Attributum ingatlanFutes = new Attributum("ingatlan-futes", AttributumTipus.SELECT_SINGLE, "Fűtés típusa");
+		Map<String, Object> ingatlanFutesErtekMap = new LinkedHashMap<String, Object>();
+		ingatlanFutesErtekMap.put("cirko", "Gáz (cirkó)");
+		ingatlanFutesErtekMap.put("kovektor", "Gáz (konvektor)");
+		ingatlanFutesErtekMap.put("elektormos", "Elektromos");
+		ingatlanFutesErtekMap.put("tavho", "Távhő");
+		ingatlanFutesErtekMap.put("tavhoegyedi", "Távhő egyedi méressel");
+		ingatlanFutesErtekMap.put("kozponti", "Házközponti");
+		ingatlanFutesErtekMap.put("kozpontiegyedi", "Házközponti egyedi méressel");
+		ingatlanFutesErtekMap.put("egyeb", "Egyéb");
+		ingatlanFutes.setErtekMap(ingatlanFutesErtekMap);
+		ingatlanFutes.setKotelezo(true);
+		
 		// Kategoria: Lakas
 		LinkedList<Attributum> lakasList = new LinkedList<Attributum>();
 		
@@ -23,12 +61,16 @@ public class AttributumCache {
 		lakasFalazatErtekMap.put("tegla", "Tégla");
 		lakasFalazatErtekMap.put("panel", "Panel");
 		lakasFalazat.setErtekMap(lakasFalazatErtekMap);
+		
+		Attributum lakasEmelet = new Attributum("lakas-emelet", AttributumTipus.NUMBER, "Emelet");
+		
 		lakasList.add(lakasFalazat);
-		
-		Attributum lakasAlapterulet = new Attributum("lakas-alapterulet", AttributumTipus.NUMBER, "Alapterület");
-		lakasAlapterulet.setKotelezo(true);
-		lakasList.add(lakasAlapterulet);
-		
+		lakasList.add(ingatlanAlapterulet);
+		lakasList.add(ingatlanSzobakszama);
+		lakasList.add(ingatlanAllapot);
+		lakasList.add(lakasEmelet);
+		lakasList.add(ingatlanKomfort);
+		lakasList.add(ingatlanFutes);
 		KATEGORIA_ATTRIBUTUM.put("lakas", lakasList);
 	}
 }

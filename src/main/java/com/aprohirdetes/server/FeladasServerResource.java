@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
@@ -27,6 +28,8 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.FormResource;
+import com.aprohirdetes.model.Attributum;
+import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
@@ -208,6 +211,14 @@ public class FeladasServerResource extends ServerResource implements
 		}
 		
 		hi.setHirdeto(ho);
+		
+		// Attributumok
+		LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(form.getFirstValue("hirdetesKategoria"));
+		for(Attributum attr : attributumList) {
+			if(form.getFirstValue(attr.getNev()) != null && !form.getFirstValue(attr.getNev()).isEmpty()) {
+				hi.getAttributumok().put(attr.getNev(), form.getFirstValue(attr.getNev()));
+			}
+		}
 		
 		// Hirdetes mentese
 		if(validated) {
