@@ -214,9 +214,11 @@ public class FeladasServerResource extends ServerResource implements
 		
 		// Attributumok
 		LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(form.getFirstValue("hirdetesKategoria"));
-		for(Attributum attr : attributumList) {
-			if(form.getFirstValue(attr.getNev()) != null && !form.getFirstValue(attr.getNev()).isEmpty()) {
-				hi.getAttributumok().put(attr.getNev(), form.getFirstValue(attr.getNev()));
+		if(attributumList != null) {
+			for(Attributum attr : attributumList) {
+				if(form.getFirstValue(attr.getNev()) != null && !form.getFirstValue(attr.getNev()).isEmpty()) {
+					hi.getAttributumok().put(attr.getNev(), form.getFirstValue(attr.getNev()));
+				}
 			}
 		}
 		
