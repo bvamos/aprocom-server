@@ -5,6 +5,7 @@ public enum AttributumTipus {
 	NUMBER,
 	TEXTAREA,
 	CHECKBOX,
+	YESNO,
 	RADIO,
 	SELECT_SINGLE,
 	SELECT_MULTI

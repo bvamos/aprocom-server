@@ -30,6 +30,7 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.FormResource;
 import com.aprohirdetes.model.Attributum;
 import com.aprohirdetes.model.AttributumCache;
+import com.aprohirdetes.model.AttributumTipus;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
@@ -216,8 +217,19 @@ public class FeladasServerResource extends ServerResource implements
 		LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(form.getFirstValue("hirdetesKategoria"));
 		if(attributumList != null) {
 			for(Attributum attr : attributumList) {
+				//System.out.println(attr.getNev() + "=" + form.getFirstValue(attr.getNev()));
 				if(form.getFirstValue(attr.getNev()) != null && !form.getFirstValue(attr.getNev()).isEmpty()) {
-					hi.getAttributumok().put(attr.getNev(), form.getFirstValue(attr.getNev()));
+					if(attr.getTipus() == AttributumTipus.YESNO) {
+						hi.getAttributumok().put(attr.getNev(), Boolean.parseBoolean(form.getFirstValue(attr.getNev())));
+					} else if(attr.getTipus() == AttributumTipus.NUMBER) {
+						try {
+							hi.getAttributumok().put(attr.getNev(), Integer.parseInt(form.getFirstValue(attr.getNev())));
+						} catch (NumberFormatException nfe) {
+							getLogger().warning("Nem sikerult a szamot atkonvertalni. " + attr.getNev() + "=" + form.getFirstValue(attr.getNev()));
+						}
+					} else {
+						hi.getAttributumok().put(attr.getNev(), form.getFirstValue(attr.getNev()));
+					}
 				}
 			}
 		}

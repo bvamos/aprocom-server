@@ -22,6 +22,7 @@ public class AttributumCache {
 		
 		Attributum ingatlanSzobakszama = new Attributum("ingatlan-szobakszama", AttributumTipus.NUMBER, "Szobák száma");
 		ingatlanSzobakszama.setKotelezo(true);
+		ingatlanSzobakszama.setAlapErtek(1);
 		
 		Attributum ingatlanAllapot = new Attributum("ingatlan-allapot", AttributumTipus.SELECT_SINGLE, "Ingatlan állapota");
 		Map<String, Object> ingatlanAllapotErtekMap = new LinkedHashMap<String, Object>();
@@ -72,5 +73,18 @@ public class AttributumCache {
 		lakasList.add(ingatlanKomfort);
 		lakasList.add(ingatlanFutes);
 		KATEGORIA_ATTRIBUTUM.put("lakas", lakasList);
+		
+		// Kategoria: Haz
+		LinkedList<Attributum> hazList = new LinkedList<Attributum>();
+		
+		Attributum hazPince = new Attributum("haz-pince", AttributumTipus.YESNO, "Pince van?");
+		
+		hazList.add(ingatlanAlapterulet);
+		hazList.add(ingatlanSzobakszama);
+		hazList.add(ingatlanAllapot);
+		hazList.add(ingatlanKomfort);
+		hazList.add(ingatlanFutes);
+		hazList.add(hazPince);
+		KATEGORIA_ATTRIBUTUM.put("haz", hazList);
 	}
 }

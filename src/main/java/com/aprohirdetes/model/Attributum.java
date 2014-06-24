@@ -117,10 +117,25 @@ public class Attributum {
 					"</div>\n";
 		case CHECKBOX:
 			break;
+		case YESNO:
+			String alapErtek = "";
+			try {
+				alapErtek = ((Boolean) getAlapErtek()) ? " checked=\"\"" : "";
+			} catch(NullPointerException npe) {
+				
+			}
+			ret = "<div class=\"form-group\">\n" + 
+					"	<div class=\"checkbox col-sm-7 col-sm-offset-3\">\n" + 
+					"		<div class=\"checkbox\">\n" + 
+					"			<label><input type=\"checkbox\" value=\"true\" name=\"" + getNev() + "\"" + alapErtek + "> " + getCim() + "</label>\n" + 
+					"		</div>\n" + 
+					"	</div>\n" + 
+					"</div>\n";
+			break;
 		case NUMBER:
 			ret = "<div class=\"form-group\">\n" + 
 					"	<label class=\"col-sm-3 control-label\" for=\"" + getNev() + "\">" + getCim() + "</label>\n" + 
-					"	<div class=\"col-sm-7\">\n";
+					"	<div class=\"col-sm-3\">\n";
 			if(getMertekEgyseg() != null) {
 				ret += "		<div class=\"input-group\">\n";
 			}

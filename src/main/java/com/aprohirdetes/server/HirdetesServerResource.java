@@ -113,15 +113,24 @@ public class HirdetesServerResource extends ServerResource implements
 			
 			hirdetes.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(hirdetes.getFeladasDatuma()));
 			
-			// Attributumok cimenek atirasa
+			// Attributumok cimenek, ertekenek (ha kell) atirasa
 			LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(kat.getUrlNev());
 			HashMap<String, Object> attributumok = new HashMap<String, Object>();
 			for(String key : hirdetes.getAttributumok().keySet()) {
 				for(Attributum attr : attributumList) {
 					if(attr.getNev().equalsIgnoreCase(key)) {
 						Object o = hirdetes.getAttributumok().get(key);
+						// Ha van mertekegyseg, az ertek moge irjuk 
 						if(attr.getMertekEgyseg() != null) {
 							o = new String(o.toString() + " " + attr.getMertekEgyseg());
+						}
+						// Ha az ertek boolean, leforditjuk
+						if(o instanceof Boolean) {
+							o = ((Boolean) o) ? new String("igen") : new String("nem");
+						}
+						// Ha van ertekMap, kiszedjuk az ertekhez tartozo nevet
+						if(attr.getErtekMap() != null) {
+							o = attr.getErtekMap().get(o.toString());
 						}
 						attributumok.put(attr.getCim(), o);
 						break;
