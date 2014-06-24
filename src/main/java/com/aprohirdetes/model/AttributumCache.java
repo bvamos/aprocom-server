@@ -54,7 +54,7 @@ public class AttributumCache {
 		ingatlanFutes.setErtekMap(ingatlanFutesErtekMap);
 		ingatlanFutes.setKotelezo(true);
 		
-		// Kategoria: Lakas
+		// Kategoria: Ingatlan->Lakas
 		LinkedList<Attributum> lakasList = new LinkedList<Attributum>();
 		
 		Attributum lakasFalazat = new Attributum("lakas-falazat", AttributumTipus.RADIO, "Falazat anyaga");
@@ -74,7 +74,7 @@ public class AttributumCache {
 		lakasList.add(ingatlanFutes);
 		KATEGORIA_ATTRIBUTUM.put("lakas", lakasList);
 		
-		// Kategoria: Haz
+		// Kategoria: Ingatlan->Haz
 		LinkedList<Attributum> hazList = new LinkedList<Attributum>();
 		
 		Attributum hazPince = new Attributum("haz-pince", AttributumTipus.YESNO, "Pince van?");
@@ -86,5 +86,41 @@ public class AttributumCache {
 		hazList.add(ingatlanFutes);
 		hazList.add(hazPince);
 		KATEGORIA_ATTRIBUTUM.put("haz", hazList);
+		
+		// Kategoria: Ingatlan->Alberlet
+		LinkedList<Attributum> alberletList = new LinkedList<Attributum>();
+		
+		alberletList.add(ingatlanAlapterulet);
+		alberletList.add(ingatlanSzobakszama);
+		alberletList.add(ingatlanAllapot);
+		alberletList.add(ingatlanKomfort);
+		alberletList.add(ingatlanFutes);
+		KATEGORIA_ATTRIBUTUM.put("alberlet", alberletList);
+		
+		// Kategoria: Elektronikai cikk->Telefon
+		LinkedList<Attributum> telefonList = new LinkedList<Attributum>();
+		
+		Attributum telefonMarka = new Attributum("telefon-marka", AttributumTipus.SELECT_SINGLE, "Márka");
+		Map<String, Object> telefonMarkaErtekMap = new LinkedHashMap<String, Object>();
+		telefonMarkaErtekMap.put("acer", "Acer");
+		telefonMarkaErtekMap.put("alcatel", "Alcatel");
+		telefonMarkaErtekMap.put("apple", "Apple/Iphone");
+		telefonMarkaErtekMap.put("asus", "Asus");
+		telefonMarkaErtekMap.put("blackberry", "Blackberry");
+		telefonMarkaErtekMap.put("cat", "CAT");
+		telefonMarkaErtekMap.put("htc", "HTC");
+		telefonMarkaErtekMap.put("huawei", "Huawei");
+		telefonMarkaErtekMap.put("lg", "LG");
+		telefonMarkaErtekMap.put("motorola", "Motorola");
+		telefonMarkaErtekMap.put("nokia", "Nokia");
+		telefonMarkaErtekMap.put("samsung", "Samsung");
+		telefonMarkaErtekMap.put("sony", "Sony");
+		telefonMarkaErtekMap.put("zte", "ZTE");
+		telefonMarkaErtekMap.put("telefon-marka-egyeb", "Egyéb");
+		telefonMarka.setErtekMap(telefonMarkaErtekMap);
+		telefonMarka.setKotelezo(true);
+		
+		telefonList.add(telefonMarka);
+		KATEGORIA_ATTRIBUTUM.put("telefon", telefonList);
 	}
 }
