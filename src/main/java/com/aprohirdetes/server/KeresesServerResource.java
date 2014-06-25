@@ -138,6 +138,7 @@ public class KeresesServerResource extends ServerResource implements
 		// Kereses Morphiaval
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		
+		query.criteria("hitelesitve").equal(true);
 		query.criteria("tipus").equal(this.hirdetesTipus);
 		query.criteria("helysegId").in(selectedHelysegIdList);
 		query.criteria("kategoriaId").in(selectedKategoriaIdList);

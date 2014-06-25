@@ -40,7 +40,7 @@ public class Hirdetes {
 	
 	public Hirdetes() {
 		setAr(0);
-		setHitelesitve(true);
+		setHitelesitve(false);
 		setMegjelenes(0);
 		setRegiId(-1);
 	}

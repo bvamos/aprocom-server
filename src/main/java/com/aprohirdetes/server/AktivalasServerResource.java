@@ -10,6 +10,9 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
@@ -17,7 +20,9 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.AktivalasResource;
+import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
+import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
 
@@ -48,11 +53,16 @@ public class AktivalasServerResource extends ServerResource implements
 		String hibaUzenet = null;
 		
 		if (this.hirdetesId != null) {
-			// TODO: Aktivalni kellene a hirdetest
+			Datastore datastore = MongoUtils.getDatastore();
+			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+			query.criteria("id").equal(this.hirdetesId);
+			UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("hitelesitve", true);
+			datastore.update(query, ops);
+			
 			getLogger().info("Hirdetes aktivalva: " + this.hirdetesId.toString());
 			uzenet = "Hirdetésedet sikeresen aktiváltuk, azonnal megjelenik az Apróhirdetés.com-on. Köszönjük, hogy minket választottál!";
 		} else {
-			hibaUzenet = "A megadott hirdetés nem létezik, vagy már sikeresen aktiválva lett.";
+			hibaUzenet = "A megadott apróhirdetés nem létezik, vagy már sikeresen aktiválva lett.";
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -61,7 +71,7 @@ public class AktivalasServerResource extends ServerResource implements
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", this.contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés aktiválása");
-		appDataModel.put("description", "Új hirdetés aktiválása. A hirdetéseket ingyen feladhatod, de csak aktiválás után jelennek meg oldalunkon.");
+		appDataModel.put("description", "Új apróhirdetés aktiválása. A hirdetéseket ingyen feladhatod, de csak aktiválás után jelennek meg oldalunkon.");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
