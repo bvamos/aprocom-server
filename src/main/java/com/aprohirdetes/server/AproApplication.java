@@ -67,6 +67,7 @@ public class AproApplication extends Application {
 		
 		// Statikus oldalak
 		router.attach("/adatkezeles", AdatvedelemServerResource.class);
+		router.attach("/feltetelek", FelhasznalasServerResource.class);
 		router.attach("/kapcsolat", KapcsolatServerResource.class);
 		router.attach("/sugo", SugoServerResource.class);
 		
