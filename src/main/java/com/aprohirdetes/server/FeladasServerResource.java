@@ -164,6 +164,11 @@ public class FeladasServerResource extends ServerResource implements
 			}
 		}
 		
+		if(!"true".equals(form.getFirstValue("feltetelek"))) {
+			hibaUzenet = "Hirdetés feladásához el kell fogadnod a Felhasználási feltételeinket!";
+			validated = false;
+		}
+		
 		// Model
 		Hirdetes hi = new Hirdetes();
 		hi.setId(hirdetesId);
