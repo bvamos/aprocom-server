@@ -108,10 +108,14 @@ public class Attributum {
 					"	<label class=\"col-sm-3 control-label\">" + getCim() + "</label>\n" + 
 					"	<div class=\"col-sm-9\">\n";
 			for(String ertek : getErtekMap().keySet()) {
-			ret += "			<label class=\"radio-inline\">\n" + 
-					"				<input type=\"radio\" name=\"" + getNev() + "\" id=\"" + getNev() + ertek + "\" value=\"" + ertek + "\" >\n" + 
-					"				" + getErtekMap().get(ertek).toString() + "\n" + 
-					"			</label>\n";
+				String checked = "";
+				if(getAlapErtek() != null){
+					checked = ertek.equalsIgnoreCase(getAlapErtek().toString()) ? " checked=\"\"" : "";
+				}
+				ret += "			<label class=\"radio-inline\">\n" + 
+						"				<input type=\"radio\" name=\"" + getNev() + "\" id=\"" + getNev() + ertek + "\" value=\"" + ertek + "\" " + checked + ">\n" + 
+						"				" + getErtekMap().get(ertek).toString() + "\n" + 
+						"			</label>\n";
 			}
 			ret += "	</div>\n" + 
 					"</div>\n";

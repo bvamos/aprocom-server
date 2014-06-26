@@ -15,6 +15,13 @@ public class AttributumCache {
 
 	public static void loadAttributumCache() {
 		
+		// Altalanos attributumok
+		Attributum allapot = new Attributum("allapot", AttributumTipus.SELECT_SINGLE, "Állapot");
+		Map<String, Object> allapotErtekMap = new LinkedHashMap<String, Object>();
+		allapotErtekMap.put("h", "Használt");
+		allapotErtekMap.put("u", "Új");
+		allapot.setErtekMap(allapotErtekMap);
+		
 		// Ingatlanokkal kapcsolatos kozos attributumok
 		Attributum ingatlanAlapterulet = new Attributum("ingatlan-alapterulet", AttributumTipus.NUMBER, "Alapterület");
 		ingatlanAlapterulet.setKotelezo(true);
@@ -97,8 +104,28 @@ public class AttributumCache {
 		alberletList.add(ingatlanFutes);
 		KATEGORIA_ATTRIBUTUM.put("alberlet", alberletList);
 		
+		// Kategoria: Ingatlan->Iroda, uzlethelyiseg
+		LinkedList<Attributum> irodaList = new LinkedList<Attributum>();
+		irodaList.add(ingatlanAlapterulet);
+		KATEGORIA_ATTRIBUTUM.put("iroda-uzlethelyiseg", irodaList);
+		
+		// Kategoria: Ingatlan->Nyaralo
+		KATEGORIA_ATTRIBUTUM.put("nyaralo", irodaList);
+		
+		// Kategoria: Ingatlan->Garazs
+		Attributum garazsElhelyezkedes = new Attributum("garazs-elhelyezkedes", AttributumTipus.RADIO, "Elhelyezkedés");
+		Map<String, Object> garazsElhelyezkedesErtekMap = new LinkedHashMap<String, Object>();
+		garazsElhelyezkedesErtekMap.put("o", "Önálló");
+		garazsElhelyezkedesErtekMap.put("t", "Teremgarázs");
+		garazsElhelyezkedes.setErtekMap(garazsElhelyezkedesErtekMap);
+		garazsElhelyezkedes.setAlapErtek("o");
+		
+		LinkedList<Attributum> garazsList = new LinkedList<Attributum>();
+		garazsList.add(ingatlanAlapterulet);
+		garazsList.add(garazsElhelyezkedes);
+		KATEGORIA_ATTRIBUTUM.put("garazs", garazsList);
+		
 		// Kategoria: Elektronikai cikk->Telefon
-		LinkedList<Attributum> telefonList = new LinkedList<Attributum>();
 		
 		Attributum telefonMarka = new Attributum("telefon-marka", AttributumTipus.SELECT_SINGLE, "Márka");
 		Map<String, Object> telefonMarkaErtekMap = new LinkedHashMap<String, Object>();
@@ -120,6 +147,8 @@ public class AttributumCache {
 		telefonMarka.setErtekMap(telefonMarkaErtekMap);
 		telefonMarka.setKotelezo(true);
 		
+		LinkedList<Attributum> telefonList = new LinkedList<Attributum>();
+		telefonList.add(allapot);
 		telefonList.add(telefonMarka);
 		KATEGORIA_ATTRIBUTUM.put("telefon", telefonList);
 	}
