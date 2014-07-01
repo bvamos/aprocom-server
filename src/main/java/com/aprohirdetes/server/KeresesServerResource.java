@@ -250,6 +250,21 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("osszesOldal", (hirdetesekSzama/this.pageSize)+1);
 		dataModel.put("sorrend", this.sorrend);
 		
+		// TODO: Osszes kategoriat megoldani
+		if(selectedKategoriaUrlNevList.contains("ingatlan") || selectedKategoriaUrlNevList.contains("lakas") || selectedKategoriaUrlNevList.contains("haz") || selectedKategoriaUrlNevList.contains("alberlet")) {
+			dataModel.put("ingatlanTabClass", "ingatlan-tab");
+			dataModel.put("headerBgClass", "ingatlan-bg");
+		} else if(selectedKategoriaUrlNevList.contains("jarmu") || selectedKategoriaUrlNevList.contains("szemelyauto") || selectedKategoriaUrlNevList.contains("kishaszon") || selectedKategoriaUrlNevList.contains("haszonjarmu")) {
+			dataModel.put("jarmuTabClass", "jarmu-tab");
+			dataModel.put("headerBgClass", "jarmu-bg");
+		} else if(selectedKategoriaUrlNevList.contains("allas")) {
+			dataModel.put("allasTabClass", "allas-tab");
+			dataModel.put("headerBgClass", "allas-bg");
+		} else {
+			dataModel.put("aproTabClass", "apro-tab");
+			dataModel.put("headerBgClass", "apro-bg");
+		}
+		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("kereses.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

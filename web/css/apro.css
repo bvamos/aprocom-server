@@ -41,7 +41,7 @@ ul.header-tabs>li>a {
 	position: relative;
 	display: block;
 	border-radius: 4px 4px 0 0;
-	padding: 10px 15px;
+	padding: 10px 10px;
 	color: #fff;
 	text-transform: uppercase;
 	text-shadow: 1px 1px #202020;
@@ -51,6 +51,22 @@ ul.header-tabs>li>a {
 
 ul.tabs1>li>a {
 	background-color: #a7a7a7;
+}
+
+ul.tabs1>li.apro-tab>a {
+	background: linear-gradient(#e36703, #ee8301);
+}
+
+ul.tabs1>li.ingatlan-tab>a {
+	background: linear-gradient(#4cab11, #92d339);
+}
+
+ul.tabs1>li.jarmu-tab>a {
+	background: linear-gradient(#0d569a, #3799c8);
+}
+
+ul.tabs1>li.allas-tab>a {
+	background: linear-gradient(#db7e07, #f8c569);
 }
 
 ul.tabs1>li.feladas-tab>a {
@@ -70,76 +86,38 @@ ul.tabs2>li>a {
 	margin-top: -15px;
 }
 
-div.header_date {
-	font-size: 12px;
-	width: 170px;
-	margin-top: 90px;
-	text-align: right;
-	color: #7e7e7e;
+.header_link {
+	width: 173px;
+	height: 34px;
 	float: left;
-	clear: both;
 }
 
-div.header_text {
+.header_date {
+	font-size: 12px;
 	color: #fff;
-	float: right;
-	width: 300px;
-	margin-top: 20px;
-	font-weight: bold;
+	padding-left: 5px;
 }
 
 #header-share {
 	float: right;
-	bottom: 0;
+	display: table;
 	clear: both;
 }
 
-div.form-signin {
-	background-color: #ee8301;
-	color: #fff;
-	margin: 2px 0 0 2px;
-	height: 124px;
+.apro-bg {
+	background-color: #E36703;
+	padding: 2px; margin-top: 2px;
+}
+.ingatlan-bg {
+	background-color: #4cab11;
 }
 
-h2.form-signin-heading {
-	background-color: #e36703;
-	color: #fff;
-	font-stretch: condensed;
-	font-size: 18px;
-	font-shadow: 1px 1px #934d08;
-	padding: 6px;
-	margin: 0;
+.jarmu-bg {
+	background-color: #0d569a;
 }
 
-div.form-signin-placeholder {
-	padding: 6px;
-	display: block;
-	float: left;
-	width: 70%;
-}
-
-div.form-signin-placeholder>input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-
-div.form-signin-placeholder>input[type="password"] {
-    margin-bottom: 5px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-}
-
-div.form-signin-button {
-	width: 20%;
-	height: 90px;
-	display: block;
-	float: left;
-}
-
-div.form-signin-button button {
-	margin-top: 20px;
-	margin-left: 5px;
+.allas-bg {
+	background-color: #db7e07;
 }
 
 div.search_container {

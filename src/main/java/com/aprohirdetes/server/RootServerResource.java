@@ -106,6 +106,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
 		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("aproTabClass", "apro-tab");
 		
 		// Without global configuration object
 		//Representation indexFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();

@@ -3,15 +3,15 @@
 <#else>
 	<#assign hirdetesTipusNev='kinal'>
 </#if>
-		<div id="header_tabs_container" class="row placeholders">
+		<div id="header_tabs_container" class="row">
 			<div class="col-md-9 placeholder">
-				<span class="glyphicon glyphicon-home"></span>
-				<span class="header_link"><a href="${app.contextRoot}/">www.aprohirdetes.com</a></span>
+				<!-- span class="glyphicon glyphicon-home"></span -->
+				<div class="header_link"><a href="${app.contextRoot}/"><img src="${app.contextRoot}/images/header_logo.png" alt="Apróhirdetés.com - Ingyenes apróhirdető oldal"></a></div>
 				<ul class="header-tabs tabs1">
-					<li><a href="${app.contextRoot}/">Apró</a></li>
-					<li><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/ingatlan/">Ingatlan</a></li>
-					<li><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/jarmu/">Jármű</a></li>
-					<li><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/allas/">Állás</a></li>
+					<li class="${aproTabClass!''}"><a href="${app.contextRoot}/">Apró</a></li>
+					<li class="${ingatlanTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/ingatlan/">Ingatlan</a></li>
+					<li class="${jarmuTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/jarmu/">Jármű</a></li>
+					<li class="${allasTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/allas/">Állás</a></li>
 					<li class="feladas-tab"><a href="${app.contextRoot}/feladas">Hirdetés feladása</a></li>
 				</ul>
 			</div>
@@ -26,36 +26,7 @@
 				</ul>
 			</div>						
 		</div>
-		<div class="row placeholders">
-			<div id="header_container" class="col-md-9 placeholder">
-				<div class="header_date">${app.datum}</div>
-				<div class="header_text">Hirdess az Apróhirdetés.com-on könnyen, gyorsan, ingyen, kötelező regisztráció nélkül!</div>
-				<div id="header-share">
-					<button type="button" class="btn btn-xs btn-google-plus" onclick="window.location='https://plus.google.com/+Aprohirdetespontcom/about'"><i class="fa fa-google-plus"></i>| Google+</button>
-					<button type="button" class="btn btn-xs btn-facebook" onclick="window.location='https://www.facebook.com/Aprohirdetespontcom'"><i class="fa fa-facebook"></i> | Facebook</button>
-				</div>
-			</div>
-			<div class="col-md-3 placeholder">
-				<div class="form-signin">
-				<#if session?? >
-					<h2 class="form-signin-heading">&raquo; Felhasználó</h2>
-					<div class="form-signin-placeholder placeholder">
-						<div><b>Email cím: </b>${session.felhasznaloNev!""}</div>
-						<div><b>Név: </b>${(session.hirdeto.nev)!""}</div>
-						<div><b>Hirdetések száma: </b>${session.hirdetesek!"0"}</div>
-					</div>
-				<#else>
-					<h2 class="form-signin-heading">&raquo; Bejelentkezés email címmel</h2>
-					<div class="form-signin-placeholder placeholder">
-						<label class="sr-only" for="signinEmail">Email cím</label>
-						<input type="email" class="form-control input-sm" id="signinEmail" autofocus="" required="" placeholder="E-mail cím">
-						<label class="sr-only" for="signinPassword">Email cím</label>
-						<input type="password" class="form-control input-sm" id="signinPassword" required="" placeholder="Jelszó">
-					</div>
-					<div class="form-signin-button">
-						<button class="btn btn-default" id="belepesButton">OK</button>
-					</div>
-				</#if>
-				</div>
-			</div>						
+		<div class="row apro-bg ${headerBgClass!''}">
+			<span class="header_date">${app.datum}</span>
 		</div>
+		
