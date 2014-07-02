@@ -1,0 +1,79 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+			<div class="header_link"><img src="${app.contextRoot}/images/header_logo.png" alt="Apróhirdetés.com - Ingyenes apróhirdető oldal"></div>
+		<br>
+				<#if hirdetes?? >
+					<div class="hirdetes-container">
+						<div class="page-header">
+							<h1>${hirdetes.cim} <small>${hirdetes.egyebMezok.tipusNev}</small></h1>
+						</div>
+						<h2><span class="label label-warning">${hirdetes.ar} Ft</span></h2>
+						
+						<h3>Hirdetés adatai</h3>
+						<div><b>Helység: </b>${hirdetes.egyebMezok.helysegNev}</div>
+						<div><b>Kategória: </b>${hirdetes.egyebMezok.kategoriaNev}</div>
+						<div><b>Feladás időpontja: </b>${hirdetes.egyebMezok.feladvaSzoveg}</div>
+
+						<br>
+						<div class="panel panel-default">
+							<div class="panel-body">${hirdetes.szoveg!""}</div>
+							<#if hirdetes.egyebInfo?? && (hirdetes.egyebInfo?length>0) >
+							<div class="panel-body">További információ: <a href="${hirdetes.egyebInfo}" target="_blank">${hirdetes.egyebInfo}</a></div>
+							</#if>
+							<#if hirdetes.attributumok??>
+							<table class="table">
+								<#assign keys = hirdetes.attributumok?keys>
+								<#list keys as attributum>
+								<tr>
+									<td width="15%"><b>${attributum}</b></td>
+									<td>${hirdetes.attributumok[attributum]}</td>
+								</tr>
+								</#list>
+							</table>
+							</#if>
+						</div>
+						
+						<#if hirdetes.kepek?has_content >
+							<div>
+							<#list hirdetes.kepek as kep>
+							<img src="${app.contextRoot}/static/images/${kep.fileNev}" height="300" alt="${hirdetes.cim?html}">
+							</#list>
+							</div>
+						<#else>
+							<div class="alert alert-warning">Sajnos a hirdető nem töltött fel képeket a hirdetéshez. :-(</div>
+						</#if>
+						
+						<#if hirdetes.hirdeto??>
+						<h3>Hirdető adatai</h3>
+						<div>
+							<span class="hirdetes-hirdeto-header">Hirdető: </span>
+							<span>${hirdetes.hirdeto.nev!""}</span>
+						</div>
+						<div>
+							<span class="hirdetes-hirdeto-header">Telefon: </span>
+							<span>${hirdetes.hirdeto.telefon!""}</span>
+						</div>
+						<div>
+							<span class="hirdetes-hirdeto-header">Email: </span>
+							<span>${hirdetes.hirdeto.email!""}</span>
+						</div>
+						<div>
+							<span class="hirdetes-hirdeto-header">Cím: </span>
+							<span>${hirdetes.hirdeto.iranyitoSzam!""} ${hirdetes.hirdeto.telepules!""}, ${hirdetes.hirdeto.cim!""}</span>
+						</div>
+						</#if>
+						
+						<hr>
+						<div><b>Egyedi azonosító: </b>${hirdetes.id}</div>
+						<div><b>Közvetlen link: </b>https://www.aprohirdetes.com${app.contextRoot}/hirdetes/${hirdetes.id}</div>
+					</div>
+					<script>
+						window.print();
+					</script>
+				<#else>
+				<h1>Nincs ilyen hirdetés</h1>
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+				<br>
+	</div>
+<#include "html_footer.ftl.html"/>
