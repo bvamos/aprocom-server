@@ -116,6 +116,7 @@ public class AproApplication extends Application {
 		
 		// Statikus file-ok
 		router.attach("/sitemap.xml", SitemapServerResource.class);
+		router.attach("/robots.txt", RobotsServerResource.class);
 
 		return router;
 	}

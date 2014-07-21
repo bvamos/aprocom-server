@@ -87,7 +87,7 @@ public class HirdetesServerResource extends ServerResource implements
 		if(hirdetes != null) {
 			// HTML Title modositasa
 			((HashMap<String, Object>) dataModel.get("app")).put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
-			((HashMap<String, Object>) dataModel.get("app")).put("description", hirdetes.getCim());
+			((HashMap<String, Object>) dataModel.get("app")).put("description", "Apróhirdetés: " + hirdetes.getCim());
 			
 			// Mongo Datastore
 			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
