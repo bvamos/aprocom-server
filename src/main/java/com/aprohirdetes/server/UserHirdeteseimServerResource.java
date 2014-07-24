@@ -75,10 +75,14 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 			for(Hirdetes h : query) {
 				h.getEgyebMezok().put("kategoria", KategoriaCache.getKategoriaNevChain(h.getKategoriaId()));
-				Date feladva = new Date(h.getId().getTime());
-				long diff = new Date().getTime() - feladva.getTime();
-				long diffDays = diff / (24*60*60*1000) % 60; 
-				h.getEgyebMezok().put("feladva", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(feladva) + ", " + diffDays + " napja");
+				Date feladvaDatum = new Date(h.getId().getTime());
+				long diff = new Date().getTime() - feladvaDatum.getTime();
+				long diffDays = diff / (24*60*60*1000) % 60;
+				String feladva = "ma";
+				if(diffDays>0) {
+					feladva = diffDays + " napja";
+				}
+				h.getEgyebMezok().put("feladva", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(feladvaDatum) + ", " + feladva);
 				
 				hirdetesList.add(h);
 			}
