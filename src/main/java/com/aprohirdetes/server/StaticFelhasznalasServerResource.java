@@ -26,7 +26,7 @@ import com.aprohirdetes.utils.AproUtils;
 
 import freemarker.template.Template;
 
-public class FelhasznalasServerResource extends ServerResource implements StaticHtmlResource {
+public class StaticFelhasznalasServerResource extends ServerResource implements StaticHtmlResource {
 
 	private String contextPath = "";
 	

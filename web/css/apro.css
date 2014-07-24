@@ -106,7 +106,9 @@ ul.tabs2>li>a {
 
 .apro-bg {
 	background-color: #E36703;
-	padding: 2px; margin-top: 2px;
+	padding: 2px; 
+	margin-top: 2px;
+	margin-bottom: 20px;
 }
 .ingatlan-bg {
 	background-color: #4cab11;
@@ -121,7 +123,7 @@ ul.tabs2>li>a {
 }
 
 div.search_container {
-	padding: 20px 0 20px 0;
+	margin: 0 0 20px 0;
 }
 
 div.search_container>div.well {

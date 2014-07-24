@@ -25,7 +25,7 @@ import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
 
-public class KilepesServerResource extends ServerResource implements
+public class UserKilepesServerResource extends ServerResource implements
 		KilepesResource {
 
 	private String contextPath = "";

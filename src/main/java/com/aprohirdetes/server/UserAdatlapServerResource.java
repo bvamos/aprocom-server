@@ -1,18 +1,18 @@
 package com.aprohirdetes.server;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
-import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -20,22 +20,24 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.BelepesResource;
+import com.aprohirdetes.common.RegisztracioResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
+import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Session;
-import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
+import com.aprohirdetes.utils.PasswordHash;
+import com.mongodb.MongoException;
 
 import freemarker.template.Template;
 
-public class BelepesServerResource extends ServerResource implements
-		BelepesResource {
+public class UserAdatlapServerResource extends ServerResource implements
+		RegisztracioResource {
 
 	private String contextPath = "";
+	private Session session = null;
 	private Hirdeto hirdeto = null;
-	private String referrer = null;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -44,27 +46,35 @@ public class BelepesServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		referrer = getQueryValue("referrer");
+		this.session = AproUtils.getSession(this);
+		if(this.session != null) {
+			this.hirdeto = HirdetoHelper.load(this.session.getHirdetoId());
+		}
 	}
 
 	@Override
 	public Representation representHtml() throws IOException {
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
-		appDataModel.put("description", "Hozzáférés a felhasználói oldalakhoz");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
+		if(this.session == null) {
+			ftl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
+		} else {
+			dataModel.put("session", this.session);
+			dataModel.put("hirdeto", this.hirdeto);
+		}
+		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
@@ -72,47 +82,45 @@ public class BelepesServerResource extends ServerResource implements
 	public Representation accept(Form form) throws IOException {
 		String message = null;
 		String errorMessage = null;
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		
-		String felhasznaloNev = form.getFirstValue("signinEmail");
-		String jelszo = form.getFirstValue("signinPassword");
-		String sessionId;
+		// TODO: Email cim ellenorzese, vagy hagyjuk a unique indexre?
 		
-		if ((this.hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo)) != null) {
-			// Session ID generalasa
-			sessionId = UUID.randomUUID().toString();
-			getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + sessionId);
-			
-			// Session Cookie
-			CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
-			cookieSetting.setVersion(0);
-			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(contextPath + "/");
-			cookieSetting.setComment("Session Id");
-			cookieSetting.setMaxAge(3600*24*7);
-			getResponse().getCookieSettings().add(cookieSetting);
-			
-			// Session mentese az adatbazisba
-			Session session = new Session();
-			session.setSessionId(sessionId);
-			session.setFelhasznaloNev(felhasznaloNev);
-			session.setHirdetoId(this.hirdeto.getId());
-			
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
-			datastore.save(session);
-			
-			// Utolso belepes mentese
-			datastore.update(this.hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
-
-			// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
-			// TODO: Relativ URL eseten kiegesziti, es h01.aprohirdtes.com lesz
-			if("feladas".equalsIgnoreCase(this.referrer)) {
-				redirectPermanent("https://www.aprohirdetes.com/feladas");
-			} else {
-				redirectPermanent("https://www.aprohirdetes.com/felhasznalo/hirdetesek");
+		hirdeto.setNev(form.getFirstValue("hirdetoNev"));
+		hirdeto.setEmail(form.getFirstValue("hirdetoEmail"));
+		hirdeto.setTelefon(form.getFirstValue("hirdetoTelefon"));
+		hirdeto.setOrszag(form.getFirstValue("hirdetoOrszag"));
+		hirdeto.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
+		hirdeto.setTelepules(form.getFirstValue("hirdetoTelepules"));
+		hirdeto.setCim(form.getFirstValue("hirdetoCim"));
+		
+		if(form.getFirstValue("hirdetoJelszo") != null && !form.getFirstValue("hirdetoJelszo").isEmpty()) {
+			try {
+				hirdeto.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeySpecException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} else {
-			errorMessage = "Hibás felhasználónév vagy jelszó";
+		}
+		
+		// TODO: Validacio
+		
+		// Mentes
+		try {
+			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			datastore.save(hirdeto);
+			
+			message = "Az adatokat módosítottuk";
+		} catch (MongoException me) {
+			if(me.getCode()==11000) {
+				errorMessage = "A megadott email cím már létezik!";
+			} else {
+				errorMessage = "Hiba történt az adatok mentése közben.";
+			}
+			ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -120,15 +128,16 @@ public class BelepesServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("uzenet", message);
 		dataModel.put("hibaUzenet", errorMessage);
-		dataModel.put("email", felhasznaloNev);
-		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
+		dataModel.put("session", this.session);
+		dataModel.put("hirdeto", hirdeto);
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

@@ -26,7 +26,7 @@ import com.aprohirdetes.utils.AproUtils;
 
 import freemarker.template.Template;
 
-public class AdatvedelemServerResource extends ServerResource implements StaticHtmlResource {
+public class StaticSugoServerResource extends ServerResource implements StaticHtmlResource {
 
 	private String contextPath = "";
 	
@@ -52,9 +52,7 @@ public class AdatvedelemServerResource extends ServerResource implements StaticH
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Adatkezelési szabályzat");
-		appDataModel.put("description", "Az Apróhirdetés.com adatkezelési szabályzata");
-		appDataModel.put("keywords", "adatkezelés, szabályzat, adatvédelem");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Súgó");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
@@ -66,11 +64,9 @@ public class AdatvedelemServerResource extends ServerResource implements StaticH
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
 		
-		// Without global configuration object
-		//Representation indexFtl = new ClientResource(LocalReference.createClapReference(getClass().getPackage())	+ "/templates/index.ftl.html").get();
 		Template indexFtl = null;
 		try {
-			indexFtl = AproApplication.TPL_CONFIG.getTemplate("adatvedelem.ftl.html");
+			indexFtl = AproApplication.TPL_CONFIG.getTemplate("sugo.ftl.html");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

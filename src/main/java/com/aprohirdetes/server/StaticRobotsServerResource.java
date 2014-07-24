@@ -7,7 +7,7 @@ import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.StaticHtmlResource;
 
-public class RobotsServerResource extends ServerResource implements StaticHtmlResource {
+public class StaticRobotsServerResource extends ServerResource implements StaticHtmlResource {
 
 	public Representation representHtml() {
 		String sitemap = "User-agent: *\n"

@@ -26,7 +26,7 @@ import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
 
-public class AktivalasServerResource extends ServerResource implements
+public class HirdetesAktivalasServerResource extends ServerResource implements
 		AktivalasResource {
 
 	private String contextPath = "";

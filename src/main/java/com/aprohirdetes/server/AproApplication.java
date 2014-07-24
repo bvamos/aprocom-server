@@ -3,6 +3,8 @@ package com.aprohirdetes.server;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -10,10 +12,12 @@ import org.restlet.Application;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
+import org.restlet.data.CacheDirective;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 import org.restlet.resource.Directory;
+import org.restlet.routing.Filter;
 import org.restlet.routing.Router;
 
 import com.aprohirdetes.model.AttributumCache;
@@ -52,25 +56,25 @@ public class AproApplication extends Application {
 		router.attach("/kereses/{hirdetesTipus}/{helysegList}/{kategoriaList}/", KeresesServerResource.class);
 		
 		router.attach("/hirdetes/{hirdetesId}", HirdetesServerResource.class);
-		router.attach("/hirdetes/{hirdetesId}/nyomtat", NyomtatasServerResource.class);
+		router.attach("/hirdetes/{hirdetesId}/nyomtat", HirdetesNyomtatasServerResource.class);
 		router.attach("/hirdetes/{hirdetesId}/{hirdetesCim}", HirdetesServerResource.class);
 		
-		router.attach("/feladas", FeladasServerResource.class);
-		router.attach("/aktivalas/{hirdetesId}", AktivalasServerResource.class);
+		router.attach("/feladas", HirdetesFeladasServerResource.class);
+		router.attach("/aktivalas/{hirdetesId}", HirdetesAktivalasServerResource.class);
 		
 		// Felhasznaloi oldalak
-		router.attach("/belepes", BelepesServerResource.class);
-		router.attach("/kilepes", KilepesServerResource.class);
-		router.attach("/regisztracio", RegisztracioServerResource.class);
-		router.attach("/felhasznalo/adatlap", ProfilServerResource.class);
-		router.attach("/felhasznalo/hirdetesek", HirdetesekServerResource.class);
-		router.attach("/ujjelszo", UjJelszoServerResource.class);
+		router.attach("/belepes", UserBelepesServerResource.class);
+		router.attach("/kilepes", UserKilepesServerResource.class);
+		router.attach("/regisztracio", UserRegisztracioServerResource.class);
+		router.attach("/felhasznalo/adatlap", UserAdatlapServerResource.class);
+		router.attach("/felhasznalo/hirdetesek", UserHirdeteseimServerResource.class);
+		router.attach("/ujjelszo", UserUjJelszoServerResource.class);
 		
 		// Statikus oldalak
-		router.attach("/adatkezeles", AdatvedelemServerResource.class);
-		router.attach("/feltetelek", FelhasznalasServerResource.class);
-		router.attach("/kapcsolat", KapcsolatServerResource.class);
-		router.attach("/sugo", SugoServerResource.class);
+		router.attach("/adatkezeles", StaticAdatvedelemServerResource.class);
+		router.attach("/feltetelek", StaticFelhasznalasServerResource.class);
+		router.attach("/kapcsolat", StaticKapcsolatServerResource.class);
+		router.attach("/sugo", StaticSugoServerResource.class);
 		
 		// RSS
 		router.attach("/rss/{hirdetesTipus}/{kategoriaList}/", RssServerResource.class);
@@ -87,7 +91,29 @@ public class AproApplication extends Application {
 		String cssUri = "war:///css";
 		Directory cssDirectory = new Directory(getContext(), cssUri);
 		cssDirectory.setListingAllowed(true);
-		router.attach("/css", cssDirectory);
+
+		//add cache headers to the webjars so we're not swamped by requests, set things to expire in a year.
+		Filter cache = new Filter(getContext(), cssDirectory){
+		    protected void afterHandle(Request request, Response response) {
+		    	System.out.println(request.getResourceRef().getPath());
+		        super.afterHandle(request, response);
+		        if (response!= null && response.getEntity() != null) {
+			    	System.out.println(request.getResourceRef().getPath());
+			    	System.out.println(response.getStatus());
+		            if (response.getStatus().equals(Status.SUCCESS_OK)){
+				    	System.out.println(request.getResourceRef().getPath());
+		                final Calendar calendar = Calendar.getInstance();
+		                calendar.add(Calendar.MONTH, 1);
+		                response.getEntity().setExpirationDate(calendar.getTime());        
+		                response.setCacheDirectives(new ArrayList<CacheDirective>());
+		                response.getCacheDirectives().add(CacheDirective.maxAge(2592000));
+		                System.out.println(response.getCacheDirectives());
+		            }
+		        }
+		    }
+		};
+		
+		router.attach("/css", cache);
 		
 		String jsUri = "war:///js";
 		Directory jsDirectory = new Directory(getContext(), jsUri);
@@ -116,7 +142,7 @@ public class AproApplication extends Application {
 		
 		// Statikus file-ok
 		router.attach("/sitemap.xml", SitemapServerResource.class);
-		router.attach("/robots.txt", RobotsServerResource.class);
+		router.attach("/robots.txt", StaticRobotsServerResource.class);
 
 		return router;
 	}

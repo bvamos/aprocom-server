@@ -36,7 +36,7 @@ import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
 
-public class NyomtatasServerResource extends ServerResource implements
+public class HirdetesNyomtatasServerResource extends ServerResource implements
 		HirdetesResource {
 
 	private String contextPath = "";

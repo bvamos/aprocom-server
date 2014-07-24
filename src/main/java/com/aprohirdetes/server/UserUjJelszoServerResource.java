@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.Query;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -20,23 +22,20 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.RegisztracioResource;
+import com.aprohirdetes.common.UjJelszoResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
-import com.aprohirdetes.model.HirdetoHelper;
-import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
-import com.mongodb.MongoException;
 
 import freemarker.template.Template;
 
-public class ProfilServerResource extends ServerResource implements
-		RegisztracioResource {
+public class UserUjJelszoServerResource extends ServerResource implements
+		UjJelszoResource {
 
 	private String contextPath = "";
-	private Session session = null;
 	private Hirdeto hirdeto = null;
 	
 	@Override
@@ -45,36 +44,25 @@ public class ProfilServerResource extends ServerResource implements
 		
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
-		
-		this.session = AproUtils.getSession(this);
-		if(this.session != null) {
-			this.hirdeto = HirdetoHelper.load(this.session.getHirdetoId());
-		}
 	}
 
 	@Override
 	public Representation representHtml() throws IOException {
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Ajaj, elfelejtettem a jelszavam");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("session", AproUtils.getSession(this));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		
-		if(this.session == null) {
-			ftl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
-		} else {
-			dataModel.put("session", this.session);
-			dataModel.put("hirdeto", this.hirdeto);
-		}
-		
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("ujjelszo.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
@@ -82,62 +70,60 @@ public class ProfilServerResource extends ServerResource implements
 	public Representation accept(Form form) throws IOException {
 		String message = null;
 		String errorMessage = null;
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("ujjelszo.ftl.html");
 		
-		// TODO: Email cim ellenorzese, vagy hagyjuk a unique indexre?
+		String felhasznaloNev = form.getFirstValue("email");
 		
-		hirdeto.setNev(form.getFirstValue("hirdetoNev"));
-		hirdeto.setEmail(form.getFirstValue("hirdetoEmail"));
-		hirdeto.setTelefon(form.getFirstValue("hirdetoTelefon"));
-		hirdeto.setOrszag(form.getFirstValue("hirdetoOrszag"));
-		hirdeto.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
-		hirdeto.setTelepules(form.getFirstValue("hirdetoTelepules"));
-		hirdeto.setCim(form.getFirstValue("hirdetoCim"));
+		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 		
-		if(form.getFirstValue("hirdetoJelszo") != null && !form.getFirstValue("hirdetoJelszo").isEmpty()) {
+		Query<Hirdeto> query = datastore.createQuery(Hirdeto.class);
+		query.criteria("email").equal(felhasznaloNev);
+		hirdeto = query.get();
+		
+		if(hirdeto != null) {
 			try {
-				hirdeto.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
+				Random r = new Random();
+				String password = Long.toString(r.nextLong(), 36);
+				getLogger().info(password);
+				hirdeto.setJelszo(PasswordHash.createHash(password));
+				MailUtils.sendMailUjJelszo(hirdeto, password);
+				message = "Az új jelszót a megadott email címre elküldtük!";
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				errorMessage = "Hiba történt az új jelszó generálása közben.";
 			} catch (InvalidKeySpecException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				errorMessage = "Hiba történt az új jelszó generálása közben.";
 			}
-		}
-		
-		// TODO: Validacio
-		
-		// Mentes
-		try {
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
-			datastore.save(hirdeto);
 			
-			message = "Az adatokat módosítottuk";
-		} catch (MongoException me) {
-			if(me.getCode()==11000) {
-				errorMessage = "A megadott email cím már létezik!";
-			} else {
-				errorMessage = "Hiba történt az adatok mentése közben.";
-			}
-			ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
+			datastore.save(hirdeto);
+		} else {
+			errorMessage = "A megadott email címmel sajnos nincs regisztrált Hirdetőnk! Kattintson a fenti Regisztráció fülre gyorsan!";
 		}
 		
+		// Varjunk picit, hogy ne lehessen ezer ilyen kerest benyomni egy masodperc alatt
+		try {
+		    Thread.sleep(3000);
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Elfelejtettem a jelszavam");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("uzenet", message);
 		dataModel.put("hibaUzenet", errorMessage);
-		dataModel.put("session", this.session);
-		dataModel.put("hirdeto", hirdeto);
+		dataModel.put("email", felhasznaloNev);
+		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

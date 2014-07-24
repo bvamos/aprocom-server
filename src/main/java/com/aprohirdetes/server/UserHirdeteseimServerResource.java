@@ -28,7 +28,7 @@ import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
 
-public class HirdetesekServerResource extends ServerResource implements
+public class UserHirdeteseimServerResource extends ServerResource implements
 		HirdetesResource {
 
 	private String contextPath = "";
@@ -75,7 +75,10 @@ public class HirdetesekServerResource extends ServerResource implements
 			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 			for(Hirdetes h : query) {
 				h.getEgyebMezok().put("kategoria", KategoriaCache.getKategoriaNevChain(h.getKategoriaId()));
-				h.getEgyebMezok().put("feladva", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date(h.getId().getTime())));
+				Date feladva = new Date(h.getId().getTime());
+				long diff = new Date().getTime() - feladva.getTime();
+				long diffDays = diff / (24*60*60*1000) % 60; 
+				h.getEgyebMezok().put("feladva", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(feladva) + ", " + diffDays + " napja");
 				
 				hirdetesList.add(h);
 			}
