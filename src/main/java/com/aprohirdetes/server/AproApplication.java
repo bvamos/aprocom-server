@@ -57,6 +57,7 @@ public class AproApplication extends Application {
 		
 		router.attach("/hirdetes/{hirdetesId}", HirdetesServerResource.class);
 		router.attach("/hirdetes/{hirdetesId}/nyomtat", HirdetesNyomtatasServerResource.class);
+		router.attach("/hirdetes/{hirdetesId}/torol", HirdetesTorlesServerResource.class);
 		router.attach("/hirdetes/{hirdetesId}/{hirdetesCim}", HirdetesServerResource.class);
 		
 		router.attach("/feladas", HirdetesFeladasServerResource.class);
@@ -113,7 +114,7 @@ public class AproApplication extends Application {
 		    }
 		};
 		
-		router.attach("/css", cache);
+		router.attach("/css", cssDirectory);
 		
 		String jsUri = "war:///js";
 		Directory jsDirectory = new Directory(getContext(), jsUri);

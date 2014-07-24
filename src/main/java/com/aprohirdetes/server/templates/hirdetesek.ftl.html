@@ -27,6 +27,7 @@
 						<th>Ár</th>
 						<th>Feladva</th>
 						<th>Megjelent</th>
+						<th>Műveletek</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -37,6 +38,7 @@
 						<td align="right">${hirdetes.ar} Ft</td>
 						<td>${(hirdetes.egyebMezok.feladva)!''}</td>
 						<td align="right">${hirdetes.megjelenes!'0'}</td>
+						<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a></td>
 					</tr>
 				</#list>
 					</tbody>

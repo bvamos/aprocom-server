@@ -1,0 +1,25 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<div class="col-sm-3 col-md-2">
+		
+<#include "profil_menu.ftl.html"/>
+				
+			</div>
+			<div class="col-sm-9 col-md-10">
+			<h3>Hirdetés törlése</h3>
+			
+				<#if hibaUzenet?? >
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+				<#if uzenet?? >
+				<div class="alert alert-success">${uzenet}</div>
+				</#if>
+				
+			</div>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>
