@@ -11,6 +11,8 @@ function submitKereses() {
 	if(kulcsszo.length>0) kform.action = kform.action + 'q=' + kulcsszo;
 	if(p>1) kform.action = kform.action + '&p=' + window.p;
 	if(this.s>0) kform.action = kform.action + '&s=' + window.s;
+	if(kform.keresesArMin.value.length>0) kform.action = kform.action + '&arMin=' + kform.keresesArMin.value;
+	if(kform.keresesArMax.value.length>0) kform.action = kform.action + '&arMax=' + kform.keresesArMax.value;
 	
 	window.location = kform.action;
 	return false;
@@ -20,24 +22,6 @@ function setKategoria(kategoria) {
 	var kform = document.forms.KeresesForm;
 	selectOption(kform.hirdetesKategoria, kategoria);
 	submitKereses();
-}
-
-function setSorrend(sorrend) {
-	window.s = sorrend;
-	window.p = 1;
-	submitKereses();
-}
-
-function nextPage() {
-	window.p = window.p+1;
-	submitKereses();
-}
-
-function prevPage() {
-	if(window.p>1) {
-		window.p--;
-		submitKereses();
-	}
 }
 
 function selectOption(select, option) {

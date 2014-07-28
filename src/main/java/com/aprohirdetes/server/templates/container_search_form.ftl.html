@@ -1,35 +1,96 @@
 		<div class="row search_container">
-			<div class="well">
-				<form class="form-inline" role="form" method="get" id="KeresesForm" onSubmit="submitKereses()">
+			<div class="well" id="keresesForm">
+				<form class="form-horizontal" name="KeresesForm">
 					<input type="hidden" name="s" value="${sorrend!1}">
-					<div class="form-group" style="width: 45%;">
-					  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
-					  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="${q!''?html}" placeholder="Keresett kifejezés" style="width: 100%;">
-					</div>
-					<select class="form-control" style="width: 10%;" id="hirdetesTipus">
-						<option value="kinal" <#if hirdetesTipus=2>selected</#if>>Kínál</option>
-						<option value="keres" <#if hirdetesTipus=1>selected</#if>>Keres</option>
-					</select>
-					<select class="form-control" style="width: 15%;" id="hirdetesHelyseg">
-						<#list helysegList as helyseg>
-						<option value="${helyseg.urlNev}" <#if '${helyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>${helyseg.nev}</option>
-							<#list helyseg.alhelysegList as alhelyseg>
-							<option value="${alhelyseg.urlNev}" <#if '${alhelyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>&nbsp;&nbsp;${alhelyseg.nev}</option>
-								<#list alhelyseg.alhelysegList as alalhelyseg>
-								<option value="${alalhelyseg.urlNev}" <#if '${alalhelyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+					
+					<div class="form-group">
+						<div class="form-inline">
+							<div class="form-group" style="min-width: 40%;">
+							  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
+							  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="${q!''?html}" placeholder="Keresett kifejezés">
+							</div>
+							<div class="form-group" style="min-width: 10%;">
+							<select class="form-control" id="hirdetesTipus" width="100%">
+								<option value="kinal" <#if hirdetesTipus=2>selected</#if>>Kínál</option>
+								<option value="keres" <#if hirdetesTipus=1>selected</#if>>Keres</option>
+							</select>
+							</div>
+							<div class="form-group" style="min-width: 15%;">
+							<select class="form-control" id="hirdetesHelyseg">
+								<#list helysegList as helyseg>
+								<option value="${helyseg.urlNev}" <#if '${helyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>${helyseg.nev}</option>
+									<#list helyseg.alhelysegList as alhelyseg>
+									<option value="${alhelyseg.urlNev}" <#if '${alhelyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>&nbsp;&nbsp;${alhelyseg.nev}</option>
+										<#list alhelyseg.alhelysegList as alalhelyseg>
+										<option value="${alalhelyseg.urlNev}" <#if '${alalhelyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+										</#list>
+									</#list>
 								</#list>
-							</#list>
-						</#list>
-					</select>
-					<select class="form-control" style="width: 15%;" id="hirdetesKategoria">
-						<#list kategoriaList as kategoria>
-						<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=hirdetesKategoria[0]>selected</#if>>${kategoria.nev}</option>
-							<#list kategoria.alkategoriaList as alkategoria>
-							<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=hirdetesKategoria[0]>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
-							</#list>
-						</#list>
-					</select>
-					<button type="submit" class="btn btn-default" style="width: 10%;">Keresés</button>
+							</select>
+							</div>
+							<div class="form-group" style="min-width: 15%;">
+							<select class="form-control" id="hirdetesKategoria">
+								<#list kategoriaList as kategoria>
+								<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=hirdetesKategoria[0]>selected</#if>>${kategoria.nev}</option>
+									<#list kategoria.alkategoriaList as alkategoria>
+									<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=hirdetesKategoria[0]>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
+									</#list>
+								</#list>
+							</select>
+							</div>
+							<button type="button" class="btn btn-success" style="min-width: 8%;" id="btnKereses">Keresés</button>
+							<button type="button" class="btn btn-default" id="btnBovitettKereses" title="Bővített keresés"><span class="glyphicon glyphicon-filter"></span></button>
+						</div>
+					</div>
+					
+					<div id="panelBovitettKereses">
+						<div class="form-group">
+							<label class="col-xs-2 control-label">Ár</label>
+							<div class="col-xs-10">
+								<div class="form-inline">
+									<div class="form-group">
+										<div class="input-group">
+											<input type="number" class="form-control" id="keresesArMin" name="keresesArMin" value="${arMin!''}" placeholder="-tól" min="0">
+											<span class="input-group-addon">Ft</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="input-group">
+											<input type="number" class="form-control" id="keresesArMax" name="keresesArMax" value="${arMax!''}" placeholder="-ig" min="0">
+											<span class="input-group-addon">Ft</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 				</form>
 			</div>
+			<script>
+				$('#panelBovitettKereses').hide();
+				$('#btnBovitettKereses').click(function(){
+					$('#panelBovitettKereses').toggle();
+				});
+				
+				$('#btnKereses').click(function(){
+					if(typeof window.p === 'undefined') window.p = 1;
+		
+					var kulcsszo = $('#hirdetesKulcsszo').val();
+					var tipus = $('#hirdetesTipus').val();
+					var helyseg = $('#hirdetesHelyseg').val();
+					var kategoria = $('#hirdetesKategoria').val();
+					var arMin = $('#keresesArMin').val();
+					var arMax = $('#keresesArMax').val();
+					
+					var action = appContext + '/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/?';
+					if(kulcsszo.length>0) action = action + 'q=' + kulcsszo;
+					if(p>1) action = action + '&p=' + window.p;
+					if(s>0) action = action + '&s=' + window.s;
+					if(arMin.length>0) action = action + '&arMin=' + arMin;
+					if(arMax.length>0) action = action + '&arMax=' + arMax;
+					
+					window.location = action;
+				});
+			</script>
 		</div>

@@ -61,6 +61,8 @@ public class KeresesServerResource extends ServerResource implements
 	private List<Helyseg> selectedHelysegList = new LinkedList<Helyseg>();
 	
 	private String kulcsszo;
+	private Integer arMin;
+	private Integer arMax;
 	private int page;
 	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20"));
 	private int sorrend;
@@ -81,6 +83,20 @@ public class KeresesServerResource extends ServerResource implements
 		this.hirdetesTipus = ("keres".equals((String) this.getRequestAttributes().get("hirdetesTipus"))) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
 		
 		this.kulcsszo = getQueryValue("q")==null ? "" : getQueryValue("q");
+		
+		try {
+			this.arMin = getQueryValue("arMin")==null ? null : Integer.parseInt(getQueryValue("arMin"));
+		} catch(NumberFormatException nfe) {
+			getLogger().warning("Ervenytelen minimum ar: " + getQueryValue("arMin"));
+			this.arMin = null;
+		}
+		
+		try {
+			this.arMax = getQueryValue("arMax")==null ? null : Integer.parseInt(getQueryValue("arMax"));
+		} catch(NumberFormatException nfe) {
+			getLogger().warning("Ervenytelen maximum ar: " + getQueryValue("arMax"));
+			this.arMax = null;
+		}
 		
 		// Set current page
 		try {
@@ -144,6 +160,12 @@ public class KeresesServerResource extends ServerResource implements
 		query.criteria("kategoriaId").in(selectedKategoriaIdList);
 		if(!this.kulcsszo.isEmpty()) {
 			query.criteria("kulcsszavak").equal(kulcsszo);
+		}
+		if(this.arMin != null) {
+			query.criteria("ar").greaterThanOrEq(arMin);
+		}
+		if(this.arMax != null) {
+			query.criteria("ar").lessThanOrEq(arMax);
 		}
 		
 		query.offset(this.page * this.pageSize - this.pageSize);
@@ -246,6 +268,8 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("hirdetesHelysegUrl", selectedHelysegUrlNevListString);
 		dataModel.put("hirdetesek_szama", hirdetesekSzama);
 		dataModel.put("q", this.kulcsszo);
+		dataModel.put("arMin", this.arMin==null ? null : this.arMin.toString());
+		dataModel.put("arMax", this.arMax==null ? null : this.arMax.toString());
 		dataModel.put("aktualisOldal", this.page);
 		dataModel.put("osszesOldal", (hirdetesekSzama/this.pageSize)+1);
 		dataModel.put("sorrend", this.sorrend);

@@ -96,6 +96,25 @@
 			alert('Hiba');
 		});
 	});
+	
+	
+	$('#keresesSorrendSelect').change(function(){
+		window.s = this.value;
+		window.p = 1;
+		$('#btnKereses').click();
+	});
+
+	$('elozoBtn').click(function(){
+		if(window.p>1) {
+			window.p--;
+			$('#btnKereses').click();
+		}
+	});
+	
+	$('kovetkezoBtn').click(function(){
+		window.p++;
+		$('#btnKereses').click();
+	});
     </script>
     <script type="text/javascript">
 	window.___gcfg = {lang: 'hu'};

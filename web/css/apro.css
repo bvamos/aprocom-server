@@ -1,3 +1,12 @@
+.form-inline .form-group {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.form-inline .form-control {
+	width: 100%;
+}
+
 div.placeholder {
 	padding: 0;
 }
@@ -201,6 +210,7 @@ ul.category-main>li {
 }
 
 ul.category-main>li>a {
+	font-family: Helvetica-Narrow, Arial-Narrow, Helvetica, Arial;
 	text-transform: uppercase;
 	text-shadow: 1px 2px #3e7bbc;
 	font-stretch: condensed;

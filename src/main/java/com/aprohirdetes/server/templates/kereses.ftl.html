@@ -14,7 +14,7 @@
 								<#assign hirdetesTipusUrl = 'kinal'>
 							</#if>
 							<a href="${app.contextRoot}/rss/${hirdetesTipusUrl}/${hirdetesHelysegUrl}/${hirdetesKategoriaUrl}/" target="_blank"><img alt="RSS" src="${app.contextRoot}/images/rss.png" border="0" width="20" height="20" /></a>
-							<select onchange="javascript:setSorrend(this.value);">
+							<select id="keresesSorrendSelect">
 								<option value="1" <#if sorrend==1>selected</#if>>Legújabb elöl</option>
 								<option value="2" <#if sorrend==2>selected</#if>>Legrégebbi elöl</option>
 								<option value="3" <#if sorrend==3>selected</#if>>Legolcsóbb elöl</option>
@@ -162,10 +162,10 @@
 					<div>
 						<ul class="pager">
 							<#if (aktualisOldal>1) >
-							<li class="previous"><a href="javascript:prevPage();">&larr; Előző</a></li>
+							<li class="previous" id="elozoBtn"><a href="#">&larr; Előző</a></li>
 							</#if>
 							<#if (aktualisOldal<osszesOldal) >
-							<li class="next"><a href="javascript:nextPage();">Következő &rarr;</a></li>
+							<li class="next" id="kovetkezoBtn"><a href="#">Következő &rarr;</a></li>
 							</#if>
 						</ul>
 					</div>
