@@ -17,12 +17,13 @@
 							</div>
 							<div class="form-group" style="min-width: 15%;">
 							<select class="form-control" id="hirdetesHelyseg">
+								<option value="">Összes helység</option>
 								<#list helysegList as helyseg>
-								<option value="${helyseg.urlNev}" <#if '${helyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>${helyseg.nev}</option>
+								<option value="${helyseg.urlNev}" <#if '${helyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>${helyseg.nev}</option>
 									<#list helyseg.alhelysegList as alhelyseg>
-									<option value="${alhelyseg.urlNev}" <#if '${alhelyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>&nbsp;&nbsp;${alhelyseg.nev}</option>
+									<option value="${alhelyseg.urlNev}" <#if '${alhelyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>&nbsp;&nbsp;${alhelyseg.nev}</option>
 										<#list alhelyseg.alhelysegList as alalhelyseg>
-										<option value="${alalhelyseg.urlNev}" <#if '${alalhelyseg.urlNev}'=hirdetesHelyseg[0]>selected</#if>>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+										<option value="${alalhelyseg.urlNev}" <#if '${alalhelyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
 										</#list>
 									</#list>
 								</#list>
@@ -83,7 +84,13 @@
 					var arMin = $('#keresesArMin').val();
 					var arMax = $('#keresesArMax').val();
 					
-					var action = appContext + '/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/?';
+					var action = '';
+					if(helyseg.length>0) {
+						action = appContext + '/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/?';
+					}else{
+						action = appContext + '/kereses/' + tipus + '/' + kategoria + '/?';
+					}
+					
 					if(kulcsszo.length>0) action = action + 'q=' + kulcsszo;
 					if(p>1) action = action + '&p=' + window.p;
 					if(s>0) action = action + '&s=' + window.s;

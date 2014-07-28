@@ -76,7 +76,8 @@ public class KeresesServerResource extends ServerResource implements
 		
 		this.selectedHelysegUrlNevListString = (String) this.getRequestAttributes().get("helysegList");
 		if(this.selectedHelysegUrlNevListString == null || this.selectedHelysegUrlNevListString.isEmpty()) {
-			this.selectedHelysegUrlNevListString = "magyarorszag";
+			// Alapertelmezett helyseg: Osszes helyseg
+			this.selectedHelysegUrlNevListString = "";
 		}
 		this.selectedHelysegList = HelysegCache.getHelysegListByUrlNevList(this.selectedHelysegUrlNevListString);
 		
@@ -156,7 +157,9 @@ public class KeresesServerResource extends ServerResource implements
 		
 		query.criteria("hitelesitve").equal(true);
 		query.criteria("tipus").equal(this.hirdetesTipus);
-		query.criteria("helysegId").in(selectedHelysegIdList);
+		if(selectedHelysegIdList.size()>0) {
+			query.criteria("helysegId").in(selectedHelysegIdList);
+		}
 		query.criteria("kategoriaId").in(selectedKategoriaIdList);
 		if(!this.kulcsszo.isEmpty()) {
 			query.criteria("kulcsszavak").equal(kulcsszo);
