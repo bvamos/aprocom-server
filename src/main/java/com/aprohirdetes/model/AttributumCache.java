@@ -260,8 +260,16 @@ public class AttributumCache {
 		gumiPerErtekMap.put("100", "100");
 		gumiPer.setErtekMap(gumiPerErtekMap);
 		
+		Attributum gumiIdoszak = new Attributum("gumi-idoszak", AttributumTipus.SELECT_SINGLE, "Időszak");
+		Map<String, Object> gumiIdoszakErtekMap = new LinkedHashMap<String, Object>();
+		gumiIdoszakErtekMap.put("ny", "Nyári");
+		gumiIdoszakErtekMap.put("t", "Téli");
+		gumiIdoszakErtekMap.put("4", "4 évszakos");
+		gumiIdoszak.setErtekMap(gumiIdoszakErtekMap);
+		
 		LinkedList<Attributum> gumiList = new LinkedList<Attributum>();
 		gumiList.add(allapot);
+		gumiList.add(gumiIdoszak);
 		gumiList.add(gumiMarka);
 		gumiList.add(gumiSzelesseg);
 		gumiList.add(gumiPer);
