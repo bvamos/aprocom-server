@@ -318,6 +318,11 @@ div.hirdetes-container .hirdetes-hirdeto-header {
 	font-weight: bold;
 }
 
+div.hirdetes-container img {
+	margin: 2px;
+	border: 1px solid #333;
+}
+
 .bar {
     height: 18px;
     background: green;

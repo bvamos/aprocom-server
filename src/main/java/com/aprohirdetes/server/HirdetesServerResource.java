@@ -90,6 +90,9 @@ public class HirdetesServerResource extends ServerResource implements
 				((HashMap<String, Object>) dataModel.get("app")).put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
 				((HashMap<String, Object>) dataModel.get("app")).put("description", "Apróhirdetés: " + hirdetes.getCim());
 				
+				// Hirdetes szovegenek modositasa: ujsorok
+				hirdetes.setSzoveg(hirdetes.getSzoveg().replaceAll("\\r\\n", "<br>"));
+				
 				// Mongo Datastore
 				Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
 				
