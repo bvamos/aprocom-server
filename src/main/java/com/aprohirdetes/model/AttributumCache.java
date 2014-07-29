@@ -61,6 +61,16 @@ public class AttributumCache {
 		ingatlanFutes.setErtekMap(ingatlanFutesErtekMap);
 		ingatlanFutes.setKotelezo(true);
 		
+		// Kategoria: Ingatlan->Telek
+		LinkedList<Attributum> telekList = new LinkedList<Attributum>();
+		
+		Attributum telekAlapterulet = new Attributum("telek-alapterulet", AttributumTipus.NUMBER, "Telek alapterülete");
+		telekAlapterulet.setKotelezo(true);
+		telekAlapterulet.setMertekEgyseg("m&sup2;");
+		
+		telekList.add(telekAlapterulet);
+		KATEGORIA_ATTRIBUTUM.put("telek-szanto-kiskert", telekList);
+		
 		// Kategoria: Ingatlan->Lakas
 		LinkedList<Attributum> lakasList = new LinkedList<Attributum>();
 		
@@ -92,6 +102,7 @@ public class AttributumCache {
 		hazList.add(ingatlanKomfort);
 		hazList.add(ingatlanFutes);
 		hazList.add(hazPince);
+		hazList.add(telekAlapterulet);
 		KATEGORIA_ATTRIBUTUM.put("haz", hazList);
 		
 		// Kategoria: Ingatlan->Alberlet
