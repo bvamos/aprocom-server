@@ -195,6 +195,8 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		if(this.session != null) {
 			// Van belepett felhasznalo, az ID-t elmentjuk
 			hi.setHirdetoId(this.session.getHirdetoId());
+			// Regisztralt felhasznalonak nem kell hitelesites emailben
+			hi.setHitelesitve(true);
 		}
 		ho.setNev(form.getFirstValue("hirdetoNev"));
 		ho.setEmail(form.getFirstValue("hirdetoEmail"));
@@ -278,11 +280,14 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				}
 			}
 	
-			
-			uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
+			if(this.session == null) {
+				uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
 					+ "Kérjük, kattints a levélben lévő linkre, és hirdetésed megjelenik oldalunkon!";
+			} else {
+				uzenet = "A Hirdetés mentése sikeresen megtörtént. Mivel regisztrált felhasználó vagy, a hirdetésedet automatikusan aktiváltuk, nincs más teendőd.";
+			}
 			getLogger().info("Sikeres hirdetesfeladas. " + id.toString());
-			if(!MailUtils.sendMailHirdetesFeladva(hi)) {
+			if(!MailUtils.sendMailHirdetesFeladva(hi, session)) {
 				getLogger().severe("Hiba a hirdetes feladva level kikuldese kozben. ID: " + hi.getId());
 			}
 			
