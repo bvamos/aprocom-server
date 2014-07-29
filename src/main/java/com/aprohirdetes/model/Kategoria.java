@@ -87,11 +87,11 @@ public class Kategoria {
 		this.alkategoriaList = alkategoriaList;
 	}
 
-	public int getHirdetesekSzama() {
+	public synchronized int getHirdetesekSzama() {
 		return hirdetesekSzama;
 	}
 
-	public void setHirdetesekSzama(int hirdetesekSzama) {
+	public synchronized void setHirdetesekSzama(int hirdetesekSzama) {
 		this.hirdetesekSzama = hirdetesekSzama;
 	}
 
