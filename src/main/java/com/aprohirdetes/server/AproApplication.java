@@ -232,7 +232,7 @@ public class AproApplication extends Application {
 		AttributumCache.loadAttributumCache();
 		
 		// Hirdetesek szamanak szamolasa idozitve a hatterben
-		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 10, 600, TimeUnit.SECONDS);
+		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
 	}
 
 	@Override

@@ -47,8 +47,8 @@ public class KategoriaCountTask implements Runnable {
 		
 		// Osszegyujtott darabszamok beirasa
 		for(DBObject rec : output.results()) {
-			Kategoria kat = KategoriaCache.getCacheById().get(rec.get("_id"));
-			kat.setHirdetesekSzama((Integer) rec.get("count"));
+			//Kategoria kat = KategoriaCache.getCacheById().get(rec.get("_id"));
+			KategoriaCache.getCacheById().get(rec.get("_id")).setHirdetesekSzama((Integer) rec.get("count"));
 		}
 		
 		// Alkategoriak dbszamainak hozzadasa a fo kategoriahoz
