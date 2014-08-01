@@ -280,6 +280,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				}
 			}
 	
+			// Level kikuldese
 			if(this.session == null) {
 				uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
 					+ "Kérjük, kattints a levélben lévő linkre, és hirdetésed megjelenik oldalunkon!";

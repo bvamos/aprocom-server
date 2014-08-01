@@ -1,6 +1,6 @@
 		<div class="row search_container">
 			<div class="well" id="keresesForm">
-				<form class="form-horizontal" name="KeresesForm">
+				<form class="form-horizontal" name="KeresesForm" role="form" method="get" id="KeresesForm">
 					<input type="hidden" name="s" value="${sorrend!1}">
 					
 					<div class="form-group">
@@ -69,35 +69,41 @@
 				</form>
 			</div>
 			<script>
-				$('#panelBovitettKereses').hide();
-				$('#btnBovitettKereses').click(function(){
-					$('#panelBovitettKereses').toggle();
-				});
+			$('#hirdetesKulcsszo').keypress(function(event) {
+		        if (event.keyCode == 13) {
+		        	$('#btnKereses').click();
+		        }
+		    });
+			
+			$('#panelBovitettKereses').hide();
+			$('#btnBovitettKereses').click(function(){
+				$('#panelBovitettKereses').toggle();
+			});
+			
+			$('#btnKereses').click(function(){
+				if(typeof window.p === 'undefined') window.p = 1;
+	
+				var kulcsszo = $('#hirdetesKulcsszo').val();
+				var tipus = $('#hirdetesTipus').val();
+				var helyseg = $('#hirdetesHelyseg').val();
+				var kategoria = $('#hirdetesKategoria').val();
+				var arMin = $('#keresesArMin').val();
+				var arMax = $('#keresesArMax').val();
 				
-				$('#btnKereses').click(function(){
-					if(typeof window.p === 'undefined') window.p = 1;
-		
-					var kulcsszo = $('#hirdetesKulcsszo').val();
-					var tipus = $('#hirdetesTipus').val();
-					var helyseg = $('#hirdetesHelyseg').val();
-					var kategoria = $('#hirdetesKategoria').val();
-					var arMin = $('#keresesArMin').val();
-					var arMax = $('#keresesArMax').val();
-					
-					var action = '';
-					if(helyseg.length>0) {
-						action = appContext + '/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/?';
-					}else{
-						action = appContext + '/kereses/' + tipus + '/' + kategoria + '/?';
-					}
-					
-					if(kulcsszo.length>0) action = action + 'q=' + kulcsszo;
-					if(p>1) action = action + '&p=' + window.p;
-					if(s>0) action = action + '&s=' + window.s;
-					if(arMin.length>0) action = action + '&arMin=' + arMin;
-					if(arMax.length>0) action = action + '&arMax=' + arMax;
-					
-					window.location = action;
-				});
+				var action = '';
+				if(helyseg.length>0) {
+					action = appContext + '/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/?';
+				}else{
+					action = appContext + '/kereses/' + tipus + '/' + kategoria + '/?';
+				}
+				
+				if(kulcsszo.length>0) action = action + 'q=' + kulcsszo;
+				if(p>1) action = action + '&p=' + window.p;
+				if(s>0) action = action + '&s=' + window.s;
+				if(arMin.length>0) action = action + '&arMin=' + arMin;
+				if(arMax.length>0) action = action + '&arMax=' + arMax;
+				
+				window.location = action;
+			});
 			</script>
 		</div>
