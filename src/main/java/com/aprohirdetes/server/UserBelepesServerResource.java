@@ -11,7 +11,6 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
@@ -34,6 +33,7 @@ public class UserBelepesServerResource extends ServerResource implements
 		BelepesResource {
 
 	private String contextPath = "";
+	private Session session = null;
 	private Hirdeto hirdeto = null;
 	private String referrer = null;
 	
@@ -43,6 +43,8 @@ public class UserBelepesServerResource extends ServerResource implements
 		
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
+		
+		session = AproUtils.getSession(this);
 		
 		referrer = getQueryValue("referrer");
 	}
@@ -61,8 +63,12 @@ public class UserBelepesServerResource extends ServerResource implements
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", session);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
+		
+		if(session != null) {
+			dataModel.put("hibaUzenet", "Már be vagy lépve. Ha mégsem Te vagy " + session.getFelhasznaloNev() + ", <a href=\"${app.contextRoot}/kilepes\">kattints ide és lépj ki</a> gyorsan!");
+		}
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
@@ -76,15 +82,21 @@ public class UserBelepesServerResource extends ServerResource implements
 		
 		String felhasznaloNev = form.getFirstValue("signinEmail");
 		String jelszo = form.getFirstValue("signinPassword");
-		String sessionId;
 		
 		if ((this.hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo)) != null) {
-			// Session ID generalasa
-			sessionId = UUID.randomUUID().toString();
-			getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + sessionId);
+			// Session betoltese
+			Session session;
+			session = SessionHelper.load(this.hirdeto.getId());
+			if(session == null) {
+				// Nincs session az adatbazisban, generalunk ujat, es elmentjuk
+				session = new Session();
+				session.setSessionId(UUID.randomUUID().toString());
+				session.setHirdetoId(this.hirdeto.getId());
+			}
+			getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + session.getSessionId());
 			
 			// Session Cookie
-			CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
+			CookieSetting cookieSetting = new CookieSetting("AproSession", session.getSessionId());
 			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
 			cookieSetting.setPath(contextPath + "/");
@@ -93,12 +105,7 @@ public class UserBelepesServerResource extends ServerResource implements
 			getResponse().getCookieSettings().add(cookieSetting);
 			
 			// Session mentese az adatbazisba
-			Session session = new Session();
-			session.setSessionId(sessionId);
-			session.setFelhasznaloNev(felhasznaloNev);
-			session.setHirdetoId(this.hirdeto.getId());
-			
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			Datastore datastore = MongoUtils.getDatastore();
 			datastore.save(session);
 			
 			// Utolso belepes mentese
@@ -113,6 +120,7 @@ public class UserBelepesServerResource extends ServerResource implements
 			}
 		} else {
 			errorMessage = "Hibás felhasználónév vagy jelszó";
+			getLogger().severe("Sikertelen belepes: " + felhasznaloNev);
 		}
 		
 		// Adatmodell a Freemarker sablonhoz

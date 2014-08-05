@@ -1,5 +1,6 @@
 package com.aprohirdetes.server.apiv1;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -9,8 +10,6 @@ import javax.servlet.ServletContext;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
-import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
@@ -22,7 +21,6 @@ import com.aprohirdetes.common.APISessionBelepesResource;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
-import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class SessionBelepesServerResource extends ServerResource implements
@@ -37,13 +35,6 @@ public class SessionBelepesServerResource extends ServerResource implements
 	protected void doInit() throws ResourceException {
 		super.doInit();
 
-		// Cookie-ban taroljuk a session azonositojat
-		Cookie sessionCookie = getRequest().getCookies().getFirst("AproSession");
-		if(sessionCookie != null) {
-			sessionId = sessionCookie.getValue();
-			System.out.println("AproSession cookie letezik: " + sessionCookie.getValue());
-		}
-		
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 	}
@@ -64,11 +55,19 @@ public class SessionBelepesServerResource extends ServerResource implements
 
 			Hirdeto hirdeto = null;
 			if ((hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo)) != null) {
-				sessionId = UUID.randomUUID().toString();
-				getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + sessionId);
+				// Session betoltese
+				Session session;
+				session = SessionHelper.load(hirdeto.getId());
+				if(session == null) {
+					// Nincs session az adatbazisban, generalunk ujat, es elmentjuk
+					session = new Session();
+					session.setSessionId(UUID.randomUUID().toString());
+					session.setHirdetoId(hirdeto.getId());
+				}
+				getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + session.getSessionId());
 				
 				// Session Cookie
-				CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
+				CookieSetting cookieSetting = new CookieSetting("AproSession", session.getSessionId());
 				cookieSetting.setVersion(0);
 				cookieSetting.setAccessRestricted(true);
 				cookieSetting.setPath(contextPath + "/");
@@ -76,14 +75,12 @@ public class SessionBelepesServerResource extends ServerResource implements
 				cookieSetting.setMaxAge(3600*24*7);
 				getResponse().getCookieSettings().add(cookieSetting);
 				
-				// Session mentese az adatbaziba
-				Session session = new Session();
-				session.setSessionId(sessionId);
-				session.setHirdetoId(hirdeto.getId());
-				session.setFelhasznaloNev(felhasznaloNev);
-				
-				Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+				// Session mentese az adatbazisba
+				Datastore datastore = MongoUtils.getDatastore();
 				datastore.save(session);
+				
+				// Utolso belepes mentese
+				datastore.update(hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
 
 				// Valasz
 				repData.put("felhasznaloNev", this.felhasznaloNev);
@@ -91,19 +88,6 @@ public class SessionBelepesServerResource extends ServerResource implements
 				
 				rep = new JsonRepresentation(repData);
 			} else {
-				try {
-					CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
-					cookieSetting.setVersion(0);
-					cookieSetting.setAccessRestricted(true);
-					cookieSetting.setPath(contextPath + "/");
-					cookieSetting.setComment("Session Id");
-					cookieSetting.setMaxAge(0);
-					getResponse().getCookieSettings().add(cookieSetting);
-					
-					System.out.println("AproSession cookie torolve");
-				} catch(NullPointerException npe) {
-					
-				}
 				repData.put("errorMsg", "Hibas felhasznalonev vagy jelszo");
 				rep = new JsonRepresentation(repData);
 				setStatus(Status.CLIENT_ERROR_FORBIDDEN, "Hibas felhasznalonev vagy jelszo");

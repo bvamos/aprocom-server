@@ -5,24 +5,26 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.utils.IndexDirection;
 
 @Entity("session")
 public class Session {
 
-	@Id private ObjectId id;
-	
+	@Id 
+	private ObjectId id;
+	@Indexed(value=IndexDirection.ASC, name="ix_sessionId", unique=true, dropDups=true)
 	private String sessionId;
-	private String felhasznaloNev;
+	@Indexed(value=IndexDirection.ASC, name="ix_hirdetoId", unique=true, dropDups=true)
 	private ObjectId hirdetoId;
-	private long kezdet;
-	private long lejarat;
-	private long utolsoKeres;
+	private Date utolsoKeres;
 	
 	public Session() {
-		long time = new Date().getTime();
-		this.kezdet = time;
-		this.utolsoKeres = time;
-		this.lejarat = time + (3600*24*7);
+		this.utolsoKeres = new Date();
+	}
+	
+	public ObjectId getId() {
+		return id;
 	}
 	
 	public String getSessionId() {
@@ -33,14 +35,6 @@ public class Session {
 		this.sessionId = sessionId;
 	}
 	
-	public String getFelhasznaloNev() {
-		return felhasznaloNev;
-	}
-	
-	public void setFelhasznaloNev(String felhasznaloNev) {
-		this.felhasznaloNev = felhasznaloNev;
-	}
-	
 	public ObjectId getHirdetoId() {
 		return hirdetoId;
 	}
@@ -49,28 +43,31 @@ public class Session {
 		this.hirdetoId = hirdetoId;
 	}
 
-	public long getLejarat() {
-		return lejarat;
-	}
-	
-	public void setLejarat(long lejarat) {
-		this.lejarat = lejarat;
-	}
-	
-	public long getUtolsoKeres() {
+	public Date getUtolsoKeres() {
 		return utolsoKeres;
 	}
 	
-	public void setUtolsoKeres(long utolsoKeres) {
+	public void setUtolsoKeres(Date utolsoKeres) {
 		this.utolsoKeres = utolsoKeres;
 	}
 	
-	public ObjectId getId() {
-		return id;
+	/**
+	 * Ha van HirdetoId (miert ne lenne, ha ven session), akkor visszaadja a Hirdeto nevet es email cimet
+	 * @return Nev (email cim)
+	 */
+	public String getFelhasznaloNev() {
+		String ret = null;
+		
+		if(hirdetoId != null) {
+			Hirdeto h = HirdetoHelper.load(hirdetoId);
+			if(h != null) {
+				ret = h.getEmail();
+				if(h.getNev() != null && !h.getNev().isEmpty()) {
+					ret = h.getNev() + " (" + ret + ")";
+				}
+			}
+		}
+		
+		return ret;
 	}
-	
-	public long getKezdet() {
-		return kezdet;
-	}
-	
 }

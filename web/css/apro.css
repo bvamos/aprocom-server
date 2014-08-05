@@ -139,7 +139,7 @@ span.header_user {
 }
 
 div.search_container {
-	margin: 0 0 20px 0;
+	margin-bottom: 20px;
 }
 
 div.search_container>div.well {
@@ -337,4 +337,8 @@ div.hirdetes-container img {
 
 .badge {
 	font-weight: normal;
+}
+
+.alert-danger a {
+	color: inherit;
 }
