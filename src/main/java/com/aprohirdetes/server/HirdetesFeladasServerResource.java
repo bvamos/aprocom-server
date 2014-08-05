@@ -283,7 +283,9 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			// Level kikuldese
 			if(this.session == null) {
 				uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
-					+ "Kérjük, kattints a levélben lévő linkre, és hirdetésed megjelenik oldalunkon!";
+					+ "Kérjük, kattints a levélben lévő linkre, és hirdetésed megjelenik oldalunkon!<br>" +
+					"Tudtad, hogy ha regisztrált felhasználó vagy, akkor automatikusan aktiváljuk a hirdetést és rögtön megjelenik? " +
+					"Még nem késő, <a href=\"${app.contextRoot}/regisztracio\">kattints ide és regisztrálj</a>!";
 			} else {
 				uzenet = "A Hirdetés mentése sikeresen megtörtént. Mivel regisztrált felhasználó vagy, a hirdetésedet automatikusan aktiváltuk, nincs más teendőd.";
 			}

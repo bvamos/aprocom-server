@@ -122,9 +122,13 @@ public class MailUtils {
 			if(session == null) {
 				// Nem belepett felhasznalokent adta fel
 				body +=	"Hirdetésedet sikeresen feladtad, de ahhoz, hogy megjelenjen az oldalunkon, "
-					+ "kérjük kattintson az alábbi linkre, vagy másolja böngészője címsorába!\n"
+					+ "kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába!\n\n"
 					+ "Aktiválás:\n"
-					+ "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n";
+					+ "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
+					+ "Tudtad, hogy ha regisztrált felhasználó vagy, akkor automatikusan aktiváljuk a hirdetést és rögtön megjelenik? \n"
+					+ "Még nem késő, kattints a linkre és regisztrálj!\n\n"
+					+ "Regisztráció:\n"
+					+ "https://www.aprohirdetes.com/regisztracio" + hi.getId() +"\n\n";
 			} else {
 				// Belepett felhasznalokent adta fel
 				body +=	"Hirdetésedet sikeresen feladtad, és ahhoz, hogy megjelenjen az oldalunkon, "
