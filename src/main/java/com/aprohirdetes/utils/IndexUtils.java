@@ -2,7 +2,8 @@ package com.aprohirdetes.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class IndexUtils {
 
@@ -38,15 +39,15 @@ public class IndexUtils {
 	 * @param text Felbontando szoveg
 	 * @return Szavak tombje
 	 */
-	public static List<String> tokenize(String text) {
-		ArrayList<String> ret = new ArrayList<String>();
+	public static Set<String> tokenize(String text) {
+		Set<String> ret = new HashSet<String>();
 
 		if (text == null || text.isEmpty()) {
 			return ret;
 		}
 
-		for (String s : text.split("\\s")) {
-			String word = s.replaceAll("[\\.,:;'\"\\!\\?]", "").toLowerCase();
+		for (String s : text.split("[ .,;:?!]+")) {
+			String word = s.replaceAll("['\"]", "").toLowerCase();
 
 			// Ures szavak kiszurese
 			if(word.isEmpty()) {

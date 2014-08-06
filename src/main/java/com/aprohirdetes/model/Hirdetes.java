@@ -1,10 +1,8 @@
 package com.aprohirdetes.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
-
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
@@ -32,7 +30,7 @@ public class Hirdetes {
 	@NotSaved private LinkedList<HirdetesKep> kepek = new LinkedList<HirdetesKep>();
 	private HashMap<String, Object> attributumok = new HashMap<String, Object>();
 	@NotSaved private HashMap<String, String> egyebMezok = new HashMap<String, String>();
-	private List<String> kulcsszavak = new ArrayList<String>();
+	private HashSet<String> kulcsszavak = new HashSet<String>();
 	private boolean hitelesitve;
 	private int megjelenes;
 	
@@ -153,7 +151,7 @@ public class Hirdetes {
 		this.attributumok = attributumok;
 	}
 
-	public List<String> getKulcsszavak() {
+	public HashSet<String> getKulcsszavak() {
 		return kulcsszavak;
 	}
 	
