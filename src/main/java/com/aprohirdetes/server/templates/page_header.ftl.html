@@ -4,19 +4,23 @@
 	<#assign hirdetesTipusNev='kinal'>
 </#if>
 		<div id="header_tabs_container" class="row">
-			<div class="col-md-2">
+			<div class="col-xs-6 col-sm-4 col-md-2">
 				<div class="header_link"><a href="${app.contextRoot}/"><img src="${app.contextRoot}/images/header_logo.png" alt="Apróhirdetés.com - Ingyenes apróhirdető oldal"></a></div>
 			</div>
-			<div class="col-md-7 hidden-xs hidden-sm placeholder">
+			<div class="hidden-xs hidden-sm col-md-5 placeholder">
 				<ul class="header-tabs tabs1">
 					<li class="${aproTabClass!''}"><a href="${app.contextRoot}/">Apró</a></li>
 					<li class="${ingatlanTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/ingatlan/">Ingatlan</a></li>
 					<li class="${jarmuTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/jarmu/">Jármű</a></li>
 					<li class="${allasTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/allas/">Állás</a></li>
+				</ul>
+			</div>
+			<div class="hidden-xs col-sm-4 col-md-2 placeholder">
+				<ul class="header-tabs tabs1">
 					<li class="feladas-tab"><a href="${app.contextRoot}/feladas">Hirdetés feladása</a></li>
 				</ul>
 			</div>
-			<div class="col-md-3 placeholder">
+			<div class="hidden-xs col-sm-4 col-md-3 placeholder">
 				<ul class="header-tabs tabs2">
 					<#if session?? >
 					<li><a href="${app.contextRoot}/felhasznalo/hirdetesek">Adatlap</a></li>
@@ -26,7 +30,29 @@
 					<li><a href="${app.contextRoot}/regisztracio">Regisztráció</a></li>
 					</#if>
 				</ul>
-			</div>						
+			</div>
+			<div class="col-xs-6 hidden-sm hidden-md hidden-lg">
+				<ul class="header-tabs tabs2">
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Menü <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu" style="right: 0; left: auto;">
+							<li class="${aproTabClass!''}"><a href="${app.contextRoot}/">Apró</a></li>
+							<li class="${ingatlanTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/ingatlan/">Ingatlan</a></li>
+							<li class="${jarmuTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/jarmu/">Jármű</a></li>
+							<li class="${allasTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/allas/">Állás</a></li>
+							<li class="divider"></li>
+							<li class="feladas-tab"><a href="${app.contextRoot}/feladas">Hirdetés feladása</a></li>
+							<li class="divider"></li>
+							<#if session?? >
+							<li><a href="${app.contextRoot}/felhasznalo/hirdetesek">Adatlap</a></li>
+							<li><a href="${app.contextRoot}/kilepes">Kilépés</a></li>
+							<#else>
+							<li><a href="${app.contextRoot}/belepes">Belépés</a></li>
+							<li><a href="${app.contextRoot}/regisztracio">Regisztráció</a></li>
+							</#if>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<div class="row apro-bg ${headerBgClass!''}">
 			<span class="header_date">${app.datum}</span>
