@@ -7,10 +7,10 @@
 			<#list kategoriaList as kategoria>
 			<div class="col-xs-6 col-sm-3 col-md-2" style="min-height: 240px; padding-left: 5px; padding-right: 5px;">
 			<ul class="category-main">
-				<li><a href="javascript:setKategoria('${kategoria.urlNev}');">${kategoria.nev} <span class="badge">${kategoria.hirdetesekSzama!0}</span></a></li>
+				<li><a href="javascript:setKategoria('${kategoria.urlNev}');">${kategoria.nev} <span class="pull-right">${kategoria.hirdetesekSzama!0}</span></a></li>
 				<ul class="category-sub">
 				<#list kategoria.alkategoriaList as alkategoria>
-					<li><a href="javascript:setKategoria('${alkategoria.urlNev}');">${alkategoria.nev} <span class="badge pull-right">${alkategoria.hirdetesekSzama!0}</span></a></li>
+					<li><a href="javascript:setKategoria('${alkategoria.urlNev}');">${alkategoria.nev} <span class="pull-right">${alkategoria.hirdetesekSzama!0}</span></a></li>
 				</#list>
 				</ul>
 			</ul>
