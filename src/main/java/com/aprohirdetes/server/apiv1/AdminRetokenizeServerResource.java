@@ -1,8 +1,7 @@
 package com.aprohirdetes.server.apiv1;
 
 import java.util.HashMap;
-import java.util.List;
-
+import java.util.HashSet;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
@@ -23,7 +22,7 @@ public class AdminRetokenizeServerResource extends ServerResource implements
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		
-		HashMap<ObjectId, List<String>> result = new HashMap<ObjectId, List<String>>();
+		HashMap<ObjectId, HashSet<String>> result = new HashMap<ObjectId, HashSet<String>>();
 		
 		for (Hirdetes hi : query) {
 			hi.tokenize();
