@@ -205,8 +205,8 @@ ul.category-main {
 	display: inline-table;
 	list-style: none outside none;
 	padding: 0;
-	margin: 5px 0 5px 5px;
-	min-width: 180px;
+	margin: 0;
+	width: 100%;
 }
 
 ul.category-main>li {

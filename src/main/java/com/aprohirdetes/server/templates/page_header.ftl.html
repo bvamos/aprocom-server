@@ -4,9 +4,10 @@
 	<#assign hirdetesTipusNev='kinal'>
 </#if>
 		<div id="header_tabs_container" class="row">
-			<div class="col-md-9 placeholder">
-				<!-- span class="glyphicon glyphicon-home"></span -->
+			<div class="col-md-2">
 				<div class="header_link"><a href="${app.contextRoot}/"><img src="${app.contextRoot}/images/header_logo.png" alt="Apróhirdetés.com - Ingyenes apróhirdető oldal"></a></div>
+			</div>
+			<div class="col-md-7 hidden-xs hidden-sm placeholder">
 				<ul class="header-tabs tabs1">
 					<li class="${aproTabClass!''}"><a href="${app.contextRoot}/">Apró</a></li>
 					<li class="${ingatlanTabClass!''}"><a href="${app.contextRoot}/kereses/${hirdetesTipusNev}/magyarorszag/ingatlan/">Ingatlan</a></li>
