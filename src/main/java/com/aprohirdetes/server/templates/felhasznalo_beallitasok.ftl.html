@@ -1,0 +1,65 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<div class="col-sm-3 col-md-2">
+		
+<#include "profil_menu.ftl.html"/>
+				
+			</div>
+			<div class="col-sm-9 col-md-10">
+			
+				<h3>Beállítások</h3>
+					
+					<#if uzenet?? >
+					<div class="alert alert-success">${uzenet}</div>
+					</#if>
+					<#if hibaUzenet?? >
+					<div class="alert alert-danger">${hibaUzenet}</div>
+					</#if>
+					
+					<h4>Apró API</h4>
+					<p>Az Apróhirdetés.com REST API egy API key segítségével azonosítja a felhasználókat. 
+					API Key-t csak regisztrált felhasználó igényelhet, ami bármikor újragyártható a lenti gomb segítségével.
+					A Te API Key-ed itt található, kérlek vigyázz rá, hogy illetéktelen kezekbe ne kerüljön!
+					</p>
+					<div id="apikeyContainer">
+						<div id="apikeyCover" class="alert alert-warning" role="alert">A biztonság kedvéért elrejtettük, kattints ide, és látható lesz!</div>
+						<#if hirdeto.apiKey?? >
+							<div id="apikeyContent" class="alert alert-success" role="alert"><b>API Key:</b> ${(hirdeto.apiKey)}
+							<button id="apikeyGenerateButton">Generálok új API Key-t</button></div>
+						<#else>
+							<div id="apikeyContent" class="alert alert-success" role="alert">Neked még nincs API Key-ed, de generálhatsz egyet!
+							<button id="apikeyGenerateButton">Generálok API Key-t</button></div>
+						</#if>
+					</div>
+					<script type="text/javascript">
+					$('#apikeyContent').hide();
+					
+					$('#apikeyCover').click(function() {
+						$('#apikeyCover').hide();
+						$('#apikeyContent').show();
+					});
+					
+					$('#apikeyGenerateButton').click(function() {
+						var data = new Object();
+						
+						$.ajax({
+					        type: "POST",
+					        url: "${app.contextRoot}/api/v1/hirdeto/${hirdeto.id}/apikeys",
+					        data: JSON.stringify(data),
+					        contentType: "application/json; charset=utf-8",
+					        dataType: "json"
+						}).done(function(data){
+				        	location.reload(true);
+				        }).fail(function(jqXHR, textStatus) {
+				            alert("Hiba");
+				        });
+					});
+					</script>
+			</div>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>

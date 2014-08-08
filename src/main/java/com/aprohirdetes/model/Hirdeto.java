@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.utils.IndexDirection;
 
 @Entity("hirdeto")
 public class Hirdeto {
@@ -13,7 +14,7 @@ public class Hirdeto {
 	@Id private ObjectId id;
 	
 	private String nev;
-	@Indexed(unique=true) private String email;
+	@Indexed(value=IndexDirection.ASC, name="ix_email", unique=true) private String email;
 	private String iranyitoSzam;
 	private String telepules;
 	private String cim;
@@ -22,6 +23,7 @@ public class Hirdeto {
 	private boolean hirlevel;
 	
 	private String jelszo;
+	@Indexed(value=IndexDirection.ASC, name="ix_apiKey", unique=true) private String apiKey;
 	private boolean hitelesitve;
 	private Date utolsoBelepes;
 	
@@ -115,6 +117,14 @@ public class Hirdeto {
 
 	public void setJelszo(String jelszo) {
 		this.jelszo = jelszo;
+	}
+
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
 	}
 
 	public boolean isHitelesitve() {

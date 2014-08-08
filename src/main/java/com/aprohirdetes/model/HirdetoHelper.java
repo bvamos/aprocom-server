@@ -11,9 +11,22 @@ public class HirdetoHelper {
 		Hirdeto hirdeto = null;
 		
 		Query<Hirdeto> query = MongoUtils.getDatastore().createQuery(Hirdeto.class);
-		
 		query.criteria("id").equal(hirdetoId);
+		hirdeto = query.get();
 		
+		return hirdeto;
+	}
+	
+	/**
+	 * Megkeresi a Hirdetot az apiKey alapjan. Rest API-nal kell, mert apiKey segitsegevel azonositja megat a Hirdeto minden hivasban.
+	 * @param apiKey Hirdeto egyedi azonosito kulcsa
+	 * @return Az azonositott Hirdeto, vagy null
+	 */
+	public static Hirdeto load(String apiKey) {
+		Hirdeto hirdeto = null;
+		
+		Query<Hirdeto> query = MongoUtils.getDatastore().createQuery(Hirdeto.class);
+		query.criteria("apiKey").equal(apiKey);
 		hirdeto = query.get();
 		
 		return hirdeto;

@@ -1,5 +1,6 @@
 package com.aprohirdetes.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -16,7 +17,10 @@ public class Hirdetes {
 	
 	@Id private ObjectId id;
 	
-	private int tipus = 1;
+	/**
+	 * Hirdetes tipusa (Keres, Kinal). Ld.: @HirdetesTipus
+	 */
+	private int tipus = HirdetesTipus.KINAL;
 	private String cim;
 	private String szoveg;
 	private String egyebInfo;
@@ -33,6 +37,7 @@ public class Hirdetes {
 	private HashSet<String> kulcsszavak = new HashSet<String>();
 	private boolean hitelesitve;
 	private int megjelenes;
+	private Date modositva;
 	
 	private int regiId;
 	
@@ -40,6 +45,7 @@ public class Hirdetes {
 		setAr(0);
 		setHitelesitve(false);
 		setMegjelenes(0);
+		setModositva(new Date());
 		setRegiId(-1);
 	}
 	
@@ -183,7 +189,20 @@ public class Hirdetes {
 		this.regiId = regiId;
 	}
 
+	/**
+	 * Utolso modositas datuma. Ha nem letezik, akkor az id-bol veszi az idot, es azt adja vissza.
+	 * @return
+	 */
+	public Date getModositva() {
+		return modositva==null ? new Date(id.getTime()) : modositva;
+	}
+
+	public void setModositva(Date modositva) {
+		this.modositva = modositva;
+	}
+
 	public void tokenize() {
+		this.kulcsszavak.clear();
 		this.kulcsszavak.addAll(IndexUtils.tokenize(this.cim));
 		this.kulcsszavak.addAll(IndexUtils.tokenize(this.szoveg));
 	}

@@ -69,6 +69,7 @@ public class AproApplication extends Application {
 		router.attach("/regisztracio", UserRegisztracioServerResource.class);
 		router.attach("/felhasznalo/adatlap", UserAdatlapServerResource.class);
 		router.attach("/felhasznalo/hirdetesek", UserHirdeteseimServerResource.class);
+		router.attach("/felhasznalo/beallitasok", UserBeallitasokServerResource.class);
 		router.attach("/ujjelszo", UserUjJelszoServerResource.class);
 		
 		// Statikus oldalak
@@ -87,6 +88,8 @@ public class AproApplication extends Application {
 		router.attach("/api/v1/session/kilepes", com.aprohirdetes.server.apiv1.SessionKilepesServerResource.class);
 		router.attach("/api/v1/admin/retokenize", com.aprohirdetes.server.apiv1.AdminRetokenizeServerResource.class);
 		router.attach("/api/v1/kategoriaAttributum/{kategoriaUrlNev}", com.aprohirdetes.server.apiv1.KategoriaAttributumServerResource.class);
+		router.attach("/api/v1/hirdetes", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
+		router.attach("/api/v1/hirdeto/{hirdetoId}/apikeys", com.aprohirdetes.server.apiv1.RestHirdetoApiKeysServerResource.class);
 		
 		// Statikus konyvtarak
 		String cssUri = "war:///css";
