@@ -31,10 +31,14 @@
 							</div>
 							<div class="form-group" style="min-width: 15%;">
 							<select class="form-control" id="hirdetesKategoria">
+								<#assign selectedKategoria="">
+								<#if hirdetesKategoria?has_content >
+									<#assign selectedKategoria=hirdetesKategoria[0]>
+								</#if>
 								<#list kategoriaList as kategoria>
-								<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=hirdetesKategoria[0]>selected</#if>>${kategoria.nev}</option>
+								<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=selectedKategoria>selected</#if>>${kategoria.nev}</option>
 									<#list kategoria.alkategoriaList as alkategoria>
-									<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=hirdetesKategoria[0]>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
+									<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=selectedKategoria>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
 									</#list>
 								</#list>
 							</select>

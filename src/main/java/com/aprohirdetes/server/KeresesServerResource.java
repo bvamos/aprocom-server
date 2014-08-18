@@ -14,7 +14,6 @@ import javax.servlet.ServletContext;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -121,6 +120,7 @@ public class KeresesServerResource extends ServerResource implements
 	}
 
 	public Representation representHtml() throws IOException {
+		String hibaUzenet = null;
 		/**
 		 * Kivalasztott kategoriak Id-jait tartalmazo lista. A kereseshez kell.
 		 */
@@ -132,6 +132,10 @@ public class KeresesServerResource extends ServerResource implements
 		for(Kategoria kat : selectedKategoriaList) {
 			selectedKategoriaIdList.add(kat.getId());
 			selectedKategoriaUrlNevList.add(kat.getUrlNev());
+		}
+		if(selectedKategoriaIdList.isEmpty()) {
+			hibaUzenet = "A kiválasztott Kategóriák nem léteznek. Ha kézzel adtad meg a címsort, kérlek ellenőrizd! " +
+					"Ha egy linkre kattintottál, nincs mit tenned, mert értesültünk a hibáról, és javítani fogjuk.";
 		}
 		
 		/**
@@ -148,97 +152,104 @@ public class KeresesServerResource extends ServerResource implements
 		}
 
 		// Kereses
-		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
-		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 		long hirdetesekSzama = 0;
+		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 		
-		// Kereses Morphiaval
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
-		
-		query.criteria("hitelesitve").equal(true);
-		query.criteria("tipus").equal(this.hirdetesTipus);
-		if(selectedHelysegIdList.size()>0) {
-			query.criteria("helysegId").in(selectedHelysegIdList);
-		}
-		query.criteria("kategoriaId").in(selectedKategoriaIdList);
-		if(!this.kulcsszo.isEmpty()) {
-			query.criteria("kulcsszavak").equal(kulcsszo);
-		}
-		if(this.arMin != null) {
-			query.criteria("ar").greaterThanOrEq(arMin);
-		}
-		if(this.arMax != null) {
-			query.criteria("ar").lessThanOrEq(arMax);
-		}
-		
-		query.offset(this.page * this.pageSize - this.pageSize);
-		query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20")));
-		
-		// Rendezes
-		if(this.sorrend==2) {
-			// Feladas ideje szerint novekvo: Legregebbi elol
-			query.order("id");
-		} else if(this.sorrend==3) {
-			// Ar szerint novekvo: Legolcsobb elol
-			query.order("ar");
-		} else if(this.sorrend==4) {
-			// Ar szerint csokkeno: Legdragabb elol
-			query.order("-ar");
-		} else {
-			// Feladas ideje szerint csokkeno: Legujabb elol
-			query.order("-id");
-		}
-		
-		//System.out.println(query);
-		
-		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
-		for(Hirdetes h : query) {
-			h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
+		try {
+			// Kereses Morphiaval
+			Datastore datastore = MongoUtils.getDatastore();
+			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			
-			Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
-			h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChain(kat.getId()) : "");
-			h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
+			query.criteria("hitelesitve").equal(true);
+			query.criteria("tipus").equal(this.hirdetesTipus);
+			if(selectedHelysegIdList.size()>0) {
+				query.criteria("helysegId").in(selectedHelysegIdList);
+			}
+			query.criteria("kategoriaId").in(selectedKategoriaIdList);
+			if(!this.kulcsszo.isEmpty()) {
+				query.criteria("kulcsszavak").equal(kulcsszo);
+			}
+			if(this.arMin != null) {
+				query.criteria("ar").greaterThanOrEq(arMin);
+			}
+			if(this.arMax != null) {
+				query.criteria("ar").lessThanOrEq(arMax);
+			}
 			
-			Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());
-			h.getEgyebMezok().put("helysegNev", (hely!=null) ? HelysegCache.getHelysegNevChain(hely.getId()) : "");
-			h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
+			query.offset(this.page * this.pageSize - this.pageSize);
+			query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20")));
 			
-			h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
+			// Rendezes
+			if(this.sorrend==2) {
+				// Feladas ideje szerint novekvo: Legregebbi elol
+				query.order("id");
+			} else if(this.sorrend==3) {
+				// Ar szerint novekvo: Legolcsobb elol
+				query.order("ar");
+			} else if(this.sorrend==4) {
+				// Ar szerint csokkeno: Legdragabb elol
+				query.order("-ar");
+			} else {
+				// Feladas ideje szerint csokkeno: Legujabb elol
+				query.order("-id");
+			}
 			
-			// Tagek
-			h.getEgyebMezok().put("tag", "");
+			//System.out.println(query);
 			
-			if(h.getAr()==0) {
-				String tag = h.getEgyebMezok().get("tag");
-				if(!tag.isEmpty()) {
-					tag += ";";
+			// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
+			for(Hirdetes h : query) {
+				h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
+				
+				Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
+				h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChain(kat.getId()) : "");
+				h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
+				
+				Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());
+				h.getEgyebMezok().put("helysegNev", (hely!=null) ? HelysegCache.getHelysegNevChain(hely.getId()) : "");
+				h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
+				
+				h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
+				
+				// Tagek
+				h.getEgyebMezok().put("tag", "");
+				
+				if(h.getAr()==0) {
+					String tag = h.getEgyebMezok().get("tag");
+					if(!tag.isEmpty()) {
+						tag += ";";
+					}
+					tag += "Ingyenes";
+					h.getEgyebMezok().put("tag", tag);
 				}
-				tag += "Ingyenes";
-				h.getEgyebMezok().put("tag", tag);
-			}
-			// Friss tag: 3 napig
-			if(h.getId().getTime()+3*24*3600*1000 > new Date().getTime()) {
-				String tag = h.getEgyebMezok().get("tag");
-				if(!tag.isEmpty()) {
-					tag += ";";
+				// Friss tag: 3 napig
+				if(h.getId().getTime()+3*24*3600*1000 > new Date().getTime()) {
+					String tag = h.getEgyebMezok().get("tag");
+					if(!tag.isEmpty()) {
+						tag += ";";
+					}
+					tag += "Friss";
+					h.getEgyebMezok().put("tag", tag);
 				}
-				tag += "Friss";
-				h.getEgyebMezok().put("tag", tag);
+	
+				
+				// Kepek
+				Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
+				kepekQuery.criteria("hirdetesId").equal(h.getId());
+				
+				for(HirdetesKep kep : kepekQuery) {
+					h.getKepek().add(kep);
+				}
+				
+				hirdetesList.add(h);
 			}
-
 			
-			// Kepek
-			Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
-			kepekQuery.criteria("hirdetesId").equal(h.getId());
-			
-			for(HirdetesKep kep : kepekQuery) {
-				h.getKepek().add(kep);
+			hirdetesekSzama = query.countAll();
+		} catch(Exception e) {
+			// Ha eddig nincs konkret hibauzenet, akkor kiirok egy altalanosat
+			if(hibaUzenet==null) {
+				hibaUzenet = "Sajnos hiba történt a keresés közben. Kérlek látogass vissza később, addigra javítani fogjuk!";
 			}
-			
-			hirdetesList.add(h);
 		}
-		
-		hirdetesekSzama = query.countAll();
 		
 		// Legordulokhoz adatok feltoltese
 		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
@@ -276,6 +287,7 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("aktualisOldal", this.page);
 		dataModel.put("osszesOldal", (hirdetesekSzama/this.pageSize)+1);
 		dataModel.put("sorrend", this.sorrend);
+		dataModel.put("hibaUzenet", hibaUzenet);
 		
 		// TODO: Osszes kategoriat megoldani
 		if(selectedKategoriaUrlNevList.contains("ingatlan") || selectedKategoriaUrlNevList.contains("lakas") || selectedKategoriaUrlNevList.contains("haz") || selectedKategoriaUrlNevList.contains("alberlet")) {

@@ -4,6 +4,9 @@
 <#include "page_header.ftl.html"/>
 <#include "container_search_form.ftl.html"/>
 				<div class="row">
+				<#if hibaUzenet?? >
+					<div class="alert alert-danger">${hibaUzenet}</div>
+				<#else>
 					<div class="hirdeteslista-header">
 						<#if (hirdetesek_szama>0) >
 						<span>${hirdetesek_szama} apróhirdetés</span> - <span>${aktualisOldal}. oldal</span>
@@ -170,6 +173,7 @@
 						</ul>
 					</div>
 				</div>
+				</#if>
 				</#if>
 <#include "page_footer.ftl.html"/>
 	</div>
