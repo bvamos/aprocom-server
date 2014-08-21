@@ -104,11 +104,13 @@
 											 <#assign kep=hirdetes.kepek[0] >
 											 <div>
 											 <#if kep.thumbFileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
-											 <#elseif kep.fileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
+												 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" style="display: block; margin:auto; border: 1px solid #000;"></a>
+												 <#elseif kep.fileNev?? >
+												 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
 											 </#if>
 											 </div>
+										<#else>
+											<!-- Kép nélküli hirdetés  -->		
 										</#if>
 									</td>
 								</tr>
