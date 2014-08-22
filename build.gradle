@@ -50,7 +50,7 @@ war {
 
 def getDate() {
     def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmmss')
+    def formattedDate = date.format('yyMMddHHmm')
     return formattedDate
 }
 
