@@ -24,6 +24,7 @@ import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.server.task.KategoriaCountTask;
+import com.aprohirdetes.server.task.LejaratErtesitoTask;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -62,6 +63,7 @@ public class AproApplication extends Application {
 		
 		router.attach("/feladas", HirdetesFeladasServerResource.class);
 		router.attach("/aktivalas/{hirdetesId}", HirdetesAktivalasServerResource.class);
+		router.attach("/hosszabbitas/{hirdetesId}", HirdetesHosszabbitasServerResource.class);
 		
 		// Felhasznaloi oldalak
 		router.attach("/belepes", UserBelepesServerResource.class);
@@ -157,6 +159,7 @@ public class AproApplication extends Application {
 
 		// Loading application configuration
 		final String configFile = "/WEB-INF/apro.properties";
+		//final String configFile = System.getProperty("configFile");
 	
 		getLogger().info("Loading configuration from " + configFile);
 		Restlet c = getContext().getClientDispatcher();
@@ -236,6 +239,9 @@ public class AproApplication extends Application {
 		
 		// Hirdetesek szamanak szamolasa idozitve a hatterben
 		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
+		
+		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
+		getTaskService().scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 60, TimeUnit.SECONDS);
 	}
 
 	@Override

@@ -187,6 +187,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		} catch (NumberFormatException nfe) {
 			hi.setAr(0);
 		}
+		hi.setLejar(30);
 		
 		// Kulcsszavak kigyujtese
 		hi.tokenize();

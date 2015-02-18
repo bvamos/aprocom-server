@@ -1,0 +1,21 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<h3>Hirdetés meghosszabbítása</h3>
+			
+				<#if hibaUzenet?? >
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+				<#if uzenet?? >
+				<div class="alert alert-success">${uzenet}</div>
+				<div>
+				<p>Hogy könnyen megtaláld, itt a közvetlen link: <a href="${app.contextRoot}/hirdetes/${hirdetesId}">${app.contextRoot}/hirdetes/${hirdetesId}</a></p></div>
+				</#if>
+				
+			</form>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>

@@ -1,9 +1,11 @@
 package com.aprohirdetes.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
@@ -36,8 +38,22 @@ public class Hirdetes {
 	@NotSaved private HashMap<String, String> egyebMezok = new HashMap<String, String>();
 	private HashSet<String> kulcsszavak = new HashSet<String>();
 	private boolean hitelesitve;
+	/**
+	 * Megjelenesek szama. Minden megjeleniteskor no az erteke.
+	 */
 	private int megjelenes;
+	/**
+	 * Utolso modositas datuma
+	 */
 	private Date modositva;
+	/**
+	 * Lejarat datuma
+	 */
+	private Date lejar;
+	/**
+	 * Utolso ertesites datuma
+	 */
+	private Date lejarErtesites;
 	
 	private int regiId;
 	
@@ -199,6 +215,51 @@ public class Hirdetes {
 
 	public void setModositva(Date modositva) {
 		this.modositva = modositva;
+	}
+
+	public Date getLejar() {
+		return lejar;
+	}
+
+	public void setLejar(Date lejar) {
+		this.lejar = lejar;
+	}
+	
+	/**
+	 * Beallitja a lejarat datumat az aktualis naptol szamitva nap napra
+	 * @param nap Ennyi nap mulva fog lejarni a hirdetes
+	 */
+	public void setLejar(int nap) {
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(new Date()); 
+		c.add(Calendar.DATE, nap);
+		this.lejar = c.getTime();
+	}
+
+	/**
+	 * @return the lejarErtesites
+	 */
+	public Date getLejarErtesites() {
+		return lejarErtesites;
+	}
+
+	/**
+	 * @param lejarErtesites the lejarErtesites to set
+	 */
+	public void setLejarErtesites(Date lejarErtesites) {
+		this.lejarErtesites = lejarErtesites;
+	}
+	
+	/**
+	 * Beallitja a lejarat utolso ertesitesenek a datumat az aktualis napra
+	 */
+	@SuppressWarnings("deprecation")
+	public void setLejarErtesites() {
+		Date d = new Date();
+		d.setHours(0);
+		d.setMinutes(0);
+		d.setSeconds(0);
+		this.lejarErtesites = d;
 	}
 
 	public void tokenize() {
