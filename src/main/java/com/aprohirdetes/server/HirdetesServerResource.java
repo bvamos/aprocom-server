@@ -116,6 +116,7 @@ public class HirdetesServerResource extends ServerResource implements
 				hirdetes.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
 				
 				hirdetes.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(hirdetes.getFeladasDatuma()));
+				hirdetes.getEgyebMezok().put("lejaratSzoveg", AproUtils.getHirdetesLejaratSzoveg(hirdetes.getLejaratDatuma()));
 				
 				// Attributumok cimenek, ertekenek (ha kell) atirasa
 				LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(kat.getUrlNev());

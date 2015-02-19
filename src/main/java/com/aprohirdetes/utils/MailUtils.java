@@ -198,12 +198,12 @@ public class MailUtils {
 		boolean ret = false;
 		
 		String email = h.getHirdeto().getEmail();
-		String subject = "Ertesités lejaró hirdetésrol";
+		String subject = "Értesítés lejáró hirdetésről";
 		
 		StringBuffer body = new StringBuffer();
 		body.append("Kedves " + h.getHirdeto().getNev() + "!\n\n");
 		body.append("Az Apróhirdetés.com oldalon feladott '" + h.getCim() + "' hirdetésed 5 napon belül lejár!\n\n");
-		body.append("A hirdetés meghosszabbításához kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába!\n");
+		body.append("A hirdetés meghosszabbításához kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába! A linkre kattintva a hirdetésed automatikusan meghosszabbodik 30 nappal.\n");
 		body.append("http://www.aprohirdetes.com/hosszabbitas/" + h.getId().toString() + "23afc87dd765476ad66c\n\n");
 		body.append("Üdvözlettel,\nApróhirdetés.com\n");
 				

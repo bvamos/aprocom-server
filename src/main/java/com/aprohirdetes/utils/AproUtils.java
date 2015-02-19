@@ -45,6 +45,29 @@ public class AproUtils {
 		return ret;
 	}
 	
+	/**
+	 * Visszaadja szoveges formaban, hogy a lejaratig mennyi ido van hatra. Pl: 1 nap, 2 nap, 30 nap.
+	 * 
+	 * @param lejaratDatuma long A lejarat datuma
+	 * @return Hatralevo ido szoveges formaban
+	 */
+	public static String getHirdetesLejaratSzoveg(long lejaratDatuma) {
+		String ret = "";
+		
+		long elteltIdo = (lejaratDatuma - new Date().getTime()) / 1000;
+		
+		if(elteltIdo<86400) {
+			ret = "Holnap";
+		} else if(elteltIdo>=86400 && elteltIdo<432000){
+			ret = "5 napon belül";
+		} else {
+			long nap = elteltIdo/86400;
+			ret = nap + " nap múlva - " + new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date(lejaratDatuma));
+		}
+		
+		return ret;
+	}
+	
 	public static void removeSessionCookie(Resource resource, String sessionId) {
 		ServletContext sc = (ServletContext) resource.getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		String contextPath = sc.getContextPath();

@@ -63,6 +63,7 @@ public class Hirdetes {
 		setMegjelenes(0);
 		setModositva(new Date());
 		setRegiId(-1);
+		setLejar(30);
 	}
 	
 	public ObjectId getId() {
@@ -234,6 +235,10 @@ public class Hirdetes {
 		c.setTime(new Date()); 
 		c.add(Calendar.DATE, nap);
 		this.lejar = c.getTime();
+	}
+	
+	public long getLejaratDatuma() {
+		return (lejar!=null) ? lejar.getTime() : 0;
 	}
 
 	/**
