@@ -55,14 +55,12 @@ public class Hirdetes {
 	 */
 	private Date lejarErtesites;
 	
-	private int regiId;
 	
 	public Hirdetes() {
 		setAr(0);
 		setHitelesitve(false);
 		setMegjelenes(0);
 		setModositva(new Date());
-		setRegiId(-1);
 		setLejar(30);
 	}
 	
@@ -196,14 +194,6 @@ public class Hirdetes {
 
 	public void increaseMegjelenesByOne() {
 		this.megjelenes++;
-	}
-
-	public int getRegiId() {
-		return regiId;
-	}
-
-	public void setRegiId(int regiId) {
-		this.regiId = regiId;
 	}
 
 	/**
