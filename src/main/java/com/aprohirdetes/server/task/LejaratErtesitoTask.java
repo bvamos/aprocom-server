@@ -46,6 +46,9 @@ public class LejaratErtesitoTask implements Runnable {
 			);
 			query.criteria("lejarErtesites").notEqual(c.getTime());
 			
+			// Egy lepesben max 100 levelet kuldjunk ki. Kesobb majd novelhetjuk, ha ez nem eleg, a task orankent fut.
+			query.limit(100);
+			
 			for(Hirdetes h : query) {
 				String s = "";
 				s = h.getCim();
