@@ -238,10 +238,10 @@ public class AproApplication extends Application {
 		AttributumCache.loadAttributumCache();
 		
 		// Hirdetesek szamanak szamolasa idozitve a hatterben
-		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 10, TimeUnit.MINUTES);
+		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
 		
 		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
-		getTaskService().scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 1, TimeUnit.HOURS);
+		getTaskService().scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 1, 1, TimeUnit.HOURS);
 	}
 
 	@Override
