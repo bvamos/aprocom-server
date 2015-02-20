@@ -61,7 +61,7 @@ public class HirdetesHosszabbitasServerResource extends ServerResource implement
 			Datastore datastore = MongoUtils.getDatastore();
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			query.criteria("id").equal(this.hirdetesId);
-			UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("lejar", c.getTime());
+			UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("lejar", c.getTime()).set("modositva", new Date());
 			datastore.update(query, ops);
 			
 			getLogger().info("Hirdetes meghosszabbitva: " + this.hirdetesId.toString());
