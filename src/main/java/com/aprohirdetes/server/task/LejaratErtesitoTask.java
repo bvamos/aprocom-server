@@ -24,13 +24,13 @@ public class LejaratErtesitoTask implements Runnable {
 	public void run() {
 		this.logger.info("LejaratErtesitoTask start");
 		
-		Date otNapMulva = new Date();
-		Calendar c = Calendar.getInstance(); 
-		c.setTime(otNapMulva); 
+		Calendar c = Calendar.getInstance();
+		// Datum 5 nap mulva. Az 5 napon belul lejaro hirdeteseket listazzuk vele.
+		c.setTime(new Date()); 
 		c.add(Calendar.DATE, 5);
-		otNapMulva = c.getTime();
-		this.logger.info(otNapMulva.toString());
+		Date otNapMulva = c.getTime();
 		
+		// Ma 00:00:00 ora. Ezt allitjuk be, mint utolso ertesites datuma, es ellenorizzuk, hogy ne kuldjunk ki egy nap tobb ertesitest.
 		c.setTime(new Date());
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
@@ -38,30 +38,34 @@ public class LejaratErtesitoTask implements Runnable {
 		c.set(Calendar.MILLISECOND, 0);
 		
 		try {
+			// 5 napon belul lejaro hirdetesek, amiknel ma meg nem kuldtunk ki ertesitest
 			Datastore datastore = MongoUtils.getDatastore();
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
-			query.or(
-				query.criteria("lejar").doesNotExist(),
-				query.criteria("lejar").lessThanOrEq(otNapMulva)
-			);
+			query.criteria("lejar").lessThanOrEq(otNapMulva);
 			query.criteria("lejarErtesites").notEqual(c.getTime());
+			query.criteria("torolve").equal(false);
 			
 			// Egy lepesben max 100 levelet kuldjunk ki. Kesobb majd novelhetjuk, ha ez nem eleg, a task orankent fut.
 			query.limit(100);
 			
 			for(Hirdetes h : query) {
-				String s = "";
-				s = h.getCim();
-				s +=", Datum: " + c.getTime().toString();
+				String s = "Hirdetes lejar: " + h.getId().toString();
 				if(h.getLejarErtesites()!=null) s += ", Utolso ertesites: " + h.getLejarErtesites().toString();
 				if(h.getLejar()!=null) s += ", Lejar: " + h.getLejar().toString();
 				this.logger.info(s);
 				
-				if(MailUtils.sendMailHirdetesLejar(h)) {
-					// Utolso ertesites beallitasa
-					HirdetesHelper.saveLejarErtesites(h.getId(), c.getTime());
+				if(h.getLejaratDatuma()<new Date().getTime()) {
+					// Lejart hirdetes, toroljuk
+					HirdetesHelper.delete(h.getId());
+					this.logger.info("Hirdetes torolve: " + h.getId().toString());
 				} else {
-					this.logger.severe("Hiba az ertesito level kikuldese kozben");
+					// 5 napon belul lejar, ertesitest kuldunk
+					if(MailUtils.sendMailHirdetesLejar(h)) {
+						// Utolso ertesites beallitasa
+						HirdetesHelper.saveLejarErtesites(h.getId(), c.getTime());
+					} else {
+						this.logger.severe("Hiba az ertesito level kikuldese kozben");
+					}
 				}
 			}
 			

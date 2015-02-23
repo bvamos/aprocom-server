@@ -20,7 +20,8 @@ public class Hirdetes {
 	@Id private ObjectId id;
 	
 	/**
-	 * Hirdetes tipusa (Keres, Kinal). Ld.: @HirdetesTipus
+	 * Hirdetes tipusa (Keres, Kinal). 
+	 * @see HirdetesTipus
 	 */
 	private int tipus = HirdetesTipus.KINAL;
 	private String cim;
@@ -54,6 +55,14 @@ public class Hirdetes {
 	 * Utolso ertesites datuma
 	 */
 	private Date lejarErtesites;
+	/**
+	 * Torolt statusz. Alapertelmezett: false
+	 */
+	private boolean torolve = false;
+	/**
+	 * Torles datuma
+	 */
+	private Date torolveDatum;
 	
 	
 	public Hirdetes() {
@@ -62,6 +71,7 @@ public class Hirdetes {
 		setMegjelenes(0);
 		setModositva(new Date());
 		setLejar(30);
+		setTorolve(false);
 	}
 	
 	public ObjectId getId() {
@@ -227,6 +237,10 @@ public class Hirdetes {
 		this.lejar = c.getTime();
 	}
 	
+	/**
+	 * A lejarat datuma timestamp formatumban (millisecond 1970-tol)
+	 * @return
+	 */
 	public long getLejaratDatuma() {
 		return (lejar!=null) ? lejar.getTime() : 0;
 	}
@@ -255,6 +269,22 @@ public class Hirdetes {
 		d.setMinutes(0);
 		d.setSeconds(0);
 		this.lejarErtesites = d;
+	}
+
+	public boolean isTorolve() {
+		return torolve;
+	}
+
+	public void setTorolve(boolean torolve) {
+		this.torolve = torolve;
+	}
+
+	public Date getTorolveDatum() {
+		return torolveDatum;
+	}
+
+	public void setTorolveDatum(Date torolveDatum) {
+		this.torolveDatum = torolveDatum;
 	}
 
 	public void tokenize() {

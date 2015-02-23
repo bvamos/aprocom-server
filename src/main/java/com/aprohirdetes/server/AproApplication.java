@@ -241,7 +241,7 @@ public class AproApplication extends Application {
 		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
 		
 		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
-		getTaskService().scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 1, 1, TimeUnit.HOURS);
+		getTaskService().scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
 	}
 
 	@Override
