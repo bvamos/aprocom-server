@@ -34,7 +34,9 @@ public class KategoriaCountTask implements Runnable {
 		DB db = MongoUtils.getMongoDB();
 		DBCollection hirdetesCollection = db.getCollection("hirdetes");
 		
-		DBObject match = new BasicDBObject("$match", new BasicDBObject( "torolve", false));
+		DBObject matchFields = new BasicDBObject("torolve", false);
+		matchFields.put("hitelesitve", true);
+		DBObject match = new BasicDBObject("$match", matchFields);
 		
 		DBObject groupFields = new BasicDBObject( "_id", "$kategoriaId");
 		groupFields.put("count", new BasicDBObject( "$sum", 1));
