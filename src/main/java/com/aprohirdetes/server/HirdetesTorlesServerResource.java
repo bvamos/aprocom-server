@@ -20,6 +20,7 @@ import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.AktivalasResource;
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
@@ -74,13 +75,14 @@ public class HirdetesTorlesServerResource extends ServerResource implements
 				dataModel.put("session", this.session);
 				
 				// Hirdetes torlese
-				Datastore datastore = MongoUtils.getDatastore();
-				Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
-				query.criteria("id").equal(this.hirdetesId);
-				datastore.delete(query);
-				
-				getLogger().info("Hirdetes torolve: " + this.hirdetesId.toString());
-				uzenet = "Hirdetésedet sikeresen töröltük. Köszönjük, hogy minket választottál! Ide kattintva <a href=\"" + contextPath + "/feladas\">feladhatsz egy új hirdetést</a>!";
+				try {
+					HirdetesHelper.delete(hirdetesId);
+					
+					getLogger().info("Hirdetes torolve: " + this.hirdetesId.toString());
+					uzenet = "Hirdetésedet sikeresen töröltük. Köszönjük, hogy minket választottál! Ide kattintva <a href=\"" + contextPath + "/feladas\">feladhatsz egy új hirdetést</a>!";
+				} catch (Exception e) {
+					getLogger().severe(e.getMessage());
+				}
 			} else {
 				ftl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
 				hibaUzenet = "Az apróhirdetés törléséhez be kell jelentkezned. Ha nem vagy regisztrált felhasználó, meg kell várnod, amíg a hirdetés lejár.";

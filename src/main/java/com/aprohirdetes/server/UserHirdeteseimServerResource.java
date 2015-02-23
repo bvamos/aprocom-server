@@ -71,6 +71,7 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			
 			query.criteria("hirdetoId").equal(this.session.getHirdetoId());
+			query.criteria("torolve").equal(false);
 			
 			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 			for(Hirdetes h : query) {
@@ -79,6 +80,9 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 				
 				// Hany napja adtak fel a hirdetest
 				h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
+				
+				// Hany nap mulva jar le a hirdetes
+				h.getEgyebMezok().put("lejarSzoveg", AproUtils.getHirdetesLejaratSzoveg(h.getLejaratDatuma()));
 				
 				// Hirdetes mentese a listaba
 				hirdetesList.add(h);

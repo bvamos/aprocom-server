@@ -10,7 +10,7 @@
 			</div>
 			<div class="col-sm-9 col-md-10">
 			
-				<h3>Hirdetéseim</h3>
+				<h3>Hirdetéseim (${hirdetesList?size})</h3>
 					
 				<#if uzenet?? >
 				<div class="alert alert-success">${uzenet}</div>
@@ -25,7 +25,7 @@
 						<th>Cím</th>
 						<th>Kategória</th>
 						<th>Ár</th>
-						<th>Feladva</th>
+						<th>Feladva/Lejár</th>
 						<th>Megjelent</th>
 						<th>Műveletek</th>
 					</tr>
@@ -35,14 +35,15 @@
 					<tr>
 						<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}" target="_blank">${hirdetes.cim}</a></td>
 						<td>${(hirdetes.egyebMezok.kategoria)!''}</td>
-						<td align="right">${hirdetes.ar} Ft</td>
-						<td>${(hirdetes.egyebMezok.feladvaSzoveg)!''}</td>
+						<td align="right" nowrap>${hirdetes.ar} Ft</td>
+						<td><small>${(hirdetes.egyebMezok.feladvaSzoveg)!''}<br>${(hirdetes.egyebMezok.lejarSzoveg)!''}</small></td>
 						<#if hirdetes.hitelesitve>
 						<td align="right">${hirdetes.megjelenes!'0'}</td>
 						<#else>
 						<td align="right">Nincs aktiválva</td>
 						</#if>
-						<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a></td>
+						<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a><br>
+						<span style="white-space:nowrap"><a href="${app.contextRoot}/hosszabbitas/${hirdetes.id}"><i class="fa fa-recycle"></i> Hosszabbítás</a></span></td>
 					</tr>
 				</#list>
 					</tbody>
