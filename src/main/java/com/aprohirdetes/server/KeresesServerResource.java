@@ -161,6 +161,7 @@ public class KeresesServerResource extends ServerResource implements
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			
 			query.criteria("hitelesitve").equal(true);
+			query.criteria("torolve").equal(false);
 			query.criteria("tipus").equal(this.hirdetesTipus);
 			if(selectedHelysegIdList.size()>0) {
 				query.criteria("helysegId").in(selectedHelysegIdList);

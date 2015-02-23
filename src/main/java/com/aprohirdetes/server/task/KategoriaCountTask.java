@@ -34,11 +34,13 @@ public class KategoriaCountTask implements Runnable {
 		DB db = MongoUtils.getMongoDB();
 		DBCollection hirdetesCollection = db.getCollection("hirdetes");
 		
+		DBObject match = new BasicDBObject("$match", new BasicDBObject( "torolve", false));
+		
 		DBObject groupFields = new BasicDBObject( "_id", "$kategoriaId");
 		groupFields.put("count", new BasicDBObject( "$sum", 1));
 		DBObject group = new BasicDBObject("$group", groupFields);
 		
-		AggregationOutput output = hirdetesCollection.aggregate(group);
+		AggregationOutput output = hirdetesCollection.aggregate(match, group);
 		
 		// Fokategoriak nullazasa
 		for(Kategoria kat : KategoriaCache.getCacheById().values()) {
