@@ -11,12 +11,7 @@
 						<#if (hirdetesek_szama>0) >
 						<span>${hirdetesek_szama} apróhirdetés</span> - <span>${aktualisOldal}. oldal</span>
 						<span style="float: right;">
-							<#if hirdetesTipus=1 >
-								<#assign hirdetesTipusUrl = 'keres'>
-							<#else>
-								<#assign hirdetesTipusUrl = 'kinal'>
-							</#if>
-							<a href="${app.contextRoot}/rss/${hirdetesTipusUrl}/${hirdetesHelysegUrl}/${hirdetesKategoriaUrl}/" target="_blank"><img alt="RSS" src="${app.contextRoot}/images/rss.png" border="0" width="20" height="20" /></a>
+							<a href="${rssUrl}" target="_blank"><img alt="RSS" src="${app.contextRoot}/images/rss.png" border="0" width="20" height="20" /></a>
 							<select id="keresesSorrendSelect">
 								<option value="1" <#if sorrend==1>selected</#if>>Legújabb elöl</option>
 								<option value="2" <#if sorrend==2>selected</#if>>Legrégebbi elöl</option>

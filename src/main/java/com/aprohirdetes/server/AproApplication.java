@@ -53,7 +53,8 @@ public class AproApplication extends Application {
 
 		router.attach("/", RootServerResource.class);
 		
-		router.attach("/kereses/{hirdetesTipus}/{kategoriaList}/", KeresesServerResource.class);
+		router.attach("/kereses/{hirdetesTipus}/", KeresesServerResource.class);
+		router.attach("/kereses/{hirdetesTipus}/{helysegList}/", KeresesServerResource.class);
 		router.attach("/kereses/{hirdetesTipus}/{helysegList}/{kategoriaList}/", KeresesServerResource.class);
 		
 		router.attach("/hirdetes/{hirdetesId}", HirdetesServerResource.class);
@@ -81,7 +82,8 @@ public class AproApplication extends Application {
 		router.attach("/sugo", StaticSugoServerResource.class);
 		
 		// RSS
-		router.attach("/rss/{hirdetesTipus}/{kategoriaList}/", RssServerResource.class);
+		router.attach("/rss/{hirdetesTipus}/", RssServerResource.class);
+		router.attach("/rss/{hirdetesTipus}/{helysegList}/", RssServerResource.class);
 		router.attach("/rss/{hirdetesTipus}/{helysegList}/{kategoriaList}/", RssServerResource.class);
 		
 		// API

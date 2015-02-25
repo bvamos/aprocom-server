@@ -39,6 +39,7 @@ public class RssServerResource extends ServerResource implements
 		RssResource {
 
 	private String contextPath = "";
+	private String hirdetesTipusString = "kinal";
 	/**
 	 * Hirdetes tipusa. 1=Keres, 2=Kinal
 	 */
@@ -72,11 +73,12 @@ public class RssServerResource extends ServerResource implements
 		
 		this.selectedHelysegUrlNevListString = (String) this.getRequestAttributes().get("helysegList");
 		if(this.selectedHelysegUrlNevListString == null || this.selectedHelysegUrlNevListString.isEmpty()) {
-			this.selectedHelysegUrlNevListString = "magyarorszag";
+			this.selectedHelysegUrlNevListString = "osszes-helyseg";
 		}
 		this.selectedHelysegList = HelysegCache.getHelysegListByUrlNevList(this.selectedHelysegUrlNevListString);
 		
-		this.hirdetesTipus = ("keres".equals((String) this.getRequestAttributes().get("hirdetesTipus"))) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
+		this.hirdetesTipusString = (String) this.getRequestAttributes().get("hirdetesTipus");
+		this.hirdetesTipus = ("keres".equals(this.hirdetesTipusString)) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
 		
 		this.kulcsszo = getQueryValue("q")==null ? "" : getQueryValue("q");
 		
@@ -119,9 +121,15 @@ public class RssServerResource extends ServerResource implements
 		// Kereses Morphiaval
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		
+		query.criteria("hitelesitve").equal(true);
+		query.criteria("torolve").equal(false);
 		query.criteria("tipus").equal(this.hirdetesTipus);
-		query.criteria("helysegId").in(selectedHelysegIdList);
-		query.criteria("kategoriaId").in(selectedKategoriaIdList);
+		if(selectedHelysegIdList.size()>0) {
+			query.criteria("helysegId").in(selectedHelysegIdList);
+		}
+		if(selectedKategoriaIdList.size()>0) {
+			query.criteria("kategoriaId").in(selectedKategoriaIdList);
+		}
 		if(!this.kulcsszo.isEmpty()) {
 			query.criteria("kulcsszavak").equal(kulcsszo);
 		}

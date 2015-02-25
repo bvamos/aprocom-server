@@ -38,6 +38,7 @@ public class KeresesServerResource extends ServerResource implements
 		KeresesResource {
 
 	private String contextPath = "";
+	private String hirdetesTipusString = "kinal";
 	/**
 	 * Hirdetes tipusa. 1=Keres, 2=Kinal
 	 */
@@ -76,11 +77,12 @@ public class KeresesServerResource extends ServerResource implements
 		this.selectedHelysegUrlNevListString = (String) this.getRequestAttributes().get("helysegList");
 		if(this.selectedHelysegUrlNevListString == null || this.selectedHelysegUrlNevListString.isEmpty()) {
 			// Alapertelmezett helyseg: Osszes helyseg
-			this.selectedHelysegUrlNevListString = "";
+			this.selectedHelysegUrlNevListString = "osszes-helyseg";
 		}
 		this.selectedHelysegList = HelysegCache.getHelysegListByUrlNevList(this.selectedHelysegUrlNevListString);
 		
-		this.hirdetesTipus = ("keres".equals((String) this.getRequestAttributes().get("hirdetesTipus"))) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
+		this.hirdetesTipusString = (String) this.getRequestAttributes().get("hirdetesTipus");
+		this.hirdetesTipus = ("keres".equals(this.hirdetesTipusString)) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
 		
 		this.kulcsszo = getQueryValue("q")==null ? "" : getQueryValue("q");
 		
@@ -133,10 +135,6 @@ public class KeresesServerResource extends ServerResource implements
 			selectedKategoriaIdList.add(kat.getId());
 			selectedKategoriaUrlNevList.add(kat.getUrlNev());
 		}
-		if(selectedKategoriaIdList.isEmpty()) {
-			hibaUzenet = "A kiválasztott Kategóriák nem léteznek. Ha kézzel adtad meg a címsort, kérlek ellenőrizd! " +
-					"Ha egy linkre kattintottál, nincs mit tenned, mert értesültünk a hibáról, és javítani fogjuk.";
-		}
 		
 		/**
 		 * Kivalasztott helysegek Id-jait tartalmazo lista. A kereseshez kell.
@@ -152,6 +150,7 @@ public class KeresesServerResource extends ServerResource implements
 		}
 
 		// Kereses
+		// !!!!!! BARMI MODOSUL ITT, AZ RssServerResource-BAN IS MODOSITANI KELL !!!!!
 		long hirdetesekSzama = 0;
 		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 		
@@ -166,7 +165,9 @@ public class KeresesServerResource extends ServerResource implements
 			if(selectedHelysegIdList.size()>0) {
 				query.criteria("helysegId").in(selectedHelysegIdList);
 			}
-			query.criteria("kategoriaId").in(selectedKategoriaIdList);
+			if(selectedKategoriaIdList.size()>0) {
+				query.criteria("kategoriaId").in(selectedKategoriaIdList);
+			}
 			if(!this.kulcsszo.isEmpty()) {
 				query.criteria("kulcsszavak").equal(kulcsszo);
 			}
@@ -271,6 +272,10 @@ public class KeresesServerResource extends ServerResource implements
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
 		
+		String rssUrl = this.contextPath + "/rss/" + this.hirdetesTipusString + "/";
+		rssUrl += (selectedHelysegUrlNevListString == null || selectedHelysegUrlNevListString.isEmpty()) ? "" : selectedHelysegUrlNevListString + "/";
+		rssUrl += (selectedKategoriaUrlNevListString == null || selectedHelysegUrlNevListString.isEmpty()) ? "" : selectedKategoriaUrlNevListString + "/";
+		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
 		dataModel.put("kategoriaList", kategoriaList);
@@ -281,6 +286,7 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("hirdetesHelyseg", selectedHelysegUrlNevList);
 		dataModel.put("hirdetesKategoriaUrl", selectedKategoriaUrlNevListString);
 		dataModel.put("hirdetesHelysegUrl", selectedHelysegUrlNevListString);
+		dataModel.put("rssUrl", rssUrl);
 		dataModel.put("hirdetesek_szama", hirdetesekSzama);
 		dataModel.put("q", this.kulcsszo);
 		dataModel.put("arMin", this.arMin==null ? null : this.arMin.toString());

@@ -83,6 +83,7 @@
 	
 	$('#hirdetesKategoria').change(function(){
 		var kategoria = $('#hirdetesKategoria').val();
+		if(kategoria.length==0) return;
 		
 		$.get("${app.contextRoot}/api/v1/kategoriaAttributum/" + kategoria,
 			function(data){
@@ -93,7 +94,7 @@
 				}
         	}
 		).fail(function() {
-			alert('Hiba');
+			alert('Hiba az egyéb mezők betöltése közben.');
 		});
 	});
 	

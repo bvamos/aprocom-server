@@ -16,8 +16,23 @@
 							</select>
 							</div>
 							<div class="form-group" style="min-width: 15%;">
+							<select class="form-control" id="hirdetesKategoria">
+								<#assign selectedKategoria="">
+								<#if hirdetesKategoria?has_content >
+									<#assign selectedKategoria=hirdetesKategoria[0]>
+								</#if>
+								<option value="">Összes kategória</option>
+								<#list kategoriaList as kategoria>
+								<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=selectedKategoria>selected</#if>>${kategoria.nev}</option>
+									<#list kategoria.alkategoriaList as alkategoria>
+									<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=selectedKategoria>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
+									</#list>
+								</#list>
+							</select>
+							</div>
+							<div class="form-group" style="min-width: 15%;">
 							<select class="form-control" id="hirdetesHelyseg">
-								<option value="">Összes helység</option>
+								<option value="osszes-helyseg">Összes helység</option>
 								<#list helysegList as helyseg>
 								<option value="${helyseg.urlNev}" <#if '${helyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>${helyseg.nev}</option>
 									<#list helyseg.alhelysegList as alhelyseg>
@@ -25,20 +40,6 @@
 										<#list alhelyseg.alhelysegList as alalhelyseg>
 										<option value="${alalhelyseg.urlNev}" <#if '${alalhelyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
 										</#list>
-									</#list>
-								</#list>
-							</select>
-							</div>
-							<div class="form-group" style="min-width: 15%;">
-							<select class="form-control" id="hirdetesKategoria">
-								<#assign selectedKategoria="">
-								<#if hirdetesKategoria?has_content >
-									<#assign selectedKategoria=hirdetesKategoria[0]>
-								</#if>
-								<#list kategoriaList as kategoria>
-								<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=selectedKategoria>selected</#if>>${kategoria.nev}</option>
-									<#list kategoria.alkategoriaList as alkategoria>
-									<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=selectedKategoria>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
 									</#list>
 								</#list>
 							</select>
@@ -95,11 +96,9 @@
 				var arMax = $('#keresesArMax').val();
 				
 				var action = '';
-				if(helyseg.length>0) {
-					action = appContext + '/kereses/' + tipus + '/' + helyseg + '/' + kategoria + '/?';
-				}else{
-					action = appContext + '/kereses/' + tipus + '/' + kategoria + '/?';
-				}
+				helysegUrl = (helyseg.length>0) ? helyseg + '/' : '';
+				kategoriaUrl = (kategoria.length>0) ? kategoria + '/' : '';
+				action = appContext + '/kereses/' + tipus + '/' + helysegUrl + kategoriaUrl + '?';
 				
 				if(kulcsszo.length>0) action = action + 'q=' + kulcsszo;
 				if(p>1) action = action + '&p=' + window.p;
@@ -107,7 +106,7 @@
 				if(arMin.length>0) action = action + '&arMin=' + arMin;
 				if(arMax.length>0) action = action + '&arMax=' + arMax;
 				
-				window.location = action;
+				window.location = encodeURI(action);
 			});
 			</script>
 		</div>
