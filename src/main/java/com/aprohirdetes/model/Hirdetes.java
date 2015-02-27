@@ -287,9 +287,11 @@ public class Hirdetes {
 		this.torolveDatum = torolveDatum;
 	}
 
+	/**
+	 * Tokenekre bontja a hirdetes cimet es szoveget, es elmenti a tokeneket a kulcsszavak tombben
+	 */
 	public void tokenize() {
 		this.kulcsszavak.clear();
-		this.kulcsszavak.addAll(IndexUtils.tokenize(this.cim));
-		this.kulcsszavak.addAll(IndexUtils.tokenize(this.szoveg));
+		this.kulcsszavak.addAll(IndexUtils.tokenizeMagyarlanc(this.cim + ". " + this.szoveg));
 	}
 }

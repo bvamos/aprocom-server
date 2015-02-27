@@ -1,10 +1,10 @@
 package com.aprohirdetes.server;
 
+import hu.u_szeged.magyarlanc.resource.ResourceHolder;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -12,12 +12,10 @@ import org.restlet.Application;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
-import org.restlet.data.CacheDirective;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 import org.restlet.resource.Directory;
-import org.restlet.routing.Filter;
 import org.restlet.routing.Router;
 
 import com.aprohirdetes.model.AttributumCache;
@@ -52,6 +50,8 @@ public class AproApplication extends Application {
 		Router router = new Router(getContext());
 
 		router.attach("/", RootServerResource.class);
+		
+		//router.attach("/teszt", TestServerResource.class);
 		
 		router.attach("/kereses/{hirdetesTipus}/", KeresesServerResource.class);
 		router.attach("/kereses/{hirdetesTipus}/{helysegList}/", KeresesServerResource.class);
@@ -100,7 +100,8 @@ public class AproApplication extends Application {
 		Directory cssDirectory = new Directory(getContext(), cssUri);
 		cssDirectory.setListingAllowed(true);
 
-		//add cache headers to the webjars so we're not swamped by requests, set things to expire in a year.
+		// TODO: add cache headers to the webjars so we're not swamped by requests, set things to expire in a year.
+		/*
 		Filter cache = new Filter(getContext(), cssDirectory){
 		    protected void afterHandle(Request request, Response response) {
 		    	System.out.println(request.getResourceRef().getPath());
@@ -120,6 +121,7 @@ public class AproApplication extends Application {
 		        }
 		    }
 		};
+		*/
 		
 		router.attach("/css", cssDirectory);
 		
@@ -244,6 +246,12 @@ public class AproApplication extends Application {
 		
 		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
 		getTaskService().scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
+		
+		// Tokenizer inicializacio
+		ResourceHolder.initHunSplitter();
+		ResourceHolder.initCorpus();
+		ResourceHolder.initMSDReducer();
+		ResourceHolder.initCorrDic();
 	}
 
 	@Override

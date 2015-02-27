@@ -1,8 +1,11 @@
 package com.aprohirdetes.utils;
 
+import hu.u_szeged.magyarlanc.resource.ResourceHolder;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class IndexUtils {
@@ -68,6 +71,42 @@ public class IndexUtils {
 			ret.add(word);
 		}
 
+		return ret;
+	}
+	
+	/**
+	 * Egy adott szoveg tokenekre bontasat vegzi a magyarlanc 2.0 tokenizer segitsegevel
+	 * Kiszedi azokat a magyar szavakat, amiket nem erdemes indexelni. Kiszedi a felesleges karaktereket. Kisbetusse alakit minden szot.
+	 * @param text
+	 * @return
+	 */
+	public static HashSet<String> tokenizeMagyarlanc(String text) {
+		HashSet<String> ret = new HashSet<String>();
+
+		if (text == null || text.isEmpty()) {
+			return ret;
+		}
+		
+		List<String[][]> morph = null;
+	    morph = new ArrayList<String[][]>();
+
+	    for (String[] sentence : ResourceHolder.getHunSplitter().splitToArray(text)) {
+	      morph.add(ResourceHolder.getMaxentTagger().morpSentence(sentence));
+	    }
+	    
+	    for(int i=0; i<morph.size(); i++) {
+	    	String[][] a = morph.get(i);
+	    	for(int j=0; j<a.length; j++) {
+	    		String[] b = a[j];
+	    		// Fonevek, melleknevek es igek szotovei
+	    		// Forras: Magyar Nemzeti Szövegtár - Az MSD-kódok rendszere
+	    		// http://corpus.nytud.hu/mnsz/sugo_hun.html#msdrendszer
+	    		if(b[2].startsWith("N") || b[2].startsWith("A") || b[2].startsWith("V")) {
+	    			ret.add(b[1].toLowerCase());
+	    		}
+	    	}
+	    }
+		
 		return ret;
 	}
 }
