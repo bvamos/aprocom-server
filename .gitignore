@@ -3,3 +3,5 @@ build
 .settings
 .gradle
 .project
+setup/restlet/restlet-jee-2.3.1.zip
+setup/restlet/restlet-jse-2.3.1.zip
