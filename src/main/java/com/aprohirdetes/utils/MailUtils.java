@@ -144,7 +144,7 @@ public class MailUtils {
 		}
 		
 		// Ertesites kuldese magamnak
-		String subject = "Uj hirdetes: " + hi.getCim();
+		String subject = "Új hirdetés: " + hi.getCim();
 		String body = hi.getSzoveg() + "\n\n"
 				+ "Kategória: " + KategoriaCache.getKategoriaNevChain(hi.getKategoriaId()) + "\n"
 				+ "Ár: " + hi.getAr() + "\n\n"
@@ -162,7 +162,7 @@ public class MailUtils {
 		if(email != null && !email.isEmpty()) {
 			String subject = "Új jelszót generáltunk";
 			String body = "Kedves " + ho.getNev() + "!\n\n"
-					+ "Kérésére új jelszót generáltunk: " + jelszo + "\n"
+					+ "Kérésedre új jelszót generáltunk: " + jelszo + "\n"
 					+ "Belépés: https://www.aprohirdetes.com/belepes\n\n"
 					+ "Üdvözlettel,\n"
 					+ "Apróhirdetés.com";
@@ -175,6 +175,8 @@ public class MailUtils {
 	public static boolean sendMailKapcsolat(String fromNev, String fromEmail, String uzenet) {
 		boolean ret = false;
 		
+		String to = AproApplication.APP_CONFIG.getProperty("MAIL.FROM");
+		
 		if(fromEmail != null && !fromEmail.isEmpty()) {
 			String subject = "Üzenet a weboldalról";
 			String body = "Kedves Apróhirdetés.com!\n\n"
@@ -182,7 +184,7 @@ public class MailUtils {
 					+ "Üdvözlettel,\n"
 					+ fromNev + " (" + fromEmail + ")\n";
 			
-			ret = MailUtils.sendMail("info@aprohirdetes.com", subject, body);
+			ret = MailUtils.sendMail(to, subject, body);
 		}
 		
 		return ret;
