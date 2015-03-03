@@ -73,7 +73,7 @@ public class HirdetesAktivalasServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés aktiválása");
 		appDataModel.put("description", "Új apróhirdetés aktiválása. A hirdetéseket ingyen feladhatod, de csak aktiválás után jelennek meg oldalunkon.");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);

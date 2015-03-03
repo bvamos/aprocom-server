@@ -14,7 +14,6 @@ import javax.servlet.ServletContext;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -114,7 +113,7 @@ public class RssServerResource extends ServerResource implements
 		}
 
 		// Kereses
-		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Datastore datastore = MongoUtils.getDatastore();
 		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 		//long hirdetesekSzama = 0;
 		
@@ -210,7 +209,7 @@ public class RssServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + " - " + KategoriaCache.getKategoriaNevekByUrlNevList(this.selectedKategoriaUrlNevListString) + " hirdetések " + HelysegCache.getHelysegNevekByUrlNevList(selectedHelysegUrlNevListString));
 		appDataModel.put("description", "50 legfrissebb apróhirdetés " + KategoriaCache.getKategoriaNevekByUrlNevList(this.selectedKategoriaUrlNevListString) + " kategóriában. Helység, város: " + HelysegCache.getHelysegNevekByUrlNevList(selectedHelysegUrlNevListString));
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesList", hirdetesList);

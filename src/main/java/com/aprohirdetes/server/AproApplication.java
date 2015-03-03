@@ -5,7 +5,6 @@ import hu.u_szeged.magyarlanc.resource.ResourceHolder;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.restlet.Application;
@@ -31,8 +30,6 @@ import freemarker.template.DefaultObjectWrapper;
 
 public class AproApplication extends Application {
 
-	public static Properties APP_CONFIG = new Properties();
-	public static Properties PACKAGE_CONFIG = new Properties();
 	public static Configuration TPL_CONFIG;
 	
 	public AproApplication() {
@@ -140,12 +137,12 @@ public class AproApplication extends Application {
 		imagesDirectory.setListingAllowed(true);
 		router.attach("/images", imagesDirectory);
 		
-		String staticImagesUploadUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + "/images_upload";
+		String staticImagesUploadUri = "file://" + AproConfig.APP_CONFIG.getProperty("WORKDIR") + "/images_upload";
 		Directory staticImagesUploadDirectory = new Directory(getContext(), staticImagesUploadUri);
 		staticImagesUploadDirectory.setListingAllowed(true);
 		router.attach("/static/images_upload", staticImagesUploadDirectory);
 		
-		String staticImagesUri = "file://" + APP_CONFIG.getProperty("WORKDIR") + "/images";
+		String staticImagesUri = "file://" + AproConfig.APP_CONFIG.getProperty("WORKDIR") + "/images";
 		Directory staticImagesDirectory = new Directory(getContext(), staticImagesUri);
 		staticImagesDirectory.setListingAllowed(true);
 		router.attach("/static/images", staticImagesDirectory);
@@ -175,7 +172,7 @@ public class AproApplication extends Application {
 			getLogger().severe("ERROR: Config file not found: " + configFile);
 		} else {
 			try {
-				APP_CONFIG.load(new StringReader(response.getEntityAsText()));
+				AproConfig.APP_CONFIG.load(new StringReader(response.getEntityAsText()));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -183,12 +180,12 @@ public class AproApplication extends Application {
 		}
 		
 		// Check application configuration
-		if(APP_CONFIG.isEmpty()) {
+		if(AproConfig.APP_CONFIG.isEmpty()) {
 			getLogger().severe("Configuration is empty. Exiting.");
 			stop();
 			return;
 		} else {
-			getLogger().info("Configuration: " + APP_CONFIG);
+			getLogger().info("Configuration: " + AproConfig.APP_CONFIG);
 		}
 		
 		// Loading package configuration
@@ -203,7 +200,7 @@ public class AproApplication extends Application {
 			getLogger().severe("ERROR: Package Config file not found: " + packageConfigFile);
 		} else {
 			try {
-				PACKAGE_CONFIG.load(new StringReader(response.getEntityAsText()));
+				AproConfig.PACKAGE_CONFIG.load(new StringReader(response.getEntityAsText()));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -211,13 +208,13 @@ public class AproApplication extends Application {
 		}
 		
 		// Create work directory structure
-		createWorkDir(APP_CONFIG.getProperty("WORKDIR"));
+		createWorkDir(AproConfig.APP_CONFIG.getProperty("WORKDIR"));
 
 		// Default configuration
 		try {
-			Integer.parseInt(APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE"));
+			Integer.parseInt(AproConfig.APP_CONFIG.getProperty("SEARCH_DEFAULT_PAGESIZE"));
 		} catch(NumberFormatException nfe) {
-			APP_CONFIG.setProperty("SEARCH_DEFAULT_PAGESIZE", "10");
+			AproConfig.APP_CONFIG.setProperty("SEARCH_DEFAULT_PAGESIZE", "10");
 		}
 		
 		// Start application

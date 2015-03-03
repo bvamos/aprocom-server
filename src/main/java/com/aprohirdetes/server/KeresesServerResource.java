@@ -64,7 +64,7 @@ public class KeresesServerResource extends ServerResource implements
 	private Integer arMin;
 	private Integer arMax;
 	private int page;
-	private int pageSize = Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20"));
+	private int pageSize = Integer.parseInt(AproConfig.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20"));
 	private int sorrend;
 	
 	@Override
@@ -179,7 +179,7 @@ public class KeresesServerResource extends ServerResource implements
 			}
 			
 			query.offset(this.page * this.pageSize - this.pageSize);
-			query.limit(Integer.parseInt(AproApplication.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20")));
+			query.limit(Integer.parseInt(AproConfig.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20")));
 			
 			// Rendezes
 			if(this.sorrend==2) {
@@ -270,7 +270,7 @@ public class KeresesServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + " - " + KategoriaCache.getKategoriaNevekByUrlNevList(this.selectedKategoriaUrlNevListString) + " hirdetések " + HelysegCache.getHelysegNevekByUrlNevList(selectedHelysegUrlNevListString));
 		appDataModel.put("description", "Sok-sok apróhirdetés " + KategoriaCache.getKategoriaNevekByUrlNevList(this.selectedKategoriaUrlNevListString) + " kategóriában. Helység, város: " + HelysegCache.getHelysegNevekByUrlNevList(selectedHelysegUrlNevListString));
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		String rssUrl = this.contextPath + "/rss/" + this.hirdetesTipusString + "/";
 		rssUrl += (selectedHelysegUrlNevListString == null || selectedHelysegUrlNevListString.isEmpty()) ? "" : selectedHelysegUrlNevListString + "/";

@@ -12,7 +12,6 @@ import javax.servlet.ServletContext;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.restlet.data.MediaType;
@@ -54,7 +53,7 @@ public class HirdetesNyomtatasServerResource extends ServerResource implements
 		try {
 			this.hirdetesId = new ObjectId((String) this.getRequestAttributes().get("hirdetesId"));
 			
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			Datastore datastore = MongoUtils.getDatastore();
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 
 			query.criteria("id").equal(this.hirdetesId);
@@ -77,7 +76,7 @@ public class HirdetesNyomtatasServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName());
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
@@ -90,7 +89,7 @@ public class HirdetesNyomtatasServerResource extends ServerResource implements
 			((HashMap<String, Object>) dataModel.get("app")).put("description", hirdetes.getCim());
 			
 			// Mongo Datastore
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			Datastore datastore = MongoUtils.getDatastore();
 			
 			// Megjelenes szamanak novelese
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);

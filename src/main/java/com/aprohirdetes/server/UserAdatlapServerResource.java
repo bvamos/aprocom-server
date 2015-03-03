@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -63,7 +62,7 @@ public class UserAdatlapServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
@@ -110,7 +109,7 @@ public class UserAdatlapServerResource extends ServerResource implements
 		
 		// Mentes
 		try {
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			Datastore datastore = MongoUtils.getDatastore();
 			datastore.save(hirdeto);
 			
 			message = "Az adatokat módosítottuk";
@@ -130,7 +129,7 @@ public class UserAdatlapServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);

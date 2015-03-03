@@ -61,7 +61,7 @@ public class StaticKapcsolatServerResource extends ServerResource implements For
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Kapcsolat");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
@@ -116,7 +116,7 @@ public class StaticKapcsolatServerResource extends ServerResource implements For
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Kapcsolat");
 		appDataModel.put("description", "Bármilyen problémával ill. kérdéssel fordulj nyugodtan ügyfélszolgálatunkhoz!");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		if(this.session != null) {
 			dataModel.put("hirdeto", HirdetoHelper.load(session.getHirdetoId()));

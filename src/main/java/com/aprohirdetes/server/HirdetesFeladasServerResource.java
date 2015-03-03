@@ -110,7 +110,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Ingyenes apróhirdetés feladása");
 		appDataModel.put("description", "Új, ingyenes apróhirdetés feladása képekkel, akár regisztráció nélkül!");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
@@ -253,11 +253,11 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			
 			for(HirdetesKep hk : query) {
 				// Normal meretu kep
-				String fileNamePath = AproApplication.APP_CONFIG
+				String fileNamePath = AproConfig.APP_CONFIG
 						.getProperty("WORKDIR")
 						+ "/"
 						+ "images_upload" + "/" + hk.getFileNev();
-				String destFileNamePath = AproApplication.APP_CONFIG
+				String destFileNamePath = AproConfig.APP_CONFIG
 						.getProperty("WORKDIR")
 						+ "/"
 						+ "images" + "/" + hk.getFileNev();
@@ -267,11 +267,11 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				}
 				
 				// Thumbnail
-				String thumbFileNamePath = AproApplication.APP_CONFIG
+				String thumbFileNamePath = AproConfig.APP_CONFIG
 						.getProperty("WORKDIR")
 						+ "/"
 						+ "images_upload" + "/" + hk.getThumbFileNev();
-				String destThumbFileNamePath = AproApplication.APP_CONFIG
+				String destThumbFileNamePath = AproConfig.APP_CONFIG
 						.getProperty("WORKDIR")
 						+ "/"
 						+ "images" + "/" + hk.getThumbFileNev();
@@ -327,7 +327,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + "Hirdetés feladása");
 		appDataModel.put("description", "Ingyenes hirdetésfeladás, fényképpel. Cégeknek, magánszemélyeknek egyaránt ingyenes!");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", this.session);

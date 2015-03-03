@@ -56,7 +56,7 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetéseim");
 		appDataModel.put("description", "Regisztrált felhasználó hirdetéseinek szerkesztése");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);

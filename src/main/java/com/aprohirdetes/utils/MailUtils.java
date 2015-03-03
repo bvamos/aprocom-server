@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.KategoriaCache;
-import com.aprohirdetes.server.AproApplication;
+import com.aprohirdetes.server.AproConfig;
 
 public class MailUtils {
 
@@ -30,11 +30,11 @@ public class MailUtils {
 	public static boolean sendMail(String toAddress, String messageSubject, String messageBody) {
 		boolean ret = false;
 		
-		String host = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.HOST");
-		String port = AproApplication.APP_CONFIG.getProperty("MAIL.SMTP.PORT");
-		String from = AproApplication.APP_CONFIG.getProperty("MAIL.FROM");
-		final String user = AproApplication.APP_CONFIG.getProperty("MAIL.USER");
-		final String pass = AproApplication.APP_CONFIG.getProperty("MAIL.PASSWORD");
+		String host = AproConfig.APP_CONFIG.getProperty("MAIL.SMTP.HOST");
+		String port = AproConfig.APP_CONFIG.getProperty("MAIL.SMTP.PORT");
+		String from = AproConfig.APP_CONFIG.getProperty("MAIL.FROM");
+		final String user = AproConfig.APP_CONFIG.getProperty("MAIL.USER");
+		final String pass = AproConfig.APP_CONFIG.getProperty("MAIL.PASSWORD");
 		
 		// From
 		if(from == null || from.isEmpty()) {
@@ -150,7 +150,7 @@ public class MailUtils {
 				+ "Ár: " + hi.getAr() + "\n\n"
 				+ "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
 				+ "https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"\n\n";
-		MailUtils.sendMail(AproApplication.APP_CONFIG.getProperty("MAIL.FROM"), subject, body);
+		MailUtils.sendMail(AproConfig.APP_CONFIG.getProperty("MAIL.FROM"), subject, body);
 		
 		return ret;
 	}
@@ -175,7 +175,7 @@ public class MailUtils {
 	public static boolean sendMailKapcsolat(String fromNev, String fromEmail, String uzenet) {
 		boolean ret = false;
 		
-		String to = AproApplication.APP_CONFIG.getProperty("MAIL.FROM");
+		String to = AproConfig.APP_CONFIG.getProperty("MAIL.FROM");
 		
 		if(fromEmail != null && !fromEmail.isEmpty()) {
 			String subject = "Üzenet a weboldalról";

@@ -14,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
 import org.restlet.data.Status;
@@ -26,7 +25,7 @@ import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.APIKepFeltoltesResource;
 import com.aprohirdetes.model.HirdetesKep;
-import com.aprohirdetes.server.AproApplication;
+import com.aprohirdetes.server.AproConfig;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class KepFeltoltesServerResource extends ServerResource implements
@@ -56,7 +55,7 @@ public class KepFeltoltesServerResource extends ServerResource implements
 					true)) {
 				ObjectId kepId = new ObjectId();
 				String fileName = hirdetesId.toString() + "_" + kepId.toString();
-				String fileNamePath = AproApplication.APP_CONFIG
+				String fileNamePath = AproConfig.APP_CONFIG
 						.getProperty("WORKDIR")
 						+ "/"
 						+ "images_upload" + "/" + fileName;
@@ -88,7 +87,7 @@ public class KepFeltoltesServerResource extends ServerResource implements
 					if (!item.isFormField()) {
 						try {
 							// Letezo kepek lekerdezese
-							Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+							Datastore datastore = MongoUtils.getDatastore();
 							Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
 							
 							query.criteria("hirdetesId").equal(hirdetesId);

@@ -13,7 +13,6 @@ import java.util.Random;
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
@@ -56,7 +55,7 @@ public class UserUjJelszoServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Ajaj, elfelejtettem a jelszavam");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
@@ -74,7 +73,7 @@ public class UserUjJelszoServerResource extends ServerResource implements
 		
 		String felhasznaloNev = form.getFirstValue("email");
 		
-		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Datastore datastore = MongoUtils.getDatastore();
 		
 		Query<Hirdeto> query = datastore.createQuery(Hirdeto.class);
 		query.criteria("email").equal(felhasznaloNev);
@@ -117,7 +116,7 @@ public class UserUjJelszoServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Elfelejtettem a jelszavam");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("uzenet", message);

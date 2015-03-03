@@ -13,7 +13,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
@@ -68,7 +67,7 @@ public class UserRegisztracioServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Regisztráció");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
@@ -112,7 +111,7 @@ public class UserRegisztracioServerResource extends ServerResource implements
 		
 		// Mentes
 		try {
-			Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+			Datastore datastore = MongoUtils.getDatastore();
 			datastore.save(ho);
 			
 			message = "Köszönjük, hogy regisztráltál nálunk!";
@@ -153,7 +152,7 @@ public class UserRegisztracioServerResource extends ServerResource implements
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Regisztráció");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("uzenet", message);

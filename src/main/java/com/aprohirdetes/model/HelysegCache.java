@@ -7,10 +7,8 @@ import java.util.Random;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 
-import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class HelysegCache {
@@ -27,7 +25,7 @@ public class HelysegCache {
 	}
 	
 	public static void loadCache() {
-		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Datastore datastore = MongoUtils.getDatastore();
 		Query<Helyseg> query = datastore.createQuery(Helyseg.class).order("sorrend");
 		
 		for(Helyseg level1 : query.asList()) {

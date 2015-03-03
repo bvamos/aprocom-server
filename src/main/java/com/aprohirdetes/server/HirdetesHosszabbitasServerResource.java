@@ -78,7 +78,7 @@ public class HirdetesHosszabbitasServerResource extends ServerResource implement
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés meghosszabbítása");
 		appDataModel.put("description", "Hamarosan lejáró apróhirdetés meghosszabbítása 30 nappal. A hirdetéseket bármikor meghosszabbíthatod, hogy ne törlodjön az Apróhirdetés.com-ról.");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);

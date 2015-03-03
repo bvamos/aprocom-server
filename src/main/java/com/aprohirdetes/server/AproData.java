@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
-import org.mongodb.morphia.Morphia;
-
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
@@ -398,14 +396,13 @@ public class AproData {
 	}
 
 	public static void main(String[] args) {
-		AproApplication.APP_CONFIG.put("DB.MONGO.DB", "aprocom");
+		AproConfig.APP_CONFIG.put("DB.MONGO.DB", "aprocom");
 		
 		KategoriaCache.loadCache();
 		HelysegCache.loadCache();
 		setRandomData();
 		
-		Datastore datastore = new Morphia().createDatastore(
-				MongoUtils.getMongo(), "aprocom");
+		Datastore datastore = MongoUtils.getDatastore();
 
 		for(int i=0; i<10000; i++) {
 			Hirdetes hi = new Hirdetes();

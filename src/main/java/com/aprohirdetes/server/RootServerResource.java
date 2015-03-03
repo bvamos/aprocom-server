@@ -50,7 +50,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 	}
 
 	public String representText() throws UnknownHostException {
-		Datastore ds = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Datastore ds = MongoUtils.getDatastore();
 		
 		//Query<Kategoria> query = ds.createQuery(Kategoria.class).filter("sorrend", 9);
 		Query<Kategoria> query = ds.createQuery(Kategoria.class).filter("szuloId", null);
@@ -63,7 +63,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 	public Representation representJson() throws UnknownHostException {
 		Representation rep = null;
 		
-		Datastore ds = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Datastore ds = MongoUtils.getDatastore();
 		
 		Query<Kategoria> query = ds.createQuery(Kategoria.class).filter("szuloId != ", null).order("sorrend");
 		
@@ -97,7 +97,7 @@ public class RootServerResource extends ServerResource implements RootResource {
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Képes apróhirdetések ingyen");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("kategoriaList", kategoriaList);

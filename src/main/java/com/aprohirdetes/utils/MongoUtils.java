@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
-import com.aprohirdetes.server.AproApplication;
+import com.aprohirdetes.server.AproConfig;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 
@@ -22,14 +22,14 @@ public class MongoUtils {
 
 			int port = 27017;
 			try {
-				port = Integer.parseInt(AproApplication.APP_CONFIG
+				port = Integer.parseInt(AproConfig.APP_CONFIG
 						.getProperty("DB.MONGO.PORT"));
 			} catch (NumberFormatException nfe) {
 			}
 
 			try {
 				MONGO_CLIENT = new MongoClient(
-						AproApplication.APP_CONFIG.getProperty("DB.MONGO.HOST"),
+						AproConfig.APP_CONFIG.getProperty("DB.MONGO.HOST"),
 						port);
 			} catch (UnknownHostException uhe) {
 				uhe.printStackTrace();
@@ -55,14 +55,14 @@ public class MongoUtils {
 
 			int port = 27017;
 			try {
-				port = Integer.parseInt(AproApplication.APP_CONFIG
+				port = Integer.parseInt(AproConfig.APP_CONFIG
 						.getProperty("DB.MONGO.PORT"));
 			} catch (NumberFormatException nfe) {
 			}
 
 			try {
 				MONGO_CLIENT = new MongoClient(
-						AproApplication.APP_CONFIG.getProperty("DB.MONGO.HOST"),
+						AproConfig.APP_CONFIG.getProperty("DB.MONGO.HOST"),
 						port);
 			} catch (UnknownHostException uhe) {
 				uhe.printStackTrace();
@@ -74,7 +74,7 @@ public class MongoUtils {
 
 		}
 
-		db = MONGO_CLIENT.getDB(AproApplication.APP_CONFIG
+		db = MONGO_CLIENT.getDB(AproConfig.APP_CONFIG
 				.getProperty("DB.MONGO.DB"));
 
 		return db;
@@ -88,6 +88,6 @@ public class MongoUtils {
 	}
 	
 	public static Datastore getDatastore() {
-		return new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		return new Morphia().createDatastore(MongoUtils.getMongo(), AproConfig.APP_CONFIG.getProperty("DB.MONGO.DB"));
 	}
 }

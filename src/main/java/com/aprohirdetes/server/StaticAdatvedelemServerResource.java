@@ -56,7 +56,7 @@ public class StaticAdatvedelemServerResource extends ServerResource implements S
 		appDataModel.put("description", "Az Apróhirdetés.com adatkezelési szabályzata");
 		appDataModel.put("keywords", "adatkezelés, szabályzat, adatvédelem");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));

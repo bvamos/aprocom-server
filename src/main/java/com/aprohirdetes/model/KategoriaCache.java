@@ -7,10 +7,8 @@ import java.util.Random;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 
-import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class KategoriaCache {
@@ -33,7 +31,7 @@ public class KategoriaCache {
 		CACHE_BY_ID.clear();
 		CACHE_BY_URLNEV.clear();
 		
-		Datastore datastore = new Morphia().createDatastore(MongoUtils.getMongo(), AproApplication.APP_CONFIG.getProperty("DB.MONGO.DB"));
+		Datastore datastore = MongoUtils.getDatastore();
 		Query<Kategoria> query = datastore.createQuery(Kategoria.class).order("sorrend");
 		
 		for(Kategoria level1 : query.asList()) {

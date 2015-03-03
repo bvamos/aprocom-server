@@ -10,8 +10,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
@@ -19,13 +17,10 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.AktivalasResource;
-import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
-import com.aprohirdetes.utils.MongoUtils;
-
 import freemarker.template.Template;
 
 public class HirdetesTorlesServerResource extends ServerResource implements
@@ -66,7 +61,7 @@ public class HirdetesTorlesServerResource extends ServerResource implements
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés törlése");
 		appDataModel.put("description", "Apróhirdetés törlése. Az apróhirdetés törléséhez be kell jelentkezned. Ha nem vagy regisztrált felhasználó, meg kell várnod, amíg a hirdetés lejár.");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
-		appDataModel.put("version", AproApplication.PACKAGE_CONFIG.getProperty("version"));
+		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
 		
