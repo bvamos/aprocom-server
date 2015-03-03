@@ -46,14 +46,6 @@ public class StaticKapcsolatServerResource extends ServerResource implements For
 	}
 	
 	public Representation representHtml() {
-		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
-		for(Kategoria o : kategoriaList) {
-			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
-			o.setAlkategoriaList(alkategoriak);
-		}
-		
-		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
-		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
@@ -65,8 +57,8 @@ public class StaticKapcsolatServerResource extends ServerResource implements For
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
-		dataModel.put("kategoriaList", kategoriaList);
-		dataModel.put("helysegList", helysegList);
+		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
+		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");

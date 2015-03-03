@@ -253,15 +253,6 @@ public class KeresesServerResource extends ServerResource implements
 			}
 		}
 		
-		// Legordulokhoz adatok feltoltese
-		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
-		for(Kategoria o : kategoriaList) {
-			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
-			o.setAlkategoriaList(alkategoriak);
-		}
-		
-		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
-		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
@@ -278,8 +269,8 @@ public class KeresesServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
-		dataModel.put("kategoriaList", kategoriaList);
-		dataModel.put("helysegList", helysegList);
+		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
+		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("hirdetesList", hirdetesList);
 		dataModel.put("hirdetesTipus", this.hirdetesTipus);
 		dataModel.put("hirdetesKategoria", selectedKategoriaUrlNevList);

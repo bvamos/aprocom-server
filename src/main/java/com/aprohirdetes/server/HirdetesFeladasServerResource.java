@@ -82,15 +82,6 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 	@Override
 	public Representation representHtml() throws IOException {
 		
-		// Legordulokhoz adatok feltoltese
-		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
-		for(Kategoria o : kategoriaList) {
-			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
-			o.setAlkategoriaList(alkategoriak);
-		}
-		
-		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
-		
 		// Kepek
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<HirdetesKep> query = datastore.createQuery(HirdetesKep.class);
@@ -105,7 +96,6 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
-		// TODO: Servlet context
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Ingyenes apróhirdetés feladása");
 		appDataModel.put("description", "Új, ingyenes apróhirdetés feladása képekkel, akár regisztráció nélkül!");
@@ -114,8 +104,8 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
-		dataModel.put("kategoriaList", kategoriaList);
-		dataModel.put("helysegList", helysegList);
+		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
+		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("kepMap", hirdetesKepMap);
 		
 		// Felhasznalo adatainak kitoltese az ures formon

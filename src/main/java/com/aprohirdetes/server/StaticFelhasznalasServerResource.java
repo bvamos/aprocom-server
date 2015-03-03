@@ -3,7 +3,6 @@ package com.aprohirdetes.server;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -17,10 +16,8 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.StaticHtmlResource;
-import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.HirdetesTipus;
-import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.AproUtils;
 
@@ -39,14 +36,6 @@ public class StaticFelhasznalasServerResource extends ServerResource implements 
 	}
 	
 	public Representation representHtml() {
-		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);
-		for(Kategoria o : kategoriaList) {
-			ArrayList<Kategoria> alkategoriak = KategoriaCache.getKategoriaListByParentId(o.getIdAsString());
-			o.setAlkategoriaList(alkategoriak);
-		}
-		
-		ArrayList<Helyseg> helysegList = HelysegCache.getHelysegListByParentId(null);
-		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
@@ -60,8 +49,8 @@ public class StaticFelhasznalasServerResource extends ServerResource implements 
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("session", AproUtils.getSession(this));
-		dataModel.put("kategoriaList", kategoriaList);
-		dataModel.put("helysegList", helysegList);
+		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
+		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
