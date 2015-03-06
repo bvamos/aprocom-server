@@ -35,6 +35,7 @@ public class MailUtils {
 		String from = AproConfig.APP_CONFIG.getProperty("MAIL.FROM");
 		final String user = AproConfig.APP_CONFIG.getProperty("MAIL.USER");
 		final String pass = AproConfig.APP_CONFIG.getProperty("MAIL.PASSWORD");
+		final boolean debug = Boolean.parseBoolean(AproConfig.APP_CONFIG.getProperty("MAIL.DEBUG"));
 		
 		// From
 		if(from == null || from.isEmpty()) {
@@ -72,7 +73,7 @@ public class MailUtils {
 			session = Session.getDefaultInstance(properties);
 		}
 
-		session.setDebug(true);
+		session.setDebug(debug);
 
 		try {
 			// Create a default MimeMessage object.
