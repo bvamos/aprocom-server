@@ -93,6 +93,9 @@ public class AproApplication extends Application {
 		router.attach("/api/v1/hirdetes", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
 		router.attach("/api/v1/hirdeto/{hirdetoId}/apikeys", com.aprohirdetes.server.apiv1.RestHirdetoApiKeysServerResource.class);
 		
+		// ADMIN
+		router.attach("/ilyennincs/", com.aprohirdetes.server.admin.FooldalServerResource.class);
+		
 		// Statikus konyvtarak
 		String cssUri = "war:///css";
 		Directory cssDirectory = new Directory(getContext(), cssUri);
