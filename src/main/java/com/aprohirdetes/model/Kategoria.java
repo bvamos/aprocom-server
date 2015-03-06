@@ -23,20 +23,19 @@ public class Kategoria {
 	
 	private int hirdetesekSzama = 0;
 	
-	private int regiId;
-	
 	public Kategoria() {
-		setRegiId(-1);
 	}
 	
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(urlNev);
+		sb.append("(" + getHirdetesekSzama() + ")");
 		
-		sb.append("{");
+		sb.append(" {");
 		for(Kategoria ak : getAlkategoriaList()) {
 			sb.append(ak.getUrlNev());
+			sb.append("(" + ak.getHirdetesekSzama() + ") ");
 		}
 		sb.append("} ");
 		
@@ -95,11 +94,4 @@ public class Kategoria {
 		this.hirdetesekSzama = hirdetesekSzama;
 	}
 
-	public int getRegiId() {
-		return regiId;
-	}
-
-	public void setRegiId(int regiId) {
-		this.regiId = regiId;
-	}
 }

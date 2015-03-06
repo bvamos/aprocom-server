@@ -21,10 +21,7 @@ public class Helyseg {
 	
 	@NotSaved private List<Helyseg> alhelysegList = new LinkedList<Helyseg>();
 	
-	private int regiId;
-
 	public Helyseg() {
-		setRegiId(-1);
 	}
 	
 	@Override
@@ -71,13 +68,5 @@ public class Helyseg {
 	
 	public void setAlhelysegList(List<Helyseg> list) {
 		this.alhelysegList = list;
-	}
-
-	public int getRegiId() {
-		return regiId;
-	}
-
-	public void setRegiId(int regiId) {
-		this.regiId = regiId;
 	}
 }
