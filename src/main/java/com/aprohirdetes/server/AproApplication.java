@@ -16,6 +16,7 @@ import org.restlet.data.Protocol;
 import org.restlet.data.Status;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
+import org.restlet.service.TaskService;
 
 import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.HelysegCache;
@@ -31,6 +32,7 @@ import freemarker.template.DefaultObjectWrapper;
 public class AproApplication extends Application {
 
 	public static Configuration TPL_CONFIG;
+	public static TaskService taskService = null;
 	
 	public AproApplication() {
 		getLogger().info("Initializing application...");
@@ -39,7 +41,6 @@ public class AproApplication extends Application {
 		setDescription("Apróhirdetés.com - Ingyenes apróhirdető portál");
 		setOwner("Vámos Balázs");
 		setAuthor("Vámos Balázs");
-		
 	}
 
 	@Override
@@ -238,11 +239,13 @@ public class AproApplication extends Application {
 		getLogger().info("Loading AttributumCache");
 		AttributumCache.loadAttributumCache();
 		
+		if(taskService == null) taskService = new TaskService(true, 2);
+		
 		// Hirdetesek szamanak szamolasa idozitve a hatterben
-		getTaskService().scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
+		taskService.scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
 		
 		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
-		getTaskService().scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
+		taskService.scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
 		
 		// Tokenizer inicializacio
 		ResourceHolder.initHunSplitter();
