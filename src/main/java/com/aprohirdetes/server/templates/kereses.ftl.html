@@ -170,6 +170,25 @@
 						</ul>
 					</div>
 				</div>
+			    <script type="text/javascript">
+				$('#keresesSorrendSelect').change(function(){
+					window.s = this.value;
+					window.p = 1;
+					$('#btnKereses').click();
+				});
+	
+				$('#elozoBtn').click(function(){
+					if(window.p>1) {
+						window.p--;
+						$('#btnKereses').click();
+					}
+				});
+				
+				$('#kovetkezoBtn').click(function(){
+					window.p++;
+					$('#btnKereses').click();
+				});
+			    </script>
 				</#if>
 				</#if>
 <#include "page_footer.ftl.html"/>

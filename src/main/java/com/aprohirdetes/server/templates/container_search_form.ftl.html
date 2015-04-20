@@ -73,12 +73,25 @@
 					
 				</form>
 			</div>
-			<script>
+			<script type="text/javascript">
 			$('#hirdetesKulcsszo').keypress(function(event) {
 		        if (event.keyCode == 13) {
 		        	$('#btnKereses').click();
 		        }
 		    });
+			//$('#hirdetesKulcsszo').autocomplete({ source: "/api/v1/kulcsszoLista"});
+						
+			$('#hirdetesTipus').change(function(){
+				$('#btnKereses').click();
+			});
+			
+			$('#hirdetesKategoria').change(function(){
+				$('#btnKereses').click();
+			});
+			
+			$('#hirdetesHelyseg').change(function(){
+				$('#btnKereses').click();
+			});
 			
 			$('#panelBovitettKereses').hide();
 			$('#btnBovitettKereses').click(function(){

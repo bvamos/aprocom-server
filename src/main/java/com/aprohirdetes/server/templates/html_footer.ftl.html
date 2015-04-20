@@ -1,69 +1,7 @@
-    <script src="${app.contextRoot}/js/bootstrap.min.js"></script>
-	
-	<script src="${app.contextRoot}/js/vendor/jquery.ui.widget.js"></script>
-	<script src="${app.contextRoot}/js/jquery.iframe-transport.js"></script>
-	<script src="${app.contextRoot}/js/jquery.fileupload.js"></script>
-	
     <script type="text/javascript">
     // $('#hirdetesCim').tooltip();
     
-	$(function () {
-	    $('#fileupload').fileupload({
-	        dataType: 'json',
-	        singleFileUploads: false,
-	        /*add: function (e, data) {
-	        	$('#progress .bar').css('width', '0%');
-	        },*/
-	        done: function (e, data) {
-	        	$.each(data.result.files, function (index, file) {
-	               $('#hirdetesKep' + file.sorszam).attr('src', file.url);
-	               $('#uploadMessage').value = 'A kep sikeresen feltöltődött: ' + file.eredetiFileNev;
-	            });
-	        },
-	    	progressall: function (e, data) {
-		        var progress = parseInt(data.loaded / data.total * 100, 10);
-		        $('#progress .progress-bar').css(
-		            'width',
-		            progress + '%'
-		        );
-		    }
-	    });
-	});
-	
-	$('#signinEmail').keypress(function(event) {
-        if (event.keyCode == 13) {
-        	$('#signinPassword').focus();
-        }
-    });
-	
-	$('#signinPassword').keypress(function(event) {
-        if (event.keyCode == 13) {
-        	$('#belepesButton').click();
-        }
-    });
-	
-	$('#belepesButton').click(function(){
-		var data = new Object();
-		data.felhasznaloNev = $('#signinEmail').val();
-		data.jelszo = $('#signinPassword').val();
-		
-		$.ajax({
-	        type: "POST",
-	        url: "${app.contextRoot}/api/v1/session/belepes",
-	        data: JSON.stringify(data),
-	        contentType: "application/json; charset=utf-8",
-	        dataType: "json"
-		}).done(function(data){
-        	window.location = '${app.contextRoot}/';
-        }).fail(function(jqXHR, textStatus) {
-            alert("Hibás felhasználónév vagy jelszó!");
-        });
-	});
-	
-	$('#belepesLink').on("click", function(){
-		$('#belepesButton').click();
-	});
-	
+    <#if session?has_content >
 	$('#kilepesLink').on("click", function(){
 		var data = new Object();
 		data.felhasznaloNev = '${(session.felhasznaloNev)!""}';
@@ -80,42 +18,7 @@
             alert("Hiba történt a kilépés közben: " + textStatus);
         });
 	});
-	
-	$('#hirdetesKategoria').change(function(){
-		var kategoria = $('#hirdetesKategoria').val();
-		if(kategoria.length==0) return;
-		
-		$.get("${app.contextRoot}/api/v1/kategoriaAttributum/" + kategoria,
-			function(data){
-				if(data) {
-        			$('#attributumWrapper').html(data);
-				} else {
-					$('#attributumWrapper').html('<div class="alert alert-info">Ehhez a kategóriához nem tartoznak egyéb mezők.</div>');
-				}
-        	}
-		).fail(function() {
-			alert('Hiba az egyéb mezők betöltése közben.');
-		});
-	});
-	
-	
-	$('#keresesSorrendSelect').change(function(){
-		window.s = this.value;
-		window.p = 1;
-		$('#btnKereses').click();
-	});
-
-	$('#elozoBtn').click(function(){
-		if(window.p>1) {
-			window.p--;
-			$('#btnKereses').click();
-		}
-	});
-	
-	$('#kovetkezoBtn').click(function(){
-		window.p++;
-		$('#btnKereses').click();
-	});
+	</#if>
     </script>
     <script type="text/javascript">
 	window.___gcfg = {lang: 'hu'};

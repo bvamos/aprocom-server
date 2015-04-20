@@ -43,6 +43,25 @@
 			</ul></p>
 			
 		</div>
+	    <script type="text/javascript">
+		$('#belepesButton').click(function(){
+			var data = new Object();
+			data.felhasznaloNev = $('#signinEmail').val();
+			data.jelszo = $('#signinPassword').val();
+			
+			$.ajax({
+		        type: "POST",
+		        url: "${app.contextRoot}/api/v1/session/belepes",
+		        data: JSON.stringify(data),
+		        contentType: "application/json; charset=utf-8",
+		        dataType: "json"
+			}).done(function(data){
+	        	window.location = '${app.contextRoot}/';
+	        }).fail(function(jqXHR, textStatus) {
+	            alert("Hibás felhasználónév vagy jelszó!");
+	        });
+		});
+	    </script>
 <#include "page_footer.ftl.html"/>
 	</div>
 <#include "html_footer.ftl.html"/>
