@@ -20,7 +20,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.HirdetesResource;
+import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.Attributum;
 import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.Helyseg;
@@ -36,7 +36,7 @@ import com.aprohirdetes.utils.MongoUtils;
 import freemarker.template.Template;
 
 public class HirdetesNyomtatasServerResource extends ServerResource implements
-		HirdetesResource {
+		StaticHtmlResource {
 
 	private String contextPath = "";
 	/**

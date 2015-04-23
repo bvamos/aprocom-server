@@ -13,7 +13,7 @@ import com.aprohirdetes.model.KategoriaCache;
 
 public class SitemapServerResource extends ServerResource implements StaticXmlResource {
 
-	public Representation representHtml() {
+	public Representation representXml() {
 		String sitemap;
 		
 		String lastModDate = "2014-07-28";

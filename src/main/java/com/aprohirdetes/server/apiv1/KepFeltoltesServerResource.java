@@ -23,13 +23,13 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.APIKepFeltoltesResource;
+import com.aprohirdetes.common.APIFormResource;
 import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.server.AproConfig;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class KepFeltoltesServerResource extends ServerResource implements
-		APIKepFeltoltesResource {
+		APIFormResource {
 
 	private String contextPath = "";
 	private ObjectId hirdetesId = null;

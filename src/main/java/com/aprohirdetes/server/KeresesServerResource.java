@@ -21,7 +21,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.KeresesResource;
+import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
@@ -35,7 +35,7 @@ import com.aprohirdetes.utils.MongoUtils;
 import freemarker.template.Template;
 
 public class KeresesServerResource extends ServerResource implements
-		KeresesResource {
+		StaticHtmlResource {
 
 	private String contextPath = "";
 	private String hirdetesTipusString = "kinal";

@@ -19,7 +19,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.RegisztracioResource;
+import com.aprohirdetes.common.FormResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.HirdetoHelper;
@@ -32,7 +32,7 @@ import com.mongodb.MongoException;
 import freemarker.template.Template;
 
 public class UserAdatlapServerResource extends ServerResource implements
-		RegisztracioResource {
+		FormResource {
 
 	private String contextPath = "";
 	private Session session = null;

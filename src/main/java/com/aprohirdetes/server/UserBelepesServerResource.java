@@ -19,7 +19,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.BelepesResource;
+import com.aprohirdetes.common.FormResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Session;
@@ -30,7 +30,7 @@ import com.aprohirdetes.utils.MongoUtils;
 import freemarker.template.Template;
 
 public class UserBelepesServerResource extends ServerResource implements
-		BelepesResource {
+		FormResource {
 
 	private String contextPath = "";
 	private Session session = null;

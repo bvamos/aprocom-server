@@ -1,5 +1,6 @@
 package com.aprohirdetes.server.apiv1;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,14 +18,14 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.APISessionBelepesResource;
+import com.aprohirdetes.common.APIRestResource;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class SessionBelepesServerResource extends ServerResource implements
-		APISessionBelepesResource {
+		APIRestResource {
 
 	private String sessionId;
 	private String felhasznaloNev;
@@ -39,7 +40,8 @@ public class SessionBelepesServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 	}
 
-	public Representation accept(JsonRepresentation entity) throws Exception {
+	@Override
+	public Representation acceptJson(JsonRepresentation entity) throws Exception {
 		Representation rep = null;
 		if (entity != null) {
 			JSONObject requestJson = entity.getJsonObject();
@@ -99,4 +101,11 @@ public class SessionBelepesServerResource extends ServerResource implements
 
 		return rep;
 	}
+
+	@Override
+	public Representation representJson() throws IOException {
+		getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
+	}
+	
 }

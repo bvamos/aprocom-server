@@ -1,5 +1,6 @@
 package com.aprohirdetes.server.apiv1;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +16,10 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.APISessionKilepesResource;
+import com.aprohirdetes.common.APIRestResource;
 
 public class SessionKilepesServerResource extends ServerResource implements
-		APISessionKilepesResource {
+		APIRestResource {
 
 	private String sessionId;
 	private String felhasznaloNev;
@@ -39,7 +40,8 @@ public class SessionKilepesServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 	}
 
-	public Representation accept(JsonRepresentation entity) throws Exception {
+	@Override
+	public Representation acceptJson(JsonRepresentation entity) throws Exception {
 		Representation rep = null;
 		if (entity != null) {
 			JSONObject requestJson = entity.getJsonObject();
@@ -79,5 +81,11 @@ public class SessionKilepesServerResource extends ServerResource implements
 		}
 
 		return rep;
+	}
+
+	@Override
+	public Representation representJson() throws IOException {
+		getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
 	}
 }

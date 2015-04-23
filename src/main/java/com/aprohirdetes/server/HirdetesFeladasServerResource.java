@@ -65,10 +65,10 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		Cookie sessionCookie = getRequest().getCookies().getFirst("AproFeladasSession");
 		if(sessionCookie != null) {
 			hirdetesId = new ObjectId(sessionCookie.getValue());
-			System.out.println("Feladas Session cookie letezik: " + sessionCookie.getValue());
+			getLogger().info("Feladas Session cookie letezik: " + hirdetesId + "; " + new Date(hirdetesId.getTime()).toString());
 			long currentDate = new Date().getTime();
 			if(hirdetesId.getTime()<currentDate-3600000) {
-				System.out.println("Feladas Session cookie tul regi: " + sessionCookie.getValue());
+				getLogger().warning("Feladas Session cookie tul regi: " + hirdetesId + "; " + hirdetesId.getTime());
 				hirdetesId = new ObjectId();
 			}
 		}
@@ -119,7 +119,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 
 		// Cookie a feladashoz, ez tarolja a session id-t, amivel a kepek feltolteset megoldjuk
 		if(hirdetesId == null) {
-			System.out.println("Uj Feladas Session cookie generalasa");
+			getLogger().info("Uj Feladas Session cookie generalasa");
 			hirdetesId = new ObjectId();
 			
 			CookieSetting cookieSetting = new CookieSetting("AproFeladasSession", hirdetesId.toString());

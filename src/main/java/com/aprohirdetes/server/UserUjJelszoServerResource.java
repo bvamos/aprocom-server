@@ -21,7 +21,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.UjJelszoResource;
+import com.aprohirdetes.common.FormResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.utils.AproUtils;
@@ -32,7 +32,7 @@ import com.aprohirdetes.utils.PasswordHash;
 import freemarker.template.Template;
 
 public class UserUjJelszoServerResource extends ServerResource implements
-		UjJelszoResource {
+		FormResource {
 
 	private String contextPath = "";
 	private Hirdeto hirdeto = null;

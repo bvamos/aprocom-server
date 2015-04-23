@@ -18,7 +18,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.HirdetesResource;
+import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.KategoriaCache;
@@ -29,7 +29,7 @@ import com.aprohirdetes.utils.MongoUtils;
 import freemarker.template.Template;
 
 public class UserHirdeteseimServerResource extends ServerResource implements
-		HirdetesResource {
+		StaticHtmlResource {
 
 	private String contextPath = "";
 	private Session session = null;

@@ -1,11 +1,13 @@
 package com.aprohirdetes.common;
 
+import java.io.IOException;
+
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 
 public interface StaticXmlResource {
 
-	@Get("html")
-	public Representation representHtml();
+	@Get("xml")
+	public Representation representXml() throws IOException;
 	
 }

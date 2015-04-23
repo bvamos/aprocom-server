@@ -1,5 +1,6 @@
 package com.aprohirdetes.server.apiv1;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +46,12 @@ public class RestHirdetesekServerResource extends ServerResource implements APIR
 		}
 		
 		return rep;
+	}
+
+	@Override
+	public Representation representJson() throws IOException {
+		setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
 	}
 
 }

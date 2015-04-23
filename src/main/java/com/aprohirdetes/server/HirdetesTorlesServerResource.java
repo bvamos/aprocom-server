@@ -16,15 +16,16 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.AktivalasResource;
+import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
+
 import freemarker.template.Template;
 
 public class HirdetesTorlesServerResource extends ServerResource implements
-		AktivalasResource {
+	StaticHtmlResource {
 
 	private String contextPath = "";
 	private ObjectId hirdetesId = null;

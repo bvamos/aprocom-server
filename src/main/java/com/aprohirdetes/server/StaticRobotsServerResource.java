@@ -5,11 +5,11 @@ import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.StaticHtmlResource;
+import com.aprohirdetes.common.StaticTxtResource;
 
-public class StaticRobotsServerResource extends ServerResource implements StaticHtmlResource {
+public class StaticRobotsServerResource extends ServerResource implements StaticTxtResource {
 
-	public Representation representHtml() {
+	public Representation representTxt() {
 		String sitemap = "User-agent: *\n"
 				+ "Disallow:\n";
 		

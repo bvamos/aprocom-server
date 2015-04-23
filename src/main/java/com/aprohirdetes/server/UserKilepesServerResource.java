@@ -17,7 +17,7 @@ import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import com.aprohirdetes.common.KilepesResource;
+import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.utils.AproUtils;
@@ -26,7 +26,7 @@ import com.aprohirdetes.utils.MongoUtils;
 import freemarker.template.Template;
 
 public class UserKilepesServerResource extends ServerResource implements
-		KilepesResource {
+		StaticHtmlResource {
 
 	private String contextPath = "";
 	private Session session = null;

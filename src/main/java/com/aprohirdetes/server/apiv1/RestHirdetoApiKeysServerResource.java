@@ -1,5 +1,6 @@
 package com.aprohirdetes.server.apiv1;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -8,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
+import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
@@ -46,6 +48,12 @@ public class RestHirdetoApiKeysServerResource extends ServerResource implements 
 		
 		rep = new JsonRepresentation(repData);	
 		return rep;
+	}
+
+	@Override
+	public Representation representJson() throws IOException {
+		setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
 	}
 
 }
