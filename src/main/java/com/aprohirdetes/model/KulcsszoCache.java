@@ -23,11 +23,12 @@ public class KulcsszoCache {
 		return CACHE_BY_KULCSSZO;
 	}
 
-	public static void loadCache() {
-		// Kiuritjuk a cache-t
-		System.out.println("KulcsszoCache torles");
+	public static void clearCache() {
 		CACHE_BY_KULCSSZO.clear();
-		System.out.println("KulcsszoCache torolve");
+	}
+	
+	public static void loadCache() {
+		clearCache();
 		
 		// Vegig megyunk a Hirdeteseken, kiszedjuk a kulcsszavakat
 		System.out.println("KulcsszoCache feltoltes");
@@ -66,5 +67,27 @@ public class KulcsszoCache {
 		for(String kulcsszo : CACHE_BY_KULCSSZO.keySet()) {
 			System.out.println(kulcsszo + ": " + CACHE_BY_KULCSSZO.get(kulcsszo));
 		}
+	}
+	
+	/**
+	 * Visszadja a prefix-szel kezdodo kulcsszavak listajat a cache-bol
+	 * @param prefix Csak a prefix-szel kezdodo kulcsszavakat adjuk vissza. Lehet üres!
+	 * @param limit Max ennyi eredmenyt adunk vissza
+	 * @return
+	 */
+	public static Map<String, Object> getCacheByPrefix(String prefix, int limit) {
+		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+		
+		int n = 0;
+		for(String kulcsszo : CACHE_BY_KULCSSZO.keySet()) {
+			if(n==limit) break;
+			if(prefix==null || prefix.isEmpty() || kulcsszo.startsWith(prefix)) {
+				System.out.println(kulcsszo);
+				map.put(kulcsszo, CACHE_BY_KULCSSZO.get(kulcsszo));
+			}
+			n++;
+		}
+		
+		return map;
 	}
 }
