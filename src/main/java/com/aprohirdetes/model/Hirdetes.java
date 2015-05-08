@@ -12,6 +12,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.NotSaved;
 
+import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.utils.IndexUtils;
 
 @Entity("hirdetes")
@@ -293,5 +294,15 @@ public class Hirdetes {
 	public void tokenize() {
 		this.kulcsszavak.clear();
 		this.kulcsszavak.addAll(IndexUtils.tokenizeMagyarlanc(this.cim + ". " + this.szoveg));
+	}
+	
+	/**
+	 * Hirdetes objektum adattartalmanak validalasa.
+	 * @throws HirdetesValidationException
+	 */
+	public void validate() throws HirdetesValidationException {
+		if(getAr()<0) {
+			throw new HirdetesValidationException("Az Ar nem lehet nullanal kisebb.");
+		}
 	}
 }

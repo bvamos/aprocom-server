@@ -7,6 +7,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
+import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class HirdetesHelper {
@@ -36,5 +37,16 @@ public class HirdetesHelper {
 		query.criteria("id").equal(hirdetesId);
 		UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("torolve", true).set("torolveDatum", new Date());
 		datastore.update(query, ops);
+	}
+	
+	/**
+	 * A Hirdetes tartalmanak validacioja az egesz adatbazist felhasznalva.
+	 * Pl.: Van-e ugyanilyen feladoval es ugyanilyen Cimsorral mar hirdetes az adatbazisban...
+	 * @param hirdetesId A Hirdetes azonositoja
+	 * @throws HirdetesValidationException
+	 * @see Hirdetes.validate()
+	 */
+	public static void validate(ObjectId hirdetesId) throws HirdetesValidationException {
+		
 	}
 }

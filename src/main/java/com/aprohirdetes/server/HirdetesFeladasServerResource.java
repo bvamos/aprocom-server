@@ -28,6 +28,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.FormResource;
+import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.model.Attributum;
 import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.AttributumTipus;
@@ -107,6 +108,8 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
 		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("kepMap", hirdetesKepMap);
+		dataModel.put("hirdetesHelyseg", "magyarorszag");
+		dataModel.put("hirdetesKategoria", "bazar");
 		
 		// Felhasznalo adatainak kitoltese az ures formon
 		if(this.session != null) {
@@ -142,98 +145,101 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("feladas_eredmeny.ftl.html");
 		String uzenet = "";
 		String hibaUzenet = "";
-		boolean validated = true;
+		String hirdetesKategoria = form.getFirstValue("hirdetesKategoria");
+		String hirdetesHelyseg = form.getFirstValue("hirdetesHelyseg");
+		String egyebAttributumokHtml = AproUtils.getAttributumHtmlByKategoria(hirdetesKategoria);
 		
-		// Validacio
-		
-		if(this.session == null) {
-			// Csak akkor foglalkozunk a jelszoval, ha nincs belepett felhasznalo 
-			if(!form.getFirstValue("hirdetoJelszo").equals(form.getFirstValue("hirdetoJelszo2"))) {
-				hibaUzenet = "A két jelszó nem egyforma";
-				validated = false;
-			}
-		}
-		
-		if(!"true".equals(form.getFirstValue("feltetelek"))) {
-			hibaUzenet = "Hirdetés feladásához el kell fogadnod a Felhasználási feltételeinket!";
-			validated = false;
-		}
-		
-		// Model
 		Hirdetes hi = new Hirdetes();
-		hi.setId(hirdetesId);
+		
 		try {
-			hi.setTipus(Integer.parseInt(form.getFirstValue("hirdetesTipus", "2")));
-		} catch (NumberFormatException nfe) {
-			hi.setTipus(2);
-		}
-		hi.setCim(form.getFirstValue("hirdetesCim"));
-		hi.setKategoriaId(KategoriaCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesKategoria")).getId());
-		hi.setHelysegId(HelysegCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesHelyseg")).getId());
-		hi.setSzoveg(form.getFirstValue("hirdetesSzoveg"));
-		hi.setEgyebInfo(form.getFirstValue("hirdetesEgyebInfo"));
-		try {
-			hi.setAr(Integer.parseInt(form.getFirstValue("hirdetesAr", "0")));
-		} catch (NumberFormatException nfe) {
-			hi.setAr(0);
-		}
-		hi.setLejar(30);
-		
-		// Kulcsszavak kigyujtese
-		hi.tokenize();
-		
-		Hirdeto ho = new Hirdeto();
-		if(this.session != null) {
-			// Van belepett felhasznalo, az ID-t elmentjuk
-			hi.setHirdetoId(this.session.getHirdetoId());
-			// Regisztralt felhasznalonak nem kell hitelesites emailben
-			hi.setHitelesitve(true);
-		}
-		ho.setNev(form.getFirstValue("hirdetoNev"));
-		ho.setEmail(form.getFirstValue("hirdetoEmail"));
-		ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
-		ho.setOrszag(form.getFirstValue("hirdetoOrszag"));
-		ho.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
-		ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
-		ho.setCim(form.getFirstValue("hirdetoCim"));
-		
-		if(this.session == null) {
+			
+			// Model
+			hi.setId(hirdetesId);
 			try {
-				ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidKeySpecException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				hi.setTipus(Integer.parseInt(form.getFirstValue("hirdetesTipus", "2")));
+			} catch (NumberFormatException nfe) {
+				hi.setTipus(2);
 			}
-		}
-		
-		hi.setHirdeto(ho);
-		
-		// Attributumok
-		LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(form.getFirstValue("hirdetesKategoria"));
-		if(attributumList != null) {
-			for(Attributum attr : attributumList) {
-				//System.out.println(attr.getNev() + "=" + form.getFirstValue(attr.getNev()));
-				if(form.getFirstValue(attr.getNev()) != null && !form.getFirstValue(attr.getNev()).isEmpty()) {
-					if(attr.getTipus() == AttributumTipus.YESNO) {
-						hi.getAttributumok().put(attr.getNev(), Boolean.parseBoolean(form.getFirstValue(attr.getNev())));
-					} else if(attr.getTipus() == AttributumTipus.NUMBER) {
-						try {
-							hi.getAttributumok().put(attr.getNev(), Integer.parseInt(form.getFirstValue(attr.getNev())));
-						} catch (NumberFormatException nfe) {
-							getLogger().warning("Nem sikerult a szamot atkonvertalni. " + attr.getNev() + "=" + form.getFirstValue(attr.getNev()));
+			hi.setCim(form.getFirstValue("hirdetesCim"));
+			hi.setKategoriaId(KategoriaCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesKategoria")).getId());
+			hi.setHelysegId(HelysegCache.getCacheByUrlNev().get(form.getFirstValue("hirdetesHelyseg")).getId());
+			hi.setSzoveg(form.getFirstValue("hirdetesSzoveg"));
+			hi.setEgyebInfo(form.getFirstValue("hirdetesEgyebInfo"));
+			try {
+				hi.setAr(Integer.parseInt(form.getFirstValue("hirdetesAr", "0")));
+			} catch (NumberFormatException nfe) {
+				hi.setAr(0);
+			}
+			hi.setLejar(30);
+			
+			// Kulcsszavak kigyujtese
+			hi.tokenize();
+			
+			Hirdeto ho = new Hirdeto();
+			if(this.session != null) {
+				// Van belepett felhasznalo, az ID-t elmentjuk
+				hi.setHirdetoId(this.session.getHirdetoId());
+				// Regisztralt felhasznalonak nem kell hitelesites emailben
+				hi.setHitelesitve(true);
+			}
+			ho.setNev(form.getFirstValue("hirdetoNev"));
+			ho.setEmail(form.getFirstValue("hirdetoEmail"));
+			ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
+			ho.setOrszag(form.getFirstValue("hirdetoOrszag"));
+			ho.setIranyitoSzam(form.getFirstValue("hirdetoIranyitoSzam"));
+			ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
+			ho.setCim(form.getFirstValue("hirdetoCim"));
+			
+			if(this.session == null) {
+				try {
+					ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			hi.setHirdeto(ho);
+			
+			// Attributumok
+			LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(form.getFirstValue("hirdetesKategoria"));
+			if(attributumList != null) {
+				for(Attributum attr : attributumList) {
+					//System.out.println(attr.getNev() + "=" + form.getFirstValue(attr.getNev()));
+					if(form.getFirstValue(attr.getNev()) != null && !form.getFirstValue(attr.getNev()).isEmpty()) {
+						if(attr.getTipus() == AttributumTipus.YESNO) {
+							hi.getAttributumok().put(attr.getNev(), Boolean.parseBoolean(form.getFirstValue(attr.getNev())));
+						} else if(attr.getTipus() == AttributumTipus.NUMBER) {
+							try {
+								hi.getAttributumok().put(attr.getNev(), Integer.parseInt(form.getFirstValue(attr.getNev())));
+							} catch (NumberFormatException nfe) {
+								getLogger().warning("Nem sikerult a szamot atkonvertalni. " + attr.getNev() + "=" + form.getFirstValue(attr.getNev()));
+							}
+						} else {
+							hi.getAttributumok().put(attr.getNev(), form.getFirstValue(attr.getNev()));
 						}
-					} else {
-						hi.getAttributumok().put(attr.getNev(), form.getFirstValue(attr.getNev()));
 					}
 				}
 			}
-		}
-		
-		// Hirdetes mentese
-		if(validated) {
+			
+			// Validacio
+			if(this.session == null) {
+				// Csak akkor foglalkozunk a jelszoval, ha nincs belepett felhasznalo 
+				if(!form.getFirstValue("hirdetoJelszo").equals(form.getFirstValue("hirdetoJelszo2"))) {
+					throw new HirdetesValidationException("A két jelszó nem egyforma");
+				}
+			}
+			
+			if(!"true".equals(form.getFirstValue("feltetelek"))) {
+				throw new HirdetesValidationException("Hirdetés feladásához el kell fogadnod a Felhasználási feltételeinket!");
+			}
+			
+			hi.validate();
+			
+			// Hirdetes mentese
 			Datastore datastore = MongoUtils.getDatastore();
 			Key<Hirdetes> id = datastore.save(hi);
 			
@@ -295,9 +301,11 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				cookieSetting.setMaxAge(0);
 				getResponse().getCookieSettings().add(cookieSetting);
 			} catch(NullPointerException npe) {
-				
+				getLogger().severe("Hiba az AproFeladasSession cookie torlese kozben: " + npe.getLocalizedMessage());
 			}
-		} else {
+		} catch(HirdetesValidationException hve) {
+			hibaUzenet = hve.getMessage();
+			getLogger().severe("Hiba a hirdetes feladas kozben. ID: " + hi.getId() + ". Hiba: " + hibaUzenet);
 			ftl = AproApplication.TPL_CONFIG.getTemplate("feladas.ftl.html");
 		}
 		
@@ -326,8 +334,9 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
-		dataModel.put("hirdetesKategoria", "ingatlan");
-		dataModel.put("hirdetesHelyseg", "magyarorszag");
+		dataModel.put("hirdetesKategoria", hirdetesKategoria);
+		dataModel.put("hirdetesHelyseg", hirdetesHelyseg);
+		dataModel.put("egyebAttributumok", egyebAttributumokHtml);
 		dataModel.put("hirdetes", hi);
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
