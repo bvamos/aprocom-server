@@ -192,8 +192,8 @@ public class KeresesServerResource extends ServerResource implements
 				// Ar szerint csokkeno: Legdragabb elol
 				query.order("-ar");
 			} else {
-				// Feladas ideje szerint csokkeno: Legujabb elol
-				query.order("-id");
+				// Utolso modositas ideje szerint csokkeno: Legutobb modositott elol
+				query.order("-modositva");
 			}
 			
 			//System.out.println(query);
