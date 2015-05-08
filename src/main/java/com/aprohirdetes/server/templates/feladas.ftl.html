@@ -35,11 +35,23 @@
 					<div class="col-sm-7">
 						<select class="form-control" id="hirdetesHelyseg" name="hirdetesHelyseg">
 							<#list helysegList as helyseg>
-							<option value="${helyseg.urlNev}">${helyseg.nev}</option>
+							<#assign selected=''>
+							<#if hirdetesHelyseg==helyseg.urlNev>
+								<#assign selected=' selected'>
+							</#if>
+							<option value="${helyseg.urlNev}"${selected}>${helyseg.nev}</option>
 								<#list helyseg.alhelysegList as alhelyseg>
-								<option value="${alhelyseg.urlNev}">&nbsp;&nbsp;${alhelyseg.nev}</option>
+								<#assign selected=''>
+								<#if hirdetesHelyseg==alhelyseg.urlNev>
+									<#assign selected=' selected'>
+								</#if>
+								<option value="${alhelyseg.urlNev}"${selected}>&nbsp;&nbsp;${alhelyseg.nev}</option>
 									<#list alhelyseg.alhelysegList as alalhelyseg>
-									<option value="${alalhelyseg.urlNev}">&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+									<#assign selected=''>
+									<#if hirdetesHelyseg==alalhelyseg.urlNev>
+										<#assign selected=' selected'>
+									</#if>
+									<option value="${alalhelyseg.urlNev}"${selected}>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
 									</#list>
 								</#list>
 							</#list>
@@ -53,9 +65,17 @@
 					<div class="col-sm-7">
 						<select class="form-control" id="hirdetesKategoria" name="hirdetesKategoria">
 							<#list kategoriaList as kategoria>
-							<option value="${kategoria.urlNev}">${kategoria.nev}</option>
+							<#assign selected=''>
+							<#if hirdetesKategoria==kategoria.urlNev>
+								<#assign selected=' selected'>
+							</#if>
+							<option value="${kategoria.urlNev}"${selected}>${kategoria.nev}</option>
 								<#list kategoria.alkategoriaList as alkategoria>
-								<option value="${alkategoria.urlNev}">&nbsp;&nbsp;${alkategoria.nev}</option>
+								<#assign selected=''>
+								<#if hirdetesKategoria==alkategoria.urlNev>
+									<#assign selected=' selected'>
+								</#if>
+								<option value="${alkategoria.urlNev}"${selected}>&nbsp;&nbsp;${alkategoria.nev}</option>
 								</#list>
 							</#list>
 						</select>
@@ -89,7 +109,11 @@
 			
 			<h3>Egyéb mezők</h3>
 			<div id="attributumWrapper">
+				<#if egyebAttributumok?? >
+				${egyebAttributumok}
+				<#else>
 				<div class="alert alert-info">Ehhez a kategóriához nem tartoznak egyéb mezők.</div>
+				</#if>
 			</div>
 			
 			<h3>Hirdető adatai</h3>
@@ -245,6 +269,7 @@
 		</div>
 	    <script type="text/javascript">
 		$('#hirdetesKategoria').change(function(){
+			$('#attributumWrapper').html('<i class="fa fa-refresh fa-spin"></i>');
 			var kategoria = $('#hirdetesKategoria').val();
 			if(kategoria.length==0) return;
 			
@@ -257,7 +282,7 @@
 					}
 	        	}
 			).fail(function() {
-				alert('Hiba az egyéb mezők betöltése közben.');
+				$('#attributumWrapper').html('<div class="alert alert-warning">Hiba az egyéb mezők betöltése közben.</div>');
 			});
 		});
 		
