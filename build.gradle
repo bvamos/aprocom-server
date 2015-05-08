@@ -38,6 +38,7 @@ war {
 	from 'web'
 	from('src/main/java/com/aprohirdetes/server/templates') {
 		include '*.html' into('WEB-INF/classes/com/aprohirdetes/server/templates')
+		include '*.ftl' into('WEB-INF/classes/com/aprohirdetes/server/templates')
 	}
 	archiveName 'aprocom-server.war'
 	manifest {
