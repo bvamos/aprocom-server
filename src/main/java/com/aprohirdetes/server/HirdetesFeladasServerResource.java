@@ -322,7 +322,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + "Hirdetés feladása");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés feladása");
 		appDataModel.put("description", "Ingyenes hirdetésfeladás, fényképpel. Cégeknek, magánszemélyeknek egyaránt ingyenes!");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
