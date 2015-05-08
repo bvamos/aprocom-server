@@ -245,6 +245,14 @@ public class Hirdetes {
 	public long getLejaratDatuma() {
 		return (lejar!=null) ? lejar.getTime() : 0;
 	}
+	
+	/**
+	 * Az utolso modositas datuma timestamp formatumban (millisecond 1970-tol)
+	 * @return
+	 */
+	public long getModositvaDatumAsLong() {
+		return (modositva!=null) ? modositva.getTime() : 0;
+	}
 
 	/**
 	 * @return the lejarErtesites
