@@ -42,11 +42,20 @@ public class HirdetesHelper {
 	/**
 	 * A Hirdetes tartalmanak validacioja az egesz adatbazist felhasznalva.
 	 * Pl.: Van-e ugyanilyen feladoval es ugyanilyen Cimsorral mar hirdetes az adatbazisban...
-	 * @param hirdetesId A Hirdetes azonositoja
+	 * @param hirdetes Hirdetes
 	 * @throws HirdetesValidationException
 	 * @see Hirdetes.validate()
 	 */
-	public static void validate(ObjectId hirdetesId) throws HirdetesValidationException {
+	public static void validate(Hirdetes hirdetes) throws HirdetesValidationException {
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("hirdeto.email").equal(hirdetes.getHirdeto().getEmail());
+		query.criteria("cim").equal(hirdetes.getCim());
+		query.criteria("torolve").equal(false);
 		
+		// TODO: Lehet, hogy a query.get() gyorsabb, mint a countAll()
+		if(query.countAll()>0) {
+			throw new HirdetesValidationException("A megadott email címmel és Rövid leírással már létezik aktív hirdetés");
+		}
 	}
 }

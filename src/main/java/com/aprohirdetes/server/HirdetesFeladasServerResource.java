@@ -35,6 +35,7 @@ import com.aprohirdetes.model.AttributumTipus;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
@@ -238,6 +239,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			}
 			
 			hi.validate();
+			HirdetesHelper.validate(hi);
 			
 			// Hirdetes mentese
 			Datastore datastore = MongoUtils.getDatastore();
