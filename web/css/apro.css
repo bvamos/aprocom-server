@@ -330,6 +330,13 @@ div.hirdetes-container img {
 	border: 1px solid #333;
 }
 
+div.hirdetes-container h3 {
+	padding: 5px;
+	color: #883E02;
+	background-color: #FCF0E6;
+	border-radius: 4px;
+}
+
 .bar {
     height: 18px;
     background: green;
