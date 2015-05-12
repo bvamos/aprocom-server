@@ -32,6 +32,7 @@ import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.model.Attributum;
 import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.AttributumTipus;
+import com.aprohirdetes.model.EsemenyHelper;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
@@ -151,6 +152,11 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		String egyebAttributumokHtml = AproUtils.getAttributumHtmlByKategoria(hirdetesKategoria);
 		
 		Hirdetes hi = new Hirdetes();
+		
+		// Automatikusan hitelesitjuk a Hirdetest, ha a szerver ugy van beallitva (fejlesztes kozben hasznos)
+		if("1".equalsIgnoreCase(AproConfig.APP_CONFIG.getProperty("AUTO_VALIDATE", "0"))) {
+			hi.setHitelesitve(true);
+		}
 		
 		try {
 			
@@ -305,10 +311,16 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			} catch(NullPointerException npe) {
 				getLogger().severe("Hiba az AproFeladasSession cookie torlese kozben: " + npe.getLocalizedMessage());
 			}
+			
+			// Esemeny lementese
+			EsemenyHelper.addHirdetesFeladasInfo(hirdetesId, null);
 		} catch(HirdetesValidationException hve) {
 			hibaUzenet = hve.getMessage();
 			getLogger().severe("Hiba a hirdetes feladas kozben. ID: " + hi.getId() + ". Hiba: " + hibaUzenet);
 			ftl = AproApplication.TPL_CONFIG.getTemplate("feladas.ftl.html");
+			
+			// Esemeny lementese
+			EsemenyHelper.addHirdetesFeladasError(hibaUzenet);
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
