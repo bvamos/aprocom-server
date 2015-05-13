@@ -25,11 +25,9 @@ import com.aprohirdetes.common.StaticXmlResource;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
-import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
-import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
@@ -61,7 +59,6 @@ public class RssServerResource extends ServerResource implements
 	private List<Helyseg> selectedHelysegList = new LinkedList<Helyseg>();
 	
 	private String kulcsszo;
-	private int sorrend;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -90,32 +87,21 @@ public class RssServerResource extends ServerResource implements
 		 * Kivalasztott kategoriak Id-jait tartalmazo lista. A kereseshez kell.
 		 */
 		ArrayList<ObjectId> selectedKategoriaIdList = new ArrayList<ObjectId>();
-		/**
-		 * Kivalasztott kategoriak UrlNeveit tartalmazo lista. A legordulo menuhoz kell, hogy be tudjuk allitani a kivalasztott elemeket.
-		 */
-		ArrayList<String> selectedKategoriaUrlNevList = new ArrayList<String>();
 		for(Kategoria kat : selectedKategoriaList) {
 			selectedKategoriaIdList.add(kat.getId());
-			selectedKategoriaUrlNevList.add(kat.getUrlNev());
 		}
 		
 		/**
 		 * Kivalasztott helysegek Id-jait tartalmazo lista. A kereseshez kell.
 		 */
 		ArrayList<ObjectId> selectedHelysegIdList = new ArrayList<ObjectId>();
-		/**
-		 * Kivalasztott helysegek UrlNeveit tartalmazo lista. A legordulo menuhoz kell, hogy be tudjuk allitani a kivalasztott elemeket.
-		 */
-		ArrayList<String> selectedHelysegUrlNevList = new ArrayList<String>();
 		for(Helyseg helyseg : selectedHelysegList) {
 			selectedHelysegIdList.add(helyseg.getId());
-			selectedHelysegUrlNevList.add(helyseg.getUrlNev());
 		}
 
 		// Kereses
 		Datastore datastore = MongoUtils.getDatastore();
 		List<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
-		//long hirdetesekSzama = 0;
 		
 		// Kereses Morphiaval
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
@@ -136,65 +122,23 @@ public class RssServerResource extends ServerResource implements
 		query.limit(50);
 		
 		// Rendezes
-		if(this.sorrend==2) {
-			// Feladas ideje szerint novekvo: Legregebbi elol
-			query.order("id");
-		} else if(this.sorrend==3) {
-			// Ar szerint novekvo: Legolcsobb elol
-			query.order("ar");
-		} else if(this.sorrend==4) {
-			// Ar szerint csokkeno: Legdragabb elol
-			query.order("-ar");
-		} else {
-			// Feladas ideje szerint csokkeno: Legujabb elol
-			query.order("-id");
-		}
-		
-		//System.out.println(query);
+		query.order("-id");
 		
 		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 		for(Hirdetes h : query) {
-			h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
-			
 			Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
 			h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChain(kat.getId()) : "");
 			h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
 			
-			Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());
-			h.getEgyebMezok().put("helysegNev", (hely!=null) ? HelysegCache.getHelysegNevChain(hely.getId()) : "");
-			h.getEgyebMezok().put("helysegUrlNev", (hely!=null) ? hely.getUrlNev() : "");
-			
-			h.getEgyebMezok().put("feladvaSzoveg", AproUtils.getHirdetesFeladvaSzoveg(h.getFeladasDatuma()));
-			
-			// Tagek
-			h.getEgyebMezok().put("tag", "");
-			
-			if(h.getAr()==0) {
-				String tag = h.getEgyebMezok().get("tag");
-				if(!tag.isEmpty()) {
-					tag += ";";
-				}
-				tag += "Ingyenes";
-				h.getEgyebMezok().put("tag", tag);
-			}
-			// Friss tag: 3 napig
-			if(h.getId().getTime()+3*24*3600*1000 > new Date().getTime()) {
-				String tag = h.getEgyebMezok().get("tag");
-				if(!tag.isEmpty()) {
-					tag += ";";
-				}
-				tag += "Friss";
-				h.getEgyebMezok().put("tag", tag);
-			}
-
+			h.getEgyebMezok().put("feladvaDatum", h.getFeladvaAsDate().toString());
 			
 			// Kepek
-			Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
+			/*Query<HirdetesKep> kepekQuery = datastore.createQuery(HirdetesKep.class);
 			kepekQuery.criteria("hirdetesId").equal(h.getId());
 			
 			for(HirdetesKep kep : kepekQuery) {
 				h.getKepek().add(kep);
-			}
+			}*/
 			
 			hirdetesList.add(h);
 		}

@@ -166,6 +166,10 @@ public class Hirdetes {
 	public long getFeladasDatuma() {
 		return id.getTime();
 	}
+	
+	public Date getFeladvaAsDate() {
+		return new Date(id.getTime());
+	}
 
 	public LinkedList<HirdetesKep> getKepek() {
 		return kepek;

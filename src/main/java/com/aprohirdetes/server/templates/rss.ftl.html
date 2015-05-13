@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-  <title>${app.htmlTitle}</title>
-  <link>https://www.aprohirdetes.com</link>
-  <description>${app.description}</description>
-  <language>hu</language>
-  <webMaster>info@aprohirdetes.com</webMaster>
-  <#list hirdetesList as hirdetes>
-  	<#if (hirdetes.cim?length>20) >
-  		<#assign cim=hirdetes.cim?substring(0, 20) >
-  	<#else>
-  		<#assign cim=hirdetes.cim >
-  	</#if>
-  <item>
-  	<guid>${hirdetes.id}</guid>
-  	<pubDate>${hirdetes.egyebMezok.feladvaSzoveg}</pubDate>
-    <title>${cim?html}</title>
-    <link>https://www.aprohirdetes.com${app.contextRoot}/hirdetes/${hirdetes.id}</link>
-    <description>${hirdetes.cim?html}</description>
-  </item>
-  </#list>
+	<title>${app.htmlTitle}</title>
+	<link>https://www.aprohirdetes.com</link>
+	<description>${app.description}</description>
+	<language>hu</language>
+	<webMaster>info@aprohirdetes.com</webMaster>
+	<#list hirdetesList as hirdetes>
+		<#if (hirdetes.cim?length>30) >
+			<#assign cim=hirdetes.cim?substring(0, 30) >
+		<#else>
+			<#assign cim=hirdetes.cim >
+		</#if>
+	<item>
+		<guid>${hirdetes.id}</guid>
+		<pubDate>${hirdetes.egyebMezok.feladvaDatum}</pubDate>
+		<!-- category>${hirdetes.egyebMezok.kategoriaNev}</category-->
+		<title>${cim?html}</title>
+		<link>https://www.aprohirdetes.com${app.contextRoot}/hirdetes/${hirdetes.id}</link>
+		<description>${hirdetes.cim?html}</description>
+	</item>
+	</#list>
 </channel>
 </rss>
