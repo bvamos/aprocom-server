@@ -91,6 +91,10 @@ public class HelysegCache {
 		
 		if(urlNevList != null) {
 			for(String urlNev : urlNevList.split("\\+")) {
+				if("osszes-helyseg".equalsIgnoreCase(urlNev)) {
+					if(ret.length()>0) ret += ", ";
+					ret += "Minden helység";
+				}
 				Helyseg k = CACHE_BY_URLNEV.get(urlNev);
 				if(k != null) {
 					if(ret.length()>0) ret += ", ";

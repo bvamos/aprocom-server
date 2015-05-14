@@ -15,7 +15,7 @@
 	<item>
 		<guid>${hirdetes.id}</guid>
 		<pubDate>${hirdetes.egyebMezok.feladvaDatum}</pubDate>
-		<!-- category>${hirdetes.egyebMezok.kategoriaNev}</category-->
+		<category>${hirdetes.egyebMezok.kategoriaNev?html}</category>
 		<title>${cim?html}</title>
 		<link>https://www.aprohirdetes.com${app.contextRoot}/hirdetes/${hirdetes.id}</link>
 		<description>${hirdetes.cim?html}</description>

@@ -127,7 +127,7 @@ public class RssServerResource extends ServerResource implements
 		// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 		for(Hirdetes h : query) {
 			Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
-			h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChain(kat.getId()) : "");
+			h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChain(kat.getId()).replaceAll(" &raquo; ", "/") : "");
 			h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
 			
 			h.getEgyebMezok().put("feladvaDatum", h.getFeladvaAsDate().toString());
