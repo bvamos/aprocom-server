@@ -287,16 +287,74 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("sorrend", this.sorrend);
 		dataModel.put("hibaUzenet", hibaUzenet);
 		
-		// TODO: Osszes kategoriat megoldani
-		if(selectedKategoriaUrlNevList.contains("ingatlan") || selectedKategoriaUrlNevList.contains("lakas") || selectedKategoriaUrlNevList.contains("haz") || selectedKategoriaUrlNevList.contains("alberlet")) {
+		// Kategoriak szerinti szinezes
+		if(selectedKategoriaUrlNevList.contains("ingatlan") || 
+				selectedKategoriaUrlNevList.contains("lakas") || 
+				selectedKategoriaUrlNevList.contains("haz") || 
+				selectedKategoriaUrlNevList.contains("alberlet") || 
+				selectedKategoriaUrlNevList.contains("iroda-uzlethelyiseg") || 
+				selectedKategoriaUrlNevList.contains("egyeb-berlemeny") || 
+				selectedKategoriaUrlNevList.contains("nyaralo") || 
+				selectedKategoriaUrlNevList.contains("garazs") || 
+				selectedKategoriaUrlNevList.contains("telek-szanto-kiskert") || 
+				selectedKategoriaUrlNevList.contains("ingatlan-szolgaltatas")) {
 			dataModel.put("ingatlanTabClass", "ingatlan-tab");
 			dataModel.put("headerBgClass", "ingatlan-bg");
-		} else if(selectedKategoriaUrlNevList.contains("jarmu") || selectedKategoriaUrlNevList.contains("szemelyauto") || selectedKategoriaUrlNevList.contains("kishaszon") || selectedKategoriaUrlNevList.contains("haszonjarmu")) {
+			dataModel.put("alkategoriaLinkek", " " + 
+				getLink("lakas", "Lakás") + " | " + 
+				getLink("haz", "Ház") + " | " + 
+				getLink("alberlet", "Albérlet") + " | " + 
+				getLink("iroda-uzlethelyiseg", "Iroda, üzlethelyiség") + " | " + 
+				getLink("egyeb-berlemeny", "Egyéb bérlemény") + " | " + 
+				getLink("nyaralo", "Nyaraló") + " | " + 
+				getLink("garazs", "Garázs") + " | " + 
+				getLink("telek-szanto-kiskert", "Telek, szántó, kiskert") + " | " + 
+				getLink("ingatlan-szolgaltatas", "Szolgáltatás"));
+		} else if(selectedKategoriaUrlNevList.contains("jarmu") || 
+				selectedKategoriaUrlNevList.contains("szemelyauto") || 
+				selectedKategoriaUrlNevList.contains("kishaszon") || 
+				selectedKategoriaUrlNevList.contains("haszonjarmu") || 
+				selectedKategoriaUrlNevList.contains("potkocsi-utanfuto") || 
+				selectedKategoriaUrlNevList.contains("motor") || 
+				selectedKategoriaUrlNevList.contains("busz") || 
+				selectedKategoriaUrlNevList.contains("lakokocsi") || 
+				selectedKategoriaUrlNevList.contains("alkatresz") || 
+				selectedKategoriaUrlNevList.contains("gumi-felni") || 
+				selectedKategoriaUrlNevList.contains("hajo")) {
 			dataModel.put("jarmuTabClass", "jarmu-tab");
 			dataModel.put("headerBgClass", "jarmu-bg");
-		} else if(selectedKategoriaUrlNevList.contains("allas")) {
+			dataModel.put("alkategoriaLinkek", " " + 
+				getLink("szemelyauto", "Személyautó") + " | " + 
+				getLink("haszonjarmu", "Haszonjármű") + " | " + 
+				getLink("potkocsi-utanfuto", "Pótkocsi, utánfutó") + " | " + 
+				getLink("motor", "Motor") + " | " + 
+				getLink("busz", "Busz") + " | " + 
+				getLink("lakokocsi", "Lakókocsi") + " | " + 
+				getLink("alkatresz", "Alkatrész") + " | " + 
+				getLink("gumi-felni", "Gumi, felni") + " | " +
+				getLink("hajo", "Hajó"));
+		} else if(selectedKategoriaUrlNevList.contains("allas") ||
+				selectedKategoriaUrlNevList.contains("allas-ipari") ||
+				selectedKategoriaUrlNevList.contains("kereskedelmi") ||
+				selectedKategoriaUrlNevList.contains("szellemi") ||
+				selectedKategoriaUrlNevList.contains("tavmunka") ||
+				selectedKategoriaUrlNevList.contains("diakmunka") ||
+				selectedKategoriaUrlNevList.contains("allas-egyeb") ||
+				selectedKategoriaUrlNevList.contains("tanitas") ||
+				selectedKategoriaUrlNevList.contains("allas-szolgaltatas") ||
+				selectedKategoriaUrlNevList.contains("vallalkozas")) {
 			dataModel.put("allasTabClass", "allas-tab");
 			dataModel.put("headerBgClass", "allas-bg");
+			dataModel.put("alkategoriaLinkek", " " + 
+					getLink("allas-ipari", "Ipari") + " | " +
+					getLink("kereskedelmi", "Kereskedelmi") + " | " +
+					getLink("szellemi", "Szellemi") + " | " +
+					getLink("tavmunka", "Távmunka") + " | " +
+					getLink("diakmunka", "Diákmunka") + " | " +
+					getLink("allas-egyeb", "Egyéb") + " | " +
+					getLink("tanitas", "Tanítás") + " | " +
+					getLink("allas-szolgaltatas", "Szolgáltatás") + " | " +
+					getLink("vallalkozas", "Vállalkozás"));
 		} else {
 			dataModel.put("aproTabClass", "apro-tab");
 			dataModel.put("headerBgClass", "apro-bg");
@@ -306,4 +364,8 @@ public class KeresesServerResource extends ServerResource implements
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
+	private String getLink(String urlNev, String nev) {
+		return "<a href=\"" + contextPath +
+				"/kereses/kinal/osszes-helyseg/" + urlNev + "/\">" + nev + "</a>";
+	}
 }
