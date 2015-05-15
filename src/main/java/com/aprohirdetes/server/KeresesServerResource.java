@@ -291,24 +291,26 @@ public class KeresesServerResource extends ServerResource implements
 		if(selectedKategoriaUrlNevList.contains("ingatlan") || 
 				selectedKategoriaUrlNevList.contains("lakas") || 
 				selectedKategoriaUrlNevList.contains("haz") || 
+				selectedKategoriaUrlNevList.contains("epitesi-telek") || 
 				selectedKategoriaUrlNevList.contains("alberlet") || 
 				selectedKategoriaUrlNevList.contains("iroda-uzlethelyiseg") || 
 				selectedKategoriaUrlNevList.contains("egyeb-berlemeny") || 
 				selectedKategoriaUrlNevList.contains("nyaralo") || 
 				selectedKategoriaUrlNevList.contains("garazs") || 
-				selectedKategoriaUrlNevList.contains("telek-szanto-kiskert") || 
+				selectedKategoriaUrlNevList.contains("szanto-kiskert") || 
 				selectedKategoriaUrlNevList.contains("ingatlan-szolgaltatas")) {
 			dataModel.put("ingatlanTabClass", "ingatlan-tab");
 			dataModel.put("headerBgClass", "ingatlan-bg");
 			dataModel.put("alkategoriaLinkek", " " + 
 				getLink("lakas", "Lakás") + " | " + 
 				getLink("haz", "Ház") + " | " + 
+				getLink("apitesi-telek", "Építési telek") + " | " + 
 				getLink("alberlet", "Albérlet") + " | " + 
 				getLink("iroda-uzlethelyiseg", "Iroda, üzlethelyiség") + " | " + 
 				getLink("egyeb-berlemeny", "Egyéb bérlemény") + " | " + 
 				getLink("nyaralo", "Nyaraló") + " | " + 
 				getLink("garazs", "Garázs") + " | " + 
-				getLink("telek-szanto-kiskert", "Telek, szántó, kiskert") + " | " + 
+				getLink("szanto-kiskert", "Szántó, kiskert") + " | " + 
 				getLink("ingatlan-szolgaltatas", "Szolgáltatás"));
 		} else if(selectedKategoriaUrlNevList.contains("jarmu") || 
 				selectedKategoriaUrlNevList.contains("szemelyauto") || 
