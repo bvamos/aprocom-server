@@ -304,7 +304,7 @@ public class KeresesServerResource extends ServerResource implements
 			dataModel.put("alkategoriaLinkek", " " + 
 				getLink("lakas", "Lakás") + " | " + 
 				getLink("haz", "Ház") + " | " + 
-				getLink("apitesi-telek", "Építési telek") + " | " + 
+				getLink("epitesi-telek", "Építési telek") + " | " + 
 				getLink("alberlet", "Albérlet") + " | " + 
 				getLink("iroda-uzlethelyiseg", "Iroda, üzlethelyiség") + " | " + 
 				getLink("egyeb-berlemeny", "Egyéb bérlemény") + " | " + 
