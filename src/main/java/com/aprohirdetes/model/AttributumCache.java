@@ -71,7 +71,13 @@ public class AttributumCache {
 		telekAlapterulet.setMertekEgyseg("m&sup2;");
 		
 		telekList.add(telekAlapterulet);
-		KATEGORIA_ATTRIBUTUM.put("telek-szanto-kiskert", telekList);
+		KATEGORIA_ATTRIBUTUM.put("epitesi-telek", telekList);
+		
+		// Kategoria: Ingatlan->Szanto, kiskert
+		LinkedList<Attributum> szantoList = new LinkedList<Attributum>();
+		szantoList.add(ingatlanAlapterulet);
+		
+		KATEGORIA_ATTRIBUTUM.put("szanto-kiskert", szantoList);
 		
 		// Kategoria: Ingatlan->Lakas
 		LinkedList<Attributum> lakasList = new LinkedList<Attributum>();
