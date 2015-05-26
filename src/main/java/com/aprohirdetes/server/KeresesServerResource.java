@@ -3,6 +3,7 @@ package com.aprohirdetes.server;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,12 +17,16 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.StaticHtmlResource;
+import com.aprohirdetes.model.Attributum;
+import com.aprohirdetes.model.AttributumCache;
+import com.aprohirdetes.model.AttributumTipus;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
@@ -87,16 +92,16 @@ public class KeresesServerResource extends ServerResource implements
 		this.kulcsszo = getQueryValue("q")==null ? "" : getQueryValue("q");
 		
 		try {
-			this.arMin = getQueryValue("arMin")==null ? null : Integer.parseInt(getQueryValue("arMin"));
+			this.arMin = getQueryValue("ar_min")==null ? null : Integer.parseInt(getQueryValue("ar_min"));
 		} catch(NumberFormatException nfe) {
-			getLogger().warning("Ervenytelen minimum ar: " + getQueryValue("arMin"));
+			getLogger().warning("Ervenytelen minimum ar: " + getQueryValue("ar_min"));
 			this.arMin = null;
 		}
 		
 		try {
-			this.arMax = getQueryValue("arMax")==null ? null : Integer.parseInt(getQueryValue("arMax"));
+			this.arMax = getQueryValue("ar_max")==null ? null : Integer.parseInt(getQueryValue("ar_max"));
 		} catch(NumberFormatException nfe) {
-			getLogger().warning("Ervenytelen maximum ar: " + getQueryValue("arMax"));
+			getLogger().warning("Ervenytelen maximum ar: " + getQueryValue("ar_max"));
 			this.arMax = null;
 		}
 		
@@ -177,6 +182,57 @@ public class KeresesServerResource extends ServerResource implements
 			if(this.arMax != null) {
 				query.criteria("ar").lessThanOrEq(arMax);
 			}
+			// Attributumok
+			ArrayList<Attributum> attributumList = new ArrayList<Attributum>();
+			ArrayList<Attributum> kategoriaAttributumList = AttributumCache.getAttributumListByKategoriaList(selectedKategoriaList);
+			for(Parameter queryParameter : getQuery()) {
+				String parameterNev = queryParameter.getName();
+				String attributumNev = parameterNev;
+				if(parameterNev.contains("_")) {
+					attributumNev = parameterNev.substring(0, parameterNev.indexOf("_"));
+				}
+				//System.out.println(parameterNev + ", " + attributumNev);
+				
+				for(Attributum attributum : kategoriaAttributumList) {
+					// Csak azok a parameterek vannak itt, amik a kivalasztott kategoriak attributumai
+					if(attributum.getNev().equalsIgnoreCase(attributumNev) && !attributumList.contains(attributum)) {
+						//System.out.println(attributum.getNev());
+						// Belerakjuk a listaba, amiben a kivalasztott kategoriakhoz tartozo es URL-ben szereplo attributumok kerulnek
+						attributumList.add(attributum);
+					}
+				}
+			}
+			
+			for(Attributum attributum : attributumList) {
+				String nev = attributum.getNev();
+				// Szam tipusu attributum
+				if(attributum.getTipus()==AttributumTipus.NUMBER) {
+					if(getQuery().getNames().contains(nev+"_min")) {
+						Integer ertek = Integer.parseInt(getQuery().getFirstValue(nev+"_min"));
+						query.criteria("attributumok."+nev).greaterThanOrEq(ertek);
+					}
+					if(getQuery().getNames().contains(nev+"_max")) {
+						Integer ertek = Integer.parseInt(getQuery().getFirstValue(nev+"_max"));
+						query.criteria("attributumok."+nev).lessThanOrEq(ertek);
+					}
+				}
+				
+				// Lista
+				if(attributum.getTipus()==AttributumTipus.SELECT_SINGLE || attributum.getTipus()==AttributumTipus.RADIO) {
+					query.criteria("attributumok."+nev).in(Arrays.asList(getQuery().getValuesArray(nev)));
+				}
+				
+				// Yes/No
+				if(attributum.getTipus()==AttributumTipus.YESNO) {
+					String ertek = getQuery().getFirstValue(nev);
+					if("igen".equalsIgnoreCase(ertek)) {
+						query.criteria("attributumok."+nev).equal(true);
+					} else if("nem".equalsIgnoreCase(ertek)) {
+						query.criteria("attributumok."+nev).equal(false);
+					}
+				}
+			}
+			
 			
 			query.offset(this.page * this.pageSize - this.pageSize);
 			query.limit(Integer.parseInt(AproConfig.APP_CONFIG.getProperty("SEARCH.DEFAULT_PAGESIZE", "20")));
@@ -196,7 +252,7 @@ public class KeresesServerResource extends ServerResource implements
 				query.order("-modositva");
 			}
 			
-			//System.out.println(query);
+			System.out.println(query);
 			
 			// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 			for(Hirdetes h : query) {
@@ -251,6 +307,7 @@ public class KeresesServerResource extends ServerResource implements
 			if(hibaUzenet==null) {
 				hibaUzenet = "Sajnos hiba történt a keresés közben. Kérlek látogass vissza később, addigra javítani fogjuk!";
 			}
+			e.printStackTrace();
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -280,12 +337,14 @@ public class KeresesServerResource extends ServerResource implements
 		dataModel.put("rssUrl", rssUrl);
 		dataModel.put("hirdetesek_szama", hirdetesekSzama);
 		dataModel.put("q", this.kulcsszo);
-		dataModel.put("arMin", this.arMin==null ? null : this.arMin.toString());
-		dataModel.put("arMax", this.arMax==null ? null : this.arMax.toString());
+		dataModel.put("ar_min", this.arMin==null ? null : this.arMin.toString());
+		dataModel.put("ar_max", this.arMax==null ? null : this.arMax.toString());
 		dataModel.put("aktualisOldal", this.page);
 		dataModel.put("osszesOldal", (hirdetesekSzama/this.pageSize)+1);
 		dataModel.put("sorrend", this.sorrend);
 		dataModel.put("hibaUzenet", hibaUzenet);
+		if(selectedKategoriaUrlNevList.size()>0)
+			dataModel.put("egyebAttributumokHtml", AproUtils.getAttributumSearchHtmlByKategoria(selectedKategoriaUrlNevList.get(0), getQuery()));
 		
 		// Kategoriak szerinti szinezes
 		if(selectedKategoriaUrlNevList.contains("ingatlan") || 

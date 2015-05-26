@@ -4,6 +4,8 @@
 <#include "page_header.ftl.html"/>
 <#include "container_search_form.ftl.html"/>
 				<div class="row">
+				<div class="col-md-2"><#include "kereses_form.ftl"/></div>
+				<div class="col-md-10">
 				<#if hibaUzenet?? >
 					<div class="alert alert-danger">${hibaUzenet}</div>
 				<#else>
@@ -23,8 +25,6 @@
 						<span>Nincs a feltételeknek megfelelő hirdetés :-(</span>
 						</#if>
 					</div>
-				</div>
-				<div class="row">
 					<#assign sorszam = 1>
 					<#list hirdetesList as hirdetes>
 						<#assign urlCim = hirdetes.cim?replace('/', '')?url >
@@ -156,9 +156,7 @@
 						</#if>
 						<#assign sorszam = sorszam + 1 >
 					</#list>
-				</div>
 				<#if (hirdetesek_szama>0) >
-				<div class="row">
 					<div>
 						<ul class="pager">
 							<#if (aktualisOldal>1) >
@@ -169,6 +167,7 @@
 							</#if>
 						</ul>
 					</div>
+				</div>
 				</div>
 			    <script type="text/javascript">
 				$('#keresesSorrendSelect').change(function(){

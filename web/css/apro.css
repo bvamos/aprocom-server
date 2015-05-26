@@ -158,6 +158,18 @@ div.search_container>div.well {
 	margin: 0;
 }
 
+#adv_search_container div.form-group {
+	margin-bottom: 5px;
+}
+
+#adv_search_container div.checkbox {
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	height: auto;
+}
+
 div.footer_container {
 	background-image: url("../images/footer_background.png");
 	background-repeat: no-repeat;

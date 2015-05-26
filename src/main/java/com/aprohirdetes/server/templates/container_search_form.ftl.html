@@ -45,29 +45,6 @@
 							</select>
 							</div>
 							<button type="button" class="btn btn-success" style="min-width: 8%;" id="btnKereses">Keresés</button>
-							<button type="button" class="btn btn-default" id="btnBovitettKereses" title="Bővített keresés"><span class="glyphicon glyphicon-filter"></span></button>
-						</div>
-					</div>
-					
-					<div id="panelBovitettKereses">
-						<div class="form-group">
-							<label class="col-xs-2 control-label">Ár</label>
-							<div class="col-xs-10">
-								<div class="form-inline">
-									<div class="form-group">
-										<div class="input-group">
-											<input type="number" class="form-control" id="keresesArMin" name="keresesArMin" value="${arMin!''}" placeholder="-tól" min="0">
-											<span class="input-group-addon">Ft</span>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="input-group">
-											<input type="number" class="form-control" id="keresesArMax" name="keresesArMax" value="${arMax!''}" placeholder="-ig" min="0">
-											<span class="input-group-addon">Ft</span>
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 					
@@ -93,11 +70,6 @@
 				$('#btnKereses').click();
 			});
 			
-			$('#panelBovitettKereses').hide();
-			$('#btnBovitettKereses').click(function(){
-				$('#panelBovitettKereses').toggle();
-			});
-			
 			$('#btnKereses').click(function(){
 				if(typeof window.p === 'undefined') window.p = 1;
 	
@@ -105,8 +77,8 @@
 				var tipus = $('#hirdetesTipus').val();
 				var helyseg = $('#hirdetesHelyseg').val();
 				var kategoria = $('#hirdetesKategoria').val();
-				var arMin = $('#keresesArMin').val();
-				var arMax = $('#keresesArMax').val();
+				//var arMin = $('#keresesArMin').val();
+				//var arMax = $('#keresesArMax').val();
 				
 				var action = '';
 				helysegUrl = (helyseg.length>0) ? helyseg + '/' : '';
@@ -116,8 +88,24 @@
 				if(kulcsszo.length>0) action = action + 'q=' + kulcsszo;
 				if(p>1) action = action + '&p=' + window.p;
 				if(s>0) action = action + '&s=' + window.s;
-				if(arMin.length>0) action = action + '&arMin=' + arMin;
-				if(arMax.length>0) action = action + '&arMax=' + arMax;
+				
+				$('#adv_search_container *').filter(':input').each(function(key, obj){
+					// obj.type: number, checkbox, select-one
+					
+					if(obj.type=='number' && this.value.length>0) {
+						action = action + '&' + this.name + '=' + this.value;
+						return;
+					}
+					if(obj.type=='checkbox' && obj.checked==true) {
+						action = action + '&' + this.name + '=' + this.value;
+						return;
+					}
+					if(obj.type=='select-one' && this.value.length>0) {
+						action = action + '&' + this.name + '=' + this.value;
+						return;
+					}
+					//alert(obj.name + ': ' + obj.type + ': ' + this.value);
+				});
 				
 				window.location = encodeURI(action);
 			});

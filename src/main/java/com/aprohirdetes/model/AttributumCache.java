@@ -1,8 +1,10 @@
 package com.aprohirdetes.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class AttributumCache {
@@ -16,22 +18,22 @@ public class AttributumCache {
 	public static void loadAttributumCache() {
 		
 		// Altalanos attributumok
-		Attributum allapot = new Attributum("allapot", AttributumTipus.SELECT_SINGLE, "Állapot");
+		Attributum allapot = new AttributumSelectSingle("allapot", "Állapot");
 		Map<String, Object> allapotErtekMap = new LinkedHashMap<String, Object>();
 		allapotErtekMap.put("h", "Használt");
 		allapotErtekMap.put("u", "Új");
 		allapot.setErtekMap(allapotErtekMap);
 		
 		// Ingatlanokkal kapcsolatos kozos attributumok
-		Attributum ingatlanAlapterulet = new Attributum("ingatlan-alapterulet", AttributumTipus.NUMBER, "Alapterület");
+		AttributumNumber ingatlanAlapterulet = new AttributumNumber("ingatlan-alapterulet", "Alapterület");
 		ingatlanAlapterulet.setKotelezo(true);
 		ingatlanAlapterulet.setMertekEgyseg("m&sup2;");
 		
-		Attributum ingatlanSzobakszama = new Attributum("ingatlan-szobakszama", AttributumTipus.NUMBER, "Szobák száma");
+		Attributum ingatlanSzobakszama = new AttributumNumber("ingatlan-szobakszama", "Szobák száma");
 		ingatlanSzobakszama.setKotelezo(true);
 		ingatlanSzobakszama.setAlapErtek(1);
 		
-		Attributum ingatlanAllapot = new Attributum("ingatlan-allapot", AttributumTipus.SELECT_SINGLE, "Ingatlan állapota");
+		Attributum ingatlanAllapot = new AttributumSelectSingle("ingatlan-allapot", "Ingatlan állapota");
 		Map<String, Object> ingatlanAllapotErtekMap = new LinkedHashMap<String, Object>();
 		ingatlanAllapotErtekMap.put("ujepitesu", "Új építésű");
 		ingatlanAllapotErtekMap.put("uj", "Újszerű");
@@ -40,7 +42,7 @@ public class AttributumCache {
 		ingatlanAllapotErtekMap.put("felujitando", "Felújítandó");
 		ingatlanAllapot.setErtekMap(ingatlanAllapotErtekMap);
 		
-		Attributum ingatlanKomfort = new Attributum("ingatlan-komfort", AttributumTipus.SELECT_SINGLE, "Komfortfokozat");
+		Attributum ingatlanKomfort = new AttributumSelectSingle("ingatlan-komfort", "Komfortfokozat");
 		Map<String, Object> ingatlanKomfortErtekMap = new LinkedHashMap<String, Object>();
 		ingatlanKomfortErtekMap.put("luxus", "Luxus");
 		ingatlanKomfortErtekMap.put("osszkomfort", "Összkomfortos");
@@ -48,7 +50,7 @@ public class AttributumCache {
 		ingatlanKomfortErtekMap.put("komfortnelkuli", "Komfort nélküli");
 		ingatlanKomfort.setErtekMap(ingatlanKomfortErtekMap);
 		
-		Attributum ingatlanFutes = new Attributum("ingatlan-futes", AttributumTipus.SELECT_SINGLE, "Fűtés típusa");
+		Attributum ingatlanFutes = new AttributumSelectSingle("ingatlan-futes", "Fűtés típusa");
 		Map<String, Object> ingatlanFutesErtekMap = new LinkedHashMap<String, Object>();
 		ingatlanFutesErtekMap.put("cirko", "Gáz (cirkó)");
 		ingatlanFutesErtekMap.put("kovektor", "Gáz (konvektor)");
@@ -64,7 +66,7 @@ public class AttributumCache {
 		// Kategoria: Ingatlan->Telek
 		LinkedList<Attributum> telekList = new LinkedList<Attributum>();
 		
-		Attributum telekAlapterulet = new Attributum("telek-alapterulet", AttributumTipus.NUMBER, "Telek alapterülete");
+		Attributum telekAlapterulet = new AttributumNumber("telek-alapterulet", "Telek alapterülete");
 		telekAlapterulet.setKotelezo(true);
 		telekAlapterulet.setMertekEgyseg("m&sup2;");
 		
@@ -74,13 +76,13 @@ public class AttributumCache {
 		// Kategoria: Ingatlan->Lakas
 		LinkedList<Attributum> lakasList = new LinkedList<Attributum>();
 		
-		Attributum lakasFalazat = new Attributum("lakas-falazat", AttributumTipus.RADIO, "Falazat anyaga");
+		Attributum lakasFalazat = new AttributumRadio("lakas-falazat", "Falazat anyaga");
 		Map<String, Object> lakasFalazatErtekMap = new LinkedHashMap<String, Object>();
 		lakasFalazatErtekMap.put("tegla", "Tégla");
 		lakasFalazatErtekMap.put("panel", "Panel");
 		lakasFalazat.setErtekMap(lakasFalazatErtekMap);
 		
-		Attributum lakasEmelet = new Attributum("lakas-emelet", AttributumTipus.NUMBER, "Emelet");
+		Attributum lakasEmelet = new AttributumNumber("lakas-emelet", "Emelet");
 		
 		lakasList.add(lakasFalazat);
 		lakasList.add(ingatlanAlapterulet);
@@ -94,7 +96,7 @@ public class AttributumCache {
 		// Kategoria: Ingatlan->Haz
 		LinkedList<Attributum> hazList = new LinkedList<Attributum>();
 		
-		Attributum hazPince = new Attributum("haz-pince", AttributumTipus.YESNO, "Pince van?");
+		Attributum hazPince = new AttributumYesNo("haz-pince", "Pince van?");
 		
 		hazList.add(ingatlanAlapterulet);
 		hazList.add(ingatlanSzobakszama);
@@ -124,7 +126,7 @@ public class AttributumCache {
 		KATEGORIA_ATTRIBUTUM.put("nyaralo", irodaList);
 		
 		// Kategoria: Ingatlan->Garazs
-		Attributum garazsElhelyezkedes = new Attributum("garazs-elhelyezkedes", AttributumTipus.RADIO, "Elhelyezkedés");
+		Attributum garazsElhelyezkedes = new AttributumRadio("garazs-elhelyezkedes", "Elhelyezkedés");
 		Map<String, Object> garazsElhelyezkedesErtekMap = new LinkedHashMap<String, Object>();
 		garazsElhelyezkedesErtekMap.put("o", "Önálló");
 		garazsElhelyezkedesErtekMap.put("t", "Teremgarázs");
@@ -138,7 +140,7 @@ public class AttributumCache {
 		
 		// Kategoria: Elektronikai cikk->Telefon
 		
-		Attributum telefonMarka = new Attributum("telefon-marka", AttributumTipus.SELECT_SINGLE, "Márka");
+		Attributum telefonMarka = new AttributumSelectSingle("telefon-marka", "Márka");
 		Map<String, Object> telefonMarkaErtekMap = new LinkedHashMap<String, Object>();
 		telefonMarkaErtekMap.put("acer", "Acer");
 		telefonMarkaErtekMap.put("alcatel", "Alcatel");
@@ -165,7 +167,7 @@ public class AttributumCache {
 		
 		// Kategoria: Jarmu->Gumi, felni
 		
-		Attributum gumiMarka = new Attributum("gumi-marka", AttributumTipus.SELECT_SINGLE, "Márka");
+		Attributum gumiMarka = new AttributumSelectSingle("gumi-marka", "Márka");
 		Map<String, Object> gumiMarkaErtekMap = new LinkedHashMap<String, Object>();
 		//gumiMarkaErtekMap.put("", "");
 		gumiMarkaErtekMap.put("barum", "Barum");
@@ -203,7 +205,7 @@ public class AttributumCache {
 		gumiMarka.setErtekMap(gumiMarkaErtekMap);
 		gumiMarka.setKotelezo(true);
 		
-		Attributum gumiSzelesseg = new Attributum("gumi-szelesseg", AttributumTipus.SELECT_SINGLE, "Szélesség");
+		Attributum gumiSzelesseg = new AttributumSelectSingle("gumi-szelesseg", "Szélesség");
 		Map<String, Object> gumiSzelessegErtekMap = new LinkedHashMap<String, Object>();
 		gumiSzelessegErtekMap.put("110", "110");
 		gumiSzelessegErtekMap.put("120", "120");
@@ -224,7 +226,7 @@ public class AttributumCache {
 		gumiSzelesseg.setErtekMap(gumiSzelessegErtekMap);
 		gumiSzelesseg.setKotelezo(true);
 		
-		Attributum gumiAtmero = new Attributum("gumi-atmero", AttributumTipus.SELECT_SINGLE, "Átmérő");
+		Attributum gumiAtmero = new AttributumSelectSingle("gumi-atmero", "Átmérő");
 		Map<String, Object> gumiAtmeroErtekMap = new LinkedHashMap<String, Object>();
 		gumiAtmeroErtekMap.put("10", "R10");
 		gumiAtmeroErtekMap.put("11", "R11");
@@ -250,7 +252,7 @@ public class AttributumCache {
 		gumiAtmero.setErtekMap(gumiAtmeroErtekMap);
 		gumiAtmero.setKotelezo(true);
 		
-		Attributum gumiPer = new Attributum("gumi-per", AttributumTipus.SELECT_SINGLE, "Per");
+		Attributum gumiPer = new AttributumSelectSingle("gumi-per", "Per");
 		Map<String, Object> gumiPerErtekMap = new LinkedHashMap<String, Object>();
 		gumiPerErtekMap.put("20", "20");
 		gumiPerErtekMap.put("25", "25");
@@ -271,7 +273,7 @@ public class AttributumCache {
 		gumiPerErtekMap.put("100", "100");
 		gumiPer.setErtekMap(gumiPerErtekMap);
 		
-		Attributum gumiIdoszak = new Attributum("gumi-idoszak", AttributumTipus.SELECT_SINGLE, "Időszak");
+		Attributum gumiIdoszak = new AttributumSelectSingle("gumi-idoszak", "Időszak");
 		Map<String, Object> gumiIdoszakErtekMap = new LinkedHashMap<String, Object>();
 		gumiIdoszakErtekMap.put("ny", "Nyári");
 		gumiIdoszakErtekMap.put("t", "Téli");
@@ -287,4 +289,25 @@ public class AttributumCache {
 		gumiList.add(gumiAtmero);
 		KATEGORIA_ATTRIBUTUM.put("gumi-felni", gumiList);
 	}
+	
+	/**
+	 * Visszaadja azoknak az attributumoknak a neveit egy listaban, amik a kivalasztott kategoriakhoz tartoznak
+	 * @param kategoriaList
+	 * @return
+	 */
+	public static ArrayList<Attributum> getAttributumListByKategoriaList(List<Kategoria> kategoriaList) {
+		ArrayList<Attributum> ret = new ArrayList<Attributum>();
+		
+		for(Kategoria kategoria : kategoriaList) {
+			LinkedList<Attributum> attributumList = KATEGORIA_ATTRIBUTUM.get(kategoria.getUrlNev());
+			if(attributumList != null) {
+				for(Attributum attributum : attributumList) {
+					ret.add(attributum);
+				}
+			}
+		}
+		
+		return ret;
+	}
+	
 }

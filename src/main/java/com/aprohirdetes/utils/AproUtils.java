@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 
 import org.restlet.data.Cookie;
 import org.restlet.data.CookieSetting;
+import org.restlet.data.Form;
 import org.restlet.resource.Resource;
 
 import com.aprohirdetes.model.Attributum;
@@ -110,6 +111,19 @@ public class AproUtils {
 		if(attributumList != null) {
 			for(Attributum attr : attributumList) {
 				ret.append(attr.toHtml());
+			}
+		}
+		
+		return ret.toString();
+	}
+	
+	public static String getAttributumSearchHtmlByKategoria(String kategoriaUrlNev, Form query) {
+		StringBuilder ret = new StringBuilder();
+		
+		LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(kategoriaUrlNev);
+		if(attributumList != null) {
+			for(Attributum attr : attributumList) {
+				ret.append(attr.toSearchHtml(query));
 			}
 		}
 		
