@@ -136,7 +136,7 @@ span.header_user {
 	background-color: #E36703;
 	padding: 2px; 
 	margin-top: 2px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 .ingatlan-bg {
 	background-color: #4cab11;
@@ -151,7 +151,7 @@ span.header_user {
 }
 
 div.search_container {
-	margin-bottom: 20px;
+	
 }
 
 div.search_container>div.well {
@@ -221,7 +221,8 @@ div.footer_links4>a {
 
 div.category_container {
 	background-image: url("../images/subcategory_background.png");
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	border-radius: 0px;
 }
 
@@ -266,7 +267,8 @@ ul.category-sub>li>a {
 div.hirdeteslista-header {
 	background-color: #e3e3e3;
 	border-left: 5px solid #ababab;
-	padding: 10px;
+	padding: 5px;
+	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
