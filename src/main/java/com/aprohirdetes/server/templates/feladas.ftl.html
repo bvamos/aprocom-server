@@ -76,6 +76,13 @@
 									<#assign selected=' selected'>
 								</#if>
 								<option value="${alkategoria.urlNev}"${selected}>&nbsp;&nbsp;${alkategoria.nev}</option>
+									<#list alkategoria.alkategoriaList as alalkategoria>
+									<#assign selected=''>
+									<#if hirdetesKategoria==alalkategoria.urlNev>
+										<#assign selected=' selected'>
+									</#if>
+									<option value="${alalkategoria.urlNev}"${selected}>&nbsp;&nbsp;&nbsp;&nbsp;${alalkategoria.nev}</option>
+									</#list>
 								</#list>
 							</#list>
 						</select>

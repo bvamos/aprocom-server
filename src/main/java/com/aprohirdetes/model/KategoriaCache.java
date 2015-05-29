@@ -41,10 +41,16 @@ public class KategoriaCache {
 			for(Kategoria level2 : query1.asList()) {
 				Query<Kategoria> query2 = datastore.createQuery(Kategoria.class).filter("szuloId", level2.getId()).order("sorrend");
 				level2.setAlkategoriaList(query2.asList());
+				
+				for(Kategoria level3 : query2.asList()) {
+					Query<Kategoria> query3 = datastore.createQuery(Kategoria.class).filter("szuloId", level3.getId()).order("sorrend");
+					level3.setAlkategoriaList(query3.asList());
+				}
 			}
 			CACHE_BY_ID.put(level1.getId(), level1);
 			CACHE_BY_URLNEV.put(level1.getUrlNev(), level1);
-			
+		
+			//System.out.println(level1.toString());
 		}
 	}
 	

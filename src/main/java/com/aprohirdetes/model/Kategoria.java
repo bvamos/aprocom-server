@@ -34,8 +34,7 @@ public class Kategoria {
 		
 		sb.append(" {");
 		for(Kategoria ak : getAlkategoriaList()) {
-			sb.append(ak.getUrlNev());
-			sb.append("(" + ak.getHirdetesekSzama() + ") ");
+			sb.append(ak.toString());
 		}
 		sb.append("} ");
 		

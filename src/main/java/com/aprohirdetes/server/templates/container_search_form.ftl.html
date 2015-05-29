@@ -25,6 +25,9 @@
 						<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=selectedKategoria>selected</#if>>${kategoria.nev}</option>
 							<#list kategoria.alkategoriaList as alkategoria>
 							<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=selectedKategoria>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
+								<#list alkategoria.alkategoriaList as alalkategoria>
+								<option value="${alalkategoria.urlNev}" <#if '${alalkategoria.urlNev}'=selectedKategoria>selected</#if>>&nbsp;&nbsp;&nbsp;&nbsp;${alalkategoria.nev}</option>
+								</#list>
 							</#list>
 						</#list>
 					</select>
