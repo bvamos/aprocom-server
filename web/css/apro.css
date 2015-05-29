@@ -158,6 +158,10 @@ div.search_container>div.well {
 	margin: 0;
 }
 
+#adv_search_container {
+	margin-top: 5px;
+}
+
 #adv_search_container div.form-group {
 	margin-bottom: 5px;
 }
@@ -174,6 +178,7 @@ div.footer_container {
 	background-image: url("../images/footer_background.png");
 	background-repeat: no-repeat;
 	height: 61px;
+	margin-top: 5px;
 	margin-bottom: 10px;
 }
 
