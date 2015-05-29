@@ -33,30 +33,41 @@
 						<#else>
 							<#assign hirdetesSzoveg = hirdetes.szoveg >
 						</#if>
+						<#if (hirdetesSzoveg?length>300) >
+							<#assign hirdetesSzoveg = hirdetes.szoveg[0..300] + "..." >
+						</#if>
 					<!-- ${sorszam} -->
 					<div class="hirdeteslista-container" itemscope itemtype="http://schema.org/Product">
 						<div class="hirdetes-header">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank">${hirdetes.cim}</a>
-									 (${hirdetes.egyebMezok.tipusNev}) <span>- ${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
+									<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">${hirdetes.cim}</a>
+									 (${hirdetes.egyebMezok.tipusNev}) <br/>
+									 <span>${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
 									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}
-									| ${hirdetes.egyebMezok.helysegNev}</td>
+									<br/>${hirdetes.egyebMezok.helysegNev}</td>
 								</tr>
 							</table>
 						</div>
 						<div class="hirdetes-body">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-szoveg" itemprop="description">${hirdetesSzoveg!""}</td>
-									<td class="hirdetes-mezok">
-										<#if hirdetes.attributumok??>
-										
-										</#if>
+									<td class="hirdetes-szoveg" itemprop="description">
+									<#if hirdetes.kepek?has_content >
+									<#assign kep=hirdetes.kepek[0] >
+										 <#if kep.thumbFileNev?? >
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" style="border: 1px solid #000; float: right;"></a>
+											 <#elseif kep.fileNev?? >
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="border: 1px solid #000; float: right;"></a>
+										 </#if>
+									</#if>
+									${hirdetesSzoveg!""}
 									</td>
-									<td class="hirdetes-kepek" rowspan="2" width="200">
-										<#if hirdetes.kepek?has_content >
-										<!-- 
+									
+									<!-- 
+									<#if hirdetes.kepek?has_content >
+									<td class="hirdetes-kepek" width="162">
+										<! - - 
 											<div id="carousel-${hirdetes.id}" class="carousel slide" data-ride="carousel" data-interval="false" style="width: 300px; height: 200px;">
 												<!- - Indicators - ->
 												<ol class="carousel-indicators">
@@ -94,41 +105,36 @@
 													<span class="glyphicon glyphicon-chevron-right"></span>
 												</a>
 											</div>
-											 -->
+											 - - >
 											 
-											 <#assign kep=hirdetes.kepek[0] >
-											 <div>
-											 <#if kep.thumbFileNev?? >
-												 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" style="display: block; margin:auto; border: 1px solid #000;"></a>
-												 <#elseif kep.fileNev?? >
-												 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
-											 </#if>
-											 </div>
-										<#else>
-											<!-- Kép nélküli hirdetés  -->		
-										</#if>
+										 <#assign kep=hirdetes.kepek[0] >
+										 <#if kep.thumbFileNev?? >
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" style="display: block; margin:auto; border: 1px solid #000;"></a>
+											 <#elseif kep.fileNev?? >
+											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
+										 </#if>
 									</td>
-								</tr>
-								<tr>
-									<td class="hirdetes-hirdeto" colspan="2">
-										<#if hirdetes.hirdeto??>
-										<div>
-											<span class="hirdetes-hirdeto-header">hirdető: </span>
-											<span>${(hirdetes.hirdeto.nev)!"Nincs név"}, ${hirdetes.hirdeto.telepules!""}</span>
-										</div>
-										</#if>
+									<#else>
+										<! - - Kép nélküli hirdetés  - - >		
+									</#if>
+									-->
+									<!-- 
+									<#if hirdetes.attributumok?has_content>
+									<td class="hirdetes-mezok" width="200">
+										<#list hirdetes.attributumok?keys as attributum>
+										${attributum}: ${hirdetes.attributumok[attributum]}<br/>
+										</#list>
 									</td>
+									</#if>
+									-->
 								</tr>
 							</table>
 						</div>
 						<div class="hirdetes-footer" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-muveletek" itemprop="url"><span>Műveletek: </span>
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">részletek itt</a>,
-									<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}" target="_blank">új ablakban</a>
+									<td class="hirdetes-muveletek" itemprop="url">
 									<#if hirdetes.egyebMezok.tag?? >
-									&nbsp;&nbsp;
 									<#list hirdetes.egyebMezok.tag?split(";") as tag>
 										<span class="label label-warning">${tag}</span>
 									</#list>

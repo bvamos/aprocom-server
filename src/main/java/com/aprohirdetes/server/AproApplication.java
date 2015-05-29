@@ -92,6 +92,8 @@ public class AproApplication extends Application {
 		router.attach("/api/v1/kategoriaAttributum/{kategoriaUrlNev}", com.aprohirdetes.server.apiv1.KategoriaAttributumServerResource.class);
 		router.attach("/api/v1/hirdetes", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
 		router.attach("/api/v1/hirdeto/{hirdetoId}/apikeys", com.aprohirdetes.server.apiv1.RestHirdetoApiKeysServerResource.class);
+		router.attach("/api/v1/kulcsszoLista", com.aprohirdetes.server.apiv1.RestKulcsszoListaServerResource.class);
+		router.attach("/api/v1/kulcsszoLista/{prefix}", com.aprohirdetes.server.apiv1.RestKulcsszoListaServerResource.class);
 		
 		// ADMIN
 		router.attach("/ilyennincs/", com.aprohirdetes.server.admin.FooldalServerResource.class);
@@ -192,7 +194,7 @@ public class AproApplication extends Application {
 			getLogger().info("Configuration: " + AproConfig.APP_CONFIG);
 		}
 		
-		// Loading package configuration
+		// Loading package configuration (Version number)
 		final String packageConfigFile = "/WEB-INF/classes/package.properties";
 	
 		getLogger().info("Loading package configuration from " + packageConfigFile);
@@ -230,6 +232,7 @@ public class AproApplication extends Application {
 		cfg.setTemplateLoader(new ClassTemplateLoader(getClass(), "templates/"));
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setURLEscapingCharset("UTF-8");
+		cfg.setBooleanFormat("Igen,Nem");
 		TPL_CONFIG = cfg;
 		
 		// Loading Kategoriak into memory cache

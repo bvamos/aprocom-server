@@ -64,9 +64,9 @@ public class KulcsszoCache {
 		}
 		
 		System.out.println("KulcsszoCache feltoltve");
-		for(String kulcsszo : CACHE_BY_KULCSSZO.keySet()) {
+		/*for(String kulcsszo : CACHE_BY_KULCSSZO.keySet()) {
 			System.out.println(kulcsszo + ": " + CACHE_BY_KULCSSZO.get(kulcsszo));
-		}
+		}*/
 	}
 	
 	/**
