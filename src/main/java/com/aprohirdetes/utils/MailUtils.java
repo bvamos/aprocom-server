@@ -191,6 +191,27 @@ public class MailUtils {
 		return ret;
 	}
 	
+	public static boolean sendMailHirdeto(Hirdetes hirdetes, String fromNev, String fromEmail, String uzenet) {
+		boolean ret = false;
+		
+		String to = hirdetes.getHirdeto().getEmail();
+		
+		if(fromEmail != null && !fromEmail.isEmpty()) {
+			String subject = "Üzenet a weboldalról";
+			String body = "Kedves " + hirdetes.getHirdeto().getNev() + "!\n\n"
+					+ uzenet + "\n\n"
+					+ "Kapcsolódó hirdetés: \n"
+					+ "  " + hirdetes.getCim() + "\n"
+					+ "  https://www.aprohirdetes.com/hirdetes/" + hirdetes.getId() + "\n\n"
+					+ "Üdvözlettel,\n"
+					+ fromNev + " (" + fromEmail + ")\n";
+			
+			ret = MailUtils.sendMail(to, subject, body);
+		}
+		
+		return ret;
+	}
+	
 	/**
 	 * Ertesito level kuldese a hirdetes feladojanak, ha a hirdetes 5 napon belul lejar
 	 * 

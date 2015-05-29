@@ -61,6 +61,80 @@
 							<span class="hirdetes-hirdeto-header">Cím: </span>
 							<span>${hirdetes.hirdeto.iranyitoSzam!""} ${hirdetes.hirdeto.telepules!""}, ${hirdetes.hirdeto.cim!""}</span>
 						</div>
+						
+						<h3>Üzenet a Hirdetőnek</h3>
+						<div id="uzenetWrapper"></div>
+						<form class="form-horizontal" role="form" method="post">
+							<div class="form-group form-group-sm">
+								<label class="col-sm-3 control-label" for="feladoNev">Nevem</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="feladoNev" name="feladoNev" autofocus="" required="true" placeholder="" value="${(felhasznalo.nev)!''}">
+								</div>
+							</div>
+							<div class="form-group form-group-sm">
+								<label class="col-sm-3 control-label" for="feladoEmail">Email címem</label>
+								<div class="col-sm-7">
+									<input type="email" class="form-control" id="feladoEmail" name="feladoEmail" autofocus="" required="true" placeholder="" value="${(felhasznalo.email)!''}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="uzenetSzoveg">Üzenetem</label>
+								<div class="col-sm-7">
+									<textarea class="form-control" rows="5" id="uzenetSzoveg" name="uzenetSzoveg"></textarea>
+								</div>
+							</div>
+							<div class="form-group form-group-sm">
+								<div class="col-sm-offset-3 col-sm-7">
+									<button type="button" id="uzenetKuldButton" class="btn btn-success">Elküldöm az üzenetet</button>
+								</div>
+							</div>
+						</form>
+						<script type="text/javascript">
+						$('#uzenetKuldButton').click(function(){
+							$('#uzenetWrapper').html('<i class="fa fa-refresh fa-spin"></i>');
+							
+							var feladoNev = $('#feladoNev').val();
+							var feladoEmail = $('#feladoEmail').val();
+							var uzenetSzoveg = $('#uzenetSzoveg').val();
+							
+							if(feladoNev.length==0) {
+								$('#uzenetWrapper').html('<div class="alert alert-danger">A feladó neve nem lehet üres.</div>');
+								$('#feladoNev').focus();
+								return;
+							}
+							if(feladoEmail.length==0) {
+								$('#uzenetWrapper').html('<div class="alert alert-danger">A feladó email címe nem lehet üres.</div>');
+								$('#feladoEmail').focus();
+								return;
+							}
+							if(uzenetSzoveg.length==0) {
+								$('#uzenetWrapper').html('<div class="alert alert-danger">Az üzenet nem lehet üres.</div>');
+								$('#uzenetSzoveg').focus();
+								return;
+							}
+							
+							$.ajax({
+								type: "POST",
+								url: "${app.contextRoot}/api/v1/hirdetesUzenet",
+								data: JSON.stringify({hirdetesId:"${hirdetes.id}", feladoNev: feladoNev, feladoEmail: feladoEmail, uzenet: uzenetSzoveg}),
+								success: function(data){
+									if(data) {
+						        		$('#uzenetWrapper').html(data);
+									} else {
+										$('#uzenetWrapper').html('<div class="alert alert-info">...</div>');
+									}
+						        },
+						        error: function() {
+									$('#uzenetWrapper').html('<div class="alert alert-warning">Hiba az üzenet küldése közben.</div>');
+								},
+								complete: function() {
+									$('#uzenetWrapper').html('');
+								},
+								dataType: "json",
+								contentType: "application/json; charset=UTF-8"
+							});
+						});
+					    </script>
 						</#if>
 						
 						<hr>

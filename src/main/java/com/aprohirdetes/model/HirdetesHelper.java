@@ -12,6 +12,17 @@ import com.aprohirdetes.utils.MongoUtils;
 
 public class HirdetesHelper {
 
+	public static Hirdetes load(String hirdetesId) {
+		return load(new ObjectId(hirdetesId));
+	}
+	
+	public static Hirdetes load(ObjectId hirdetesId) {
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("id").equal(hirdetesId);
+		return query.get();
+	}
+	
 	/**
 	 * A megadott Hirdetes lejarErtesites mezojenek beallitasa a megadott datumra
 	 * @see Hirdetes
