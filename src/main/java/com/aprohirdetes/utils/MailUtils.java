@@ -1,10 +1,8 @@
 package com.aprohirdetes.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -96,9 +94,8 @@ public class MailUtils {
 			// Send message
 			Transport.send(message);
 			ret = true;
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
+			System.out.println("itt");
 			e.printStackTrace();
 		}
 		

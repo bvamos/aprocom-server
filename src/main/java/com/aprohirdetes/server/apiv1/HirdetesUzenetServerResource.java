@@ -23,21 +23,23 @@ public class HirdetesUzenetServerResource extends ServerResource implements
 		HashMap<String, String> result = new HashMap<String, String>();
 		
 		if (entity != null) {
-			System.out.println(entity.toString());
+			//System.out.println(entity.toString());
 			JSONObject requestJson = entity.getJsonObject();
 			String hirdetesId = requestJson.getString("hirdetesId");
-			System.out.println(hirdetesId);
 			Hirdetes hirdetes = HirdetesHelper.load(hirdetesId);
 			
 			try {
-				System.out.println(entity.toString());
+				//System.out.println(entity.toString());
 				
 				if(hirdetes!=null) {
 					if(!MailUtils.sendMailHirdeto(hirdetes, requestJson.getString("feladoNev"), requestJson.getString("feladoEmail"), requestJson.getString("uzenet"))) {
+						System.out.println("Nem sikerült a levél elküldése.");
 						result.put("hibaUzenet", "Nem sikerült a levél elküldése.");
+						setStatus(Status.SERVER_ERROR_INTERNAL);
 					}
 				} else {
 					result.put("hibaUzenet", "Nincs ilyen Hirdetés.");
+					setStatus(Status.SERVER_ERROR_INTERNAL);
 				}
 			} catch (JSONException je) {
 				getLogger().severe(je.getMessage());
