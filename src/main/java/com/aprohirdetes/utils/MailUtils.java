@@ -95,7 +95,6 @@ public class MailUtils {
 			Transport.send(message);
 			ret = true;
 		} catch (Exception e) {
-			System.out.println("itt");
 			e.printStackTrace();
 		}
 		
