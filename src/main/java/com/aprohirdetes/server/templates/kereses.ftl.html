@@ -36,12 +36,16 @@
 						<#if (hirdetesSzoveg?length>300) >
 							<#assign hirdetesSzoveg = hirdetes.szoveg[0..300] + "..." >
 						</#if>
+						<#assign hirdetesCim = hirdetes.cim >
+						<#if (hirdetesCim?length>60) >
+							<#assign hirdetesCim = hirdetes.cim[0..60] + "..." >
+						</#if>
 					<!-- ${sorszam} -->
 					<div class="hirdeteslista-container" itemscope itemtype="http://schema.org/Product">
 						<div class="hirdetes-header">
 							<table border="0" width="100%">
 								<tr>
-									<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">${hirdetes.cim}</a>
+									<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">${hirdetesCim}</a>
 									 (${hirdetes.egyebMezok.tipusNev}) <br/>
 									 <span>${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
 									<td class="hirdetes-kategoria">${hirdetes.egyebMezok.kategoriaNev}
