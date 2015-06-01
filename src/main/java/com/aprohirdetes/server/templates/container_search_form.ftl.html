@@ -22,7 +22,7 @@
 						</#if>
 						<option value="">Összes kategória</option>
 						<#list kategoriaList as kategoria>
-						<option value="${kategoria.urlNev}" <#if '${kategoria.urlNev}'=selectedKategoria>selected</#if>>${kategoria.nev}</option>
+						<option value="${kategoria.urlNev}" style="font-weight: bold;" <#if '${kategoria.urlNev}'=selectedKategoria>selected</#if>>${kategoria.nev}</option>
 							<#list kategoria.alkategoriaList as alkategoria>
 							<option value="${alkategoria.urlNev}" <#if '${alkategoria.urlNev}'=selectedKategoria>selected</#if>>&nbsp;&nbsp;${alkategoria.nev}</option>
 								<#list alkategoria.alkategoriaList as alalkategoria>
@@ -39,7 +39,7 @@
 						<#list helysegList as helyseg>
 						<option value="${helyseg.urlNev}" <#if '${helyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>${helyseg.nev}</option>
 							<#list helyseg.alhelysegList as alhelyseg>
-							<option value="${alhelyseg.urlNev}" <#if '${alhelyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>&nbsp;&nbsp;${alhelyseg.nev}</option>
+							<option value="${alhelyseg.urlNev}" style="font-weight: bold;" <#if '${alhelyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>&nbsp;&nbsp;${alhelyseg.nev}</option>
 								<#list alhelyseg.alhelysegList as alalhelyseg>
 								<option value="${alalhelyseg.urlNev}" <#if '${alalhelyseg.urlNev}'="${hirdetesHelyseg[0]!''}">selected</#if>>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
 								</#list>

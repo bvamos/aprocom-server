@@ -45,7 +45,7 @@
 								<#if hirdetesHelyseg==alhelyseg.urlNev>
 									<#assign selected=' selected'>
 								</#if>
-								<option value="${alhelyseg.urlNev}"${selected}>&nbsp;&nbsp;${alhelyseg.nev}</option>
+								<option value="${alhelyseg.urlNev}"${selected} style="font-weight: bold;">&nbsp;&nbsp;${alhelyseg.nev}</option>
 									<#list alhelyseg.alhelysegList as alalhelyseg>
 									<#assign selected=''>
 									<#if hirdetesHelyseg==alalhelyseg.urlNev>
@@ -69,7 +69,7 @@
 							<#if hirdetesKategoria==kategoria.urlNev>
 								<#assign selected=' selected'>
 							</#if>
-							<option value="${kategoria.urlNev}"${selected}>${kategoria.nev}</option>
+							<option value="${kategoria.urlNev}"${selected} style="font-weight: bold;">${kategoria.nev}</option>
 								<#list kategoria.alkategoriaList as alkategoria>
 								<#assign selected=''>
 								<#if hirdetesKategoria==alkategoria.urlNev>
