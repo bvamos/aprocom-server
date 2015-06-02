@@ -157,7 +157,23 @@ public class AproApplication extends Application {
 		String imagesUri = "war:///images";
 		Directory imagesDirectory = new Directory(getContext(), imagesUri);
 		imagesDirectory.setListingAllowed(true);
-		router.attach("/images", imagesDirectory);
+		
+		Filter cacheImages = new Filter(getContext(), imagesDirectory){
+		    protected void afterHandle(Request request, Response response) {
+		        super.afterHandle(request, response);
+		        if (response!= null && response.getEntity() != null) {
+		            if (response.getStatus().equals(Status.SUCCESS_OK)){
+		                final Calendar calendar = Calendar.getInstance();
+		                calendar.add(Calendar.MONTH, 1);
+		                response.getEntity().setExpirationDate(calendar.getTime());
+		                response.getEntity().setModificationDate(null);
+		                response.setCacheDirectives(new ArrayList<CacheDirective>());
+		                response.getCacheDirectives().add(CacheDirective.maxAge(2592000));
+		            }
+		        }
+		    }
+		};
+		router.attach("/images", cacheImages);
 		
 		String staticImagesUploadUri = "file://" + AproConfig.APP_CONFIG.getProperty("WORKDIR") + "/images_upload";
 		Directory staticImagesUploadDirectory = new Directory(getContext(), staticImagesUploadUri);
