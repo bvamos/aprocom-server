@@ -10,10 +10,10 @@
 			</div>
 			<div class="col-sm-9 col-md-10">
 			
-				<h3>Beérkezett üzenetek &raquo; ${(uzenet.targy)!'Hiba'}</h3>
+				<h3>Beérkezett üzenetek <small>&raquo; ${(uzenet.targy)!'Hiba'}</small></h3>
 					
 				<#if hibaUzenet?? >
-				<div class="alert alert-danger">${hibaUzenet}</div>
+				<div class="alert alert-danger" role="alert">${hibaUzenet}</div>
 				</#if>
 				
 				<#if uzenet?? >

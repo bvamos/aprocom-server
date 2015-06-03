@@ -32,6 +32,7 @@ public class UserUzenetekServerResource extends ServerResource implements
 
 	private String contextPath = "";
 	private Session session = null;
+	private String uzenetTipus = "beerkezett";
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -41,6 +42,12 @@ public class UserUzenetekServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 		
 		this.session = AproUtils.getSession(this);
+		
+		try {
+			this.uzenetTipus = (String) this.getRequestAttributes().get("tipus");
+		} catch(Exception e) {
+			getLogger().severe("Uzenet megjelenitese. Hibas a tipus: " + (String) this.getRequestAttributes().get("tipus"));
+		}
 	}
 
 	@Override
@@ -64,12 +71,17 @@ public class UserUzenetekServerResource extends ServerResource implements
 			ftl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
 		} else {
 			dataModel.put("session", this.session);
+			dataModel.put("uzenetTipus", this.uzenetTipus);
 
 			// Uzenetek lekerdezese
 			Datastore datastore = MongoUtils.getDatastore();
 			Query<Uzenet> query = datastore.createQuery(Uzenet.class);
 			
-			query.criteria("cimzettId").equal(this.session.getHirdetoId());
+			if("elkuldott".equalsIgnoreCase(uzenetTipus)) {
+				query.criteria("feladoId").equal(this.session.getHirdetoId());
+			} else {
+				query.criteria("cimzettId").equal(this.session.getHirdetoId());
+			}
 			query.criteria("torolve").equal(false);
 			
 			query.order("-id");

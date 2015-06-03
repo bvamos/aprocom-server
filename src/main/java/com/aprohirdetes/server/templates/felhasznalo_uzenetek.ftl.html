@@ -10,7 +10,12 @@
 			</div>
 			<div class="col-sm-9 col-md-10">
 			
-				<h3>Beérkezett üzeneteim (${uzenetList?size})</h3>
+				<h3>Üzeneteim</h3>
+				
+				<ul class="nav nav-tabs">
+					<li role="presentation" class="<#if uzenetTipus=="beerkezett">active</#if>"><a href="${app.contextRoot}/felhasznalo/uzenetek/beerkezett">Beérkezett üzeneteim<#if uzenetTipus=="beerkezett"> (${uzenetList?size})</#if></a></li>
+					<li role="presentation" class="<#if uzenetTipus=="elkuldott">active</#if>"><a href="${app.contextRoot}/felhasznalo/uzenetek/elkuldott">Elküldött üzeneteim<#if uzenetTipus=="elkuldott"> (${uzenetList?size})</#if></a></li>
+				</ul>
 					
 				<#if uzenet?? >
 				<div class="alert alert-success">${uzenet}</div>
@@ -23,7 +28,11 @@
 					<thead>
 					<tr>
 						<th>Dátum</th>
+						<#if uzenetTipus=="elkuldott">
+						<th>Címzett</th>
+						<#else>
 						<th>Feladó</th>
+						</#if>
 						<th>Tárgy</th>
 						<!-- th>Műveletek</th-->
 					</tr>
@@ -40,7 +49,7 @@
 					<tr>
 						<td>${strong_start}${uzenet.datum}${strong_end}</td>
 						<td>${strong_start}${(uzenet.feladoEmail)!''}${strong_end}</td>
-						<td>${strong_start}<a href="${app.contextRoot}/felhasznalo/uzenetek/${uzenet.id}">${uzenet.targy}</a>${strong_end}</td>
+						<td>${strong_start}<a href="${app.contextRoot}/felhasznalo/uzenet/${uzenet.id}">${uzenet.targy}</a>${strong_end}</td>
 						<!-- td><a href="${app.contextRoot}/"><i class="fa fa-trash-o"></i> Törlés</a></td -->
 					</tr>
 				</#list>
