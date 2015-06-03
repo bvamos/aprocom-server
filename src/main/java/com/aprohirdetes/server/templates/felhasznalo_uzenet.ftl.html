@@ -1,0 +1,54 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<div class="col-sm-3 col-md-2">
+		
+<#include "profil_menu.ftl.html"/>
+				
+			</div>
+			<div class="col-sm-9 col-md-10">
+			
+				<h3>Beérkezett üzenetek &raquo; ${(uzenet.targy)!'Hiba'}</h3>
+					
+				<#if hibaUzenet?? >
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+				
+				<#if uzenet?? >
+				
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Feladó</label>
+						<div class="col-sm-10">
+							<p class="form-control-static">${uzenet.feladoEmail}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Tárgy</label>
+						<div class="col-sm-10">
+							<p class="form-control-static">${uzenet.targy}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Dátum</label>
+						<div class="col-sm-10">
+							<p class="form-control-static">${uzenet.datum}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Üzenet</label>
+						<div class="col-sm-10">
+							<p class="form-control-static"><pre>${uzenet.szoveg}</pre></p>
+						</div>
+					</div>
+				</form>
+				
+				</#if>
+				
+			</div>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>

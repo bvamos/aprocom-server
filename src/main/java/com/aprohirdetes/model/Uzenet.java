@@ -1,10 +1,10 @@
 package com.aprohirdetes.model;
 
-import java.util.Date;
-
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+
+import com.aprohirdetes.utils.AproUtils;
 
 @Entity("uzenet")
 public class Uzenet {
@@ -20,7 +20,6 @@ public class Uzenet {
 	private ObjectId cimzettId;
 	private String cimzettEmail;
 	
-	private Date kuldesDatum;
 	private boolean kezbesitve;
 	private boolean elolvasva;
 	private boolean torolve;
@@ -37,6 +36,11 @@ public class Uzenet {
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
+	
+	public String getDatum() {
+		return AproUtils.getHirdetesFeladvaSzoveg(this.id.getTime());
+	}
+	
 	public ObjectId getElozmenyId() {
 		return elozmenyId;
 	}
@@ -78,12 +82,6 @@ public class Uzenet {
 	}
 	public void setCimzettEmail(String cimzettEmail) {
 		this.cimzettEmail = cimzettEmail;
-	}
-	public Date getKuldesDatum() {
-		return kuldesDatum;
-	}
-	public void setKuldesDatum(Date kuldesDatum) {
-		this.kuldesDatum = kuldesDatum;
 	}
 	public boolean isKezbesitve() {
 		return kezbesitve;

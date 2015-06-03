@@ -2,7 +2,6 @@ package com.aprohirdetes.server;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -10,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
@@ -22,16 +22,18 @@ import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.Uzenet;
+import com.aprohirdetes.model.UzenetHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
 
-public class UserUzenetekServerResource extends ServerResource implements
+public class UserUzenetServerResource extends ServerResource implements
 		StaticHtmlResource {
 
 	private String contextPath = "";
 	private Session session = null;
+	private ObjectId uzenetId = null;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -41,11 +43,17 @@ public class UserUzenetekServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 		
 		this.session = AproUtils.getSession(this);
+		
+		try {
+			this.uzenetId = new ObjectId((String) this.getRequestAttributes().get("uzenetId"));
+		} catch(Exception e) {
+			getLogger().severe("Uzenet megjelenitese. Hibas az azonosito: " + (String) this.getRequestAttributes().get("uzenetId"));
+		}
 	}
 
 	@Override
 	public Representation representHtml() throws IOException {
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("felhasznalo_uzenetek.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("felhasznalo_uzenet.ftl.html");
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -65,22 +73,25 @@ public class UserUzenetekServerResource extends ServerResource implements
 		} else {
 			dataModel.put("session", this.session);
 
-			// Uzenetek lekerdezese
-			Datastore datastore = MongoUtils.getDatastore();
-			Query<Uzenet> query = datastore.createQuery(Uzenet.class);
-			
-			query.criteria("cimzettId").equal(this.session.getHirdetoId());
-			query.criteria("torolve").equal(false);
-			
-			query.order("-id");
-			
-			ArrayList<Uzenet> uzenetList = new ArrayList<Uzenet>();
-			for(Uzenet h : query) {
-				// Uzenet mentese a listaba
-				uzenetList.add(h);
+			if(uzenetId==null) {
+				dataModel.put("hibaUzenet", "Hoppá, hibás az Üzenet azonosítója.");
+			} else {
+				// Uzenet lekerdezese
+				Datastore datastore = MongoUtils.getDatastore();
+				Query<Uzenet> query = datastore.createQuery(Uzenet.class);
+				
+				query.criteria("cimzettId").equal(this.session.getHirdetoId());
+				query.criteria("id").equal(uzenetId);
+				query.criteria("torolve").equal(false);
+				
+				Uzenet uzenet = query.get();
+				if(uzenet!=null) {
+					dataModel.put("uzenet", uzenet);
+					UzenetHelper.setElolvasva(uzenetId);
+				} else {
+					dataModel.put("hibaUzenet", "Sajnos a megadott azonosítóval nincs Üzeneted.");
+				}
 			}
-			
-			dataModel.put("uzenetList", uzenetList);
 		}
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
