@@ -33,6 +33,7 @@ public class UserUzenetServerResource extends ServerResource implements
 
 	private String contextPath = "";
 	private Session session = null;
+	private String uzenetTipus = "beerkezett";
 	private ObjectId uzenetId = null;
 	
 	@Override
@@ -43,6 +44,12 @@ public class UserUzenetServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 		
 		this.session = AproUtils.getSession(this);
+		
+		try {
+			this.uzenetTipus = (String) this.getRequestAttributes().get("tipus");
+		} catch(Exception e) {
+			getLogger().severe("Uzenet megjelenitese. Hibas a tipus: " + (String) this.getRequestAttributes().get("tipus"));
+		}
 		
 		try {
 			this.uzenetId = new ObjectId((String) this.getRequestAttributes().get("uzenetId"));
@@ -80,13 +87,18 @@ public class UserUzenetServerResource extends ServerResource implements
 				Datastore datastore = MongoUtils.getDatastore();
 				Query<Uzenet> query = datastore.createQuery(Uzenet.class);
 				
-				query.criteria("cimzettId").equal(this.session.getHirdetoId());
+				if("elkuldott".equalsIgnoreCase(uzenetTipus)) {
+					query.criteria("feladoId").equal(this.session.getHirdetoId());
+				} else {
+					query.criteria("cimzettId").equal(this.session.getHirdetoId());
+				}
 				query.criteria("id").equal(uzenetId);
 				query.criteria("torolve").equal(false);
 				
 				Uzenet uzenet = query.get();
 				if(uzenet!=null) {
 					dataModel.put("uzenet", uzenet);
+					dataModel.put("uzenetTipus", this.uzenetTipus);
 					UzenetHelper.setElolvasva(uzenetId);
 				} else {
 					dataModel.put("hibaUzenet", "Sajnos a megadott azonosítóval nincs Üzeneted.");

@@ -68,13 +68,13 @@
 							<div class="form-group form-group-sm">
 								<label class="col-sm-3 control-label" for="feladoNev">Nevem</label>
 								<div class="col-sm-7">
-									<input type="text" class="form-control" id="feladoNev" name="feladoNev" autofocus="" required="true" placeholder="" value="${(felhasznalo.nev)!''}">
+									<input type="text" class="form-control" id="feladoNev" name="feladoNev" autofocus="" required="true" placeholder="" value="${(session.felhasznaloNev)!''}">
 								</div>
 							</div>
 							<div class="form-group form-group-sm">
 								<label class="col-sm-3 control-label" for="feladoEmail">Email címem</label>
 								<div class="col-sm-7">
-									<input type="email" class="form-control" id="feladoEmail" name="feladoEmail" autofocus="" required="true" placeholder="" value="${(felhasznalo.email)!''}">
+									<input type="email" class="form-control" id="feladoEmail" name="feladoEmail" autofocus="" required="true" placeholder="" value="${(session.felhasznaloEmail)!''}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -95,6 +95,11 @@
 							
 							var feladoNev = $('#feladoNev').val();
 							var feladoEmail = $('#feladoEmail').val();
+							<#if session?? >
+							var feladoId = '${session.hirdetoIdAsString}';
+							<#else>
+							var feladoId = null;
+							</#if>
 							var uzenetSzoveg = $('#uzenetSzoveg').val();
 							
 							if(feladoNev.length==0) {
@@ -116,7 +121,7 @@
 							$.ajax({
 								type: "POST",
 								url: "${app.contextRoot}/api/v1/hirdetesUzenet",
-								data: JSON.stringify({hirdetesId:"${hirdetes.id}", feladoNev: feladoNev, feladoEmail: feladoEmail, uzenet: uzenetSzoveg}),
+								data: JSON.stringify({hirdetesId:"${hirdetes.id}", feladoNev: feladoNev, feladoEmail: feladoEmail, feladoId: feladoId, uzenet: uzenetSzoveg}),
 								success: function(data){
 									if(data) {
 										$('#uzenetWrapper').html('<div class="alert alert-info">Az üzeneted sikeresen elküldtük</div>');

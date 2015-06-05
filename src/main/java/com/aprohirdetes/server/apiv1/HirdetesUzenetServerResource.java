@@ -3,6 +3,7 @@ package com.aprohirdetes.server.apiv1;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.restlet.data.Status;
@@ -49,7 +50,9 @@ public class HirdetesUzenetServerResource extends ServerResource implements
 					uzenet.setCimzettEmail(hirdetes.getHirdeto().getEmail());
 					uzenet.setCimzettId(hirdetes.getHirdetoId());
 					uzenet.setFeladoEmail(requestJson.getString("feladoEmail"));
-					uzenet.setTargy("Üzenet a weboldalról");
+					if(requestJson.getString("feladoId")!=null && !requestJson.getString("feladoId").isEmpty())
+						uzenet.setFeladoId(new ObjectId(requestJson.getString("feladoId")));
+					uzenet.setTargy("Üzenet: " + hirdetes.getCim());
 					uzenet.setSzoveg(body);
 					uzenet.setKezbesitve(true);
 					UzenetHelper.add(uzenet);

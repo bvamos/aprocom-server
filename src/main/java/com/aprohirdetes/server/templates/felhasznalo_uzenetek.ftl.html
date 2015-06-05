@@ -47,9 +47,9 @@
 						<#assign strong_end = "</strong>" >
 					</#if>
 					<tr>
-						<td>${strong_start}${uzenet.datum}${strong_end}</td>
+						<td>${strong_start}<a href="${app.contextRoot}/felhasznalo/uzenet/${uzenetTipus}/${uzenet.id}">${uzenet.datum}</a>${strong_end}</td>
 						<td>${strong_start}${(uzenet.feladoEmail)!''}${strong_end}</td>
-						<td>${strong_start}<a href="${app.contextRoot}/felhasznalo/uzenet/${uzenet.id}">${uzenet.targy}</a>${strong_end}</td>
+						<td>${strong_start}<a href="${app.contextRoot}/felhasznalo/uzenet/${uzenetTipus}/${uzenet.id}">${uzenet.targy}</a>${strong_end}</td>
 						<!-- td><a href="${app.contextRoot}/"><i class="fa fa-trash-o"></i> Törlés</a></td -->
 					</tr>
 				</#list>

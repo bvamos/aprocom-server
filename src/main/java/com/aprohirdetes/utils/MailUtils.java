@@ -25,12 +25,12 @@ public class MailUtils {
 	 * @param messageBody
 	 * @return
 	 */
-	public static boolean sendMail(String toAddress, String messageSubject, String messageBody) {
+	public static boolean sendMail(String toAddress, String messageSubject, String messageBody, String fromAddress) {
 		boolean ret = false;
 		
 		String host = AproConfig.APP_CONFIG.getProperty("MAIL.SMTP.HOST");
 		String port = AproConfig.APP_CONFIG.getProperty("MAIL.SMTP.PORT");
-		String from = AproConfig.APP_CONFIG.getProperty("MAIL.FROM");
+		String from = (fromAddress!=null) ? fromAddress : AproConfig.APP_CONFIG.getProperty("MAIL.FROM");
 		final String user = AproConfig.APP_CONFIG.getProperty("MAIL.USER");
 		final String pass = AproConfig.APP_CONFIG.getProperty("MAIL.PASSWORD");
 		final boolean debug = Boolean.parseBoolean(AproConfig.APP_CONFIG.getProperty("MAIL.DEBUG"));
@@ -101,6 +101,10 @@ public class MailUtils {
 		return ret;
 	}
 	
+	public static boolean sendMail(String toAddress, String messageSubject, String messageBody) {
+		return sendMail(toAddress, messageSubject, messageBody, null);
+	}
+	
 	/**
 	 * Visszaigazolo level kuldese aktivalo linkkel a hirdetesben megadott email cimre.
 	 * Plusz ertesito level nekunk.
@@ -152,6 +156,12 @@ public class MailUtils {
 		return ret;
 	}
 	
+	/**
+	 * Elfelejtett jelszo kikuldese emailben
+	 * @param ho Hirdeto
+	 * @param jelszo
+	 * @return
+	 */
 	public static boolean sendMailUjJelszo(Hirdeto ho, String jelszo) {
 		boolean ret = false;
 		
@@ -169,6 +179,13 @@ public class MailUtils {
 		return ret;
 	}
 	
+	/**
+	 * Level kuldese a kapcsolat formrol
+	 * @param fromNev
+	 * @param fromEmail
+	 * @param uzenet
+	 * @return
+	 */
 	public static boolean sendMailKapcsolat(String fromNev, String fromEmail, String uzenet) {
 		boolean ret = false;
 		
@@ -181,19 +198,27 @@ public class MailUtils {
 					+ "Üdvözlettel,\n"
 					+ fromNev + " (" + fromEmail + ")\n";
 			
-			ret = MailUtils.sendMail(to, subject, body);
+			ret = MailUtils.sendMail(to, subject, body, fromEmail);
 		}
 		
 		return ret;
 	}
 	
+	/**
+	 * 
+	 * @param hirdetes
+	 * @param fromNev
+	 * @param fromEmail
+	 * @param uzenet
+	 * @return
+	 */
 	public static boolean sendMailHirdeto(Hirdetes hirdetes, String fromNev, String fromEmail, String uzenet) {
 		boolean ret = false;
 		
 		String to = hirdetes.getHirdeto().getEmail();
 		
 		if(fromEmail != null && !fromEmail.isEmpty()) {
-			String subject = "Üzenet a weboldalról";
+			String subject = "Üzenet: " + hirdetes.getCim();
 			String body = "Kedves " + hirdetes.getHirdeto().getNev() + "!\n\n"
 					+ uzenet + "\n\n"
 					+ "Kapcsolódó hirdetés: \n"
@@ -202,7 +227,7 @@ public class MailUtils {
 					+ "Üdvözlettel,\n"
 					+ fromNev + " (" + fromEmail + ")\n";
 			
-			ret = MailUtils.sendMail(to, subject, body);
+			ret = MailUtils.sendMail(to, subject, body, fromEmail);
 		}
 		
 		return ret;

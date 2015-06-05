@@ -38,6 +38,10 @@ public class Session {
 	public ObjectId getHirdetoId() {
 		return hirdetoId;
 	}
+	
+	public String getHirdetoIdAsString() {
+		return hirdetoId.toString();
+	}
 
 	public void setHirdetoId(ObjectId hirdetoId) {
 		this.hirdetoId = hirdetoId;
@@ -52,7 +56,7 @@ public class Session {
 	}
 	
 	/**
-	 * Ha van HirdetoId (miert ne lenne, ha ven session), akkor visszaadja a Hirdeto nevet es email cimet
+	 * Ha van HirdetoId (miert ne lenne, ha van session), akkor visszaadja a Hirdeto nevet es email cimet
 	 * @return Nev (email cim)
 	 */
 	public String getFelhasznaloNev() {
@@ -61,10 +65,26 @@ public class Session {
 		if(hirdetoId != null) {
 			Hirdeto h = HirdetoHelper.load(hirdetoId);
 			if(h != null) {
-				ret = h.getEmail();
 				if(h.getNev() != null && !h.getNev().isEmpty()) {
-					ret = h.getNev() + " (" + ret + ")";
+					ret = h.getNev();
 				}
+			}
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * Ha van HirdetoId (miert ne lenne, ha van session), akkor visszaadja a Hirdeto email cimet
+	 * @return Email cim
+	 */
+	public String getFelhasznaloEmail() {
+		String ret = null;
+		
+		if(hirdetoId != null) {
+			Hirdeto h = HirdetoHelper.load(hirdetoId);
+			if(h != null) {
+				ret = h.getEmail();
 			}
 		}
 		

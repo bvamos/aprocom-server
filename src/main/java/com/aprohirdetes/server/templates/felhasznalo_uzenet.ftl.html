@@ -10,7 +10,7 @@
 			</div>
 			<div class="col-sm-9 col-md-10">
 			
-				<h3>Beérkezett üzenetek <small>&raquo; ${(uzenet.targy)!'Hiba'}</small></h3>
+				<h3><#if uzenetTipus=='elkuldott' >Elküldött<#else>Beérkezett</#if> üzenetek <small>&raquo; ${(uzenet.targy)!'Hiba'}</small></h3>
 					
 				<#if hibaUzenet?? >
 				<div class="alert alert-danger" role="alert">${hibaUzenet}</div>
@@ -20,7 +20,7 @@
 				
 				<form class="form-horizontal">
 					<div class="form-group">
-						<label class="col-sm-2 control-label">Feladó</label>
+						<label class="col-sm-2 control-label"><#if uzenetTipus=='beerkezett'>Feladó<#else>Címzett</#if></label>
 						<div class="col-sm-10">
 							<p class="form-control-static">${uzenet.feladoEmail}</p>
 						</div>
@@ -46,6 +46,10 @@
 				</form>
 				
 				</#if>
+				
+				<nav>
+					<ul class="pager"><li class="previous"><a href="${app.contextRoot}/felhasznalo/uzenetek/${uzenetTipus}">&larr; Vissza</a></li></ul>
+				</nav>
 				
 			</div>
 		</div>
