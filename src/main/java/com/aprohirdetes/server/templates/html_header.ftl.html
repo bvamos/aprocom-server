@@ -9,11 +9,15 @@
 	<meta name="keywords" content="${app.keywords!'apróhirdetés apró hirdetés használt olcsó eladó keres kínál ingyen'}" />
 	<meta name="google-site-verification" content="gw_ZSftHIh4ySnCFBq6PFTsnNFzd1yUpQ7V2uIWXey4" />
 	
+	<#if hirdetes?? >
 	<meta property="og:title" content="Apróhirdetés.com - ${(hirdetes.cim)!app.htmlTitle}"/>
-	<meta property="og:type" content="product"/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content="https://www.aprohirdetes.com/"/>
-	<meta property="og:description" content="${app.description!'Ingyenes, fényképes apróhirdetések: ingatlan, jármű, autó, állás, munka, pénz'}"/>
+	<meta property="og:type" content="article"/>
+	<#if hirdetes.kepek?has_content >
+	<meta property="og:image" content="https://www.aprohirdetes.com${app.contextRoot}/static/images/${hirdetes.kepek[0].fileNev}"/>
+	</#if>
+	<meta property="og:url" content="https://www.aprohirdetes.com${app.contextRoot}"/>
+	<meta property="og:description" content="${hirdetes.szoveg!'Ingyenes, fényképes apróhirdetések: ingatlan, jármű, autó, állás, munka, pénz'}"/>
+	</#if>
 	
 	<link rel="stylesheet" href="${app.contextRoot}/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="${app.contextRoot}/css/jquery.fileupload.css"/>
