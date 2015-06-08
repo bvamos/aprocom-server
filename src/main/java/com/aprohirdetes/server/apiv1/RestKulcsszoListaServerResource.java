@@ -42,4 +42,9 @@ public class RestKulcsszoListaServerResource extends ServerResource implements A
 		return rep;
 	}
 
+	@Override
+	public Representation representHtml() throws IOException {
+		getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
+	}
 }

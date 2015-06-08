@@ -108,4 +108,9 @@ public class SessionBelepesServerResource extends ServerResource implements
 		return null;
 	}
 	
+	@Override
+	public Representation representHtml() throws IOException {
+		getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
+	}
 }

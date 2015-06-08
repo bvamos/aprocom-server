@@ -2,9 +2,9 @@ package com.aprohirdetes.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Locale;
-
 import javax.servlet.ServletContext;
 
 import org.restlet.data.Cookie;
@@ -128,5 +128,44 @@ public class AproUtils {
 		}
 		
 		return ret.toString();
+	}
+	
+	public static class Captcha {
+		private LinkedHashMap<String, Integer> kodok = new LinkedHashMap<String, Integer>();
+		
+		public Captcha() {
+			kodok.put("Egy+egy", 2);
+			kodok.put("Hat+Nyolc", 14);
+		}
+		
+		public int getSize() {
+			return kodok.size();
+		}
+		
+		public int getRandom() {
+			return (int)(Math.random()*getSize());
+		}
+		
+		public String getKey(int n) {
+			String ret = null;
+			int i = 0;
+			for(String s : kodok.keySet()) {
+				ret = s;
+				if(i==n) continue;
+				i++;
+			}
+			return ret;
+		}
+		
+		public Integer getValue(int n) {
+			Integer ret = null;
+			int i = 0;
+			for(String s : kodok.keySet()) {
+				ret = kodok.get(s);
+				if(i==n) continue;
+				i++;
+			}
+			return ret;
+		}
 	}
 }

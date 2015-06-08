@@ -88,4 +88,10 @@ public class SessionKilepesServerResource extends ServerResource implements
 		getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
 		return null;
 	}
+	
+	@Override
+	public Representation representHtml() throws IOException {
+		getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
+	}
 }

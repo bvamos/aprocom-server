@@ -12,6 +12,9 @@ public interface APIRestResource {
 	@Get("json")
 	public Representation representJson() throws IOException;
 	
+	@Get("html")
+	public Representation representHtml() throws IOException;
+	
 	@Post("json")
 	public Representation acceptJson(JsonRepresentation entity) throws Exception;
 	

@@ -6,9 +6,11 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
+import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.APIRestResource;
@@ -54,4 +56,10 @@ public class RestHirdetesekServerResource extends ServerResource implements APIR
 		return null;
 	}
 
+	@Override 
+	public Representation representHtml() throws IOException {
+		Representation rep = new StringRepresentation("Hamarosan...", MediaType.TEXT_HTML);
+		
+		return rep;
+	}
 }
