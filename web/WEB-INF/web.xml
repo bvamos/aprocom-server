@@ -14,7 +14,7 @@
     </init-param>
     <init-param>
       <param-name>org.restlet.clients</param-name>
-      <param-value>CLAP FILE</param-value>
+      <param-value>CLAP FILE HTTPS</param-value>
     </init-param>
   </servlet>
   
