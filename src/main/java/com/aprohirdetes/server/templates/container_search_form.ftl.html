@@ -1,5 +1,5 @@
 		<div class="row search_container">
-			<form class="form-inline" name="KeresesForm" role="form" method="get" id="KeresesForm">
+			<form class="form-inline" name="KeresesForm" role="form" id="KeresesForm">
 				<input type="hidden" name="s" value="${sorrend!1}">
 				
 				<div class="form-group col-md-4 col-sm-3 col-md-4">
@@ -52,8 +52,9 @@
 			</form>
 			<script type="text/javascript">
 			$('#hirdetesKulcsszo').keypress(function(event) {
-		        if (event.keyCode == 13) {
+				if (event.keyCode == 13) {
 		        	$('#btnKereses').click();
+					return false;
 		        }
 		    });
 			//$('#hirdetesKulcsszo').autocomplete({ source: "/api/v1/kulcsszoLista"});
@@ -71,6 +72,7 @@
 			});
 			
 			$('#btnKereses').click(function(){
+				
 				if(typeof window.p === 'undefined') window.p = 1;
 	
 				var kulcsszo = $('#hirdetesKulcsszo').val();
