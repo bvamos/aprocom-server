@@ -17,21 +17,6 @@
 			</div>
 			</#list>
 		</div>
-		<script type="text/javascript">
-		function setKategoria(kategoria) {
-			selectOption(document.forms.KeresesForm.hirdetesKategoria, kategoria);
-			$('#btnKereses').click();
-		}
-		
-		function selectOption(select, option) {
-			for(var i=0; i<select.options.length; i++) {
-				if(select.options[i].value == option) {
-					select.options[i].selected = true;
-					break;
-				}
-			}
-		}
-		</script>
 <#include "page_footer.ftl.html"/>
 	</div>
 <#include "html_footer.ftl.html"/>

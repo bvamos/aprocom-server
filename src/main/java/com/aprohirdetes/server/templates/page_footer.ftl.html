@@ -1,3 +1,18 @@
+		<script type="text/javascript">
+		function setKategoria(kategoria) {
+			selectOption(document.forms.KeresesForm.hirdetesKategoria, kategoria);
+			$('#btnKereses').click();
+		}
+		
+		function selectOption(select, option) {
+			for(var i=0; i<select.options.length; i++) {
+				if(select.options[i].value == option) {
+					select.options[i].selected = true;
+					break;
+				}
+			}
+		}
+		</script>
 		<div class="row footer_container">
 			<div class="hidden-xs footer_links2">
 				<a href="${app.contextRoot}/sugo">Súgó</a>
