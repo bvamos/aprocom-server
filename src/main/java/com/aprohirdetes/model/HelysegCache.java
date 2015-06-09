@@ -127,13 +127,13 @@ public class HelysegCache {
 		// Szulo neve
 		for(Helyseg o : CACHE_BY_ID.values()) {
 			if(o.getId().equals(helyseg.getSzuloId())) {
-				ret = "<small>" + o.getNev() + " &raquo; </small>";
+				ret = o.getNev() + " &raquo; ";
 				break;
 			}
 		}
 		
 		// Megadott Helyseg neve
-		ret +=  "<small>" + helyseg.getNev() + "</small>";
+		ret +=  helyseg.getNev();
 		
 		return ret;
 	}

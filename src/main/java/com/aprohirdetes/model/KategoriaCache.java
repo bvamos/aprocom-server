@@ -142,13 +142,13 @@ public class KategoriaCache {
 		// Szulo kategoria neve
 		for(Kategoria kat : CACHE_BY_ID.values()) {
 			if(kat.getId().equals(kategoria.getSzuloId())) {
-				ret = "<small><a href=\"javascript:setKategoria('" + kat.getUrlNev() + "');\">" + kat.getNev() + "</a> &raquo; </small>";
+				ret = "<a href=\"javascript:setKategoria('" + kat.getUrlNev() + "');\">" + kat.getNev() + "</a> &raquo; ";
 				break;
 			}
 		}
 		
 		// Megadott kategoria neve
-		ret +=  "<small><a href=\"javascript:setKategoria('" + kategoria.getUrlNev() + "');\">" + kategoria.getNev() + "</a></small>";
+		ret +=  "<a href=\"javascript:setKategoria('" + kategoria.getUrlNev() + "');\">" + kategoria.getNev() + "</a>";
 		
 		return ret;
 	}
