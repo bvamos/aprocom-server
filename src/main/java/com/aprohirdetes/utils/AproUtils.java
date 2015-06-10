@@ -2,7 +2,6 @@ package com.aprohirdetes.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Locale;
 import javax.servlet.ServletContext;
@@ -69,34 +68,59 @@ public class AproUtils {
 		return ret;
 	}
 	
+	/**
+	 * Session cookie torlese kilepesnel
+	 * @param resource
+	 * @param sessionId
+	 */
 	public static void removeSessionCookie(Resource resource, String sessionId) {
 		ServletContext sc = (ServletContext) resource.getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		String contextPath = sc.getContextPath();
 		
 		// Cookie torlese
 		try {
-			CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
+			resource.getResponse().getCookieSettings().removeAll("AproSession");
+			
+			CookieSetting cookieSetting = new CookieSetting("AproSession", "");
 			cookieSetting.setVersion(0);
 			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(contextPath);
+			cookieSetting.setPath(contextPath + "/");
 			cookieSetting.setComment("Session Id");
 			cookieSetting.setMaxAge(0);
 			resource.getResponse().getCookieSettings().add(cookieSetting);
 			
-			System.out.println("AproSession cookie torolve");
+			resource.getLogger().info("AproSession cookie torolve");
 		} catch(NullPointerException npe) {
-			
+			resource.getLogger().severe("Hiba az AproSession cookie torlesenel: " + npe.getMessage());
 		}
 	}
 	
+	/**
+	 * Session betoltese a Session cookie alapjan es a cookie lejaratanak frissitese
+	 * @param resource
+	 * @return
+	 */
 	public static Session getSession(Resource resource) {
 		Session session = null;
 		String sessionId = null;
+		ServletContext sc = (ServletContext) resource.getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		String contextPath = sc.getContextPath();
 		
 		Cookie sessionCookie = resource.getRequest().getCookies().getFirst("AproSession");
 		if(sessionCookie != null) {
 			sessionId = sessionCookie.getValue();
-			resource.getLogger().info("getSession: " + sessionId);
+			resource.getLogger().info("AproSession cookie betoltve: " + sessionId);
+			
+			// Session Cookie uj lejarat ertekkel: 31 nap mostantol
+			CookieSetting cookieSetting = new CookieSetting(sessionCookie.getName(), sessionId);
+			cookieSetting.setVersion(sessionCookie.getVersion());
+			cookieSetting.setAccessRestricted(true);
+			cookieSetting.setPath(contextPath + "/");
+			cookieSetting.setComment("Session Id");
+			cookieSetting.setMaxAge(3600*24*31);
+			
+			resource.getResponse().getCookieSettings().removeAll("AproSession");
+			resource.getResponse().getCookieSettings().add(cookieSetting);
 		}
 		
 		session = SessionHelper.load(sessionId);
@@ -130,42 +154,4 @@ public class AproUtils {
 		return ret.toString();
 	}
 	
-	public static class Captcha {
-		private LinkedHashMap<String, Integer> kodok = new LinkedHashMap<String, Integer>();
-		
-		public Captcha() {
-			kodok.put("Egy+egy", 2);
-			kodok.put("Hat+Nyolc", 14);
-		}
-		
-		public int getSize() {
-			return kodok.size();
-		}
-		
-		public int getRandom() {
-			return (int)(Math.random()*getSize());
-		}
-		
-		public String getKey(int n) {
-			String ret = null;
-			int i = 0;
-			for(String s : kodok.keySet()) {
-				ret = s;
-				if(i==n) continue;
-				i++;
-			}
-			return ret;
-		}
-		
-		public Integer getValue(int n) {
-			Integer ret = null;
-			int i = 0;
-			for(String s : kodok.keySet()) {
-				ret = kodok.get(s);
-				if(i==n) continue;
-				i++;
-			}
-			return ret;
-		}
-	}
 }

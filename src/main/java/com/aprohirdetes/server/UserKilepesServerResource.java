@@ -46,9 +46,11 @@ public class UserKilepesServerResource extends ServerResource implements
 		
 		if (this.session != null) {
 			getLogger().info("Session cookie torlese: " + session.getSessionId());
-			//AproUtils.removeSessionCookie(this, this.sessionId);
+			
 			try {
-				CookieSetting cookieSetting = new CookieSetting("AproSession", session.getSessionId());
+				getResponse().getCookieSettings().removeAll("AproSession");
+				
+				CookieSetting cookieSetting = new CookieSetting("AproSession", "");
 				cookieSetting.setVersion(0);
 				cookieSetting.setAccessRestricted(true);
 				cookieSetting.setPath(contextPath + "/");
@@ -56,9 +58,9 @@ public class UserKilepesServerResource extends ServerResource implements
 				cookieSetting.setMaxAge(0);
 				getResponse().getCookieSettings().add(cookieSetting);
 				
-				System.out.println("AproSession cookie torolve: " + session.getSessionId());
+				getLogger().info("Kilepes. AproSession cookie torolve: " + session.getSessionId());
 			} catch(NullPointerException npe) {
-				
+				getLogger().severe("Hiba a Kilepesnel: " + npe.getMessage());
 			}
 			
 			// Session torlese az adatbazisbol

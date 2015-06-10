@@ -114,9 +114,9 @@ public class UserBelepesServerResource extends ServerResource implements
 			// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
 			// TODO: Relativ URL eseten kiegesziti, es h01.aprohirdtes.com lesz. Talan csak mas template-et kellene betolteni atiranyitas helyett
 			if("feladas".equalsIgnoreCase(this.referrer)) {
-				redirectPermanent("https://www.aprohirdetes.com/feladas");
+				redirectPermanent(this.contextPath + "/feladas");
 			} else {
-				redirectPermanent("https://www.aprohirdetes.com/felhasznalo/hirdetesek");
+				redirectPermanent(this.contextPath + "/felhasznalo/hirdetesek");
 			}
 		} else {
 			errorMessage = "Hibás felhasználónév vagy jelszó";
