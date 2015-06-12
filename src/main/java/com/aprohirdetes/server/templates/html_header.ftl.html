@@ -9,7 +9,7 @@
 	<meta name="keywords" content="${app.keywords!'apróhirdetés apró hirdetés használt olcsó eladó keres kínál ingyen'}" />
 	<meta name="google-site-verification" content="gw_ZSftHIh4ySnCFBq6PFTsnNFzd1yUpQ7V2uIWXey4" />
 	
-	<#if hirdetes?? >
+	<#if (hirdetes.id)?? >
 	<meta property="og:title" content="Apróhirdetés.com - ${(hirdetes.cim)!app.htmlTitle}"/>
 	<meta property="og:type" content="article"/>
 	<#if hirdetes.kepek?has_content >

@@ -64,7 +64,10 @@ public class Hirdetes {
 	 * Torles datuma
 	 */
 	private Date torolveDatum;
-	
+	/**
+	 * A hirdetes helysegenek urlNeve. A modosito html formon kell a helyseg kivalasztasahoz
+	 */
+	@NotSaved private String helysegUrlNev;
 	
 	public Hirdetes() {
 		setAr(0);
@@ -129,6 +132,10 @@ public class Hirdetes {
 
 	public void setHelysegId(ObjectId helysegId) {
 		this.helysegId = helysegId;
+	}
+	
+	public String getHelysegUrlNev() {
+		return HelysegCache.getHelysegUrlNev(helysegId);
 	}
 
 	public ObjectId getKategoriaId() {
@@ -219,8 +226,16 @@ public class Hirdetes {
 		return modositva==null ? new Date(id.getTime()) : modositva;
 	}
 
+	/**
+	 * Utolso modositas datumanak beallitasa
+	 * @param modositva Datum, vagy null, akkor a modositas datuma az aktualis datum lesz
+	 */
 	public void setModositva(Date modositva) {
-		this.modositva = modositva;
+		if(modositva==null) {
+			this.modositva = new Date();
+		} else {
+			this.modositva = modositva;
+		}
 	}
 
 	public Date getLejar() {

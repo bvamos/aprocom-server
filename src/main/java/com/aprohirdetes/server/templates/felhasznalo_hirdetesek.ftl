@@ -42,8 +42,10 @@
 						<#else>
 						<td align="right">Nincs aktiválva</td>
 						</#if>
-						<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a><br>
-						<span style="white-space:nowrap"><a href="${app.contextRoot}/hosszabbitas/${hirdetes.id}"><i class="fa fa-recycle"></i> Hosszabbítás</a></span></td>
+						<td><span style="white-space:nowrap"><a href="${app.contextRoot}/felhasznalo/hirdetes/${hirdetes.id}"><i class="fa fa-edit"></i> Szerkesztés</a></span><br>
+							<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a><br>
+							<span style="white-space:nowrap"><a href="${app.contextRoot}/hosszabbitas/${hirdetes.id}"><i class="fa fa-recycle"></i> Hosszabbítás</a></span>
+						</td>
 					</tr>
 				</#list>
 					</tbody>

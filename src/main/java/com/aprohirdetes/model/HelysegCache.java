@@ -138,6 +138,28 @@ public class HelysegCache {
 		return ret;
 	}
 	
+	/**
+	 * Visszaadja a megadott Helyseg URL-ben hasznalt nevet
+	 * @param helysegId
+	 * @return
+	 */
+	public static String getHelysegUrlNev(ObjectId helysegId) {
+		String ret = "";
+		
+		if(helysegId == null) {
+			return ret;
+		}
+		
+		Helyseg helyseg = CACHE_BY_ID.get(helysegId);
+		
+		if(helyseg == null) {
+			return ret;
+		}
+		
+		// Megadott Helyseg url neve
+		return helyseg.getUrlNev();
+	}
+	
 	public static Helyseg getRandomHelyseg() {
 		Random generator = new Random();
 		Object[] values = CACHE_BY_ID.values().toArray();

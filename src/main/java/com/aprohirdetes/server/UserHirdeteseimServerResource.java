@@ -46,7 +46,7 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 
 	@Override
 	public Representation representHtml() throws IOException {
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("hirdetesek.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("felhasznalo_hirdetesek.ftl");
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
