@@ -282,6 +282,7 @@ public class AproApplication extends Application {
 		AttributumCache.loadAttributumCache();
 		
 		if(taskService == null) taskService = new TaskService(true, 2);
+		setTaskService(taskService);
 		
 		// Hirdetesek szamanak szamolasa idozitve a hatterben
 		taskService.scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
@@ -300,10 +301,14 @@ public class AproApplication extends Application {
 	public synchronized void stop() throws Exception {
 		getLogger().info("Stopping application...");
 
+		getLogger().info("Stopping TaskService...");
+		taskService.stop();
+		
 		getLogger().info("Closing MongoDB database...");
 		MongoUtils.closeDB();
 		
 		super.stop();
+		getLogger().info("Application stopped");
 	}
 	
 	/**

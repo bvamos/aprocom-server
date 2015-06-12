@@ -33,6 +33,7 @@ public class KategoriaCountTask implements Runnable {
 	@Override
 	public void run() {
 		this.logger.info("KategoriaCountTask start");
+		Thread.currentThread().setName("Apro-KategoriaCountTask");
 		
 		DB db = MongoUtils.getMongoDB();
 		DBCollection hirdetesCollection = db.getCollection("hirdetes");

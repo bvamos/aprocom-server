@@ -31,7 +31,6 @@ public class KulcsszoCache {
 		clearCache();
 		
 		// Vegig megyunk a Hirdeteseken, kiszedjuk a kulcsszavakat
-		System.out.println("KulcsszoCache feltoltes");
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).retrievedFields(true, "kulcsszavak");
 		query.criteria("hitelesitve").equal(true);
@@ -63,7 +62,6 @@ public class KulcsszoCache {
 			CACHE_BY_KULCSSZO.put(entry.getKey(), entry.getValue());
 		}
 		
-		System.out.println("KulcsszoCache feltoltve");
 		/*for(String kulcsszo : CACHE_BY_KULCSSZO.keySet()) {
 			System.out.println(kulcsszo + ": " + CACHE_BY_KULCSSZO.get(kulcsszo));
 		}*/

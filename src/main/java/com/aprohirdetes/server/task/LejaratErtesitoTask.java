@@ -23,6 +23,7 @@ public class LejaratErtesitoTask implements Runnable {
 	@Override
 	public void run() {
 		this.logger.info("LejaratErtesitoTask start");
+		Thread.currentThread().setName("Apro-LejaratErtesitoTask");
 		
 		Calendar c = Calendar.getInstance();
 		// Datum 5 nap mulva. Az 5 napon belul lejaro hirdeteseket listazzuk vele.
