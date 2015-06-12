@@ -81,7 +81,7 @@
 						<label class="col-sm-2 control-label" for="hirdetesAr">Ár</label>
 						<div class="col-sm-2">
 							<div class="input-group">
-								<input type="number" class="form-control" id="hirdetesAr" name="hirdetesAr" required="" value="${(hirdetes.ar)!'0'}">
+								<input type="number" class="form-control" id="hirdetesAr" name="hirdetesAr" required="" value="${(hirdetes.ar?c)!'0'}">
 								<span class="input-group-addon">Ft</span>
 							</div>
 						</div>
