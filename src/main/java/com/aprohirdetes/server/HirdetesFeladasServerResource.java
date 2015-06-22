@@ -236,12 +236,12 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			if(this.session == null) {
 				// Csak akkor foglalkozunk a jelszoval, ha nincs belepett felhasznalo 
 				if(!form.getFirstValue("hirdetoJelszo").equals(form.getFirstValue("hirdetoJelszo2"))) {
-					throw new HirdetesValidationException("A két jelszó nem egyforma");
+					throw new HirdetesValidationException(1011, "A két jelszó nem egyforma");
 				}
 			}
 			
 			if(!"true".equals(form.getFirstValue("feltetelek"))) {
-				throw new HirdetesValidationException("Hirdetés feladásához el kell fogadnod a Felhasználási feltételeinket!");
+				throw new HirdetesValidationException(1012, "Hirdetés feladásához el kell fogadnod a Felhasználási feltételeinket!");
 			}
 			
 			hi.validate();
@@ -320,7 +320,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			ftl = AproApplication.TPL_CONFIG.getTemplate("feladas.ftl.html");
 			
 			// Esemeny lementese
-			EsemenyHelper.addHirdetesFeladasError(hibaUzenet);
+			EsemenyHelper.addHirdetesFeladasError(hve.getEsemenyId(), hibaUzenet);
 		}
 		
 		// Adatmodell a Freemarker sablonhoz

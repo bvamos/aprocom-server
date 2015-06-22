@@ -9,10 +9,9 @@ import com.aprohirdetes.utils.MongoUtils;
 
 public class EsemenyHelper {
 	
-	public static void add(EsemenyTipus tipus, EsemenySzint szint, String uzenet) {
-		Esemeny esemeny = new Esemeny(tipus, szint, uzenet);
-		Datastore datastore = MongoUtils.getDatastore();
-		datastore.save(esemeny);
+	public static void add(EsemenyTipus tipus, EsemenySzint szint, int esemenyId, String uzenet) {
+		Esemeny esemeny = new Esemeny(tipus, szint, esemenyId, uzenet);
+		add(esemeny);
 	}
 	
 	public static void add(Esemeny esemeny) {
@@ -21,12 +20,12 @@ public class EsemenyHelper {
 	}
 	
 	public static void addHirdetesFeladasInfo(ObjectId hirdetesId, String uzenet) {
-		Esemeny esemeny = new Esemeny(EsemenyTipus.HIRDETES_FELADAS, EsemenySzint.INFO, uzenet);
+		Esemeny esemeny = new Esemeny(EsemenyTipus.HIRDETES_FELADAS, EsemenySzint.INFO, 1001, uzenet);
 		esemeny.setHirdetesId(hirdetesId);
 		add(esemeny);
 	}
 	
-	public static void addHirdetesFeladasError(String uzenet) {
-		add(EsemenyTipus.HIRDETES_FELADAS, EsemenySzint.ERROR, uzenet);
+	public static void addHirdetesFeladasError(int esemenyId, String uzenet) {
+		add(EsemenyTipus.HIRDETES_FELADAS, EsemenySzint.ERROR, esemenyId, uzenet);
 	}
 }

@@ -329,7 +329,7 @@ public class Hirdetes {
 	 */
 	public void validate() throws HirdetesValidationException {
 		if(getAr()<0) {
-			throw new HirdetesValidationException("Az Ar nem lehet nullanal kisebb.");
+			throw new HirdetesValidationException(1014, "Az ár nem lehet nullánál kisebb.");
 		}
 	}
 }

@@ -2,6 +2,8 @@ package com.aprohirdetes.exception;
 
 public class HirdetesValidationException extends Exception {
 
+	private int esemenyId;
+	
 	/**
 	 * 
 	 */
@@ -11,8 +13,23 @@ public class HirdetesValidationException extends Exception {
 		super();
 	}
 	
-	public HirdetesValidationException(String msg) {
+	public HirdetesValidationException(int esemenyId, String msg) {
 		super(msg);
+		this.esemenyId = esemenyId;
+	}
+
+	/**
+	 * @return the esemenyId
+	 */
+	public int getEsemenyId() {
+		return esemenyId;
+	}
+
+	/**
+	 * @param esemenyId the esemenyId to set
+	 */
+	public void setEsemenyId(int esemenyId) {
+		this.esemenyId = esemenyId;
 	}
 	
 }

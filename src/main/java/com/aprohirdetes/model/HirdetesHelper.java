@@ -66,7 +66,7 @@ public class HirdetesHelper {
 		
 		// TODO: Lehet, hogy a query.get() gyorsabb, mint a countAll()
 		if(query.countAll()>0) {
-			throw new HirdetesValidationException("A megadott email címmel és Rövid leírással már létezik aktív hirdetés");
+			throw new HirdetesValidationException(1013, "A megadott email címmel és Rövid leírással már létezik aktív hirdetés");
 		}
 	}
 }
