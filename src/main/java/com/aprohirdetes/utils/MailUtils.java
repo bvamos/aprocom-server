@@ -12,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.server.AproConfig;
 
 public class MailUtils {
@@ -27,6 +28,11 @@ public class MailUtils {
 	 */
 	public static boolean sendMail(String toAddress, String messageSubject, String messageBody, String fromAddress) {
 		boolean ret = false;
+		
+		if("true".equalsIgnoreCase(AproConfig.APP_CONFIG.getProperty("MAIL.DISABLED"))) {
+			AproApplication.getCurrent().getLogger().warning("Levelkuldes kikapcsolva");
+			return ret;
+		}
 		
 		String host = AproConfig.APP_CONFIG.getProperty("MAIL.SMTP.HOST");
 		String port = AproConfig.APP_CONFIG.getProperty("MAIL.SMTP.PORT");
