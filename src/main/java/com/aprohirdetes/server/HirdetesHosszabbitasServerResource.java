@@ -67,7 +67,7 @@ public class HirdetesHosszabbitasServerResource extends ServerResource implement
 			getLogger().info("Hirdetes meghosszabbitva: " + this.hirdetesId.toString());
 			uzenet = "Hirdetésedet sikeresen meghosszabbítottuk. Köszönjük a bizalmadat!";
 		} else {
-			hibaUzenet = "A megadott azonosítóju apróhirdetés nem létezik.";
+			hibaUzenet = "A megadott azonosítójú apróhirdetés nem létezik.";
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -76,7 +76,7 @@ public class HirdetesHosszabbitasServerResource extends ServerResource implement
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", this.contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Hirdetés meghosszabbítása");
-		appDataModel.put("description", "Hamarosan lejáró apróhirdetés meghosszabbítása 30 nappal. A hirdetéseket bármikor meghosszabbíthatod, hogy ne törlodjön az Apróhirdetés.com-ról.");
+		appDataModel.put("description", "Hamarosan lejáró apróhirdetés meghosszabbítása 30 nappal. A hirdetéseket bármikor meghosszabbíthatod, hogy ne törlődjön az Apróhirdetés.com-ról.");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
