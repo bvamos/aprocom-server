@@ -14,6 +14,7 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
 import org.restlet.data.CacheDirective;
+import org.restlet.data.Header;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
@@ -21,11 +22,14 @@ import org.restlet.engine.application.Encoder;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Filter;
 import org.restlet.routing.Router;
+import org.restlet.security.Authenticator;
 import org.restlet.service.TaskService;
 
 import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.HelysegCache;
+import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.server.task.KategoriaCountTask;
 import com.aprohirdetes.server.task.LejaratErtesitoTask;
 import com.aprohirdetes.utils.MongoUtils;
@@ -51,7 +55,8 @@ public class AproApplication extends Application {
 	@Override
 	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
-
+		// TODO: Router szintu Session kezeles kellene a beepitett Authenticator hasznalataval
+		
 		router.attach("/", RootServerResource.class);
 		
 		//router.attach("/teszt", TestServerResource.class);
@@ -93,12 +98,43 @@ public class AproApplication extends Application {
 		router.attach("/rss/{hirdetesTipus}/{helysegList}/{kategoriaList}/", RssServerResource.class);
 		
 		// API
+		Router apiAuthRouter = new Router(getContext());
+		apiAuthRouter.attach("/api/v1/hirdetes", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
+		apiAuthRouter.attach("/api/v1/admin/retokenize", com.aprohirdetes.server.apiv1.AdminRetokenizeServerResource.class);
+		
+		Authenticator apiAuthFilter = new Authenticator(getContext()) {
+
+			@Override
+			protected boolean authenticate(Request request, Response response) {
+				Header apiKeyHeader = request.getHeaders().getFirst("Auth-Key");
+				String apiKey = apiKeyHeader==null ? null : apiKeyHeader.getValue();
+				
+				Hirdeto hirdeto = null;
+				if(apiKey==null || (hirdeto = SessionHelper.authenticate(apiKey))==null) {
+					getLogger().severe("API auth key error: " + apiKey);
+					response.setStatus(Status.CLIENT_ERROR_FORBIDDEN);
+					return false;
+				}
+				
+				getLogger().info("API auth key: " + apiKey + "; Email: " + hirdeto.getEmail());
+				request.getClientInfo().setAuthenticated(true);
+				// TODO: User objektum letrehozasa es getClientInfo().setUser()
+				return true;
+			}
+			
+		};
+		apiAuthFilter.setNext(apiAuthRouter);
+		
+		// Authentikalt resource-ok
+		// TODO: Default helyett inkabb a path elejere kellene illeszteni ezt az authentikaciot
+		// Egyelore az a baj, hogy nem minden /api kezdetu resource authentikal
+		router.attachDefault(apiAuthFilter);
+		
+		// Nem authentikalt resource-ok
 		router.attach("/api/v1/kepFeltoltes/{hirdetesId}", com.aprohirdetes.server.apiv1.KepFeltoltesServerResource.class);
 		router.attach("/api/v1/session/belepes", com.aprohirdetes.server.apiv1.SessionBelepesServerResource.class);
 		router.attach("/api/v1/session/kilepes", com.aprohirdetes.server.apiv1.SessionKilepesServerResource.class);
-		router.attach("/api/v1/admin/retokenize", com.aprohirdetes.server.apiv1.AdminRetokenizeServerResource.class);
 		router.attach("/api/v1/kategoriaAttributum/{kategoriaUrlNev}", com.aprohirdetes.server.apiv1.KategoriaAttributumServerResource.class);
-		router.attach("/api/v1/hirdetes", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
 		router.attach("/api/v1/hirdetesUzenet", com.aprohirdetes.server.apiv1.HirdetesUzenetServerResource.class);
 		router.attach("/api/v1/hirdeto/{hirdetoId}/apikeys", com.aprohirdetes.server.apiv1.RestHirdetoApiKeysServerResource.class);
 		router.attach("/api/v1/kulcsszoLista", com.aprohirdetes.server.apiv1.RestKulcsszoListaServerResource.class);

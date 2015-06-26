@@ -13,6 +13,8 @@ import com.aprohirdetes.utils.PasswordHash;
 
 public class SessionHelper {
 
+	private SessionHelper(){};
+	
 	/**
 	 * Betolti a Session objektumot az adatbazisbol
 	 * @param sessionId
@@ -101,6 +103,35 @@ public class SessionHelper {
 				e.printStackTrace();
 			}
 		}
+		
+		return ret;
+	}
+	
+	/**
+	 * HTTP Header alapu authentikacio az API-khoz.
+	 * @param apiKey Auth-Key HTTP header erteke
+	 * @return Hirdeto.apiKey egyedi mezovel azonositott Hirdeto objektum vagy null
+	 */
+	public static Hirdeto authenticate(String apiKey) {
+		Hirdeto ret = null;
+		
+		// Varunk 2 mp-et, igy nem erdemes brute-force tamadast inditani, mert tul lassu a rendszer
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			// Ezt nem lehet megszakitani
+		}
+		
+		if(apiKey == null || apiKey.isEmpty()) {
+			return ret;
+		}
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdeto> query = datastore.createQuery(Hirdeto.class);
+		
+		query.criteria("apiKey").equal(apiKey);
+		
+		ret = query.get();
 		
 		return ret;
 	}
