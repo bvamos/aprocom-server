@@ -34,7 +34,7 @@
 							<#assign hirdetesSzoveg = hirdetes.szoveg >
 						</#if>
 						<#if (hirdetesSzoveg?length>300) >
-							<#assign hirdetesSzoveg = hirdetes.szoveg[0..300] + "..." >
+							<#assign hirdetesSzoveg = hirdetesSzoveg[0..300] + "..." >
 						</#if>
 						<#assign hirdetesCim = hirdetes.cim >
 						<#if (hirdetesCim?length>60) >
