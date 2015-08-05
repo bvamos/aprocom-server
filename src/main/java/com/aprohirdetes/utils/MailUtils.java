@@ -17,6 +17,11 @@ import com.aprohirdetes.server.AproConfig;
 
 public class MailUtils {
 
+	/**
+	 * Ez egy utility class, ezert nem engedem a peldanyositast
+	 */
+	private MailUtils() {};
+	
 	// TODO: Exception tovabb dobasa
 	/**
 	 * Levelkuldes megadott cimzettnek
