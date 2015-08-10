@@ -297,7 +297,7 @@ public class AttributumCache {
 	}
 	
 	/**
-	 * Visszaadja azoknak az attributumoknak a neveit egy listaban, amik a kivalasztott kategoriakhoz tartoznak
+	 * Visszaadja azokat az Attributumokat egy listaban, amik a kivalasztott kategoriakhoz tartoznak
 	 * @param kategoriaList
 	 * @return
 	 */
@@ -316,4 +316,24 @@ public class AttributumCache {
 		return ret;
 	}
 	
+	/**
+	 * Visszaad egy Attributum objektumot a kategoria es az attributum neve alapjan, ha letezik.
+	 * @param kategoriaUrlNev
+	 * @param attributumNev
+	 * @return
+	 */
+	public static Attributum getAttributum(String kategoriaUrlNev, String attributumNev) {
+		Attributum ret = null;
+		
+		LinkedList<Attributum> attributumList = KATEGORIA_ATTRIBUTUM.get(kategoriaUrlNev);
+		if(attributumList != null) {
+			for(Attributum attributum : attributumList) {
+				if(attributumNev.equalsIgnoreCase(attributum.getNev())) {
+					ret = attributum;
+				}
+			}
+		}
+		
+		return ret;
+	}
 }

@@ -1,6 +1,7 @@
 package com.aprohirdetes.model;
 
 import java.util.Date;
+import java.util.LinkedList;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
@@ -20,7 +21,23 @@ public class HirdetesHelper {
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		query.criteria("id").equal(hirdetesId);
-		return query.get();
+		Hirdetes hirdetes = query.get();
+		
+		if(hirdetes != null) {
+			// Kepek betoltese
+			Query<HirdetesKep> queryKep = datastore.createQuery(HirdetesKep.class);
+			queryKep.criteria("hirdetesId").equal(hirdetesId);
+	
+			LinkedList<HirdetesKep> hirdetesKepList = new LinkedList<HirdetesKep>();
+			for(HirdetesKep hk : queryKep) {
+				hirdetesKepList.add(hk);
+			}
+			if(hirdetesKepList.size()>0) {
+				hirdetes.setKepek(hirdetesKepList);
+			}
+		}
+		
+		return hirdetes;
 	}
 	
 	/**
@@ -58,8 +75,16 @@ public class HirdetesHelper {
 	 * @see Hirdetes.validate()
 	 */
 	public static void validate(Hirdetes hirdetes) throws HirdetesValidationException {
+		if(hirdetes.getHirdeto()==null) {
+			throw new HirdetesValidationException(1016, "A Hirdeto adatainak megadasa kotelezo");
+		}
+		if(hirdetes.getHirdeto().getEmail()==null) {
+			throw new HirdetesValidationException(1015, "A Hirdeto email címe nem lehet üres");
+		}
+		
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("hirdeto.email").exists();
 		query.criteria("hirdeto.email").equal(hirdetes.getHirdeto().getEmail());
 		query.criteria("cim").equal(hirdetes.getCim());
 		query.criteria("torolve").equal(false);

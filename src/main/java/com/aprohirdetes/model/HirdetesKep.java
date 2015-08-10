@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Hirdeteshez csatolt kep
  * 
@@ -13,7 +15,9 @@ import org.mongodb.morphia.annotations.Id;
 @Entity("kep")
 public class HirdetesKep {
 
-	@Id private ObjectId id;
+	@Id
+	@JsonIgnore
+	private ObjectId id;
 	
 	private int sorszam;
 	private String fileNev;
@@ -21,6 +25,7 @@ public class HirdetesKep {
 	private long fileMeret;
 	private String contentType;
 	
+	@JsonIgnore
 	private ObjectId hirdetesId;
 	
 	public HirdetesKep() {

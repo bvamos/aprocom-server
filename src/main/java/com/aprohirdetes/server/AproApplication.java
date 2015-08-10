@@ -99,7 +99,8 @@ public class AproApplication extends Application {
 		
 		// API
 		Router apiAuthRouter = new Router(getContext());
-		apiAuthRouter.attach("/api/v1/hirdetes", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
+		apiAuthRouter.attach("/api/v1/hirdetesek", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
+		apiAuthRouter.attach("/api/v1/hirdetesek/{hirdetesId}/kepek", com.aprohirdetes.server.apiv1.RestKepekServerResource.class);
 		apiAuthRouter.attach("/api/v1/admin/retokenize", com.aprohirdetes.server.apiv1.AdminRetokenizeServerResource.class);
 		
 		Authenticator apiAuthFilter = new Authenticator(getContext()) {
@@ -109,15 +110,16 @@ public class AproApplication extends Application {
 				Header apiKeyHeader = request.getHeaders().getFirst("Auth-Key");
 				String apiKey = apiKeyHeader==null ? null : apiKeyHeader.getValue();
 				
-				Hirdeto hirdeto = null;
-				if(apiKey==null || (hirdeto = SessionHelper.authenticate(apiKey))==null) {
+				Hirdeto felado = null;
+				if(apiKey==null || (felado = SessionHelper.authenticate(apiKey))==null) {
 					getLogger().severe("API auth key error: " + apiKey);
 					response.setStatus(Status.CLIENT_ERROR_FORBIDDEN);
 					return false;
 				}
 				
-				getLogger().info("API auth key: " + apiKey + "; Email: " + hirdeto.getEmail());
+				getLogger().info("API auth key: " + apiKey + "; Email: " + felado.getEmail());
 				request.getClientInfo().setAuthenticated(true);
+				request.getAttributes().put("feladoId", felado.getId());
 				// TODO: User objektum letrehozasa es getClientInfo().setUser()
 				return true;
 			}

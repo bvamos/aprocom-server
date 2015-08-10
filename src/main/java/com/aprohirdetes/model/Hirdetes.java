@@ -26,15 +26,28 @@ public class Hirdetes {
 	 */
 	private int tipus = HirdetesTipus.KINAL;
 	private String cim;
+	/**
+	 * Hirdetes szovege. Maximum 3000 karakter.
+	 */
 	private String szoveg;
+	public static final int MAX_SZOVEG_LENGTH = 3000;
+	/**
+	 * Egyeb informaciora mutato link
+	 */
 	private String egyebInfo;
+	public static final int MAX_EGYEBINFO_LENGTH = 1000;
 	private int ar;
 	
 	private ObjectId helysegId;
 	private ObjectId kategoriaId;
-	private ObjectId hirdetoId;
 	
+	/**
+	 * A felado azonositoja. API-n lehetoseg van mas neveben is feladni hirdetest.
+	 */
+	private ObjectId feladoId;
+	private ObjectId hirdetoId;
 	@Embedded private Hirdeto hirdeto;
+	
 	@NotSaved private LinkedList<HirdetesKep> kepek = new LinkedList<HirdetesKep>();
 	private HashMap<String, Object> attributumok = new HashMap<String, Object>();
 	@NotSaved private HashMap<String, String> egyebMezok = new HashMap<String, String>();
@@ -93,6 +106,14 @@ public class Hirdetes {
 	public void setTipus(int tipus) {
 		this.tipus = tipus;
 	}
+	
+	public void setTipus(String tipus) {
+		if("keres".equalsIgnoreCase(tipus)) {
+			this.setTipus(HirdetesTipus.KERES);
+		} else {
+			this.setTipus(HirdetesTipus.KINAL);
+		}
+	}
 
 	public String getCim() {
 		return cim;
@@ -107,7 +128,11 @@ public class Hirdetes {
 	}
 
 	public void setSzoveg(String szoveg) {
-		this.szoveg = szoveg;
+		if(szoveg!=null && szoveg.length()>MAX_SZOVEG_LENGTH) {
+			this.szoveg = szoveg.substring(0, MAX_SZOVEG_LENGTH);
+		} else {
+			this.szoveg = szoveg;
+		}
 	}
 
 	public String getEgyebInfo() {
@@ -115,7 +140,11 @@ public class Hirdetes {
 	}
 
 	public void setEgyebInfo(String egyebInfo) {
-		this.egyebInfo = egyebInfo;
+		if(egyebInfo!=null && egyebInfo.length()>MAX_SZOVEG_LENGTH) {
+			this.egyebInfo = egyebInfo.substring(0, MAX_SZOVEG_LENGTH);
+		} else {
+			this.egyebInfo = egyebInfo;
+		}
 	}
 
 	public int getAr() {
@@ -144,6 +173,20 @@ public class Hirdetes {
 
 	public void setKategoriaId(ObjectId kategoriaId) {
 		this.kategoriaId = kategoriaId;
+	}
+
+	/**
+	 * @return the feladoId
+	 */
+	public ObjectId getFeladoId() {
+		return feladoId;
+	}
+
+	/**
+	 * @param feladoId the feladoId to set
+	 */
+	public void setFeladoId(ObjectId feladoId) {
+		this.feladoId = feladoId;
 	}
 
 	public ObjectId getHirdetoId() {

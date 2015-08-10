@@ -3,6 +3,8 @@ package com.aprohirdetes.model;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
@@ -44,7 +46,7 @@ public class Hirdeto {
 	}
 	
 	public String getIdAsString() {
-		return id.toString();
+		return (id==null) ? null : id.toString();
 	}
 	
 	public String getNev() {
@@ -151,4 +153,12 @@ public class Hirdeto {
 		this.regiId = regiId;
 	}
 	
+	public JSONObject toJSONObject() throws JSONException {
+		JSONObject hirdetoJson = new JSONObject();
+		
+		if(this.id != null) hirdetoJson.put("id", this.id.toString());
+		if(this.nev != null) hirdetoJson.put("nev", this.nev);
+		
+		return hirdetoJson;
+	}
 }
