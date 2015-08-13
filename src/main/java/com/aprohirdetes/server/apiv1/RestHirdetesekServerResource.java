@@ -18,6 +18,7 @@ import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.HirdetesForras;
 import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.HirdetoHelper;
@@ -238,6 +239,8 @@ public class RestHirdetesekServerResource extends ServerResource  {
 				hirdetes.setId(new ObjectId());
 				// API-n feladott hirdetest nem kell hitelesiteni
 				hirdetes.setHitelesitve(true);
+				// Forras beallitasa
+				hirdetes.setForras(HirdetesForras.API);
 				
 				Datastore datastore = MongoUtils.getDatastore();
 				Key<Hirdetes> hirdetesKey = datastore.save(hirdetes);

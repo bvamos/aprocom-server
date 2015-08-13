@@ -78,6 +78,10 @@ public class Hirdetes {
 	 */
 	private Date torolveDatum;
 	/**
+	 * Hirdetes forrasa. HirdetesForras
+	 */
+	private int forras;
+	/**
 	 * A hirdetes helysegenek urlNeve. A modosito html formon kell a helyseg kivalasztasahoz
 	 */
 	@NotSaved private String helysegUrlNev;
@@ -89,6 +93,7 @@ public class Hirdetes {
 		setModositva(new Date());
 		setLejar(30);
 		setTorolve(false);
+		setForras(HirdetesForras.WEB);
 	}
 	
 	public ObjectId getId() {
@@ -359,6 +364,24 @@ public class Hirdetes {
 	}
 
 	/**
+	 * @return the forras
+	 */
+	public int getForras() {
+		return forras;
+	}
+
+	/**
+	 * @param forras the forras to set
+	 */
+	public void setForras(int forras) {
+		this.forras = forras;
+	}
+	
+	public void setForras(HirdetesForras forras) {
+		this.forras = forras.value();
+	}
+
+	/**
 	 * Tokenekre bontja a hirdetes cimet es szoveget, es elmenti a tokeneket a kulcsszavak tombben
 	 */
 	public void tokenize() {
@@ -375,4 +398,5 @@ public class Hirdetes {
 			throw new HirdetesValidationException(1014, "Az ár nem lehet nullánál kisebb.");
 		}
 	}
+	
 }

@@ -39,7 +39,9 @@ public class RestKepekServerResource extends ServerResource  {
 		super.doInit();
 		
 		String hirdetesId = (String) getRequestAttributes().get("hirdetesId");
-		hirdetes = HirdetesHelper.load(hirdetesId);
+		if(hirdetesId!=null) {
+			hirdetes = HirdetesHelper.load(hirdetesId);
+		}
 	}
 
 	@Get("json")
