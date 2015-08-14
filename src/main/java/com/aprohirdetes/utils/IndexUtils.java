@@ -98,12 +98,13 @@ public class IndexUtils {
 	    	String[][] a = morph.get(i);
 	    	for(int j=0; j<a.length; j++) {
 	    		String[] b = a[j];
-	    		// Fonevek, melleknevek es igek szotovei
+	    		// Fonevek (N), melleknevek (A), igek (V) szotovei, Ismeretlen szavak (X)
 	    		// Forras: Magyar Nemzeti Szövegtár - Az MSD-kódok rendszere
 	    		// http://corpus.nytud.hu/mnsz/sugo_hun.html#msdrendszer
-	    		if(b[2].startsWith("N") || b[2].startsWith("A") || b[2].startsWith("V")) {
+	    		if(b[2].startsWith("N") || b[2].startsWith("A") || b[2].startsWith("V") || b[2].startsWith("X")) {
 	    			ret.add(b[1].toLowerCase());
 	    		}
+	    		//System.out.println(b[0] + ";" + b[1] + ";" + b[2]);
 	    	}
 	    }
 		
