@@ -259,7 +259,7 @@ public class KeresesServerResource extends ServerResource implements
 				h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
 				
 				Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
-				h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChain(kat.getId()) : "");
+				h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChainAsLink(kat.getId()) : "");
 				h.getEgyebMezok().put("kategoriaUrlNev", (kat!=null) ? kat.getUrlNev() : "");
 				
 				Helyseg hely = HelysegCache.getCacheById().get(h.getHelysegId());

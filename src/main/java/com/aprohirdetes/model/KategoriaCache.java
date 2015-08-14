@@ -142,6 +142,39 @@ public class KategoriaCache {
 		// Szulo kategoria neve
 		for(Kategoria kat : CACHE_BY_ID.values()) {
 			if(kat.getId().equals(kategoria.getSzuloId())) {
+				ret = kat.getNev() + " &raquo; ";
+				break;
+			}
+		}
+		
+		// Megadott kategoria neve
+		ret +=  kategoria.getNev();
+		
+		return ret;
+	}
+	
+	/**
+	 * Visszaadja a Kategoria nevek lancolatat egy stringkent a megadott Kategoriatol felfele
+	 * ugy, hogy linkekke alakitja a szovegeket. A kereses eredmenylistajaban hasznaljuk.
+	 * @param kategoriaId
+	 * @return
+	 */
+	public static String getKategoriaNevChainAsLink(ObjectId kategoriaId) {
+		String ret = "";
+		
+		if(kategoriaId == null) {
+			return ret;
+		}
+		
+		Kategoria kategoria = CACHE_BY_ID.get(kategoriaId);
+		
+		if(kategoria == null) {
+			return ret;
+		}
+		
+		// Szulo kategoria neve
+		for(Kategoria kat : CACHE_BY_ID.values()) {
+			if(kat.getId().equals(kategoria.getSzuloId())) {
 				ret = "<a href=\"javascript:setKategoria('" + kat.getUrlNev() + "');\">" + kat.getNev() + "</a> &raquo; ";
 				break;
 			}
