@@ -31,4 +31,24 @@ public class HirdetoHelper {
 		
 		return hirdeto;
 	}
+	
+	/**
+	 * Visszaad egy ervenyes hirdetoTipus erteket a FORM mezoje alapjan
+	 * @param value
+	 * @return
+	 */
+	public static int getHirdetoTipus(String value) {
+		// Maganszemely:1, Ceg: 2
+		int hirdetoTipus = 1;
+		try{
+			hirdetoTipus = Integer.parseInt(value);
+			if(hirdetoTipus != 1 && hirdetoTipus != 2) {
+				hirdetoTipus = 1;
+			}
+		} catch (NumberFormatException nfe) {
+			hirdetoTipus = 1;
+		}
+		
+		return hirdetoTipus;
+	}
 }

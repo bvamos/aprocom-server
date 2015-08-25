@@ -120,6 +120,8 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			
 			dataModel.put("session", this.session);
 			dataModel.put("hirdetes", hi);
+			dataModel.put("hirdetoTipusMsz", (hi.getHirdeto().getTipus()==2) ? "" : "checked");
+			dataModel.put("hirdetoTipusCeg", (hi.getHirdeto().getTipus()==2) ? "checked" : "");
 		}
 
 		// Cookie a feladashoz, ez tarolja a session id-t, amivel a kepek feltolteset megoldjuk
@@ -189,7 +191,12 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				// Regisztralt felhasznalonak nem kell hitelesites emailben
 				hi.setHitelesitve(true);
 			}
+			ho.setTipus(HirdetoHelper.getHirdetoTipus(form.getFirstValue("hirdetoTipus")));
 			ho.setNev(form.getFirstValue("hirdetoNev"));
+			if(ho.getTipus()==2) {
+				// Ceg
+				ho.setCegNev(form.getFirstValue("hirdetoCegNev"));
+			}
 			ho.setEmail(form.getFirstValue("hirdetoEmail"));
 			ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
 			ho.setOrszag(form.getFirstValue("hirdetoOrszag"));
@@ -352,6 +359,8 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		dataModel.put("hirdetesHelyseg", hirdetesHelyseg);
 		dataModel.put("egyebAttributumok", egyebAttributumokHtml);
 		dataModel.put("hirdetes", hi);
+		dataModel.put("hirdetoTipusMsz", (hi.getHirdeto().getTipus()==2) ? "" : "checked");
+		dataModel.put("hirdetoTipusCeg", (hi.getHirdeto().getTipus()==2) ? "checked" : "");
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

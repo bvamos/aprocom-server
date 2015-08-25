@@ -20,6 +20,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.FormResource;
+import com.aprohirdetes.exception.AproException;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Session;
@@ -83,44 +84,50 @@ public class UserBelepesServerResource extends ServerResource implements
 		String felhasznaloNev = form.getFirstValue("signinEmail");
 		String jelszo = form.getFirstValue("signinPassword");
 		
-		if ((this.hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo)) != null) {
-			// Session betoltese
-			Session session;
-			session = SessionHelper.load(this.hirdeto.getId());
-			if(session == null) {
-				// Nincs session az adatbazisban, generalunk ujat, es elmentjuk
-				session = new Session();
-				session.setSessionId(UUID.randomUUID().toString());
-				session.setHirdetoId(this.hirdeto.getId());
-			}
-			getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + session.getSessionId());
-			
-			// Session Cookie
-			CookieSetting cookieSetting = new CookieSetting("AproSession", session.getSessionId());
-			cookieSetting.setVersion(0);
-			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(contextPath + "/");
-			cookieSetting.setComment("Session Id");
-			cookieSetting.setMaxAge(3600*24*7);
-			getResponse().getCookieSettings().add(cookieSetting);
-			
-			// Session mentese az adatbazisba
-			Datastore datastore = MongoUtils.getDatastore();
-			datastore.save(session);
-			
-			// Utolso belepes mentese
-			datastore.update(this.hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
-
-			// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
-			// TODO: Relativ URL eseten kiegesziti, es h01.aprohirdtes.com lesz. Talan csak mas template-et kellene betolteni atiranyitas helyett
-			if("feladas".equalsIgnoreCase(this.referrer)) {
-				redirectPermanent(this.contextPath + "/feladas");
+		try {
+			this.hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo);
+			if(this.hirdeto != null) {
+				// Session betoltese
+				Session session;
+				session = SessionHelper.load(this.hirdeto.getId());
+				if(session == null) {
+					// Nincs session az adatbazisban, generalunk ujat, es elmentjuk
+					session = new Session();
+					session.setSessionId(UUID.randomUUID().toString());
+					session.setHirdetoId(this.hirdeto.getId());
+				}
+				getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + session.getSessionId());
+				
+				// Session Cookie
+				CookieSetting cookieSetting = new CookieSetting("AproSession", session.getSessionId());
+				cookieSetting.setVersion(0);
+				cookieSetting.setAccessRestricted(true);
+				cookieSetting.setPath(contextPath + "/");
+				cookieSetting.setComment("Session Id");
+				cookieSetting.setMaxAge(3600*24*7);
+				getResponse().getCookieSettings().add(cookieSetting);
+				
+				// Session mentese az adatbazisba
+				Datastore datastore = MongoUtils.getDatastore();
+				datastore.save(session);
+				
+				// Utolso belepes mentese
+				datastore.update(this.hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
+	
+				// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
+				// TODO: Relativ URL eseten kiegesziti, es h01.aprohirdtes.com lesz. Talan csak mas template-et kellene betolteni atiranyitas helyett
+				if("feladas".equalsIgnoreCase(this.referrer)) {
+					redirectPermanent(this.contextPath + "/feladas");
+				} else {
+					redirectPermanent(this.contextPath + "/felhasznalo/hirdetesek");
+				}
 			} else {
-				redirectPermanent(this.contextPath + "/felhasznalo/hirdetesek");
+				errorMessage = "Hibás felhasználónév vagy jelszó";
+				getLogger().severe("Sikertelen belepes: " + felhasznaloNev);
 			}
-		} else {
-			errorMessage = "Hibás felhasználónév vagy jelszó";
-			getLogger().severe("Sikertelen belepes: " + felhasznaloNev);
+		} catch(AproException ae) {
+			errorMessage = ae.getMessage();
+			getLogger().severe("Nem aktiv felhasznalo: " + felhasznaloNev);
 		}
 		
 		// Adatmodell a Freemarker sablonhoz

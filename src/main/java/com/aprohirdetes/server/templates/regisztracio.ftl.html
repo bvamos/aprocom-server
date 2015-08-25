@@ -20,9 +20,30 @@
 				</#if>
 				
 				<div class="form-group">
+					<label class="col-sm-3 control-label">Hirdető típusa</label>
+					<div class="col-sm-9">
+							<label class="radio-inline">
+								<input type="radio" name="hirdetoTipus" id="hirdetoTipusMsz" value="1" checked>
+								Magánszemély
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="hirdetoTipus" id="hirdetoTipusCeg" value="2">
+								Cég, társaság
+							</label>
+					</div>
+				</div>
+				
+				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoNev">Név</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="hirdetoNev" name="hirdetoNev" value="${(hirdeto.nev)!''}">
+					</div>
+				</div>
+				
+				<div class="form-group" id="hirdetoCegNevFormGroup" style="display: none;">
+					<label class="col-sm-3 control-label" for="hirdetoNev">Cégnév</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetoCegNev" name="hirdetoCegNev" value="${(hirdeto.cegNev)!''}">
 					</div>
 				</div>
 				
@@ -92,6 +113,14 @@
 					</div>
 				</div>
 			</form>
+			<script type="text/javascript">
+			$('#hirdetoTipusMsz').click(function(){
+				$('#hirdetoCegNevFormGroup').hide();
+			});
+			$('#hirdetoTipusCeg').click(function(){
+				$('#hirdetoCegNevFormGroup').show();
+			});
+			</script>
 		
 		</div>
 <#include "page_footer.ftl.html"/>

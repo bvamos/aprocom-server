@@ -78,6 +78,7 @@ public class AproApplication extends Application {
 		router.attach("/belepes", UserBelepesServerResource.class);
 		router.attach("/kilepes", UserKilepesServerResource.class);
 		router.attach("/regisztracio", UserRegisztracioServerResource.class);
+		router.attach("/regisztracio/{hirdetoId}", UserAktivalasServerResource.class);
 		router.attach("/felhasznalo/adatlap", UserAdatlapServerResource.class);
 		router.attach("/felhasznalo/hirdetesek", UserHirdeteseimServerResource.class);
 		router.attach("/felhasznalo/hirdetes/{hirdetesId}", UserHirdetesServerResource.class);

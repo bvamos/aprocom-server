@@ -53,7 +53,7 @@ public class UserAdatlapServerResource extends ServerResource implements
 
 	@Override
 	public Representation representHtml() throws IOException {
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("felhasznalo_adatlap.ftl.html");
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -72,6 +72,8 @@ public class UserAdatlapServerResource extends ServerResource implements
 		} else {
 			dataModel.put("session", this.session);
 			dataModel.put("hirdeto", this.hirdeto);
+			dataModel.put("hirdetoTipusMsz", (hirdeto.getTipus()==2) ? "" : "checked");
+			dataModel.put("hirdetoTipusCeg", (hirdeto.getTipus()==2) ? "checked" : "");
 		}
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
@@ -81,11 +83,18 @@ public class UserAdatlapServerResource extends ServerResource implements
 	public Representation accept(Form form) throws IOException {
 		String message = null;
 		String errorMessage = null;
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
+		Template ftl = AproApplication.TPL_CONFIG.getTemplate("felhasznalo_adatlap.ftl.html");
 		
 		// TODO: Email cim ellenorzese, vagy hagyjuk a unique indexre?
 		
+		hirdeto.setTipus(HirdetoHelper.getHirdetoTipus(form.getFirstValue("hirdetoTipus")));
 		hirdeto.setNev(form.getFirstValue("hirdetoNev"));
+		if(hirdeto.getTipus()==2) {
+			// Ceg
+			hirdeto.setCegNev(form.getFirstValue("hirdetoCegNev"));
+		} else {
+			hirdeto.setCegNev(null);
+		}
 		hirdeto.setEmail(form.getFirstValue("hirdetoEmail"));
 		hirdeto.setTelefon(form.getFirstValue("hirdetoTelefon"));
 		hirdeto.setOrszag(form.getFirstValue("hirdetoOrszag"));
@@ -119,7 +128,6 @@ public class UserAdatlapServerResource extends ServerResource implements
 			} else {
 				errorMessage = "Hiba történt az adatok mentése közben.";
 			}
-			ftl = AproApplication.TPL_CONFIG.getTemplate("profil.ftl.html");
 		}
 		
 		// Adatmodell a Freemarker sablonhoz
@@ -127,7 +135,7 @@ public class UserAdatlapServerResource extends ServerResource implements
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
 		appDataModel.put("contextRoot", contextPath);
-		appDataModel.put("htmlTitle", getApplication().getName() + " - Profil");
+		appDataModel.put("htmlTitle", getApplication().getName() + " - Adatlap");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
@@ -137,6 +145,9 @@ public class UserAdatlapServerResource extends ServerResource implements
 		dataModel.put("hibaUzenet", errorMessage);
 		dataModel.put("session", this.session);
 		dataModel.put("hirdeto", hirdeto);
+		System.out.println(hirdeto.getTipus());
+		dataModel.put("hirdetoTipusMsz", (hirdeto.getTipus()==2) ? "" : "checked");
+		dataModel.put("hirdetoTipusCeg", (hirdeto.getTipus()==2) ? "checked" : "");
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}

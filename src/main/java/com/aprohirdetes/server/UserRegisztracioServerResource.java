@@ -26,6 +26,7 @@ import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
+import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.utils.AproUtils;
@@ -89,7 +90,12 @@ public class UserRegisztracioServerResource extends ServerResource implements
 		// TODO: Email cim ellenorzese, vagy hagyjuk a unique indexre?
 		
 		Hirdeto ho = new Hirdeto();
+		ho.setTipus(HirdetoHelper.getHirdetoTipus(form.getFirstValue("hirdetoTipus")));
 		ho.setNev(form.getFirstValue("hirdetoNev"));
+		if(ho.getTipus()==2) {
+			// Ceg
+			ho.setCegNev(form.getFirstValue("hirdetoCegNev"));
+		}
 		ho.setEmail(form.getFirstValue("hirdetoEmail"));
 		ho.setTelefon(form.getFirstValue("hirdetoTelefon"));
 		ho.setOrszag(form.getFirstValue("hirdetoOrszag"));
@@ -166,5 +172,5 @@ public class UserRegisztracioServerResource extends ServerResource implements
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
-
+	
 }

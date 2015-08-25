@@ -132,9 +132,37 @@
 				</#if>
 				
 				<div class="form-group">
+					<label class="col-sm-3 control-label">Hirdető típusa</label>
+					<div class="col-sm-9">
+							<label class="radio-inline">
+								<input type="radio" name="hirdetoTipus" id="hirdetoTipusMsz" value="1" ${hirdetoTipusMsz}>
+								Magánszemély
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="hirdetoTipus" id="hirdetoTipusCeg" value="2" ${hirdetoTipusCeg}>
+								Cég, társaság
+							</label>
+					</div>
+				</div>
+				
+				<div class="form-group">
 					<label class="col-sm-3 control-label" for="hirdetoNev">Név</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="hirdetoNev" name="hirdetoNev" value="${(hirdetes.hirdeto.nev)!''}">
+					</div>
+				</div>
+				
+				<div class="form-group" id="hirdetoCegNevFormGroup" <#if (hirdetoTipusMsz?length>0)>style="display: none;"</#if>>
+					<label class="col-sm-3 control-label" for="hirdetoNev">Cégnév</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="hirdetoCegNev" name="hirdetoCegNev" value="${(hirdetes.hirdeto.cegNev)!''}">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cím</label>
+					<div class="col-sm-7">
+						<input type="email" class="form-control" id="hirdetoEmail" name="hirdetoEmail" placeholder="@" required="" value="${(hirdetes.hirdeto.email)!''}">
 					</div>
 				</div>
 				
@@ -164,13 +192,6 @@
 					<label class="col-sm-3 control-label" for="hirdetoCim">Cím</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="hirdetoCim" name="hirdetoCim" value="${(hirdetes.hirdeto.cim)!''}">
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cím</label>
-					<div class="col-sm-7">
-						<input type="email" class="form-control" id="hirdetoEmail" name="hirdetoEmail" placeholder="@" required="" value="${(hirdetes.hirdeto.email)!''}">
 					</div>
 				</div>
 				
@@ -293,6 +314,12 @@
 			});
 		});
 		
+		$('#hirdetoTipusMsz').click(function(){
+			$('#hirdetoCegNevFormGroup').hide();
+		});
+		$('#hirdetoTipusCeg').click(function(){
+			$('#hirdetoCegNevFormGroup').show();
+		});
 	    </script>
 <#include "js.fileupload.ftl"/>
 <#include "page_footer.ftl.html"/>

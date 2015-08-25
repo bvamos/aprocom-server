@@ -15,7 +15,13 @@ public class Hirdeto {
 
 	@Id private ObjectId id;
 	
+	/**
+	 * Hirdeto tipusa. Maganszemely (1) vagy Ceg (2)
+	 */
+	private int tipus;
+	
 	private String nev;
+	private String cegNev;
 	@Indexed(value=IndexDirection.ASC, name="ix_email", unique=true) private String email;
 	private String iranyitoSzam;
 	private String telepules;
@@ -27,14 +33,14 @@ public class Hirdeto {
 	private String jelszo;
 	@Indexed(value=IndexDirection.ASC, name="ix_apiKey", unique=true) private String apiKey;
 	private boolean hitelesitve;
+	private Date regisztralas;
 	private Date utolsoBelepes;
 	
-	private int regiId;
-	
 	public Hirdeto() {
+		setTipus(1);
 		setHirlevel(true);
-		setHitelesitve(true);
-		setRegiId(-1);
+		setHitelesitve(false);
+		setRegisztralas(new Date());
 	}
 	
 	public ObjectId getId() {
@@ -49,12 +55,40 @@ public class Hirdeto {
 		return (id==null) ? null : id.toString();
 	}
 	
+	/**
+	 * @return the tipus
+	 */
+	public int getTipus() {
+		return tipus;
+	}
+
+	/**
+	 * @param tipus the tipus to set
+	 */
+	public void setTipus(int tipus) {
+		this.tipus = tipus;
+	}
+
 	public String getNev() {
 		return nev;
 	}
 	
 	public void setNev(String nev) {
 		this.nev = nev;
+	}
+
+	/**
+	 * @return the cegNev
+	 */
+	public String getCegNev() {
+		return cegNev;
+	}
+
+	/**
+	 * @param cegNev the cegNev to set
+	 */
+	public void setCegNev(String cegNev) {
+		this.cegNev = cegNev;
 	}
 
 	public String getEmail() {
@@ -137,6 +171,20 @@ public class Hirdeto {
 		this.hitelesitve = hitelesitve;
 	}
 
+	/**
+	 * @return the regisztralas
+	 */
+	public Date getRegisztralas() {
+		return regisztralas;
+	}
+
+	/**
+	 * @param regisztralas the regisztralas to set
+	 */
+	public void setRegisztralas(Date regisztralas) {
+		this.regisztralas = regisztralas;
+	}
+
 	public Date getUtolsoBelepes() {
 		return utolsoBelepes;
 	}
@@ -145,14 +193,6 @@ public class Hirdeto {
 		this.utolsoBelepes = utolsoBelepes;
 	}
 
-	public int getRegiId() {
-		return regiId;
-	}
-
-	public void setRegiId(int regiId) {
-		this.regiId = regiId;
-	}
-	
 	public JSONObject toJSONObject() throws JSONException {
 		JSONObject hirdetoJson = new JSONObject();
 		

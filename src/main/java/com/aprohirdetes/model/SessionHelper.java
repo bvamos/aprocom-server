@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
+import com.aprohirdetes.exception.AproException;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
 
@@ -66,7 +67,7 @@ public class SessionHelper {
 	 * @return Hirdeto objektum vagy null
 	 * @throws InterruptedException 
 	 */
-	public static Hirdeto authenticate(String felhasznaloNev, String jelszo) {
+	public static Hirdeto authenticate(String felhasznaloNev, String jelszo) throws AproException {
 		Hirdeto ret = null;
 		
 		// Varunk 2 mp-et, igy nem erdemes brute-force tamadast inditani, mert tul lassu a rendszer
@@ -77,11 +78,11 @@ public class SessionHelper {
 		}
 		
 		if(felhasznaloNev == null || felhasznaloNev.isEmpty()) {
-			return ret;
+			throw(new AproException(0, "A felhasznalonev nem lehet ures"));
 		}
 		
 		if(jelszo == null || jelszo.isEmpty()) {
-			return ret;
+			throw(new AproException(0, "A jelszo nem lehet ures"));
 		}
 		
 		Datastore datastore = MongoUtils.getDatastore();
@@ -92,15 +93,19 @@ public class SessionHelper {
 		Hirdeto hirdeto = query.get();
 		
 		if(hirdeto!=null) {
-			String jelszoHash = hirdeto.getJelszo();
-			try {
-				ret = PasswordHash.validatePassword(jelszo, jelszoHash) ? hirdeto : null;
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidKeySpecException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(hirdeto.isHitelesitve()) {
+				String jelszoHash = hirdeto.getJelszo();
+				try {
+					ret = PasswordHash.validatePassword(jelszo, jelszoHash) ? hirdeto : null;
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				throw(new AproException(2002, "A felhasználói fiókod még nem aktivált."));
 			}
 		}
 		

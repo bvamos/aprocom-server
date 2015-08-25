@@ -117,6 +117,41 @@ public class MailUtils {
 	}
 	
 	/**
+	 * Visszaigazolo level kuldese aktivalo linkkel a regisztracioban megadott email cimre.
+	 * Plusz ertesito level nekunk.
+	 * 
+	 * @param hi Feladott Hirdetes
+	 * @return True, ha sikerult a levelet elkuldeni, kulonben False
+	 */
+	public static boolean sendMailRegisztracio(Hirdeto ho) {
+		boolean ret = false;
+		
+		// Aktivalo level kuldese a megadott email cimre
+		String email = ho.getEmail();
+		if(email != null && !email.isEmpty()) {
+			String subject = "Regisztráció aktiválása";
+			String body = "Kedves " + ho.getNev() + "!\n\n"
+					+ "Köszönjük, hogy az Apróhirdetés.com-ot választottad!\n";
+				body +=	"A regisztrációd véglegesítéséhez "
+					+ "kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába!\n\n"
+					+ "Aktiválás:\n"
+					+ "https://www.aprohirdetes.com/regisztracio/" + ho.getId() +"\n\n"
+					;
+			body +=	"Üdvözlettel,\n"
+					+ "Apróhirdetés.com";
+			
+			ret = MailUtils.sendMail(email, subject, body);
+		}
+		
+		// Ertesites kuldese magamnak
+		String subject = "Új felhasznalo: " + ho.getEmail();
+		String body = ho.getNev() + "\n\n";
+		MailUtils.sendMail(AproConfig.APP_CONFIG.getProperty("MAIL.FROM"), subject, body);
+		
+		return ret;
+	}
+	
+	/**
 	 * Visszaigazolo level kuldese aktivalo linkkel a hirdetesben megadott email cimre.
 	 * Plusz ertesito level nekunk.
 	 * 
