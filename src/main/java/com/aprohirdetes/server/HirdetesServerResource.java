@@ -15,6 +15,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.restlet.data.MediaType;
+import org.restlet.data.Status;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ResourceException;
@@ -165,8 +166,8 @@ public class HirdetesServerResource extends ServerResource implements
 		} else {
 			// Nincs ilyen hirdetes
 			getLogger().severe("Nincs meg a megadott hirdetes: " + (String) this.getRequestAttributes().get("hirdetesId"));
-			
 			dataModel.put("hibaUzenet", "A megadott hirdetés nem található. Valószinűleg oldalunk segítségével már vevőre lelt a meghirdetett termék vagy szolgáltatás.");
+			setStatus(Status.CLIENT_ERROR_NOT_FOUND);
 		}
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("hirdetes.ftl.html");
