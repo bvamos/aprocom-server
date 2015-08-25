@@ -122,6 +122,9 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			dataModel.put("hirdetes", hi);
 			dataModel.put("hirdetoTipusMsz", (hi.getHirdeto().getTipus()==2) ? "" : "checked");
 			dataModel.put("hirdetoTipusCeg", (hi.getHirdeto().getTipus()==2) ? "checked" : "");
+		} else {
+			dataModel.put("hirdetoTipusMsz", "checked");
+			dataModel.put("hirdetoTipusCeg", "");
 		}
 
 		// Cookie a feladashoz, ez tarolja a session id-t, amivel a kepek feltolteset megoldjuk
