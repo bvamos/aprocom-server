@@ -1,9 +1,7 @@
 package com.aprohirdetes.server.apiv1;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import org.json.JSONArray;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -33,10 +31,7 @@ public class RestKulcsszoListaServerResource extends ServerResource implements A
 	@Override
 	public Representation representJson() throws IOException {
 		Representation rep = null;
-		
-		Map<String, Object> repData = new LinkedHashMap<String, Object>();
-		
-		repData = KulcsszoCache.getCacheByPrefix(prefix, 10);
+		JSONArray repData = KulcsszoCache.getCacheByPrefix(prefix, 10);
 		
 		rep = new JsonRepresentation(repData);
 		return rep;

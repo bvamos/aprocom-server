@@ -7,6 +7,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
@@ -73,19 +77,25 @@ public class KulcsszoCache {
 	 * @param limit Max ennyi eredmenyt adunk vissza
 	 * @return
 	 */
-	public static Map<String, Object> getCacheByPrefix(String prefix, int limit) {
-		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+	public static JSONArray getCacheByPrefix(String prefix, int limit) {
+		JSONArray ret = new JSONArray();
 		
 		int n = 0;
 		for(String kulcsszo : CACHE_BY_KULCSSZO.keySet()) {
 			if(n==limit) break;
+			JSONObject map = new JSONObject();
 			if(prefix==null || prefix.isEmpty() || kulcsszo.startsWith(prefix)) {
-				System.out.println(kulcsszo);
-				map.put(kulcsszo, CACHE_BY_KULCSSZO.get(kulcsszo));
+				try {
+				map.append("name", kulcsszo);
+				map.append("count", CACHE_BY_KULCSSZO.get(kulcsszo));
+				ret.put(map);
+				} catch (JSONException je) {
+					
+				}
 			}
 			n++;
 		}
 		
-		return map;
+		return ret;
 	}
 }

@@ -4,7 +4,7 @@
 				
 				<div class="form-group col-md-4 col-sm-3 col-md-4">
 				  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
-				  <input type="search" class="form-control" id="hirdetesKulcsszo" name="q" value="${q!''?html}" placeholder="Keresett kifejezés">
+				  <input type="text" class="typeahead form-control" id="hirdetesKulcsszo" name="q" value="${q!''?html}" placeholder="Keresett kifejezés">
 				</div>
 				
 				<div class="form-group col-xs-5 col-sm-2 col-md-2">
@@ -57,7 +57,27 @@
 					return false;
 		        }
 		    });
-			//$('#hirdetesKulcsszo').autocomplete({ source: "/api/v1/kulcsszoLista"});
+			
+			var kulcsszoAPI = new Bloodhound({
+				datumTokenizer: Bloodhound.tokenizers.whitespace,
+				queryTokenizer: Bloodhound.tokenizers.whitespace,
+				identify: function(obj) {keys = Object.keys(obj); return keys[0];},
+				remote: {
+				    url: '/api/v1/kulcsszoLista/%QUERY',
+				    wildcard: '%QUERY'
+				}
+			});
+			
+			$('#hirdetesKulcsszo').typeahead({
+				hint: true,
+				highlight: false,
+				minLength: 1
+			},
+			{
+				name: 'kulcsszo',
+				display: 'name',
+				source: kulcsszoAPI
+			});
 						
 			$('#hirdetesTipus').change(function(){
 				$('#btnKereses').click();
