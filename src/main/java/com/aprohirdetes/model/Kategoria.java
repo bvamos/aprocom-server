@@ -26,17 +26,27 @@ public class Kategoria {
 	public Kategoria() {
 	}
 	
+	public Kategoria(String id, String nev, String urlNev, int sorrend, String szuloId) {
+		setId(id);
+		setNev(nev);
+		setUrlNev(urlNev);
+		setSorrend(sorrend);
+		setSzuloId(szuloId);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(urlNev);
 		sb.append("(" + getHirdetesekSzama() + ")");
 		
-		sb.append(" {");
-		for(Kategoria ak : getAlkategoriaList()) {
-			sb.append(ak.toString());
+		if(getAlkategoriaList()!=null) {
+			sb.append(" {");
+			for(Kategoria ak : getAlkategoriaList()) {
+				sb.append(ak.toString() + ", ");
+			}
+			sb.append("} ");
 		}
-		sb.append("} ");
 		
 		return sb.toString();
 	}
@@ -49,8 +59,16 @@ public class Kategoria {
 		return id.toString();
 	}
 	
+	private void setId(String id) {
+		this.id = new ObjectId(id);
+	}
+	
 	public ObjectId getSzuloId() {
 		return this.szuloId;
+	}
+	
+	private void setSzuloId(String szuloId) {
+		this.szuloId = new ObjectId(szuloId);
 	}
 
 	public String getNev() {

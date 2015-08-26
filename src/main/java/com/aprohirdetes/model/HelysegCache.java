@@ -2,6 +2,7 @@ package com.aprohirdetes.model;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 
@@ -24,22 +25,47 @@ public class HelysegCache {
 		return CACHE_BY_URLNEV;
 	}
 	
+	/**
+	 * Feltolti a Helyseg cache-eket az adatbazisbol, hogy kesobb csak ezt hasznaljuk, 
+	 * es ne kelljen nyulni a db-hez.
+	 * A legfelso szint minden Helyseget tartalmaz, es azok is tartalmazzak az alattuk
+	 * levoket. Igy egy akar a 3. szinten levo Helyseget is ki lehet venni a cache-bol
+	 * az Helyseg.id vagy a Helyseg.urlNev alapjan.
+	 */
 	public static void loadCache() {
-		Datastore datastore = MongoUtils.getDatastore();
-		Query<Helyseg> query = datastore.createQuery(Helyseg.class).order("sorrend");
+		CACHE_BY_ID.clear();
+		CACHE_BY_URLNEV.clear();
 		
-		for(Helyseg level1 : query.asList()) {
-			Query<Helyseg> query1 = datastore.createQuery(Helyseg.class).filter("szuloId", level1.getId()).order("sorrend");
-			level1.setAlhelysegList(query1.asList());
-			
-			for(Helyseg level2 : query1.asList()) {
-				Query<Helyseg> query2 = datastore.createQuery(Helyseg.class).filter("szuloId", level2.getId()).order("sorrend");
-				level2.setAlhelysegList(query2.asList());
-			}
-			CACHE_BY_ID.put(level1.getId(), level1);
-			CACHE_BY_URLNEV.put(level1.getUrlNev(), level1);
-			
+		for(Helyseg helyseg : loadById(null)) {
+			CACHE_BY_ID.put(helyseg.getId(), helyseg);
+			CACHE_BY_URLNEV.put(helyseg.getUrlNev(), helyseg);
 		}
+		
+		//System.out.println(CACHE_BY_ID.toString());
+		//System.out.println(CACHE_BY_URLNEV.toString());
+	}
+	
+	/**
+	 * Rekurzivan betolti a Helysegek listajat
+	 * @param szuloId
+	 * @return
+	 */
+	private static LinkedList<Helyseg> loadById(ObjectId szuloId) {
+		LinkedList<Helyseg> ret = new LinkedList<Helyseg>();
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Helyseg> query = datastore.createQuery(Helyseg.class);
+		if (szuloId!=null) {
+			query.filter("szuloId", szuloId);
+		}
+		query.order("sorrend");
+		
+		for(Helyseg helyseg : query.asList()) {
+			helyseg.setAlhelysegList(loadById(helyseg.getId()));
+			ret.add(helyseg);
+		}
+		
+		return ret;
 	}
 	
 	public static ArrayList<Helyseg> getHelysegListByParentId(String parentId) {

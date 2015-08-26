@@ -2,6 +2,7 @@ package com.aprohirdetes.model;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 
@@ -25,35 +26,48 @@ public class KategoriaCache {
 	}
 	
 	/**
-	 * 
+	 * Feltolti a Kategoria cache-eket az adatbazisbol, hogy kesobb csak ezt hasznaljuk, 
+	 * es ne kelljen nyulni a db-hez.
+	 * A legfelso szint minden Kategoriat tartalmaz, es azok is tartalmazzak az alattuk
+	 * levoket. Igy egy akar a 3. szinten levo Kategoriat is ki lehet venni a cache-bol
+	 * az Kategoria.id vagy a Kategoria.urlNev alapjan.
 	 */
 	public static void loadCache() {
 		CACHE_BY_ID.clear();
 		CACHE_BY_URLNEV.clear();
 		
-		Datastore datastore = MongoUtils.getDatastore();
-		Query<Kategoria> query = datastore.createQuery(Kategoria.class).order("sorrend");
-		
-		for(Kategoria level1 : query.asList()) {
-			Query<Kategoria> query1 = datastore.createQuery(Kategoria.class).filter("szuloId", level1.getId()).order("sorrend");
-			level1.setAlkategoriaList(query1.asList());
-			
-			for(Kategoria level2 : query1.asList()) {
-				Query<Kategoria> query2 = datastore.createQuery(Kategoria.class).filter("szuloId", level2.getId()).order("sorrend");
-				level2.setAlkategoriaList(query2.asList());
-				
-				for(Kategoria level3 : query2.asList()) {
-					Query<Kategoria> query3 = datastore.createQuery(Kategoria.class).filter("szuloId", level3.getId()).order("sorrend");
-					level3.setAlkategoriaList(query3.asList());
-				}
-			}
-			CACHE_BY_ID.put(level1.getId(), level1);
-			CACHE_BY_URLNEV.put(level1.getUrlNev(), level1);
-		
-			//System.out.println(level1.toString());
+		for(Kategoria kategoria : loadById(null)) {
+			CACHE_BY_ID.put(kategoria.getId(), kategoria);
+			CACHE_BY_URLNEV.put(kategoria.getUrlNev(), kategoria);
 		}
+		
+		//System.out.println(CACHE_BY_ID.toString());
+		//System.out.println(CACHE_BY_URLNEV.toString());
 	}
 	
+	/**
+	 * Rekurzivan betolti a Kategoriak listajat
+	 * @param szuloId
+	 * @return
+	 */
+	private static LinkedList<Kategoria> loadById(ObjectId szuloId) {
+		LinkedList<Kategoria> ret = new LinkedList<Kategoria>();
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Kategoria> query = datastore.createQuery(Kategoria.class);
+		if (szuloId!=null) {
+			query.filter("szuloId", szuloId);
+		}
+		query.order("sorrend");
+		
+		for(Kategoria kategoria : query.asList()) {
+			kategoria.setAlkategoriaList(loadById(kategoria.getId()));
+			ret.add(kategoria);
+		}
+		
+		return ret;
+	}
+		
 	public static ArrayList<Kategoria> getKategoriaListByParentId(String parentId) {
 		ArrayList<Kategoria> ret = new ArrayList<Kategoria>();
 		
