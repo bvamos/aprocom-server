@@ -19,7 +19,7 @@ public class RestKulcsszoListaServerResource extends ServerResource implements A
 	protected void doInit() throws ResourceException {
 		super.doInit();
 		
-		prefix = (String) this.getRequestAttributes().get("prefix");
+		prefix = getQueryValue("p")==null ? "" : getQueryValue("p");
 	}
 	
 	@Override

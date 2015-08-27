@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.restlet.Context;
 
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -86,14 +87,15 @@ public class KulcsszoCache {
 			JSONObject map = new JSONObject();
 			if(prefix==null || prefix.isEmpty() || kulcsszo.startsWith(prefix)) {
 				try {
-				map.append("name", kulcsszo);
-				map.append("count", CACHE_BY_KULCSSZO.get(kulcsszo));
-				ret.put(map);
-				} catch (JSONException je) {
+					map.put("name", kulcsszo);
+					map.put("count", CACHE_BY_KULCSSZO.get(kulcsszo));
 					
+					ret.put(map);
+				} catch (JSONException je) {
+					Context.getCurrentLogger().severe(je.getMessage());
 				}
+				n++;
 			}
-			n++;
 		}
 		
 		return ret;

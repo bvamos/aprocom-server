@@ -141,7 +141,6 @@ public class AproApplication extends Application {
 		router.attach("/api/v1/hirdetesUzenet", com.aprohirdetes.server.apiv1.HirdetesUzenetServerResource.class);
 		router.attach("/api/v1/hirdeto/{hirdetoId}/apikeys", com.aprohirdetes.server.apiv1.RestHirdetoApiKeysServerResource.class);
 		router.attach("/api/v1/kulcsszoLista", com.aprohirdetes.server.apiv1.RestKulcsszoListaServerResource.class);
-		router.attach("/api/v1/kulcsszoLista/{prefix}", com.aprohirdetes.server.apiv1.RestKulcsszoListaServerResource.class);
 		
 		// ADMIN
 		router.attach("/ilyennincs/", com.aprohirdetes.server.admin.FooldalServerResource.class);
@@ -317,7 +316,6 @@ public class AproApplication extends Application {
 		HelysegCache.loadCache();
 		
 		// Betoltjuk a Kategoriakhoz tartozo Attributumokat
-		getLogger().info("Loading AttributumCache");
 		AttributumCache.loadAttributumCache();
 		
 		if(taskService == null) taskService = new TaskService(true, 2);

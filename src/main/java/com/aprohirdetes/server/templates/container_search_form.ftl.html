@@ -61,9 +61,9 @@
 			var kulcsszoAPI = new Bloodhound({
 				datumTokenizer: Bloodhound.tokenizers.whitespace,
 				queryTokenizer: Bloodhound.tokenizers.whitespace,
-				identify: function(obj) {keys = Object.keys(obj); return keys[0];},
+				sufficient: 10,
 				remote: {
-				    url: '/api/v1/kulcsszoLista/%QUERY',
+				    url: '/api/v1/kulcsszoLista?p=%QUERY',
 				    wildcard: '%QUERY'
 				}
 			});
@@ -76,6 +76,7 @@
 			{
 				name: 'kulcsszo',
 				display: 'name',
+				limit: 10,
 				source: kulcsszoAPI
 			});
 						
