@@ -28,13 +28,12 @@
 					<#assign sorszam = 1>
 					<#list hirdetesList as hirdetes>
 						<#assign urlCim = hirdetes.cim?replace('/', '')?url >
-						<#if (q?length>0) >
-							<#assign hirdetesSzoveg = hirdetes.szoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i') >
-						<#else>
-							<#assign hirdetesSzoveg = hirdetes.szoveg >
-						</#if>
+						<#assign hirdetesSzoveg = hirdetes.szoveg >
 						<#if (hirdetesSzoveg?length>300) >
-							<#assign hirdetesSzoveg = hirdetesSzoveg[0..300] + "..." >
+							<#assign hirdetesSzoveg = hirdetes.szoveg[0..300] + "..." >
+						</#if>
+						<#if (q?length>0) >
+							<#assign hirdetesSzoveg = hirdetesSzoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i') >
 						</#if>
 						<#assign hirdetesCim = hirdetes.cim >
 						<#if (hirdetesCim?length>60) >
@@ -67,70 +66,6 @@
 									</#if>
 									${hirdetesSzoveg!""}
 									</td>
-									
-									<!-- 
-									<#if hirdetes.kepek?has_content >
-									<td class="hirdetes-kepek" width="162">
-										<! - - 
-											<div id="carousel-${hirdetes.id}" class="carousel slide" data-ride="carousel" data-interval="false" style="width: 300px; height: 200px;">
-												<!- - Indicators - ->
-												<ol class="carousel-indicators">
-												<#assign i=1 >
-												<#list hirdetes.kepek as kep>
-													<#if i==1 >
-													<li data-target="#carousel-${hirdetes.id}" data-slide-to="1" class="active"></li>
-												  	<#else>
-													<li data-target="#carousel-${hirdetes.id}" data-slide-to="${i}"></li>
-												  	</#if>
-												  	<#assign i=i+1>
-												</#list>
-												</ol>
-												
-												<!- - Wrapper for slides - ->
-												<div class="carousel-inner">
-												<#assign i=1 >
-												<#list hirdetes.kepek as kep>
-													<#if i==1 >
-												  	<div class="item active">
-												  	<#else>
-												  	<div class="item">
-												  	</#if>
-												    <img src="${app.contextRoot}/static/images/$ {kep.thumbFileNev}" height="140">
-												</div>
-												  	<#assign i=i+1>
-												</#list>
-												</div>
-												
-												<!- - Controls - ->
-												<a class="left carousel-control" href="#carousel-${hirdetes.id}" data-slide="prev">
-													<span class="glyphicon glyphicon-chevron-left"></span>
-												</a>
-												<a class="right carousel-control" href="#carousel-${hirdetes.id}" data-slide="next">
-													<span class="glyphicon glyphicon-chevron-right"></span>
-												</a>
-											</div>
-											 - - >
-											 
-										 <#assign kep=hirdetes.kepek[0] >
-										 <#if kep.thumbFileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" style="display: block; margin:auto; border: 1px solid #000;"></a>
-											 <#elseif kep.fileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="display: block; margin:auto; border: 1px solid #000;"></a>
-										 </#if>
-									</td>
-									<#else>
-										<! - - Kép nélküli hirdetés  - - >		
-									</#if>
-									-->
-									<!-- 
-									<#if hirdetes.attributumok?has_content>
-									<td class="hirdetes-mezok" width="200">
-										<#list hirdetes.attributumok?keys as attributum>
-										${attributum}: ${hirdetes.attributumok[attributum]}<br/>
-										</#list>
-									</td>
-									</#if>
-									-->
 								</tr>
 							</table>
 						</div>
