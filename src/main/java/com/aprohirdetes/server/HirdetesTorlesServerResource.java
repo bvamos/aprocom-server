@@ -20,8 +20,7 @@ import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
-import com.aprohirdetes.utils.AproUtils;
-
+import com.aprohirdetes.model.SessionHelper;
 import freemarker.template.Template;
 
 public class HirdetesTorlesServerResource extends ServerResource implements
@@ -38,7 +37,7 @@ public class HirdetesTorlesServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		this.session = AproUtils.getSession(this);
+		this.session = SessionHelper.getSession(this);
 		
 		String hirdetesIdString = (String) this.getRequestAttributes().get("hirdetesId");
 		try {

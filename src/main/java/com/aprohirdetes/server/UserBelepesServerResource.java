@@ -11,7 +11,6 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
-import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -25,7 +24,6 @@ import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
-import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
@@ -45,7 +43,7 @@ public class UserBelepesServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		session = AproUtils.getSession(this);
+		session = SessionHelper.getSession(this);
 		
 		referrer = getQueryValue("referrer");
 	}
@@ -99,13 +97,7 @@ public class UserBelepesServerResource extends ServerResource implements
 				getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + session.getSessionId());
 				
 				// Session Cookie
-				CookieSetting cookieSetting = new CookieSetting("AproSession", session.getSessionId());
-				cookieSetting.setVersion(0);
-				cookieSetting.setAccessRestricted(true);
-				cookieSetting.setPath(contextPath + "/");
-				cookieSetting.setComment("Session Id");
-				cookieSetting.setMaxAge(3600*24*7);
-				getResponse().getCookieSettings().add(cookieSetting);
+				SessionHelper.setSessionCookie(this, session.getSessionId());
 				
 				// Session mentese az adatbazisba
 				Datastore datastore = MongoUtils.getDatastore();

@@ -21,7 +21,7 @@ import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Session;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import freemarker.template.Template;
 
 public class UserBeallitasokServerResource extends ServerResource implements
@@ -37,7 +37,7 @@ public class UserBeallitasokServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		this.session = AproUtils.getSession(this);
+		this.session = SessionHelper.getSession(this);
 	}
 
 	@Override

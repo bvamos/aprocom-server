@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
-import org.restlet.data.CookieSetting;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
@@ -20,7 +19,7 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
@@ -38,7 +37,7 @@ public class UserKilepesServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		this.session = AproUtils.getSession(this);
+		this.session = SessionHelper.getSession(this);
 	}
 
 	@Override
@@ -47,21 +46,7 @@ public class UserKilepesServerResource extends ServerResource implements
 		if (this.session != null) {
 			getLogger().info("Session cookie torlese: " + session.getSessionId());
 			
-			try {
-				getResponse().getCookieSettings().removeAll("AproSession");
-				
-				CookieSetting cookieSetting = new CookieSetting("AproSession", "");
-				cookieSetting.setVersion(0);
-				cookieSetting.setAccessRestricted(true);
-				cookieSetting.setPath(contextPath + "/");
-				cookieSetting.setComment("Session Id");
-				cookieSetting.setMaxAge(0);
-				getResponse().getCookieSettings().add(cookieSetting);
-				
-				getLogger().info("Kilepes. AproSession cookie torolve: " + session.getSessionId());
-			} catch(NullPointerException npe) {
-				getLogger().severe("Hiba a Kilepesnel: " + npe.getMessage());
-			}
+			SessionHelper.removeSessionCookie(this);
 			
 			// Session torlese az adatbazisbol
 			Datastore datastore = MongoUtils.getDatastore();

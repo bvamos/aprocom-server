@@ -25,7 +25,7 @@ import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
@@ -44,7 +44,7 @@ public class UserHirdetesServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		this.session = AproUtils.getSession(this);
+		this.session = SessionHelper.getSession(this);
 		
 		try {
 			this.hirdetesId = new ObjectId((String) this.getRequestAttributes().get("hirdetesId"));

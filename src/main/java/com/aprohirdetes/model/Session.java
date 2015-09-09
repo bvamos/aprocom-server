@@ -90,4 +90,17 @@ public class Session {
 		
 		return ret;
 	}
+	
+	public String getFelhasznaloApikey() {
+		String ret = null;
+		
+		if(hirdetoId != null) {
+			Hirdeto h = HirdetoHelper.load(hirdetoId);
+			if(h != null) {
+				ret = h.getApiKey();
+			}
+		}
+		
+		return ret;
+	}
 }

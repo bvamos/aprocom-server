@@ -44,6 +44,7 @@ import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
@@ -76,7 +77,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			}
 		}
 		
-		session = AproUtils.getSession(this);
+		session = SessionHelper.getSession(this);
 		
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();

@@ -13,7 +13,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.mongodb.morphia.Datastore;
-import org.restlet.data.CookieSetting;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -29,7 +28,7 @@ import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
 import com.mongodb.MongoException;
@@ -71,7 +70,7 @@ public class UserRegisztracioServerResource extends ServerResource implements
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", SessionHelper.getSession(this));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("kategoriaList", kategoriaList);
 		dataModel.put("helysegList", helysegList);
@@ -131,17 +130,7 @@ public class UserRegisztracioServerResource extends ServerResource implements
 		}
 		
 		// Cookie torlese, kileptetes, ha van ervenyes session
-		try {
-			CookieSetting cookieSetting = new CookieSetting("AproSession", AproUtils.getSession(this).getSessionId());
-			cookieSetting.setVersion(0);
-			cookieSetting.setAccessRestricted(true);
-			cookieSetting.setPath(contextPath + "/");
-			cookieSetting.setComment("Session Id");
-			cookieSetting.setMaxAge(0);
-			getResponse().getCookieSettings().add(cookieSetting);
-		} catch(NullPointerException npe) {
-			
-		}
+		SessionHelper.removeSessionCookie(this);
 		
 		// Adatmodell a Freemarker sablonhoz
 		ArrayList<Kategoria> kategoriaList = KategoriaCache.getKategoriaListByParentId(null);

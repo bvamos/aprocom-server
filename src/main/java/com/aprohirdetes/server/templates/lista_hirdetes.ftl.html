@@ -1,0 +1,61 @@
+						<#assign urlCim = hirdetes.cim?replace('/', '')?url >
+						<#assign hirdetesSzoveg = hirdetes.szoveg >
+						<#if (hirdetesSzoveg?length>300) >
+							<#assign hirdetesSzoveg = hirdetes.szoveg[0..300] + "..." >
+						</#if>
+						<#if (q?length>0) >
+							<#assign hirdetesSzoveg = hirdetesSzoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i') >
+						</#if>
+						<#assign hirdetesCim = hirdetes.cim >
+						<#if (hirdetesCim?length>60) >
+							<#assign hirdetesCim = hirdetes.cim[0..60] + "..." >
+						</#if>
+						<!-- ${sorszam} -->
+						<div class="hirdeteslista-container" itemscope itemtype="http://schema.org/Product">
+							<div class="hirdetes-header">
+								<table border="0" width="100%">
+									<tr>
+										<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">${hirdetesCim}</a>
+										 (${hirdetes.egyebMezok.tipusNev}) <br/>
+										 <span>${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
+										<td class="hirdetes-kategoria"><small>${hirdetes.egyebMezok.kategoriaNev}
+										<br/>${hirdetes.egyebMezok.helysegNev}</small></td>
+									</tr>
+								</table>
+							</div>
+							<div class="hirdetes-body">
+								<table border="0" width="100%">
+									<tr>
+										<td class="hirdetes-szoveg" itemprop="description">
+										<#if hirdetes.kepek?has_content >
+										<#assign kep=hirdetes.kepek[0] >
+											 <#if kep.thumbFileNev?? >
+												 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" style="border: 1px solid #000; float: right;"></a>
+												 <#elseif kep.fileNev?? >
+												 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="border: 1px solid #000; float: right;"></a>
+											 </#if>
+										</#if>
+										${hirdetesSzoveg!""}
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="hirdetes-footer" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+								<table border="0" width="100%">
+									<tr>
+										<td class="hirdetes-muveletek" itemprop="url">
+										<#if session?? >
+											<#if hirdetes.egyebMezok.kedvenc??><a id="heart_${hirdetes.id}" href="javascript:torolKedvenc('${hirdetes.id}');" title="Törlés a Kedvencekből"><i class="fa fa-heart"></i></a>
+											<#else><a id="heart_${hirdetes.id}" href="javascript:mentKedvenc('${hirdetes.id}');" title="Hozzáadás a Kedvencekhez"><i class="fa fa-heart-o"></i></a></#if>
+										</#if>
+										<#if hirdetes.egyebMezok.tag?? >
+										<#list hirdetes.egyebMezok.tag?split(";") as tag>
+											<span class="label label-warning">${tag}</span>
+										</#list>
+										</#if>
+										</td>
+										<td class="hirdetes-ar" itemprop="price">${hirdetes.ar} <span itemprop="priceCurrency">Ft</span></td>
+									</tr>
+								</table>
+							</div>
+						</div>

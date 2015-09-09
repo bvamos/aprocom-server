@@ -19,8 +19,7 @@ import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.KategoriaCache;
-import com.aprohirdetes.utils.AproUtils;
-
+import com.aprohirdetes.model.SessionHelper;
 import freemarker.template.Template;
 
 public class StaticSugoServerResource extends ServerResource implements StaticHtmlResource {
@@ -46,7 +45,7 @@ public class StaticSugoServerResource extends ServerResource implements StaticHt
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", SessionHelper.getSession(this));
 		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
 		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);

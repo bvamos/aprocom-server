@@ -25,7 +25,7 @@ import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.Session;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MailUtils;
 
 import freemarker.template.Template;
@@ -42,7 +42,7 @@ public class StaticKapcsolatServerResource extends ServerResource implements For
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		session = AproUtils.getSession(this);
+		session = SessionHelper.getSession(this);
 	}
 	
 	public Representation representHtml() {
@@ -56,7 +56,7 @@ public class StaticKapcsolatServerResource extends ServerResource implements For
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", session);
 		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
 		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);

@@ -31,6 +31,7 @@ import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -80,7 +81,7 @@ public class HirdetesServerResource extends ServerResource implements
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", SessionHelper.getSession(this));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		
 		// Hirdetes adatai

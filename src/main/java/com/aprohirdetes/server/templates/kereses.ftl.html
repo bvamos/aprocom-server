@@ -27,63 +27,12 @@
 					</div><!-- hirdeteslista-header -->
 					<#assign sorszam = 1>
 					<#list hirdetesList as hirdetes>
-						<#assign urlCim = hirdetes.cim?replace('/', '')?url >
-						<#assign hirdetesSzoveg = hirdetes.szoveg >
-						<#if (hirdetesSzoveg?length>300) >
-							<#assign hirdetesSzoveg = hirdetes.szoveg[0..300] + "..." >
-						</#if>
-						<#if (q?length>0) >
-							<#assign hirdetesSzoveg = hirdetesSzoveg?replace(q, '<span class="kiemelt">'+q+'</span>', 'i') >
-						</#if>
-						<#assign hirdetesCim = hirdetes.cim >
-						<#if (hirdetesCim?length>60) >
-							<#assign hirdetesCim = hirdetes.cim[0..60] + "..." >
-						</#if>
-					<!-- ${sorszam} -->
-					<div class="hirdeteslista-container" itemscope itemtype="http://schema.org/Product">
-						<div class="hirdetes-header">
-							<table border="0" width="100%">
-								<tr>
-									<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">${hirdetesCim}</a>
-									 (${hirdetes.egyebMezok.tipusNev}) <br/>
-									 <span>${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
-									<td class="hirdetes-kategoria"><small>${hirdetes.egyebMezok.kategoriaNev}
-									<br/>${hirdetes.egyebMezok.helysegNev}</small></td>
-								</tr>
-							</table>
-						</div>
-						<div class="hirdetes-body">
-							<table border="0" width="100%">
-								<tr>
-									<td class="hirdetes-szoveg" itemprop="description">
-									<#if hirdetes.kepek?has_content >
-									<#assign kep=hirdetes.kepek[0] >
-										 <#if kep.thumbFileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.thumbFileNev}" style="border: 1px solid #000; float: right;"></a>
-											 <#elseif kep.fileNev?? >
-											 <a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}"><img src="${app.contextRoot}/static/images/${kep.fileNev}" height="140" style="border: 1px solid #000; float: right;"></a>
-										 </#if>
-									</#if>
-									${hirdetesSzoveg!""}
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div class="hirdetes-footer" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-							<table border="0" width="100%">
-								<tr>
-									<td class="hirdetes-muveletek" itemprop="url">
-									<#if hirdetes.egyebMezok.tag?? >
-									<#list hirdetes.egyebMezok.tag?split(";") as tag>
-										<span class="label label-warning">${tag}</span>
-									</#list>
-									</#if>
-									</td>
-									<td class="hirdetes-ar" itemprop="price">${hirdetes.ar} <span itemprop="priceCurrency">Ft</span></td>
-								</tr>
-							</table>
-						</div>
-					</div>
+						<#attempt>
+							<#include "lista_${hirdetes.egyebMezok.kategoriaUrlNev}.ftl.html"/>
+						<#recover>
+							<#include "lista_hirdetes.ftl.html">
+						</#attempt>
+						
 						<#if (sorszam==5) >
 						<!-- Hirdetes -->
 						<script type="text/javascript" charset="utf-8" >
@@ -101,19 +50,20 @@
 						</#if>
 						<#assign sorszam = sorszam + 1 >
 					</#list>
-				<#if (hirdetesek_szama>0) >
-					<div>
-						<ul class="pager">
-							<#if (aktualisOldal>1) >
-							<li class="previous"><a href="#" id="elozoBtn">&larr; Előző oldal</a></li>
-							</#if>
-							<#if (aktualisOldal<osszesOldal) >
-							<li class="next"><a href="#" id="kovetkezoBtn">Még több apróhirdetés &rarr;</a></li>
-							</#if>
-						</ul>
+					
+					<#if (hirdetesek_szama>0) >
+						<div>
+							<ul class="pager">
+								<#if (aktualisOldal>1) >
+								<li class="previous"><a href="#" id="elozoBtn">&larr; Előző oldal</a></li>
+								</#if>
+								<#if (aktualisOldal<osszesOldal) >
+								<li class="next"><a href="#" id="kovetkezoBtn">Még több apróhirdetés &rarr;</a></li>
+								</#if>
+							</ul>
+						</div>
+					</#if>
 					</div>
-				</#if>
-				</div>
 				</div>
 			    <script type="text/javascript">
 				$('#keresesSorrendSelect').change(function(){
@@ -133,6 +83,47 @@
 					window.p++;
 					$('#btnKereses').click();
 				});
+				
+				function mentKedvenc(hirdetesId) {
+					var data = {"hirdetesId":hirdetesId};
+					
+					$.ajax({
+				        type: "POST",
+				        url: "${app.contextRoot}/api/v1/kedvencek",
+				        data: JSON.stringify(data),
+				        contentType: "application/json; charset=utf-8",
+				        dataType: "json"
+					}).done(function(data){
+						//alert(JSON.stringify(data));
+						var id = data.hirdetesId;
+						var i = document.getElementById("heart_" + hirdetesId);
+						i.innerHTML = '<i class="fa fa-heart"></i>';
+			        	i.href = "javascript:torolKedvenc('" + hirdetesId + "')";
+			        	i.title = "Törlés a Kedvencekből";
+			        }).fail(function(jqXHR, textStatus) {
+			            alert(textStatus);
+			        });
+				}
+				
+				function torolKedvenc(hirdetesId) {
+					var data = {"hirdetesId":hirdetesId};
+					
+					$.ajax({
+				        type: "DELETE",
+				        url: "${app.contextRoot}/api/v1/kedvencek/" + hirdetesId,
+				        contentType: "application/json; charset=utf-8",
+				        dataType: "json"
+					}).done(function(data){
+						//alert(JSON.stringify(data));
+						var id = data.hirdetesId;
+						var i = document.getElementById("heart_" + hirdetesId);
+			        	i.innerHTML = '<i class="fa fa-heart-o"></i>';
+			        	i.href = "javascript:mentKedvenc('" + hirdetesId + "')";
+			        	i.title = "Hozzáadás a Kedvencekhez";
+			        }).fail(function(jqXHR, textStatus) {
+			            alert(textStatus);
+			        });
+				}
 			    </script>
 				</#if>
 <#include "page_footer.ftl.html"/>

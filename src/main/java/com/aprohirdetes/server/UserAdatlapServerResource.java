@@ -24,7 +24,7 @@ import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Session;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
 import com.mongodb.MongoException;
@@ -45,7 +45,7 @@ public class UserAdatlapServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		this.session = AproUtils.getSession(this);
+		this.session = SessionHelper.getSession(this);
 		if(this.session != null) {
 			this.hirdeto = HirdetoHelper.load(this.session.getHirdetoId());
 		}

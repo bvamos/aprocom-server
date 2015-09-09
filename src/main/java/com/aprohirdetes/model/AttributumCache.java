@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.restlet.Context;
+
 public class AttributumCache {
 
 	private static HashMap<String, LinkedList<Attributum>> KATEGORIA_ATTRIBUTUM = new HashMap<String, LinkedList<Attributum>>();
@@ -16,6 +18,7 @@ public class AttributumCache {
 	}
 
 	public static void loadAttributumCache() {
+		Context.getCurrentLogger().info("Loading AttributumCache...");
 		
 		// Altalanos attributumok
 		Attributum allapot = new AttributumSelectSingle("allapot", "Állapot");
@@ -294,6 +297,8 @@ public class AttributumCache {
 		gumiList.add(gumiPer);
 		gumiList.add(gumiAtmero);
 		KATEGORIA_ATTRIBUTUM.put("gumi-felni", gumiList);
+		
+		Context.getCurrentLogger().info("AttributumCache has been loaded");
 	}
 	
 	/**

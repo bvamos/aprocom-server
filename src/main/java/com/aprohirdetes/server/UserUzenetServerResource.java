@@ -21,9 +21,9 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.model.Uzenet;
 import com.aprohirdetes.model.UzenetHelper;
-import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
@@ -43,7 +43,7 @@ public class UserUzenetServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		this.session = AproUtils.getSession(this);
+		this.session = SessionHelper.getSession(this);
 		
 		try {
 			this.uzenetTipus = (String) this.getRequestAttributes().get("tipus");

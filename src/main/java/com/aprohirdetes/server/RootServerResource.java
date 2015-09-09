@@ -19,7 +19,7 @@ import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.KategoriaCache;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import freemarker.template.Template;
 
 public class RootServerResource extends ServerResource implements StaticHtmlResource {
@@ -51,7 +51,7 @@ public class RootServerResource extends ServerResource implements StaticHtmlReso
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesKategoria", "ingatlan");
 		dataModel.put("hirdetesHelyseg", "magyarorszag");
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", SessionHelper.getSession(this));
 		dataModel.put("aproTabClass", "apro-tab");
 		
 		// Without global configuration object

@@ -24,7 +24,7 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.FormResource;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Hirdeto;
-import com.aprohirdetes.utils.AproUtils;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
@@ -58,7 +58,7 @@ public class UserUjJelszoServerResource extends ServerResource implements
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", SessionHelper.getSession(this));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("ujjelszo.ftl.html");

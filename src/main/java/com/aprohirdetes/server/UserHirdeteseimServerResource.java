@@ -23,6 +23,7 @@ import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -41,7 +42,7 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 		
-		this.session = AproUtils.getSession(this);
+		this.session = SessionHelper.getSession(this);
 	}
 
 	@Override

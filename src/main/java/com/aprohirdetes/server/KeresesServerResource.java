@@ -30,10 +30,13 @@ import com.aprohirdetes.model.AttributumTipus;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdetes;
+import com.aprohirdetes.model.HirdetesKedvenc;
 import com.aprohirdetes.model.HirdetesKep;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -65,6 +68,7 @@ public class KeresesServerResource extends ServerResource implements
 	 */
 	private List<Helyseg> selectedHelysegList = new LinkedList<Helyseg>();
 	
+	private Session session;
 	private String kulcsszo;
 	private Integer arMin;
 	private Integer arMax;
@@ -122,6 +126,7 @@ public class KeresesServerResource extends ServerResource implements
 			this.sorrend = 0;
 		}
 		
+		this.session = SessionHelper.getSession(this);
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
 	}
@@ -298,6 +303,21 @@ public class KeresesServerResource extends ServerResource implements
 					h.getKepek().add(kep);
 				}
 				
+				// Kedvencek
+				if(this.session!= null) {
+					// Ha van session, akkor a feladoId letezik
+					Query<HirdetesKedvenc> kedvencQuery = datastore.createQuery(HirdetesKedvenc.class);
+					kedvencQuery.criteria("hirdetoId").equal(this.session.getHirdetoId());
+					kedvencQuery.criteria("hirdetesId").equal(h.getId());
+					
+					System.out.println(kedvencQuery);
+					HirdetesKedvenc kedvenc = kedvencQuery.get();
+					if(kedvenc != null) {
+						System.out.println("Kedvenc: " + kedvenc.getHirdetes().getCim());
+						h.getEgyebMezok().put("kedvenc", "true");
+					}
+				}
+				
 				hirdetesList.add(h);
 			}
 			
@@ -325,7 +345,8 @@ public class KeresesServerResource extends ServerResource implements
 		rssUrl += (selectedKategoriaUrlNevListString == null || selectedHelysegUrlNevListString.isEmpty()) ? "" : selectedKategoriaUrlNevListString + "/";
 		
 		dataModel.put("app", appDataModel);
-		dataModel.put("session", AproUtils.getSession(this));
+		dataModel.put("session", this.session);
+		//dataModel.put("apikey", SessionHelper.getSession(this).getFelhasznaloApikey());
 		dataModel.put("kategoriaList", KategoriaCache.getKategoriaListByParentId(null));
 		dataModel.put("helysegList", HelysegCache.getHelysegListByParentId(null));
 		dataModel.put("hirdetesList", hirdetesList);

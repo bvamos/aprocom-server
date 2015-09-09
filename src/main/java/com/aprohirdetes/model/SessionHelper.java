@@ -4,11 +4,20 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 
+import javax.servlet.ServletContext;
+
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.restlet.Context;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.data.Cookie;
+import org.restlet.data.CookieSetting;
+import org.restlet.resource.Resource;
 
 import com.aprohirdetes.exception.AproException;
+import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
 
@@ -114,18 +123,11 @@ public class SessionHelper {
 	
 	/**
 	 * HTTP Header alapu authentikacio az API-khoz.
-	 * @param apiKey Auth-Key HTTP header erteke
+	 * @param apiKey API-Key HTTP header erteke
 	 * @return Hirdeto.apiKey egyedi mezovel azonositott Hirdeto objektum vagy null
 	 */
 	public static Hirdeto authenticate(String apiKey) {
 		Hirdeto ret = null;
-		
-		// Varunk 2 mp-et, igy nem erdemes brute-force tamadast inditani, mert tul lassu a rendszer
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			// Ezt nem lehet megszakitani
-		}
 		
 		if(apiKey == null || apiKey.isEmpty()) {
 			return ret;
@@ -140,4 +142,93 @@ public class SessionHelper {
 		
 		return ret;
 	}
+	
+	public static void setSessionCookie(Resource resource, String sessionId) {
+		ServletContext sc = (ServletContext) resource.getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		String contextPath = sc.getContextPath();
+		
+		// Session Cookie uj lejarat ertekkel: 31 nap mostantol
+		CookieSetting cookieSetting = new CookieSetting("AproSession", sessionId);
+		cookieSetting.setVersion(0);
+		cookieSetting.setAccessRestricted(false);
+		cookieSetting.setPath(contextPath + "/");
+		cookieSetting.setComment("Session Id");
+		cookieSetting.setMaxAge(3600*24*31);
+		
+		resource.getResponse().getCookieSettings().removeAll("AproSession");
+		resource.getResponse().getCookieSettings().add(cookieSetting);
+		Context.getCurrentLogger().info("AproSession cookie hozzaadva: " + cookieSetting.toString());
+	}
+	
+	public static void updateSessionCookie(Response response, Cookie cookie) {
+		CookieSetting cookieSetting = new CookieSetting("AproSession", cookie.getValue());
+		cookieSetting.setVersion(0);
+		cookieSetting.setAccessRestricted(false);
+		cookieSetting.setPath("/");
+		cookieSetting.setComment("Session Id");
+		cookieSetting.setMaxAge(3600*24*31);
+		
+		response.getCookieSettings().removeAll("AproSession");
+		response.getCookieSettings().add(cookieSetting);
+		Context.getCurrentLogger().info("AproSession cookie modositva: " + cookieSetting.toString());
+	}
+	
+	/**
+	 * Session cookie torlese kilepesnel
+	 * @param resource
+	 */
+	public static void removeSessionCookie(Resource resource) {
+		ServletContext sc = (ServletContext) resource.getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
+		String contextPath = sc.getContextPath();
+		
+		// Cookie torlese
+		try {
+			resource.getResponse().getCookieSettings().removeAll("AproSession");
+			
+			CookieSetting cookieSetting = new CookieSetting("AproSession", "");
+			cookieSetting.setVersion(0);
+			cookieSetting.setAccessRestricted(false);
+			cookieSetting.setPath(contextPath + "/");
+			cookieSetting.setComment("Session Id");
+			cookieSetting.setMaxAge(0);
+			resource.getResponse().getCookieSettings().add(cookieSetting);
+			
+			resource.getLogger().info("AproSession cookie torolve");
+		} catch(NullPointerException npe) {
+			resource.getLogger().severe("Hiba az AproSession cookie torlesenel: " + npe.getMessage());
+		}
+	}
+	
+	/**
+	 * Session betoltese a Session cookie alapjan es a cookie lejaratanak frissitese
+	 * @param request
+	 * @return
+	 */
+	public static Session getSession(Request request, Response response) {
+		Session session = null;
+		String sessionId = null;
+		
+		Cookie sessionCookie = request.getCookies().getFirst("AproSession");
+		if(sessionCookie == null) {
+			return null;
+		}
+		
+		sessionId = sessionCookie.getValue();
+		AproApplication.getCurrent().getLogger().info("AproSession cookie betoltve: " + sessionId);
+		
+		updateSessionCookie(response, sessionCookie);
+		session = SessionHelper.load(sessionId);
+		
+		return session;
+	}
+	
+	/**
+	 * Session betoltese a Session cookie alapjan es a cookie lejaratanak frissitese
+	 * @param resource
+	 * @return
+	 */
+	public static Session getSession(Resource resource) {
+		return getSession(resource.getRequest(), resource.getResponse());
+	}
+	
 }

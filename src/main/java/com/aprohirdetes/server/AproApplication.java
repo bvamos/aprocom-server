@@ -25,10 +25,12 @@ import org.restlet.routing.Router;
 import org.restlet.security.Authenticator;
 import org.restlet.service.TaskService;
 
+import com.aprohirdetes.common.Apro;
 import com.aprohirdetes.model.AttributumCache;
 import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.server.task.KategoriaCountTask;
 import com.aprohirdetes.server.task.LejaratErtesitoTask;
@@ -82,6 +84,7 @@ public class AproApplication extends Application {
 		router.attach("/felhasznalo/adatlap", UserAdatlapServerResource.class);
 		router.attach("/felhasznalo/hirdetesek", UserHirdeteseimServerResource.class);
 		router.attach("/felhasznalo/hirdetes/{hirdetesId}", UserHirdetesServerResource.class);
+		router.attach("/felhasznalo/kedvencek", UserKedvencekServerResource.class);
 		router.attach("/felhasznalo/beallitasok", UserBeallitasokServerResource.class);
 		router.attach("/felhasznalo/uzenetek/{tipus}", UserUzenetekServerResource.class);
 		router.attach("/felhasznalo/uzenet/{tipus}/{uzenetId}", UserUzenetServerResource.class);
@@ -102,27 +105,38 @@ public class AproApplication extends Application {
 		Router apiAuthRouter = new Router(getContext());
 		apiAuthRouter.attach("/api/v1/hirdetesek", com.aprohirdetes.server.apiv1.RestHirdetesekServerResource.class);
 		apiAuthRouter.attach("/api/v1/hirdetesek/{hirdetesId}/kepek", com.aprohirdetes.server.apiv1.RestKepekServerResource.class);
+		apiAuthRouter.attach("/api/v1/kedvencek", com.aprohirdetes.server.apiv1.RestKedvencekServerResource.class);
+		apiAuthRouter.attach("/api/v1/kedvencek/{hirdetesId}", com.aprohirdetes.server.apiv1.RestKedvencServerResource.class);
 		apiAuthRouter.attach("/api/v1/admin/retokenize", com.aprohirdetes.server.apiv1.AdminRetokenizeServerResource.class);
 		
 		Authenticator apiAuthFilter = new Authenticator(getContext()) {
 
 			@Override
 			protected boolean authenticate(Request request, Response response) {
-				Header apiKeyHeader = request.getHeaders().getFirst("Auth-Key");
-				String apiKey = apiKeyHeader==null ? null : apiKeyHeader.getValue();
-				
 				Hirdeto felado = null;
-				if(apiKey==null || (felado = SessionHelper.authenticate(apiKey))==null) {
-					getLogger().severe("API auth key error: " + apiKey);
-					response.setStatus(Status.CLIENT_ERROR_FORBIDDEN);
-					return false;
+				// Megprobalunk sessionId-t talalni a keresben
+				Session session = SessionHelper.getSession(request, response);
+				if(session!=null) {
+					request.getClientInfo().setAuthenticated(true);
+					request.getAttributes().put("feladoId", session.getHirdetoId());
+					// TODO: User objektum letrehozasa es getClientInfo().setUser()
+					return true;
 				}
 				
-				getLogger().info("API auth key: " + apiKey + "; Email: " + felado.getEmail());
-				request.getClientInfo().setAuthenticated(true);
-				request.getAttributes().put("feladoId", felado.getId());
-				// TODO: User objektum letrehozasa es getClientInfo().setUser()
-				return true;
+				// Megprobaljuk az API-Keyt
+				Header apiKeyHeader = request.getHeaders().getFirst(Apro.API_KEY_HEADER_NAME);
+				String apiKey = apiKeyHeader==null ? null : apiKeyHeader.getValue();
+				if((felado = SessionHelper.authenticate(apiKey))!=null) {
+					getLogger().info("API auth key: " + apiKey + "; Email: " + felado.getEmail());
+					request.getClientInfo().setAuthenticated(true);
+					request.getAttributes().put("feladoId", felado.getId());
+					// TODO: User objektum letrehozasa es getClientInfo().setUser()
+					return true;
+				}
+				
+				getLogger().severe("API auth error: " + apiKey);
+				response.setStatus(Status.CLIENT_ERROR_FORBIDDEN);
+				return false;
 			}
 			
 		};
