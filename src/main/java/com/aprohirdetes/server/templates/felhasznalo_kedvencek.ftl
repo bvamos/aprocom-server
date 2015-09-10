@@ -44,6 +44,26 @@
 				</table>
 			</div>
 		</div>
+		<script type="text/javascript">
+		function torolKedvenc(hirdetesId) {
+			var data = {"hirdetesId":hirdetesId};
+			
+			if(confirm("Biztos, hogy törölni szeretned a Kedvencekbol?")) {
+			
+			$.ajax({
+		        type: "DELETE",
+		        url: "${app.contextRoot}/api/v1/kedvencek/" + hirdetesId,
+		        contentType: "application/json; charset=utf-8",
+		        dataType: "json"
+			}).done(function(data){
+				//alert(JSON.stringify(data));
+				window.location.reload();
+	        }).fail(function(jqXHR, textStatus) {
+	            alert(textStatus);
+	        });
+	        }
+		}
+		</script>
 <#include "page_footer.ftl.html"/>
 	</div>
 <#include "html_footer.ftl.html"/>
