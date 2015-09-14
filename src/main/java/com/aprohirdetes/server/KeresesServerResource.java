@@ -471,25 +471,27 @@ public class KeresesServerResource extends ServerResource implements
 		String ret = "";
 		
 		String urlNev = KategoriaCache.getCacheById().get(hirdetes.getKategoriaId()).getUrlNev();
-		HashMap<String, Object> attributumok = hirdetes.getAttributumok();
+		HashMap<String, Object> a = hirdetes.getAttributumok();
 		
 		switch(urlNev) {
 		case "lakas":
 		case "haz":
 		case "alberlet":
-			ret = attributumok.get("ingatlan-alapterulet") + " m² | " 
-				+ attributumok.get("ingatlan-szobakszama") + " szoba";
+			ret += attr(a.get("ingatlan-alapterulet"), " m² | ");
+			ret	+= attr(a.get("ingatlan-szobakszama"), " szoba | ");
 			break;
 		case "epitesi-telek":
-			ret = attributumok.get("telek-alapterulet") + " m²";
+			ret = attr(a.get("telek-alapterulet"), " m² | ");
 			break;
 		case "szanto-kiskert":
-			ret = attributumok.get("ingatlan-alapterulet") + " m²";
+			ret = attr(a.get("ingatlan-alapterulet"), " m² | ");
 			break;
 		}
 		
-		if(ret.length()>0) ret += " | ";
-		
 		return ret;
+	}
+	
+	private String attr(Object o, String postfix) {
+		return (o != null) ? o.toString() + postfix : "";
 	}
 }
