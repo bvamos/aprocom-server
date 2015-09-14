@@ -3,7 +3,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 apply plugin: 'java'
 apply plugin: 'war'
 
-#sourceCompatibility = 1.6
+//sourceCompatibility = 1.6
 version = "1." + getDate()
 env = System.getenv()
 
