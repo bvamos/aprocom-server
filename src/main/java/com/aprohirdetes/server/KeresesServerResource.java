@@ -477,14 +477,14 @@ public class KeresesServerResource extends ServerResource implements
 		case "lakas":
 		case "haz":
 		case "alberlet":
-			ret = attributumok.get("ingatlan-alapterulet").toString() + "m² | " 
-				+ attributumok.get("ingatlan-szobakszama").toString() + " szoba";
+			ret = attributumok.get("ingatlan-alapterulet") + " m² | " 
+				+ attributumok.get("ingatlan-szobakszama") + " szoba";
 			break;
 		case "epitesi-telek":
-			ret = attributumok.get("telek-alapterulet").toString() + "m²";
+			ret = attributumok.get("telek-alapterulet") + " m²";
 			break;
 		case "szanto-kiskert":
-			ret = attributumok.get("ingatlan-alapterulet").toString() + "m²";
+			ret = attributumok.get("ingatlan-alapterulet") + " m²";
 			break;
 		}
 		
