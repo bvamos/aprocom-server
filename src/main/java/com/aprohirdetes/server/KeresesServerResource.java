@@ -318,6 +318,10 @@ public class KeresesServerResource extends ServerResource implements
 					}
 				}
 				
+				// Kategoria fuggo fontosabb attributumok a listahoz
+				h.getEgyebMezok().put("attributumokString", getAttributumSzovegByKategoria(h));
+
+				
 				hirdetesList.add(h);
 			}
 			
@@ -446,8 +450,46 @@ public class KeresesServerResource extends ServerResource implements
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
 	}
 
+	/**
+	 * 
+	 * @param urlNev
+	 * @param nev
+	 * @return
+	 */
 	private String getLink(String urlNev, String nev) {
 		return "<a href=\"" + contextPath +
 				"/kereses/kinal/osszes-helyseg/" + urlNev + "/\">" + nev + "</a>";
+	}
+	
+	/**
+	 * Visszaadja a kategoria alapjan a hirdeteshez tartozo fobb atrributumok ertekeit.
+	 * A listaban az ar elott jelenik meg.
+	 * @param hirdetes
+	 * @return
+	 */
+	private String getAttributumSzovegByKategoria(Hirdetes hirdetes) {
+		String ret = "";
+		
+		String urlNev = KategoriaCache.getCacheById().get(hirdetes.getKategoriaId()).getUrlNev();
+		HashMap<String, Object> attributumok = hirdetes.getAttributumok();
+		
+		switch(urlNev) {
+		case "lakas":
+		case "haz":
+		case "alberlet":
+			ret = attributumok.get("ingatlan-alapterulet").toString() + "m² | " 
+				+ attributumok.get("ingatlan-szobakszama").toString() + " szoba";
+			break;
+		case "epitesi-telek":
+			ret = attributumok.get("telek-alapterulet").toString() + "m²";
+			break;
+		case "szanto-kiskert":
+			ret = attributumok.get("ingatlan-alapterulet").toString() + "m²";
+			break;
+		}
+		
+		if(ret.length()>0) ret += " | ";
+		
+		return ret;
 	}
 }

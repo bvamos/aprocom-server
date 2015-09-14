@@ -18,8 +18,8 @@
 										<td class="hirdetes-cim" itemprop="name"><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/${urlCim}">${hirdetesCim}</a>
 										 (${hirdetes.egyebMezok.tipusNev}) <br/>
 										 <span>${hirdetes.egyebMezok.feladvaSzoveg}</span></td>
-										<td class="hirdetes-kategoria"><small>${hirdetes.egyebMezok.kategoriaNev}
-										<br/>${hirdetes.egyebMezok.helysegNev}</small></td>
+										<td class="hirdetes-ar">${hirdetes.egyebMezok.attributumokString!''}
+										<span itemprop="price">${hirdetes.ar}</span> <span itemprop="priceCurrency">Ft</span></td>
 									</tr>
 								</table>
 							</div>
@@ -54,7 +54,7 @@
 										</#list>
 										</#if>
 										</td>
-										<td class="hirdetes-ar" itemprop="price">${hirdetes.ar} <span itemprop="priceCurrency">Ft</span></td>
+										<td class="hirdetes-kategoria"><small>${hirdetes.egyebMezok.kategoriaNev} | ${hirdetes.egyebMezok.helysegNev}</small></td>
 									</tr>
 								</table>
 							</div>

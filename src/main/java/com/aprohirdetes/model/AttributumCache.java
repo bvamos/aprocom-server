@@ -20,6 +20,7 @@ public class AttributumCache {
 	public static void loadAttributumCache() {
 		Context.getCurrentLogger().info("Loading AttributumCache...");
 		
+		// **********************
 		// Altalanos attributumok
 		Attributum allapot = new AttributumSelectSingle("allapot", "Állapot");
 		Map<String, Object> allapotErtekMap = new LinkedHashMap<String, Object>();
@@ -27,6 +28,7 @@ public class AttributumCache {
 		allapotErtekMap.put("u", "Új");
 		allapot.setErtekMap(allapotErtekMap);
 		
+		// ********************************************
 		// Ingatlanokkal kapcsolatos kozos attributumok
 		AttributumNumber ingatlanAlapterulet = new AttributumNumber("ingatlan-alapterulet", "Alapterület");
 		ingatlanAlapterulet.setKotelezo(true);
@@ -66,6 +68,7 @@ public class AttributumCache {
 		ingatlanFutes.setErtekMap(ingatlanFutesErtekMap);
 		ingatlanFutes.setKotelezo(true);
 		
+		// **************************
 		// Kategoria: Ingatlan->Telek
 		LinkedList<Attributum> telekList = new LinkedList<Attributum>();
 		
@@ -76,12 +79,14 @@ public class AttributumCache {
 		telekList.add(telekAlapterulet);
 		KATEGORIA_ATTRIBUTUM.put("epitesi-telek", telekList);
 		
+		// ************************************
 		// Kategoria: Ingatlan->Szanto, kiskert
 		LinkedList<Attributum> szantoList = new LinkedList<Attributum>();
 		szantoList.add(ingatlanAlapterulet);
 		
 		KATEGORIA_ATTRIBUTUM.put("szanto-kiskert", szantoList);
 		
+		// **************************
 		// Kategoria: Ingatlan->Lakas
 		LinkedList<Attributum> lakasList = new LinkedList<Attributum>();
 		
@@ -102,6 +107,7 @@ public class AttributumCache {
 		lakasList.add(ingatlanFutes);
 		KATEGORIA_ATTRIBUTUM.put("lakas", lakasList);
 		
+		// ************************
 		// Kategoria: Ingatlan->Haz
 		LinkedList<Attributum> hazList = new LinkedList<Attributum>();
 		
@@ -116,6 +122,7 @@ public class AttributumCache {
 		hazList.add(telekAlapterulet);
 		KATEGORIA_ATTRIBUTUM.put("haz", hazList);
 		
+		// *****************************
 		// Kategoria: Ingatlan->Alberlet
 		LinkedList<Attributum> alberletList = new LinkedList<Attributum>();
 		
@@ -126,14 +133,17 @@ public class AttributumCache {
 		alberletList.add(ingatlanFutes);
 		KATEGORIA_ATTRIBUTUM.put("alberlet", alberletList);
 		
+		// *****************************************
 		// Kategoria: Ingatlan->Iroda, uzlethelyiseg
 		LinkedList<Attributum> irodaList = new LinkedList<Attributum>();
 		irodaList.add(ingatlanAlapterulet);
 		KATEGORIA_ATTRIBUTUM.put("iroda-uzlethelyiseg", irodaList);
 		
+		// ****************************
 		// Kategoria: Ingatlan->Nyaralo
 		KATEGORIA_ATTRIBUTUM.put("nyaralo", irodaList);
 		
+		// ***************************
 		// Kategoria: Ingatlan->Garazs
 		Attributum garazsElhelyezkedes = new AttributumRadio("garazs-elhelyezkedes", "Elhelyezkedés");
 		Map<String, Object> garazsElhelyezkedesErtekMap = new LinkedHashMap<String, Object>();
@@ -147,6 +157,7 @@ public class AttributumCache {
 		garazsList.add(garazsElhelyezkedes);
 		KATEGORIA_ATTRIBUTUM.put("garazs", garazsList);
 		
+		// *************************************
 		// Kategoria: Elektronikai cikk->Telefon
 		
 		Attributum telefonMarka = new AttributumSelectSingle("telefon-marka", "Márka");
@@ -174,6 +185,7 @@ public class AttributumCache {
 		telefonList.add(telefonMarka);
 		KATEGORIA_ATTRIBUTUM.put("telefon", telefonList);
 		
+		// *****************************
 		// Kategoria: Jarmu->Gumi, felni
 		
 		Attributum gumiMarka = new AttributumSelectSingle("gumi-marka", "Márka");

@@ -27,11 +27,7 @@
 					</div><!-- hirdeteslista-header -->
 					<#assign sorszam = 1>
 					<#list hirdetesList as hirdetes>
-						<#attempt>
-							<#include "lista_${hirdetes.egyebMezok.kategoriaUrlNev}.ftl.html"/>
-						<#recover>
-							<#include "lista_hirdetes.ftl.html">
-						</#attempt>
+						<#include "lista_hirdetes.ftl.html">
 						
 						<#if (sorszam==5) >
 						<!-- Hirdetes -->
