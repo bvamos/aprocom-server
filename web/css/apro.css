@@ -126,6 +126,10 @@ span.header_user {
 	padding-right: 5px;
 }
 
+span.header_user a {
+	color: #fff;
+}
+
 #header-share {
 	float: right;
 	display: table;

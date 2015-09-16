@@ -60,7 +60,8 @@
 			<span class="header_date">${app.datum}</span>
 			<span class="header_alkat hidden-xs">${alkategoriaLinkek!''}</span>
 			<#if session?? >
-			<span class="header_user">${(session.felhasznaloNev)!''} (${(session.felhasznaloEmail)!''})</span>
+			<span class="header_user">${(session.felhasznaloNev)!''} (${(session.felhasznaloEmail)!''})
+			| <a href="${app.contextRoot}/felhasznalo/kedvencek"><i class="fa fa-heart"></i></a></span>
 			</#if>
 		</div>
 		
