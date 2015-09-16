@@ -1,15 +1,17 @@
 package com.aprohirdetes.server;
 
+import java.net.UnknownHostException;
+
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
 import com.aprohirdetes.model.Kategoria;
-import com.aprohirdetes.utils.MongoUtils;
+import com.mongodb.MongoClient;
 
 public class AproSetup {
 
-	public static void main(String[] args) {
-		Datastore ds = new Morphia().createDatastore(MongoUtils.getMongo(), "aprocom");
+	public static void main(String[] args) throws UnknownHostException {
+		Datastore ds = new Morphia().createDatastore(new MongoClient("localhost", 27018), "aprocom");
 		ds.delete(ds.createQuery(Kategoria.class));
 
 		ds.save(new Kategoria("52d3e4fcd1f386a6190b7a17","Ingatlan","ingatlan",1,null));
@@ -121,11 +123,11 @@ public class AproSetup {
 			
 		ds.save(new Kategoria("52d9ac4a44aee655a135e665","Elektronikai cikk","elekronika",9,null));
 			ds.save(new Kategoria("52dab02c44aee655a135e694","Audio","audio",1,"52d9ac4a44aee655a135e665"));
-				ds.save(new Kategoria("55f805cf116fe91b2a4642a8","CD, MP3 lejátszó","",1,"52dab02c44aee655a135e694"));
-				ds.save(new Kategoria("55f805d4116fe91b2a4642a9","Hifi, erősítő","",2,"52dab02c44aee655a135e694"));
-				ds.save(new Kategoria("55f805d8116fe91b2a4642aa","Rádió","",3,"52dab02c44aee655a135e694"));
+				ds.save(new Kategoria("55f805cf116fe91b2a4642a8","CD, MP3 lejátszó","cd-mp3",1,"52dab02c44aee655a135e694"));
+				ds.save(new Kategoria("55f805d4116fe91b2a4642a9","Hifi, erősítő","hifi-erosito",2,"52dab02c44aee655a135e694"));
+				ds.save(new Kategoria("55f805d8116fe91b2a4642aa","Rádió","radio",3,"52dab02c44aee655a135e694"));
 			ds.save(new Kategoria("52dab04244aee655a135e695","Video","video",2,"52d9ac4a44aee655a135e665"));
-				ds.save(new Kategoria("55f805df116fe91b2a4642ac","DVD, házimozi","",1,"52dab04244aee655a135e695"));
+				ds.save(new Kategoria("55f805df116fe91b2a4642ac","DVD, házimozi","dvd-hazimozi",1,"52dab04244aee655a135e695"));
 			ds.save(new Kategoria("55f805e6116fe91b2a4642ad","TV","tv",3,"52d9ac4a44aee655a135e665"));
 			ds.save(new Kategoria("52dab05b44aee655a135e696","Telefon","telefon",4,"52d9ac4a44aee655a135e665"));
 			ds.save(new Kategoria("52dab08044aee655a135e697","Tablet","tablet",5,"52d9ac4a44aee655a135e665"));
