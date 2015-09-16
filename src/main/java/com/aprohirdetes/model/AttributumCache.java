@@ -69,7 +69,7 @@ public class AttributumCache {
 		ingatlanFutes.setKotelezo(true);
 		
 		// **************************
-		// Kategoria: Ingatlan->Telek
+		// Kategoria: Ingatlan->Epitesi Telek
 		LinkedList<Attributum> telekList = new LinkedList<Attributum>();
 		
 		Attributum telekAlapterulet = new AttributumNumber("telek-alapterulet", "Telek alapterülete");

@@ -484,7 +484,15 @@ public class KeresesServerResource extends ServerResource implements
 			ret = attr(a.get("telek-alapterulet"), " m² | ");
 			break;
 		case "szanto-kiskert":
+		case "iroda-uzlethelyiseg":
+		case "nyaralo":
+		case "garazs":
 			ret = attr(a.get("ingatlan-alapterulet"), " m² | ");
+			break;
+		case "gumi-felni":
+			ret += attr(a.get("gumi-szelesseg"), "/");
+			ret += attr(a.get("gumi-per"), " ");
+			ret += attr(a.get("gumi-atmero"), " | ");
 			break;
 		}
 		

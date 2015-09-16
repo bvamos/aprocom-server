@@ -68,7 +68,9 @@ public class Kategoria {
 	}
 	
 	private void setSzuloId(String szuloId) {
-		this.szuloId = new ObjectId(szuloId);
+		if(szuloId != null) {
+			this.szuloId = new ObjectId(szuloId);
+		}
 	}
 
 	public String getNev() {
