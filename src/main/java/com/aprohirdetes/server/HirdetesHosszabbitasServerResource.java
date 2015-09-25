@@ -23,6 +23,7 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesTipus;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
@@ -81,6 +82,7 @@ public class HirdetesHosszabbitasServerResource extends ServerResource implement
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("session", SessionHelper.getSession(this));
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		dataModel.put("hirdetesId", hirdetesId!=null ? hirdetesId.toString() : null);
 		dataModel.put("uzenet", uzenet);
