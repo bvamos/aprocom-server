@@ -28,4 +28,11 @@ public class EsemenyHelper {
 	public static void addHirdetesFeladasError(int esemenyId, String uzenet) {
 		add(EsemenyTipus.HIRDETES_FELADAS, EsemenySzint.ERROR, esemenyId, uzenet);
 	}
+	
+	public static void addHirdetesMegjelenesInfo(ObjectId hirdetesId, ObjectId hirdetoId) {
+		Esemeny esemeny = new Esemeny(EsemenyTipus.HIRDETES_MEGJELENES, EsemenySzint.INFO, 1201, null);
+		esemeny.setHirdetesId(hirdetesId);
+		esemeny.setHirdetoId(hirdetoId);
+		add(esemeny);
+	}
 }

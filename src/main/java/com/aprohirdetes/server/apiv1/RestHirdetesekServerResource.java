@@ -7,11 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
+import org.restlet.Context;
 import org.restlet.data.Status;
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
+import com.aprohirdetes.common.APIRestResource;
 import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.model.Attributum;
 import com.aprohirdetes.model.AttributumCache;
@@ -27,17 +28,25 @@ import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.RestResponse;
 import com.aprohirdetes.utils.MongoUtils;
 
-public class RestHirdetesekServerResource extends ServerResource  {
+public class RestHirdetesekServerResource extends ServerResource implements APIRestResource {
 
-	@Post("json")
-	public RestResponse acceptJson(JsonRepresentation entity) throws Exception {
+	@Override
+	public RestResponse acceptJson(JsonRepresentation entity) {
 		RestResponse response = new RestResponse();
 		
-		if (entity != null) {
+		if (entity == null) {
+			// POST request with no entity.
+			response.addError(1028, "A hirdetes objektum nem lehet ures");
+			response.setSuccess(false);
+			setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+			return response;
+		}
+		
+		// Hirdetes objektum letrehozasa
+		Hirdetes hirdetes = new Hirdetes();
+		
+		try {
 			JSONObject requestJson = entity.getJsonObject();
-			
-			// Hirdetes objektum letrehozasa
-			Hirdetes hirdetes = new Hirdetes();
 			
 			// Felado azonositoja. AproApplication.apiAuthFilterben kerul beallitasra
 			// Nem feltetlenul azonos a Hirdeto.id-val
@@ -225,42 +234,52 @@ public class RestHirdetesekServerResource extends ServerResource  {
 				hirdetes.setHirdeto(hirdeto);
 			} // Hirdeto vege
 			
-			// Hirdetes validacio
-			try {
-				hirdetes.validate();
-				HirdetesHelper.validate(hirdetes);
-			} catch(HirdetesValidationException hve) {
-				response.addError(hve.getEsemenyId(), hve.getMessage());
-			}
-			
-			// Hirdetes mentese, ha nincs hiba
-			if(!response.hasError()) {
-				// Uj id
-				hirdetes.setId(new ObjectId());
-				// API-n feladott hirdetest nem kell hitelesiteni
-				hirdetes.setHitelesitve(true);
-				// Forras beallitasa
-				hirdetes.setForras(HirdetesForras.API);
-				
-				Datastore datastore = MongoUtils.getDatastore();
-				Key<Hirdetes> hirdetesKey = datastore.save(hirdetes);
-				
-				if(hirdetesKey!=null) {
-					response.setSuccess(true);
-					response.addData("id", hirdetes.getId().toString());
-				} else {
-					// Hiba a mentes kozben
-					response.addError(1027, "Hiba a hirdetes mentese kozben");
-				}
-			}
-			
-		} else {
-			// POST request with no entity.
-			response.addError(1028, "A hirdetes objektum nem lehet ures");
-			setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
+		} catch(JSONException je) {
+			Context.getCurrentLogger().severe(je.getMessage());
 		}
 		
+		// Hirdetes validacio
+		try {
+			hirdetes.validate();
+			HirdetesHelper.validate(hirdetes);
+		} catch(HirdetesValidationException hve) {
+			response.addError(hve.getEsemenyId(), hve.getMessage());
+		}
+		
+		// Hirdetes mentese, ha nincs hiba
+		if(!response.hasError()) {
+			// Uj id
+			hirdetes.setId(new ObjectId());
+			// API-n feladott hirdetest nem kell hitelesiteni
+			hirdetes.setHitelesitve(true);
+			// Forras beallitasa
+			hirdetes.setForras(HirdetesForras.API);
+			
+			Datastore datastore = MongoUtils.getDatastore();
+			Key<Hirdetes> hirdetesKey = datastore.save(hirdetes);
+			
+			if(hirdetesKey!=null) {
+				response.setSuccess(true);
+				response.addData("id", hirdetes.getId().toString());
+			} else {
+				// Hiba a mentes kozben
+				response.addError(1027, "Hiba a hirdetes mentese kozben");
+			}
+		}
+			
 		return response;
+	}
+
+	@Override
+	public RestResponse representJson() {
+		setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
+	}
+
+	@Override
+	public RestResponse representHtml() {
+		setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
+		return null;
 	}
 
 	

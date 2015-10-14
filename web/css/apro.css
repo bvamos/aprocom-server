@@ -428,3 +428,40 @@ span.twitter-typeahead {
 .tt-suggestion p {
   margin: 0;
 }
+
+.divider {
+	position:relative;
+	text-align:center;
+	margin: 30px;
+}
+
+.divider span {
+	display:inline-block;
+    padding:0 10px;
+    background:#fff;
+}
+
+.divider:before {
+    content:"";
+    display:block;
+    position:absolute;
+    z-index:-1;
+    left:0;
+    right:0;
+    top:50%;
+    height:1px;
+    background:#ccc;
+}
+
+.btn-facebook {
+	background-color: #3b5998;
+	color: #fff;
+	width: 400px;
+}
+
+.btn-facebook::before {
+	font-family: "FontAwesome";
+	content: "\f09a";
+	left: 1rem;
+	font-size: 2rem;
+}

@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
-
 import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -93,5 +92,19 @@ public class HirdetesHelper {
 		if(query.countAll()>0) {
 			throw new HirdetesValidationException(1013, "A megadott email címmel és Rövid leírással már létezik aktív hirdetés");
 		}
+	}
+	
+	/**
+	 * Megnoveli az adatbazisban a megadott hirdetes megjeleneseinek szamat
+	 * @param hirdetes
+	 */
+	public static void increaseMegjelenes(Hirdetes hirdetes) {
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("id").equal(hirdetes.getId());
+		UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("megjelenes", hirdetes.getMegjelenes()+1);
+		datastore.update(query, ops);
+		//UpdateResults<Hirdetes> results = datastore.update(query, ops);
+	    //return (int)results.getWriteResult().getField("megjelenes");
 	}
 }

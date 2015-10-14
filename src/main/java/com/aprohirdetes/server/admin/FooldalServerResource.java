@@ -54,7 +54,7 @@ public class FooldalServerResource extends ServerResource implements
 		dataModel.put("app", appDataModel);
 		
 		dataModel.put("kulcsszavak", KulcsszoCache.getCacheByKulcsszo());
-		// Torolt hirdetesek szama
+		dataModel.put("aktivHirdetesekSzama", getAktivHirdetesekSzama());
 		dataModel.put("toroltHirdetesekSzama", getToroltHirdetesekSzama());
 		dataModel.put("nemHitelesitettHirdetesekSzama", getNemHitelesitettHirdetesekSzama());
 		
@@ -63,6 +63,19 @@ public class FooldalServerResource extends ServerResource implements
 		return new TemplateRepresentation(indexFtl, dataModel, MediaType.TEXT_HTML);
 	}
 
+	private long getAktivHirdetesekSzama() {
+		long ret = 0;
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("torolve", false);
+		
+		ret = query.countAll();
+		
+		query = null;
+		
+		return ret;
+	}
+	
 	private long getToroltHirdetesekSzama() {
 		long ret = 0;
 		

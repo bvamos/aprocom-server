@@ -6,11 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
-
 import javax.servlet.ServletContext;
 
-import org.mongodb.morphia.Datastore;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
@@ -21,11 +18,8 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.FormResource;
 import com.aprohirdetes.exception.AproException;
 import com.aprohirdetes.model.HirdetesTipus;
-import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
-import com.aprohirdetes.utils.MongoUtils;
-
 import freemarker.template.Template;
 
 public class UserBelepesServerResource extends ServerResource implements
@@ -33,7 +27,6 @@ public class UserBelepesServerResource extends ServerResource implements
 
 	private String contextPath = "";
 	private Session session = null;
-	private Hirdeto hirdeto = null;
 	private String referrer = null;
 	
 	@Override
@@ -66,7 +59,7 @@ public class UserBelepesServerResource extends ServerResource implements
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
 		
 		if(session != null) {
-			dataModel.put("hibaUzenet", "Már be vagy lépve. Ha mégsem Te vagy " + session.getFelhasznaloNev() + ", <a href=\"${app.contextRoot}/kilepes\">kattints ide és lépj ki</a> gyorsan!");
+			dataModel.put("hibaUzenet", "Már be vagy lépve. Ha mégsem Te vagy " + this.session.getFelhasznaloNev() + ", <a href=\"" + this.contextPath + "kilepes\">kattints ide és lépj ki</a> gyorsan!");
 		}
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
@@ -83,43 +76,20 @@ public class UserBelepesServerResource extends ServerResource implements
 		String jelszo = form.getFirstValue("signinPassword");
 		
 		try {
-			this.hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo);
-			if(this.hirdeto != null) {
-				// Session betoltese
-				Session session;
-				session = SessionHelper.load(this.hirdeto.getId());
-				if(session == null) {
-					// Nincs session az adatbazisban, generalunk ujat, es elmentjuk
-					session = new Session();
-					session.setSessionId(UUID.randomUUID().toString());
-					session.setHirdetoId(this.hirdeto.getId());
-				}
-				getLogger().info("Sikeres belepes: " + felhasznaloNev + "; AproSession: " + session.getSessionId());
-				
-				// Session Cookie
-				SessionHelper.setSessionCookie(this, session.getSessionId());
-				
-				// Session mentese az adatbazisba
-				Datastore datastore = MongoUtils.getDatastore();
-				datastore.save(session);
-				
-				// Utolso belepes mentese
-				datastore.update(this.hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
-	
-				// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
-				// TODO: Relativ URL eseten kiegesziti, es h01.aprohirdtes.com lesz. Talan csak mas template-et kellene betolteni atiranyitas helyett
-				if("feladas".equalsIgnoreCase(this.referrer)) {
-					redirectPermanent(this.contextPath + "/feladas");
-				} else {
-					redirectPermanent(this.contextPath + "/felhasznalo/hirdetesek");
-				}
+			session = SessionHelper.login(felhasznaloNev, jelszo);
+			
+			// Session Cookie
+			SessionHelper.setSessionCookie(this, session.getSessionId());
+			
+			// Atiranyitas a Hirdeto profiljara vagy a feladas oldalra
+			// TODO: Relativ URL eseten kiegesziti, es h01.aprohirdtes.com lesz. Talan csak mas template-et kellene betolteni atiranyitas helyett
+			if("feladas".equalsIgnoreCase(this.referrer)) {
+				redirectPermanent(this.contextPath + "/feladas");
 			} else {
-				errorMessage = "Hibás felhasználónév vagy jelszó";
-				getLogger().severe("Sikertelen belepes: " + felhasznaloNev);
+				redirectPermanent(this.contextPath + "/felhasznalo/hirdetesek");
 			}
 		} catch(AproException ae) {
-			errorMessage = ae.getMessage();
-			getLogger().severe("Nem aktiv felhasznalo: " + felhasznaloNev);
+			getLogger().severe("Hibas belepes: " + ae.getMessage());
 		}
 		
 		// Adatmodell a Freemarker sablonhoz

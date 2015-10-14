@@ -71,13 +71,20 @@
 			$('#hirdetesKulcsszo').typeahead({
 				hint: true,
 				highlight: false,
-				minLength: 1
+				minLength: 2
 			},
 			{
-				name: 'kulcsszo',
-				display: 'name',
+				name: 'keywords',
 				limit: 10,
-				source: kulcsszoAPI
+				source: function (query, processSync, processAsync) {
+					return $.get('/api/v1/kulcsszoLista', { p: query }, function (data) {
+			        	var matches = [];
+			            $.each(data.data.keywords, function(i, obj) {
+			                matches.push(obj.name);
+			            });
+			            return processAsync(matches);
+			        });
+				}
 			});
 						
 			$('#hirdetesTipus').change(function(){

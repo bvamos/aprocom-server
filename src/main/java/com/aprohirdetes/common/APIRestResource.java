@@ -1,21 +1,25 @@
 package com.aprohirdetes.common;
 
-import java.io.IOException;
-
 import org.restlet.ext.json.JsonRepresentation;
-import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
+import com.aprohirdetes.model.RestResponse;
+
+/**
+ * AproAPI Server Resource interface
+ * @author bvamos
+ *
+ */
 public interface APIRestResource {
 
 	@Get("json")
-	public Representation representJson() throws IOException;
+	public RestResponse representJson();
 	
 	@Get("html")
-	public Representation representHtml() throws IOException;
+	public RestResponse representHtml();
 	
 	@Post("json")
-	public Representation acceptJson(JsonRepresentation entity) throws Exception;
+	public RestResponse acceptJson(JsonRepresentation entity);
 	
 }

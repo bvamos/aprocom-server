@@ -123,6 +123,10 @@
 								$('#uzenetSzoveg').focus();
 								return;
 							}
+							if(grec==undefined) {
+								$('#uzenetWrapper').html('<div class="alert alert-danger">Nincs internet kapcsolat.</div>');
+								return;
+							}
 							if(grec.length==0) {
 								$('#uzenetWrapper').html('<div class="alert alert-danger">Robotok kíméljenek!</div>');
 								return;
@@ -142,7 +146,7 @@
 								}
 					        }).fail(function(jqXHR, textStatus, errorThrown) {
 					        	var jsonResponseText = $.parseJSON(jqXHR.responseText);
-								$('#uzenetWrapper').html('<div class="alert alert-warning">Hiba az üzenet küldése közben: ' + jsonResponseText.hibaUzenet +'</div>');
+								$('#uzenetWrapper').html('<div class="alert alert-warning">Hiba az üzenet küldése közben: ' + jsonResponseText.errors[0].hibaUzenet +'</div>');
 							});
 						});
 					    </script>

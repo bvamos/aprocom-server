@@ -3,18 +3,15 @@ package com.aprohirdetes.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.restlet.Context;
-
 import com.aprohirdetes.utils.MongoUtils;
 
 public class KulcsszoCache {
@@ -78,22 +75,17 @@ public class KulcsszoCache {
 	 * @param limit Max ennyi eredmenyt adunk vissza
 	 * @return
 	 */
-	public static JSONArray getCacheByPrefix(String prefix, int limit) {
-		JSONArray ret = new JSONArray();
+	public static LinkedList<HashMap<String, Object>> getCacheByPrefix(String prefix, int limit) {
+		LinkedList<HashMap<String, Object>> ret = new LinkedList<HashMap<String, Object>>();
 		
 		int n = 0;
 		for(String kulcsszo : CACHE_BY_KULCSSZO.keySet()) {
 			if(n==limit) break;
-			JSONObject map = new JSONObject();
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			if(prefix==null || prefix.isEmpty() || kulcsszo.startsWith(prefix)) {
-				try {
-					map.put("name", kulcsszo);
-					map.put("count", CACHE_BY_KULCSSZO.get(kulcsszo));
-					
-					ret.put(map);
-				} catch (JSONException je) {
-					Context.getCurrentLogger().severe(je.getMessage());
-				}
+				map.put("name", kulcsszo);
+				map.put("cnt", CACHE_BY_KULCSSZO.get(kulcsszo));
+				ret.add(map);
 				n++;
 			}
 		}

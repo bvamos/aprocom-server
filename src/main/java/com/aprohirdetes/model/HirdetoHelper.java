@@ -1,7 +1,9 @@
 package com.aprohirdetes.model;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -30,6 +32,49 @@ public class HirdetoHelper {
 		hirdeto = query.get();
 		
 		return hirdeto;
+	}
+	
+	/**
+	 * Megkeresi a Hirdetot a Facebook id mezoje alapjan. FB belepesnel hasznaljuk.
+	 * @param fbId
+	 * @return Az azonositott Hirdeto, vagy null
+	 */
+	public static Hirdeto loadByFbId(String fbId) {
+		Hirdeto hirdeto = null;
+		
+		Query<Hirdeto> query = MongoUtils.getDatastore().createQuery(Hirdeto.class);
+		query.criteria("facebookId").equal(fbId);
+		hirdeto = query.get();
+		
+		return hirdeto;
+	}
+	
+	/**
+	 * Megkeresi a Hirdetot az email cim mezoje alapjan. FB belepesnel hasznaljuk.
+	 * @param email Email cim
+	 * @return Az azonositott Hirdeto, vagy null
+	 */
+	public static Hirdeto loadByEmail(String email) {
+		Hirdeto hirdeto = null;
+		
+		Query<Hirdeto> query = MongoUtils.getDatastore().createQuery(Hirdeto.class);
+		query.criteria("email").equal(email);
+		hirdeto = query.get();
+		
+		return hirdeto;
+	}
+	
+	public static void save(Hirdeto hirdeto) {
+		Datastore datastore = MongoUtils.getDatastore();
+		datastore.save(hirdeto);
+	}
+	
+	public static void saveHirdetoField(ObjectId hirdetoId, String nev, String ertek) {
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdeto> query = datastore.createQuery(Hirdeto.class);
+		query.criteria("id").equal(hirdetoId);
+		UpdateOperations<Hirdeto> ops = datastore.createUpdateOperations(Hirdeto.class).set(nev, ertek);
+		datastore.update(query, ops);
 	}
 	
 	/**

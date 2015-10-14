@@ -36,6 +36,8 @@ public class Hirdeto {
 	private Date regisztralas;
 	private Date utolsoBelepes;
 	
+	@Indexed(value=IndexDirection.ASC, name="ix_fbId") private String facebookId;
+	
 	public Hirdeto() {
 		setTipus(1);
 		setHirlevel(true);
@@ -191,6 +193,20 @@ public class Hirdeto {
 
 	public void setUtolsoBelepes(Date utolsoBelepes) {
 		this.utolsoBelepes = utolsoBelepes;
+	}
+
+	/**
+	 * @return the facebookId
+	 */
+	public String getFacebookId() {
+		return facebookId;
+	}
+
+	/**
+	 * @param facebookId the facebookId to set
+	 */
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
 	}
 
 	public JSONObject toJSONObject() throws JSONException {

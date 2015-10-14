@@ -63,7 +63,6 @@ public class UserBeallitasokServerResource extends ServerResource implements
 			dataModel.put("session", this.session);
 
 			Hirdeto hirdeto = HirdetoHelper.load(session.getHirdetoId());
-			
 			dataModel.put("hirdeto", hirdeto);
 		}
 		

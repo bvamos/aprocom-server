@@ -3,7 +3,12 @@
 <#include "page_header_banner.ftl.html"/>
 <#include "page_header.ftl.html"/>
 		<div class="row">
-			<h3>Belépés email címmel</h3>
+			
+			<h3>Belépés</h3>
+			
+			<div class="text-center"><a href="https://www.facebook.com/dialog/oauth?client_id=728081890591646&redirect_uri=http://local.aprohirdetes.com${app.contextRoot}/belepes/fb" class="btn btn-facebook btn-lg" role="button">Belépés Facebookkal</a></div>
+			
+			<div class="divider"><span>vagy</span></div>
 			
 			<form class="form-horizontal" role="form" method="post">
 				<#if hibaUzenet?? >
@@ -11,26 +16,26 @@
 				</#if>
 				
 				<div class="form-group">
-					<label class="col-sm-3 control-label" for="hirdetoEmail">Email cím</label>
-					<div class="col-sm-7">
+					<label class="col-sm-4 control-label" for="hirdetoEmail">Email cím</label>
+					<div class="col-sm-4">
 						<input type="email" class="form-control" id="signinEmail" name="signinEmail" value="${(email)!''}" placeholder="E-mail cím" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-3 control-label" for="hirdetoJelszo">Jelszó</label>
+					<label class="col-sm-4 control-label" for="hirdetoJelszo">Jelszó</label>
 					<div class="col-sm-4">
 						<input type="password" class="form-control" id="signinPassword" name="signinPassword" autofocus="" required="" placeholder="Jelszó">
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<div class="col-sm-7 col-sm-offset-3">
+					<div class="col-sm-offset-4 col-sm-7">
 						<a href="${app.contextRoot}/ujjelszo">Elfelejtettem a jelszavam</a>
 					</div>
 				</div>
 			
 				<div class="form-group">
-					<div class="col-sm-offset-3 colsm-7">
+					<div class="col-sm-offset-4 colsm-7">
 						<button type="submit" class="btn btn-success btn-lg">Belépek</button>
 					</div>
 				</div>

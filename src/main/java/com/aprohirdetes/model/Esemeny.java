@@ -16,6 +16,7 @@ public class Esemeny {
 		HIRDETES_FELADAS,
 		HIRDETES_SZERKESZTES,
 		HIRDETES_TORLES,
+		HIRDETES_MEGJELENES,
 		FELHASZNALO_REGISZTRACIO,
 		FELHASZNALO_BELEPES,
 		FELHASZNALO_KILEPES,
@@ -28,6 +29,7 @@ public class Esemeny {
 	
 	public enum EsemenySzint {
 		INFO,
+		WARNING,
 		ERROR
 	}
 

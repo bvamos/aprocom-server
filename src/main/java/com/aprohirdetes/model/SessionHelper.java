@@ -3,6 +3,7 @@ package com.aprohirdetes.model;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
@@ -69,6 +70,61 @@ public class SessionHelper {
 		return session;
 	}
 	
+	public static Session login(String felhasznaloNev, String jelszo) throws AproException {
+		Hirdeto hirdeto = null;
+		Session session = null;
+		
+		if ((hirdeto = SessionHelper.authenticate(felhasznaloNev, jelszo)) != null) {
+			// Session betoltese
+			session = SessionHelper.load(hirdeto.getId());
+			if(session == null) {
+				// Nincs session az adatbazisban, generalunk ujat, es elmentjuk
+				session = new Session();
+				session.setSessionId(UUID.randomUUID().toString());
+				session.setHirdetoId(hirdeto.getId());
+			}
+			Context.getCurrentLogger().info("Sikeres belepes: " + hirdeto.getEmail() + "; AproSession: " + session.getSessionId());
+			
+			Datastore datastore = MongoUtils.getDatastore();
+			
+			// Session mentese az adatbazisba
+			datastore.save(session);
+			
+			// Utolso belepes mentese
+			datastore.update(hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
+		}
+		
+		return session;
+	}
+	
+	public static Session login(Hirdeto hirdeto) throws AproException {
+		Session session = null;
+		
+		// Session betoltese
+		session = SessionHelper.load(hirdeto.getId());
+		if(session == null) {
+			// Nincs session az adatbazisban, generalunk ujat, es elmentjuk
+			session = new Session();
+			session.setSessionId(UUID.randomUUID().toString());
+			session.setHirdetoId(hirdeto.getId());
+		}
+		Context.getCurrentLogger().info("Sikeres belepes: " + hirdeto.getEmail() + "; AproSession: " + session.getSessionId());
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		
+		// Session mentese az adatbazisba
+		datastore.save(session);
+		
+		// Utolso belepes mentese
+		datastore.update(hirdeto, datastore.createUpdateOperations(Hirdeto.class).set("utolsoBelepes", new Date()));
+		
+		return session;
+	}
+	
+	public static void logout() throws AproException {
+		// TODO: Logout
+	}
+	
 	/**
 	 * Felhasznalonev es jelszo alapjan autentikal egy Hirdetot 
 	 * @param felhasznaloNev
@@ -116,6 +172,10 @@ public class SessionHelper {
 			} else {
 				throw(new AproException(2002, "A felhasználói fiókod még nem aktivált."));
 			}
+		}
+		
+		if(ret==null) {
+			throw(new AproException(2003, "Hibas felhasznalonev vagy jelszo"));
 		}
 		
 		return ret;

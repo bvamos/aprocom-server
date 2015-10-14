@@ -34,6 +34,14 @@
 							<button id="apikeyGenerateButton">Generálok API Key-t</button></div>
 						</#if>
 					</div>
+					
+					<h4>Facebook belépés</h4>
+					<#if hirdeto.facebookId?? >
+					<p>Szuper! Felhasználói fiókod már össze van kötve a Facebook profiloddal.</p>
+					<#else>
+					<p>Felhasználói fiókod még nincs összekötve a Facebook profiloddal.</p>
+					<p><a href="https://www.facebook.com/dialog/oauth?client_id=728081890591646&redirect_uri=http://local.aprohirdetes.com${app.contextRoot}/belepes/fb" class="btn btn-facebook btn-lg" role="button">Belépés Facebookkal</a></p>
+					</#if>
 					<script type="text/javascript">
 					$('#apikeyContent').hide();
 					

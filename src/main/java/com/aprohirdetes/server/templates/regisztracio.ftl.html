@@ -9,15 +9,24 @@
 				<#if hibaUzenet?? >
 				<div class="alert alert-danger">${hibaUzenet}</div>
 				<#else>
-				<div class="alert alert-info"><b>Miért érdemes regisztrálni?</b><br>
-				<ul>
-					<li>Az előre kitöltött felhasználói adatok gyorsabbá teszik a hirdetések feladását
-					<li>Egy helyen kezelheted az összes hirdetésed 
-				</ul>
-				<p>Ugyanakkor az Apróhirdetés.com-on nem szükséges a regisztráció a hirdetések feladásához. Egyszerűen kattints a
+				<p>Az Apróhirdetés.com-on nem szükséges a regisztráció a hirdetések feladásához. Egyszerűen kattints a
 				<a href="${app.contextRoot}/feladas">Hirdetés feladása</a> fülre, add meg a hirdetés és a hirdető adatait, és a hirdetésed hamarosan megjelenik
-				az Apróhirdetés.com-on!</div>
+				az Apróhirdetés.com-on!</p>
+				<div class="alert alert-info"><b>De mégis miért érdemes regisztrálni?</b><br>
+				<ul>
+					<li>mert az előre kitöltött felhasználói adatok gyorsabbá teszik a hirdetések feladását,</li>
+					<li>mert regisztrált felhasználóinknak nem kell aktiválniuk a hirdetéseiket,</li>
+					<li>mert egy helyen kezelheted az összes hirdetésed és kedvenceid.</li>
+				</ul>
+				</div>
 				</#if>
+				
+				<div class="text-center"><div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();"></div>
+				<button id="btnFBSignup" class="btn btn-lg btn-facebook" type="button">Regisztracio Facebookkal</button>
+				</div>
+				<div class="text-center" id="status"></div>
+			
+				<div class="divider"><span>vagy</span></div>
 				
 				<div class="form-group">
 					<label class="col-sm-3 control-label">Hirdető típusa</label>
@@ -119,6 +128,18 @@
 			});
 			$('#hirdetoTipusCeg').click(function(){
 				$('#hirdetoCegNevFormGroup').show();
+			});
+			$('#btnFBSignup').click(function(){
+				FB.login(function(response) {
+					if (response.authResponse) {
+					  console.log('Welcome!  Fetching your information.... ');
+					  FB.api('/me', function(response) {
+					    console.log('Good to see you, ' + response.name + '.');
+					  });
+					} else {
+					  console.log('User cancelled login or did not fully authorize.');
+					}
+				});
 			});
 			</script>
 		
