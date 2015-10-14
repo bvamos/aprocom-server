@@ -41,7 +41,7 @@ public class UserBelepesFBServerResource extends ServerResource implements
 			
 			try {
 				// Access token lekerese FB APIval
-				String responseText = Utils.httpGet("https://graph.facebook.com/v2.3/oauth/access_token?client_id=728081890591646&redirect_uri=http://local.aprohirdetes.com" + contextPath + "/belepes/fb&client_secret=2ad09d57151a1cf0b7b51ecc488e3546&code=" + code);
+				String responseText = Utils.httpGet("https://graph.facebook.com/v2.3/oauth/access_token?client_id=728081890591646&redirect_uri=https://www.aprohirdetes.com" + contextPath + "/belepes/fb&client_secret=2ad09d57151a1cf0b7b51ecc488e3546&code=" + code);
 				System.out.println(responseText);
 				JSONObject jsonResponse = new JSONObject(responseText);
 				String fbAccessToken = jsonResponse.getString("access_token");
