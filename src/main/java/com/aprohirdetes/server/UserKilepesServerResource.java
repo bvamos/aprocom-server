@@ -57,6 +57,7 @@ public class UserKilepesServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
+		appDataModel.put("urlBase", AproConfig.APP_CONFIG.getProperty("URLBASE"));
 		appDataModel.put("contextRoot", this.contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Kilépés");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));

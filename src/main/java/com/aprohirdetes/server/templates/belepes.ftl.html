@@ -6,14 +6,19 @@
 			
 			<h3>Belépés</h3>
 			
-			<div class="text-center"><a href="https://www.facebook.com/dialog/oauth?client_id=728081890591646&redirect_uri=https://www.aprohirdetes.com${app.contextRoot}/belepes/fb" class="btn btn-facebook btn-lg" role="button">Belépés Facebookkal</a></div>
+			<#if hibaUzenet?? >
+			<div class="alert alert-danger">${hibaUzenet}</div>
+			</#if>
+			<#if uzenet?? >
+			<div class="alert alert-success">${uzenet}</div>
+			</#if>
+			
+			<div class="text-center"><a href="https://www.facebook.com/dialog/oauth?client_id=728081890591646&redirect_uri=${app.urlBase}${app.contextRoot}/belepes/fb" class="btn btn-facebook btn-lg" role="button">Belépés Facebookkal</a></div>
 			
 			<div class="divider"><span>vagy</span></div>
 			
 			<form class="form-horizontal" role="form" method="post" action="${app.contextRoot}/belepes">
-				<#if hibaUzenet?? >
-				<div class="alert alert-danger">${hibaUzenet}</div>
-				</#if>
+				
 				
 				<div class="form-group">
 					<label class="col-sm-4 control-label" for="hirdetoEmail">Email cím</label>

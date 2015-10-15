@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.restlet.data.Form;
@@ -20,6 +21,7 @@ import com.aprohirdetes.exception.AproException;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
+
 import freemarker.template.Template;
 
 public class UserBelepesServerResource extends ServerResource implements
@@ -48,6 +50,7 @@ public class UserBelepesServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
+		appDataModel.put("urlBase", AproConfig.APP_CONFIG.getProperty("URLBASE"));
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
 		appDataModel.put("description", "Hozzáférés a felhasználói oldalakhoz");
@@ -96,6 +99,7 @@ public class UserBelepesServerResource extends ServerResource implements
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
 		Map<String, String> appDataModel = new HashMap<String, String>();
+		appDataModel.put("urlBase", AproConfig.APP_CONFIG.getProperty("URLBASE"));
 		appDataModel.put("contextRoot", contextPath);
 		appDataModel.put("htmlTitle", getApplication().getName() + " - Belépés");
 		appDataModel.put("datum", new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date()));
