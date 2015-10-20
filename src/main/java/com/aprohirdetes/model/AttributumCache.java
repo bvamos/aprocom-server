@@ -310,6 +310,77 @@ public class AttributumCache {
 		gumiList.add(gumiAtmero);
 		KATEGORIA_ATTRIBUTUM.put("gumi-felni", gumiList);
 		
+		/**********************************
+		 * Kategoria: Jarmu->Szemelyauto
+		 */
+		Attributum szautoMarka = new AttributumSelectSingle("szauto-marka", "Márka");
+		Map<String, Object> szautoMarkaErtekMap = new LinkedHashMap<String, Object>();
+		//szautoMarkaErtekMap.put("", "");
+		szautoMarkaErtekMap.put("alfaromeo", "Alfa Romeo");
+		szautoMarkaErtekMap.put("audi", "Audi");
+		szautoMarkaErtekMap.put("bmw", "BMW");
+		szautoMarkaErtekMap.put("chevrolet", "Chevrolet");
+		szautoMarkaErtekMap.put("citroen", "Citroen");
+		szautoMarkaErtekMap.put("dacia", "dacia");
+		szautoMarkaErtekMap.put("daewoo", "Daewoo");
+		szautoMarkaErtekMap.put("fiat", "Fiat");
+		szautoMarkaErtekMap.put("ford", "Ford");
+		szautoMarkaErtekMap.put("honda", "Honda");
+		szautoMarkaErtekMap.put("hyundai", "Hyundai");
+		szautoMarkaErtekMap.put("jaguar", "Jaguar");
+		szautoMarkaErtekMap.put("kia", "Kia");
+		szautoMarkaErtekMap.put("lada", "Lada");
+		szautoMarkaErtekMap.put("lancia", "Lancia");
+		szautoMarkaErtekMap.put("landrover", "Land Rover");
+		szautoMarkaErtekMap.put("lexus", "Lexus");
+		szautoMarkaErtekMap.put("mazda", "Mazda");
+		szautoMarkaErtekMap.put("mercedes", "Mercedes");
+		szautoMarkaErtekMap.put("mini", "Mini");
+		szautoMarkaErtekMap.put("mitsubishi", "Mitsubushi");
+		szautoMarkaErtekMap.put("nissan", "Nissan");
+		szautoMarkaErtekMap.put("opel", "Opel");
+		szautoMarkaErtekMap.put("peugeot", "Peugeot");
+		szautoMarkaErtekMap.put("porsche", "Porsche");
+		szautoMarkaErtekMap.put("renault", "Renault");
+		szautoMarkaErtekMap.put("rover", "Rover");
+		szautoMarkaErtekMap.put("saab", "Saab");
+		szautoMarkaErtekMap.put("seat", "Seat");
+		szautoMarkaErtekMap.put("skoda", "Skoda");
+		szautoMarkaErtekMap.put("smart", "Smart");
+		szautoMarkaErtekMap.put("subaru", "Subaru");
+		szautoMarkaErtekMap.put("suzuki", "Suzuki");
+		szautoMarkaErtekMap.put("toyota", "Toyota");
+		szautoMarkaErtekMap.put("trabant", "Trabant");
+		szautoMarkaErtekMap.put("vw", "Volkswagen");
+		szautoMarkaErtekMap.put("volvo", "Volvo");
+		szautoMarkaErtekMap.put("szauto-egyeb", "Egyéb");
+		szautoMarka.setErtekMap(szautoMarkaErtekMap);
+		
+		AttributumNumber szautoEvjarat = new AttributumNumber("szauto-evjarat", "Évjárat");
+		szautoEvjarat.setKotelezo(true);
+		
+		AttributumNumber szautoKm = new AttributumNumber("szauto-km", "Km-óra állása");
+		
+		Attributum szautoUzemanyag = new AttributumSelectSingle("szauto-uzemanyag", "Üzemanyag");
+		Map<String, Object> szautoUzemanyagErtekMap = new LinkedHashMap<String, Object>();
+		//szautoUzemanyagErtekMap.put("", "");
+		szautoUzemanyagErtekMap.put("benzin", "Benzin");
+		szautoUzemanyagErtekMap.put("diesel", "Diesel");
+		szautoUzemanyagErtekMap.put("hibrid-benzin", "Hibrid/Benzin");
+		szautoUzemanyagErtekMap.put("hibrid-diesel", "Hibrid/Diesel");
+		szautoUzemanyagErtekMap.put("gaz-benzin", "Gáz/Benzin");
+		szautoUzemanyagErtekMap.put("gaz-diesel", "Gáz/Diesel");
+		szautoUzemanyagErtekMap.put("elektromos", "Elektromos");
+		szautoUzemanyag.setErtekMap(szautoUzemanyagErtekMap);
+		
+		LinkedList<Attributum> szautoList = new LinkedList<Attributum>();
+		szautoList.add(szautoMarka);
+		szautoList.add(szautoEvjarat);
+		szautoList.add(szautoKm);
+		szautoList.add(szautoUzemanyag);
+		KATEGORIA_ATTRIBUTUM.put("szemelyauto", szautoList);
+		
+		
 		Context.getCurrentLogger().info("AttributumCache has been loaded");
 	}
 	

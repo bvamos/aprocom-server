@@ -494,6 +494,11 @@ public class KeresesServerResource extends ServerResource implements
 			ret += attr(a.get("gumi-per"), " ");
 			ret += attr(a.get("gumi-atmero"), " | ");
 			break;
+		case "szemelyauto":
+			ret += attr(a.get("szauto-marka"), " | ");
+			ret += attr(a.get("szauto-evjarat"), " | ");
+			ret += attr(a.get("szauto-km"), " km | ");
+			break;
 		}
 		
 		return ret;
