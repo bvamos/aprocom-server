@@ -502,9 +502,24 @@ public class KeresesServerResource extends ServerResource implements
 			ret += attr(urlNev, "jarmu-km", a.get("jarmu-km"), " km | ");
 			break;
 		case "kishaszon":
-		case "haszonjarmu":
+			ret += attr(urlNev, "kishaszon-marka", a.get("kishaszon-marka"), " | ");
 			ret += attr(urlNev, "jarmu-evjarat", a.get("jarmu-evjarat"), " | ");
 			ret += attr(urlNev, "jarmu-km", a.get("jarmu-km"), " km | ");
+			break;
+		case "haszonjarmu":
+			ret += attr(urlNev, "haszonjarmu-marka", a.get("haszonjarmu-marka"), " | ");
+			ret += attr(urlNev, "jarmu-evjarat", a.get("jarmu-evjarat"), " | ");
+			ret += attr(urlNev, "jarmu-km", a.get("jarmu-km"), " km | ");
+			break;
+		case "busz":
+			ret += attr(urlNev, "busz-marka", a.get("busz-marka"), " | ");
+			ret += attr(urlNev, "jarmu-km", a.get("jarmu-km"), " km | ");
+			ret += attr(urlNev, "busz-kapacitas", a.get("busz-kapacitas"), " fő | ");
+			break;
+		case "motor":
+			ret += attr(urlNev, "motor-marka", a.get("motor-marka"), " | ");
+			ret += attr(urlNev, "jarmu-evjarat", a.get("jarmu-evjarat"), " | ");
+			ret += attr(urlNev, "jarmu-hengerurtartalom", a.get("jarmu-hengerurtartalom"), " cm³ | ");
 			break;
 		}
 		
