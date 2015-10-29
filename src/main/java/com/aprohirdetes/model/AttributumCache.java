@@ -313,11 +313,13 @@ public class AttributumCache {
 		/**********************************
 		 * Kategoria: Jarmu
 		 */
-		AttributumText jarmuEvjarat = new AttributumText("jarmu-evjarat", "Évjárat");
+		AttributumNumber jarmuEvjarat = new AttributumNumber("jarmu-evjarat", "Évjárat");
 		jarmuEvjarat.setKotelezo(true);
 		
 		AttributumNumber jarmuKm = new AttributumNumber("jarmu-km", "Km-óra állása");
-		
+
+		AttributumNumber jarmuHengerUrTartalom = new AttributumNumber("jarmu-hengerurtartalom", "Hengerűrtartalom");
+
 		/**********************************
 		 * Kategoria: Jarmu->Szemelyauto
 		 */
@@ -380,24 +382,175 @@ public class AttributumCache {
 		szautoList.add(szautoMarka);
 		szautoList.add(jarmuEvjarat);
 		szautoList.add(jarmuKm);
+		szautoList.add(jarmuHengerUrTartalom);
 		szautoList.add(szautoUzemanyag);
 		KATEGORIA_ATTRIBUTUM.put("szemelyauto", szautoList);
 		
 		/*********************************
 		 * Kategoria: Jarmu->Kishaszon
 		 */
+		Attributum kihaszonMarka = new AttributumSelectSingle("kishaszon-marka", "Márka");
+		Map<String, String> kishaszonMarkaErtekMap = new LinkedHashMap<String, String>();
+		//kishaszonMarkaErtekMap.put("", "");
+		kishaszonMarkaErtekMap.put("citroen", "Citroen");
+		kishaszonMarkaErtekMap.put("dacia", "dacia");
+		kishaszonMarkaErtekMap.put("daewoo", "Daewoo");
+		kishaszonMarkaErtekMap.put("fiat", "Fiat");
+		kishaszonMarkaErtekMap.put("ford", "Ford");
+		kishaszonMarkaErtekMap.put("hyundai", "Hyundai");
+		kishaszonMarkaErtekMap.put("isuzu", "Isuzu");
+		kishaszonMarkaErtekMap.put("kia", "Kia");
+		kishaszonMarkaErtekMap.put("lada", "Lada");
+		kishaszonMarkaErtekMap.put("landrover", "Land Rover");
+		kishaszonMarkaErtekMap.put("mazda", "Mazda");
+		kishaszonMarkaErtekMap.put("mercedes", "Mercedes");
+		kishaszonMarkaErtekMap.put("mitsubishi", "Mitsubushi");
+		kishaszonMarkaErtekMap.put("multicar", "Multicar");
+		kishaszonMarkaErtekMap.put("nissan", "Nissan");
+		kishaszonMarkaErtekMap.put("opel", "Opel");
+		kishaszonMarkaErtekMap.put("peugeot", "Peugeot");
+		kishaszonMarkaErtekMap.put("renault", "Renault");
+		kishaszonMarkaErtekMap.put("seat", "Seat");
+		kishaszonMarkaErtekMap.put("skoda", "Skoda");
+		kishaszonMarkaErtekMap.put("suzuki", "Suzuki");
+		kishaszonMarkaErtekMap.put("toyota", "Toyota");
+		kishaszonMarkaErtekMap.put("vw", "Volkswagen");
+		kishaszonMarkaErtekMap.put("kishaszon-egyeb", "Egyéb");
+		kihaszonMarka.setErtekMap(kishaszonMarkaErtekMap);
 		LinkedList<Attributum> kishaszonList = new LinkedList<Attributum>();
+		
+		kishaszonList.add(kihaszonMarka);
 		kishaszonList.add(jarmuEvjarat);
 		kishaszonList.add(jarmuKm);
+		kishaszonList.add(jarmuHengerUrTartalom);
 		KATEGORIA_ATTRIBUTUM.put("kishaszon", kishaszonList);
 		
 		/*********************************
 		 * Kategoria: Jarmu->Haszonjarmu
 		 */
+		Attributum haszonjarmuMarka = new AttributumSelectSingle("haszonjarmu-marka", "Márka");
+		Map<String, String> haszonjarmuMarkaErtekMap = new LinkedHashMap<String, String>();
+		//haszonjarmuMarkaErtekMap.put("", "");
+		haszonjarmuMarkaErtekMap.put("csepel", "Csepel");
+		haszonjarmuMarkaErtekMap.put("daewoo", "Daewoo");
+		haszonjarmuMarkaErtekMap.put("daf", "Daf");
+		haszonjarmuMarkaErtekMap.put("ford", "Ford");
+		haszonjarmuMarkaErtekMap.put("gaz", "Gaz");
+		haszonjarmuMarkaErtekMap.put("hyundai", "Hyundai");
+		haszonjarmuMarkaErtekMap.put("ifa", "IFA");
+		haszonjarmuMarkaErtekMap.put("isuzu", "Isuzu");
+		haszonjarmuMarkaErtekMap.put("iveco", "Iveco");
+		haszonjarmuMarkaErtekMap.put("kamaz", "Kamaz");
+		haszonjarmuMarkaErtekMap.put("man", "MAN");
+		haszonjarmuMarkaErtekMap.put("mercedes", "Mercedes-Benz");
+		haszonjarmuMarkaErtekMap.put("mitsubishi", "Mitsubushi");
+		haszonjarmuMarkaErtekMap.put("multicar", "Multicar");
+		haszonjarmuMarkaErtekMap.put("nissan", "Nissan");
+		haszonjarmuMarkaErtekMap.put("opel", "Opel");
+		haszonjarmuMarkaErtekMap.put("raba", "Raba");
+		haszonjarmuMarkaErtekMap.put("renault", "Renault");
+		haszonjarmuMarkaErtekMap.put("robur", "Robur");
+		haszonjarmuMarkaErtekMap.put("scania", "Scania");
+		haszonjarmuMarkaErtekMap.put("steyr", "Steyr");
+		haszonjarmuMarkaErtekMap.put("tatra", "Tatra");
+		haszonjarmuMarkaErtekMap.put("unimog", "Unimog");
+		haszonjarmuMarkaErtekMap.put("ural", "Ural");
+		haszonjarmuMarkaErtekMap.put("vw", "Volkswagen");
+		haszonjarmuMarkaErtekMap.put("volvo", "Volvo");
+		haszonjarmuMarkaErtekMap.put("zil", "Zil");
+		haszonjarmuMarkaErtekMap.put("haszonjarmu-egyeb", "Egyéb");
+		haszonjarmuMarka.setErtekMap(haszonjarmuMarkaErtekMap);
+		
 		LinkedList<Attributum> haszonjarmuList = new LinkedList<Attributum>();
+		haszonjarmuList.add(haszonjarmuMarka);
 		haszonjarmuList.add(jarmuEvjarat);
 		haszonjarmuList.add(jarmuKm);
+		haszonjarmuList.add(jarmuHengerUrTartalom);
 		KATEGORIA_ATTRIBUTUM.put("haszonjarmu", haszonjarmuList);
+		
+		/*****************************
+		 * Kategoria: Jarmu->Motor
+		 */
+		Attributum motorMarka = new AttributumSelectSingle("motor-marka", "Márka");
+		Map<String, String> motorMarkaErtekMap = new LinkedHashMap<String, String>();
+		//motorMarkaErtekMap.put("", "");
+		motorMarkaErtekMap.put("aprilia", "Aprilia");
+		motorMarkaErtekMap.put("benelli", "Benelli");
+		motorMarkaErtekMap.put("bmw", "BMW");
+		motorMarkaErtekMap.put("cagiva", "Cagiva");
+		motorMarkaErtekMap.put("derbi", "Derbi");
+		motorMarkaErtekMap.put("ducati", "Ducati");
+		motorMarkaErtekMap.put("gilera", "Gilera");
+		motorMarkaErtekMap.put("harley", "Harley Davidson");
+		motorMarkaErtekMap.put("honda", "Honda");
+		motorMarkaErtekMap.put("jawa", "Jawa");
+		motorMarkaErtekMap.put("kavasaki", "Kavasaki");
+		motorMarkaErtekMap.put("keeway", "Keeway");
+		motorMarkaErtekMap.put("ktm", "KTM");
+		motorMarkaErtekMap.put("kymco", "Kymco");
+		motorMarkaErtekMap.put("malaguti", "Malaguti");
+		motorMarkaErtekMap.put("motowell", "Motowell");
+		motorMarkaErtekMap.put("mz", "MZ");
+		motorMarkaErtekMap.put("pannonia", "Pannonia");
+		motorMarkaErtekMap.put("peugeot", "Peugeot");
+		motorMarkaErtekMap.put("piaggio", "Piaggio");
+		motorMarkaErtekMap.put("simson", "Simson");
+		motorMarkaErtekMap.put("suzuki", "Suzuki");
+		motorMarkaErtekMap.put("triumph", "Triumph");
+		motorMarkaErtekMap.put("vespa", "Vespa");
+		motorMarkaErtekMap.put("yamaha", "Yamaha");
+		motorMarkaErtekMap.put("motor-egyeb", "Egyéb");
+		motorMarka.setErtekMap(motorMarkaErtekMap);
+		
+		LinkedList<Attributum> motorList = new LinkedList<Attributum>();
+		motorList.add(motorMarka);
+		motorList.add(jarmuEvjarat);
+		motorList.add(jarmuKm);
+		motorList.add(jarmuHengerUrTartalom);
+		KATEGORIA_ATTRIBUTUM.put("motor", motorList);
+		
+		/*****************************
+		 * Kategoria: Jarmu->Busz
+		 */
+		Attributum buszMarka = new AttributumSelectSingle("busz-marka", "Márka");
+		Map<String, String> buszMarkaErtekMap = new LinkedHashMap<String, String>();
+		//motorMarkaErtekMap.put("", "");
+		buszMarkaErtekMap.put("aprilia", "Aprilia");
+		buszMarkaErtekMap.put("benelli", "Benelli");
+		buszMarkaErtekMap.put("bmw", "BMW");
+		buszMarkaErtekMap.put("cagiva", "Cagiva");
+		buszMarkaErtekMap.put("derbi", "Derbi");
+		buszMarkaErtekMap.put("ducati", "Ducati");
+		buszMarkaErtekMap.put("gilera", "Gilera");
+		buszMarkaErtekMap.put("harley", "Harley Davidson");
+		buszMarkaErtekMap.put("honda", "Honda");
+		buszMarkaErtekMap.put("jawa", "Jawa");
+		buszMarkaErtekMap.put("kavasaki", "Kavasaki");
+		buszMarkaErtekMap.put("keeway", "Keeway");
+		buszMarkaErtekMap.put("ktm", "KTM");
+		buszMarkaErtekMap.put("kymco", "Kymco");
+		buszMarkaErtekMap.put("malaguti", "Malaguti");
+		buszMarkaErtekMap.put("motowell", "Motowell");
+		buszMarkaErtekMap.put("mz", "MZ");
+		buszMarkaErtekMap.put("pannonia", "Pannonia");
+		buszMarkaErtekMap.put("peugeot", "Peugeot");
+		buszMarkaErtekMap.put("piaggio", "Piaggio");
+		buszMarkaErtekMap.put("simson", "Simson");
+		buszMarkaErtekMap.put("suzuki", "Suzuki");
+		buszMarkaErtekMap.put("triumph", "Triumph");
+		buszMarkaErtekMap.put("vespa", "Vespa");
+		buszMarkaErtekMap.put("yamaha", "Yamaha");
+		buszMarkaErtekMap.put("motor-egyeb", "Egyéb");
+		buszMarka.setErtekMap(buszMarkaErtekMap);
+		
+		AttributumNumber buszKapacitas = new AttributumNumber("busz-kapacitas", "Szállítható személyek száma");
+		
+		LinkedList<Attributum> buszList = new LinkedList<Attributum>();
+		buszList.add(buszMarka);
+		buszList.add(jarmuEvjarat);
+		buszList.add(jarmuKm);
+		buszList.add(buszKapacitas);
+		KATEGORIA_ATTRIBUTUM.put("busz", buszList);
 		
 		Context.getCurrentLogger().info("AttributumCache feltoltve");
 	}
