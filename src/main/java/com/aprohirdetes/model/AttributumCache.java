@@ -18,7 +18,7 @@ public class AttributumCache {
 	}
 
 	public static void loadAttributumCache() {
-		Context.getCurrentLogger().info("Loading AttributumCache...");
+		Context.getCurrentLogger().info("AttributumCache feltoltese...");
 		
 		// **********************
 		// Altalanos attributumok
@@ -309,6 +309,14 @@ public class AttributumCache {
 		gumiList.add(gumiPer);
 		gumiList.add(gumiAtmero);
 		KATEGORIA_ATTRIBUTUM.put("gumi-felni", gumiList);
+
+		/**********************************
+		 * Kategoria: Jarmu
+		 */
+		AttributumText jarmuEvjarat = new AttributumText("jarmu-evjarat", "Évjárat");
+		jarmuEvjarat.setKotelezo(true);
+		
+		AttributumNumber jarmuKm = new AttributumNumber("jarmu-km", "Km-óra állása");
 		
 		/**********************************
 		 * Kategoria: Jarmu->Szemelyauto
@@ -356,11 +364,6 @@ public class AttributumCache {
 		szautoMarkaErtekMap.put("szauto-egyeb", "Egyéb");
 		szautoMarka.setErtekMap(szautoMarkaErtekMap);
 		
-		AttributumNumber szautoEvjarat = new AttributumNumber("szauto-evjarat", "Évjárat");
-		szautoEvjarat.setKotelezo(true);
-		
-		AttributumNumber szautoKm = new AttributumNumber("szauto-km", "Km-óra állása");
-		
 		Attributum szautoUzemanyag = new AttributumSelectSingle("szauto-uzemanyag", "Üzemanyag");
 		Map<String, String> szautoUzemanyagErtekMap = new LinkedHashMap<String, String>();
 		//szautoUzemanyagErtekMap.put("", "");
@@ -375,13 +378,28 @@ public class AttributumCache {
 		
 		LinkedList<Attributum> szautoList = new LinkedList<Attributum>();
 		szautoList.add(szautoMarka);
-		szautoList.add(szautoEvjarat);
-		szautoList.add(szautoKm);
+		szautoList.add(jarmuEvjarat);
+		szautoList.add(jarmuKm);
 		szautoList.add(szautoUzemanyag);
 		KATEGORIA_ATTRIBUTUM.put("szemelyauto", szautoList);
 		
+		/*********************************
+		 * Kategoria: Jarmu->Kishaszon
+		 */
+		LinkedList<Attributum> kishaszonList = new LinkedList<Attributum>();
+		kishaszonList.add(jarmuEvjarat);
+		kishaszonList.add(jarmuKm);
+		KATEGORIA_ATTRIBUTUM.put("kishaszon", kishaszonList);
 		
-		Context.getCurrentLogger().info("AttributumCache has been loaded");
+		/*********************************
+		 * Kategoria: Jarmu->Haszonjarmu
+		 */
+		LinkedList<Attributum> haszonjarmuList = new LinkedList<Attributum>();
+		haszonjarmuList.add(jarmuEvjarat);
+		haszonjarmuList.add(jarmuKm);
+		KATEGORIA_ATTRIBUTUM.put("haszonjarmu", haszonjarmuList);
+		
+		Context.getCurrentLogger().info("AttributumCache feltoltve");
 	}
 	
 	/**

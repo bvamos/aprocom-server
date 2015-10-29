@@ -498,8 +498,13 @@ public class KeresesServerResource extends ServerResource implements
 			break;
 		case "szemelyauto":
 			ret += attr(urlNev, "szauto-marka", a.get("szauto-marka"), " | ");
-			ret += attr(urlNev, "szauto-evjarat", a.get("szauto-evjarat"), " | ");
-			ret += attr(urlNev, "szauto-km", a.get("szauto-km"), " km | ");
+			ret += attr(urlNev, "jarmu-evjarat", a.get("jarmu-evjarat"), " | ");
+			ret += attr(urlNev, "jarmu-km", a.get("jarmu-km"), " km | ");
+			break;
+		case "kishaszon":
+		case "haszonjarmu":
+			ret += attr(urlNev, "jarmu-evjarat", a.get("jarmu-evjarat"), " | ");
+			ret += attr(urlNev, "jarmu-km", a.get("jarmu-km"), " km | ");
 			break;
 		}
 		
