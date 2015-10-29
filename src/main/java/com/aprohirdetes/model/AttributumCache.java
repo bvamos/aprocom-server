@@ -23,7 +23,7 @@ public class AttributumCache {
 		// **********************
 		// Altalanos attributumok
 		Attributum allapot = new AttributumSelectSingle("allapot", "Állapot");
-		Map<String, Object> allapotErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> allapotErtekMap = new LinkedHashMap<String, String>();
 		allapotErtekMap.put("h", "Használt");
 		allapotErtekMap.put("u", "Új");
 		allapot.setErtekMap(allapotErtekMap);
@@ -39,7 +39,7 @@ public class AttributumCache {
 		ingatlanSzobakszama.setAlapErtek(1);
 		
 		Attributum ingatlanAllapot = new AttributumSelectSingle("ingatlan-allapot", "Ingatlan állapota");
-		Map<String, Object> ingatlanAllapotErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> ingatlanAllapotErtekMap = new LinkedHashMap<String, String>();
 		ingatlanAllapotErtekMap.put("ujepitesu", "Új építésű");
 		ingatlanAllapotErtekMap.put("uj", "Újszerű");
 		ingatlanAllapotErtekMap.put("felujitott", "Felújított");
@@ -48,7 +48,7 @@ public class AttributumCache {
 		ingatlanAllapot.setErtekMap(ingatlanAllapotErtekMap);
 		
 		Attributum ingatlanKomfort = new AttributumSelectSingle("ingatlan-komfort", "Komfortfokozat");
-		Map<String, Object> ingatlanKomfortErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> ingatlanKomfortErtekMap = new LinkedHashMap<String, String>();
 		ingatlanKomfortErtekMap.put("luxus", "Luxus");
 		ingatlanKomfortErtekMap.put("osszkomfort", "Összkomfortos");
 		ingatlanKomfortErtekMap.put("komfortos", "Komfortos");
@@ -56,7 +56,7 @@ public class AttributumCache {
 		ingatlanKomfort.setErtekMap(ingatlanKomfortErtekMap);
 		
 		Attributum ingatlanFutes = new AttributumSelectSingle("ingatlan-futes", "Fűtés típusa");
-		Map<String, Object> ingatlanFutesErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> ingatlanFutesErtekMap = new LinkedHashMap<String, String>();
 		ingatlanFutesErtekMap.put("cirko", "Gáz (cirkó)");
 		ingatlanFutesErtekMap.put("kovektor", "Gáz (konvektor)");
 		ingatlanFutesErtekMap.put("elektormos", "Elektromos");
@@ -91,7 +91,7 @@ public class AttributumCache {
 		LinkedList<Attributum> lakasList = new LinkedList<Attributum>();
 		
 		Attributum lakasFalazat = new AttributumRadio("lakas-falazat", "Falazat anyaga");
-		Map<String, Object> lakasFalazatErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> lakasFalazatErtekMap = new LinkedHashMap<String, String>();
 		lakasFalazatErtekMap.put("tegla", "Tégla");
 		lakasFalazatErtekMap.put("panel", "Panel");
 		lakasFalazat.setErtekMap(lakasFalazatErtekMap);
@@ -146,7 +146,7 @@ public class AttributumCache {
 		// ***************************
 		// Kategoria: Ingatlan->Garazs
 		Attributum garazsElhelyezkedes = new AttributumRadio("garazs-elhelyezkedes", "Elhelyezkedés");
-		Map<String, Object> garazsElhelyezkedesErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> garazsElhelyezkedesErtekMap = new LinkedHashMap<String, String>();
 		garazsElhelyezkedesErtekMap.put("o", "Önálló");
 		garazsElhelyezkedesErtekMap.put("t", "Teremgarázs");
 		garazsElhelyezkedes.setErtekMap(garazsElhelyezkedesErtekMap);
@@ -161,7 +161,7 @@ public class AttributumCache {
 		// Kategoria: Elektronikai cikk->Telefon
 		
 		Attributum telefonMarka = new AttributumSelectSingle("telefon-marka", "Márka");
-		Map<String, Object> telefonMarkaErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> telefonMarkaErtekMap = new LinkedHashMap<String, String>();
 		telefonMarkaErtekMap.put("acer", "Acer");
 		telefonMarkaErtekMap.put("alcatel", "Alcatel");
 		telefonMarkaErtekMap.put("apple", "Apple/Iphone");
@@ -189,7 +189,7 @@ public class AttributumCache {
 		// Kategoria: Jarmu->Gumi, felni
 		
 		Attributum gumiMarka = new AttributumSelectSingle("gumi-marka", "Márka");
-		Map<String, Object> gumiMarkaErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> gumiMarkaErtekMap = new LinkedHashMap<String, String>();
 		//gumiMarkaErtekMap.put("", "");
 		gumiMarkaErtekMap.put("barum", "Barum");
 		gumiMarkaErtekMap.put("bfgoodrich", "BFGoodrich");
@@ -227,7 +227,7 @@ public class AttributumCache {
 		gumiMarka.setKotelezo(true);
 		
 		Attributum gumiSzelesseg = new AttributumSelectSingle("gumi-szelesseg", "Szélesség");
-		Map<String, Object> gumiSzelessegErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> gumiSzelessegErtekMap = new LinkedHashMap<String, String>();
 		gumiSzelessegErtekMap.put("110", "110");
 		gumiSzelessegErtekMap.put("120", "120");
 		gumiSzelessegErtekMap.put("130", "130");
@@ -248,7 +248,7 @@ public class AttributumCache {
 		gumiSzelesseg.setKotelezo(true);
 		
 		Attributum gumiAtmero = new AttributumSelectSingle("gumi-atmero", "Átmérő");
-		Map<String, Object> gumiAtmeroErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> gumiAtmeroErtekMap = new LinkedHashMap<String, String>();
 		gumiAtmeroErtekMap.put("10", "R10");
 		gumiAtmeroErtekMap.put("11", "R11");
 		gumiAtmeroErtekMap.put("12", "R12");
@@ -274,7 +274,7 @@ public class AttributumCache {
 		gumiAtmero.setKotelezo(true);
 		
 		Attributum gumiPer = new AttributumSelectSingle("gumi-per", "Per");
-		Map<String, Object> gumiPerErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> gumiPerErtekMap = new LinkedHashMap<String, String>();
 		gumiPerErtekMap.put("20", "20");
 		gumiPerErtekMap.put("25", "25");
 		gumiPerErtekMap.put("30", "30");
@@ -295,7 +295,7 @@ public class AttributumCache {
 		gumiPer.setErtekMap(gumiPerErtekMap);
 		
 		Attributum gumiIdoszak = new AttributumSelectSingle("gumi-idoszak", "Időszak");
-		Map<String, Object> gumiIdoszakErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> gumiIdoszakErtekMap = new LinkedHashMap<String, String>();
 		gumiIdoszakErtekMap.put("ny", "Nyári");
 		gumiIdoszakErtekMap.put("t", "Téli");
 		gumiIdoszakErtekMap.put("4", "4 évszakos");
@@ -314,7 +314,7 @@ public class AttributumCache {
 		 * Kategoria: Jarmu->Szemelyauto
 		 */
 		Attributum szautoMarka = new AttributumSelectSingle("szauto-marka", "Márka");
-		Map<String, Object> szautoMarkaErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> szautoMarkaErtekMap = new LinkedHashMap<String, String>();
 		//szautoMarkaErtekMap.put("", "");
 		szautoMarkaErtekMap.put("alfaromeo", "Alfa Romeo");
 		szautoMarkaErtekMap.put("audi", "Audi");
@@ -362,7 +362,7 @@ public class AttributumCache {
 		AttributumNumber szautoKm = new AttributumNumber("szauto-km", "Km-óra állása");
 		
 		Attributum szautoUzemanyag = new AttributumSelectSingle("szauto-uzemanyag", "Üzemanyag");
-		Map<String, Object> szautoUzemanyagErtekMap = new LinkedHashMap<String, Object>();
+		Map<String, String> szautoUzemanyagErtekMap = new LinkedHashMap<String, String>();
 		//szautoUzemanyagErtekMap.put("", "");
 		szautoUzemanyagErtekMap.put("benzin", "Benzin");
 		szautoUzemanyagErtekMap.put("diesel", "Diesel");

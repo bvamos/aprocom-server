@@ -26,6 +26,7 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.Attributum;
 import com.aprohirdetes.model.AttributumCache;
+import com.aprohirdetes.model.AttributumSelectSingle;
 import com.aprohirdetes.model.AttributumTipus;
 import com.aprohirdetes.model.Helyseg;
 import com.aprohirdetes.model.HelysegCache;
@@ -477,34 +478,46 @@ public class KeresesServerResource extends ServerResource implements
 		case "lakas":
 		case "haz":
 		case "alberlet":
-			ret += attr(a.get("ingatlan-alapterulet"), " m² | ");
-			ret	+= attr(a.get("ingatlan-szobakszama"), " szoba | ");
+			ret += attr(urlNev, "ingatlan-alapterulet", a.get("ingatlan-alapterulet"), " m² | ");
+			ret	+= attr(urlNev, "ingatlan-szobakszama", a.get("ingatlan-szobakszama"), " szoba | ");
 			break;
 		case "epitesi-telek":
-			ret = attr(a.get("telek-alapterulet"), " m² | ");
+			ret = attr(urlNev, "telek-alapterulet", a.get("telek-alapterulet"), " m² | ");
 			break;
 		case "szanto-kiskert":
 		case "iroda-uzlethelyiseg":
 		case "nyaralo":
 		case "garazs":
-			ret = attr(a.get("ingatlan-alapterulet"), " m² | ");
+			ret = attr(urlNev, "ingatlan-alapterulet", a.get("ingatlan-alapterulet"), " m² | ");
 			break;
 		case "gumi-felni":
-			ret += attr(a.get("gumi-szelesseg"), "/");
-			ret += attr(a.get("gumi-per"), " ");
-			ret += attr(a.get("gumi-atmero"), " | ");
+			ret += attr(urlNev, "gumi-marka", a.get("gumi-marka"), " | ");
+			ret += attr(urlNev, "gumi-szelesseg", a.get("gumi-szelesseg"), "/");
+			ret += attr(urlNev, "gumi-per", a.get("gumi-per"), " ");
+			ret += attr(urlNev, "gumi-atmero", a.get("gumi-atmero"), " | ");
 			break;
 		case "szemelyauto":
-			ret += attr(a.get("szauto-marka"), " | ");
-			ret += attr(a.get("szauto-evjarat"), " | ");
-			ret += attr(a.get("szauto-km"), " km | ");
+			ret += attr(urlNev, "szauto-marka", a.get("szauto-marka"), " | ");
+			ret += attr(urlNev, "szauto-evjarat", a.get("szauto-evjarat"), " | ");
+			ret += attr(urlNev, "szauto-km", a.get("szauto-km"), " km | ");
 			break;
 		}
 		
 		return ret;
 	}
 	
-	private String attr(Object o, String postfix) {
-		return (o != null) ? o.toString() + postfix : "";
+	private String attr(String kategoriaUrlNev, String attributumNev, Object o, String postfix) {
+		Attributum a = AttributumCache.getAttributum(kategoriaUrlNev, attributumNev);
+		
+		if(o==null) {
+			return "";
+		}
+		
+		if(a instanceof AttributumSelectSingle) {
+			// Ha lista tipusu, akkor a nevet adjuk vissza, nem az erteket
+			return a.getErtekMap().get(o.toString()) + postfix;
+		} else {
+			return o.toString() + postfix;
+		}
 	}
 }

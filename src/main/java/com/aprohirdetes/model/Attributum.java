@@ -11,7 +11,7 @@ public class Attributum {
 	private String cim;
 	private String segitseg;
 	private Object alapErtek;
-	private Map<String, Object> ertekMap;
+	private Map<String, String> ertekMap;
 	private boolean kotelezo;
 	private String mertekEgyseg;
 	
@@ -62,11 +62,11 @@ public class Attributum {
 		this.alapErtek = alapErtek;
 	}
 
-	public Map<String, Object> getErtekMap() {
+	public Map<String, String> getErtekMap() {
 		return ertekMap;
 	}
 
-	public void setErtekMap(Map<String, Object> ertekMap) {
+	public void setErtekMap(Map<String, String> ertekMap) {
 		this.ertekMap = ertekMap;
 	}
 
