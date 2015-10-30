@@ -412,13 +412,14 @@ public class KeresesServerResource extends ServerResource implements
 			dataModel.put("headerBgClass", "jarmu-bg");
 			dataModel.put("alkategoriaLinkek", " " + 
 				getLink("szemelyauto", "Személyautó") + " | " + 
+				getLink("kishaszon", "Kishaszon") + " | " + 
 				getLink("haszonjarmu", "Haszonjármű") + " | " + 
+				getLink("alkatresz", "Alkatrész") + " | " + 
+				getLink("gumi-felni", "Gumi, felni") + " | " +
 				getLink("potkocsi-utanfuto", "Pótkocsi, utánfutó") + " | " + 
 				getLink("motor", "Motor") + " | " + 
 				getLink("busz", "Busz") + " | " + 
 				getLink("lakokocsi", "Lakókocsi") + " | " + 
-				getLink("alkatresz", "Alkatrész") + " | " + 
-				getLink("gumi-felni", "Gumi, felni") + " | " +
 				getLink("hajo", "Hajó"));
 		} else if(selectedKategoriaUrlNevList.contains("allas") ||
 				selectedKategoriaUrlNevList.contains("allas-ipari") ||

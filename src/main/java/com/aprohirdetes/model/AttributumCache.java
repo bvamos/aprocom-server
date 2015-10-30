@@ -334,7 +334,7 @@ public class AttributumCache {
 		szautoMarkaErtekMap.put("bmw", "BMW");
 		szautoMarkaErtekMap.put("chevrolet", "Chevrolet");
 		szautoMarkaErtekMap.put("citroen", "Citroen");
-		szautoMarkaErtekMap.put("dacia", "dacia");
+		szautoMarkaErtekMap.put("dacia", "Dacia");
 		szautoMarkaErtekMap.put("daewoo", "Daewoo");
 		szautoMarkaErtekMap.put("fiat", "Fiat");
 		szautoMarkaErtekMap.put("ford", "Ford");
@@ -396,7 +396,7 @@ public class AttributumCache {
 		Map<String, String> kishaszonMarkaErtekMap = new LinkedHashMap<String, String>();
 		//kishaszonMarkaErtekMap.put("", "");
 		kishaszonMarkaErtekMap.put("citroen", "Citroen");
-		kishaszonMarkaErtekMap.put("dacia", "dacia");
+		kishaszonMarkaErtekMap.put("dacia", "Dacia");
 		kishaszonMarkaErtekMap.put("daewoo", "Daewoo");
 		kishaszonMarkaErtekMap.put("fiat", "Fiat");
 		kishaszonMarkaErtekMap.put("ford", "Ford");
