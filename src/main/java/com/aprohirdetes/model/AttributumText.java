@@ -43,4 +43,13 @@ public class AttributumText extends Attributum {
 		
 		return ret;
 	}
+	
+	@Override
+	public String toString(Object value) {
+		String ret = "";
+		
+		ret = value.toString();
+		
+		return ret;
+	}
 }

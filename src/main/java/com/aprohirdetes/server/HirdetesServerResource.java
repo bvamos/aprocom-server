@@ -32,6 +32,7 @@ import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.utils.AproUtils;
+
 import freemarker.template.Template;
 
 public class HirdetesServerResource extends ServerResource implements
@@ -114,24 +115,14 @@ public class HirdetesServerResource extends ServerResource implements
 					// Attributumok cimenek, ertekenek (ha kell) atirasa
 					try {
 						LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(kat.getUrlNev());
+						// Attributumnev->ertek formazva
 						HashMap<String, Object> attributumok = new HashMap<String, Object>();
+						
 						for(String key : hirdetes.getAttributumok().keySet()) {
 							for(Attributum attr : attributumList) {
 								if(attr.getNev().equalsIgnoreCase(key)) {
 									Object o = hirdetes.getAttributumok().get(key);
-									// Ha van mertekegyseg, az ertek moge irjuk 
-									if(attr.getMertekEgyseg() != null) {
-										o = new String(o.toString() + " " + attr.getMertekEgyseg());
-									}
-									// Ha az ertek boolean, leforditjuk
-									if(o instanceof Boolean) {
-										o = ((Boolean) o) ? new String("igen") : new String("nem");
-									}
-									// Ha van ertekMap, kiszedjuk az ertekhez tartozo nevet
-									if(attr.getErtekMap() != null) {
-										o = attr.getErtekMap().get(o.toString());
-									}
-									attributumok.put(attr.getCim(), o);
+									attributumok.put(attr.getCim(), attr.toString(o));
 									break;
 								}
 							}

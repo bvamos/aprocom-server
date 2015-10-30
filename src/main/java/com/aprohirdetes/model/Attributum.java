@@ -98,4 +98,15 @@ public class Attributum {
 	public String toSearchHtml(Form query) {
 		return "";
 	}
+	
+	/**
+	 * Stringkent visszadja a parameterben megadott attributum erteket. 
+	 * Szam eseten formaz, lista eseten nevet ad vissza, es hozzacsapja a mertekeegyseget is, ha kell.
+	 * A megvalositas az attributum tipusoknal van
+	 * @param value
+	 * @return
+	 */
+	public String toString(Object value) {
+		return "";
+	}
 }

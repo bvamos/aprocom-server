@@ -315,10 +315,13 @@ public class AttributumCache {
 		 */
 		AttributumNumber jarmuEvjarat = new AttributumNumber("jarmu-evjarat", "Évjárat");
 		jarmuEvjarat.setKotelezo(true);
+		jarmuEvjarat.setFormazott(false);
 		
 		AttributumNumber jarmuKm = new AttributumNumber("jarmu-km", "Km-óra állása");
+		jarmuKm.setMertekEgyseg("km");
 
 		AttributumNumber jarmuHengerUrTartalom = new AttributumNumber("jarmu-hengerurtartalom", "Hengerűrtartalom");
+		jarmuHengerUrTartalom.setMertekEgyseg("cm³");
 
 		/**********************************
 		 * Kategoria: Jarmu->Szemelyauto
@@ -544,6 +547,7 @@ public class AttributumCache {
 		buszMarka.setErtekMap(buszMarkaErtekMap);
 		
 		AttributumNumber buszKapacitas = new AttributumNumber("busz-kapacitas", "Szállítható személyek száma");
+		buszKapacitas.setMertekEgyseg("fő");
 		
 		LinkedList<Attributum> buszList = new LinkedList<Attributum>();
 		buszList.add(buszMarka);

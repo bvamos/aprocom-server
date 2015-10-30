@@ -51,4 +51,13 @@ public class AttributumYesNo extends Attributum {
 		
 		return ret;
 	}
+	
+	@Override
+	public String toString(Object value) {
+		String ret = "";
+	
+		ret = ((Boolean) value) ? new String("igen") : new String("nem");
+		
+		return ret;
+	}
 }

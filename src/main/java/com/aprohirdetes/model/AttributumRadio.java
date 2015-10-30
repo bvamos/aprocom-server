@@ -55,4 +55,13 @@ public class AttributumRadio extends Attributum {
 	
 		return ret;
 	}
+	
+	@Override
+	public String toString(Object value) {
+		String ret = "";
+		
+		ret = getErtekMap().get(value.toString());
+		
+		return ret;
+	}
 }

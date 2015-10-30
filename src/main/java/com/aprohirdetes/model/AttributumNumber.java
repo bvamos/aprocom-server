@@ -1,11 +1,26 @@
 package com.aprohirdetes.model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import org.restlet.data.Form;
 
 public class AttributumNumber extends Attributum {
 
+	private boolean formazott;
+	
 	public AttributumNumber(String nev, String cim) {
 		super(nev, AttributumTipus.NUMBER, cim);
+		setFormazott(true);
+	}
+	
+	public boolean getFormazott() {
+		return this.formazott;
+	}
+	
+	public void setFormazott(boolean formazott) {
+		this.formazott = formazott;
 	}
 	
 	@Override
@@ -68,6 +83,29 @@ public class AttributumNumber extends Attributum {
 					"		</div>\n";
 		}
 		ret +=  "</div>\n";
+		
+		return ret;
+	}
+	
+	@Override
+	public String toString(Object value) {
+		String ret = "";
+		
+		if(getFormazott()) {
+			NumberFormat nf = NumberFormat.getNumberInstance(new Locale("hu", "HU"));
+			DecimalFormat df = (DecimalFormat) nf;
+			try {
+				ret = df.format(value);
+			} catch (IllegalArgumentException iae) {
+				System.out.println(getNev() + "=" + value);
+			}
+		} else {
+			ret = value.toString();
+		}
+		
+		if(getMertekEgyseg() != null) {
+			ret += " " + getMertekEgyseg();
+		}
 		
 		return ret;
 	}
