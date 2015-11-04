@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.restlet.Application;
@@ -321,6 +322,7 @@ public class AproApplication extends Application {
 		cfg.setTemplateLoader(new ClassTemplateLoader(getClass(), "templates/"));
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setURLEscapingCharset("UTF-8");
+		cfg.setLocale(new Locale("hu", "HU"));
 		cfg.setBooleanFormat("Igen,Nem");
 		TPL_CONFIG = cfg;
 		
