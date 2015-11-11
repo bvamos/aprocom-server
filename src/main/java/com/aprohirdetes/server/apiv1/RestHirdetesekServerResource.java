@@ -57,7 +57,7 @@ public class RestHirdetesekServerResource extends ServerResource implements APIR
 				String tipus = requestJson.getString("tipus");
 				if(!"keres".equalsIgnoreCase(tipus) && !"kinal".equalsIgnoreCase(tipus)) {
 					response.setSuccess(false);
-					response.addError(1018, "A hirdetes tipusa csak keres vagy kinal lehet");
+					response.addError(1018, "A hirdetes tipusa csak keres, kinal, berel vagy kiad lehet");
 				} else {
 					hirdetes.setTipus(tipus);
 				}

@@ -19,6 +19,15 @@
 								<input type="radio" name="hirdetesTipus" id="hirdetesTipusKeres" value="1">
 								Keres (Venni szeretnék)
 							</label>
+							<br/>
+							<label class="radio-inline">
+								<input type="radio" name="hirdetesTipus" id="hirdetesTipusKiad" value="4">
+								Kiad (Bérbe adni szeretnék)
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="hirdetesTipus" id="hirdetesTipusBerel" value="3">
+								Bérel (Bérelni szeretnék)
+							</label>
 					</div>
 				</div>
 				
@@ -27,36 +36,6 @@
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="hirdetesCim" name="hirdetesCim" autofocus="" required="" placeholder="" value="${(hirdetes.cim)!''}">
 						<span class="help-block">Rövid, de beszédes címsor, ami pár szóban összefoglalja a hirdetésed tartalmát.</span>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-sm-3 control-label" for="hirdetesHelyseg">Ország, megye, település</label>
-					<div class="col-sm-7">
-						<select class="form-control" id="hirdetesHelyseg" name="hirdetesHelyseg">
-							<#list helysegList as helyseg>
-							<#assign selected=''>
-							<#if hirdetesHelyseg==helyseg.urlNev>
-								<#assign selected=' selected'>
-							</#if>
-							<option value="${helyseg.urlNev}"${selected}>${helyseg.nev}</option>
-								<#list helyseg.alhelysegList as alhelyseg>
-								<#assign selected=''>
-								<#if hirdetesHelyseg==alhelyseg.urlNev>
-									<#assign selected=' selected'>
-								</#if>
-								<option value="${alhelyseg.urlNev}"${selected} style="font-weight: bold;">&nbsp;&nbsp;${alhelyseg.nev}</option>
-									<#list alhelyseg.alhelysegList as alalhelyseg>
-									<#assign selected=''>
-									<#if hirdetesHelyseg==alalhelyseg.urlNev>
-										<#assign selected=' selected'>
-									</#if>
-									<option value="${alalhelyseg.urlNev}"${selected}>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
-									</#list>
-								</#list>
-							</#list>
-						</select>
-						<span class="help-block">Válaszd ki a hozzád legközelebb eső települést! Kereséskor a nagyobb földrajzi egység magában foglalja a kisebbeket, tehát pl. Budapestet megadva feltételként, az összes kerületbe feladott hirdetés meg fog jelenni.</span>
 					</div>
 				</div>
 				
@@ -90,17 +69,19 @@
 				</div>
 				
 				<div class="form-group">
-					<label class="col-sm-3 control-label" for="hirdeteSzoveg">Hirdetés szövege</label>
-					<div class="col-sm-7">
-						<textarea class="form-control" rows="5" id="hirdetesSzoveg" name="hirdetesSzoveg">${(hirdetes.szoveg)!''}</textarea>
+					<div id="attributumWrapper" class="col-sm-7 col-sm-offset-3">
+						<#if egyebAttributumok?? >
+						${egyebAttributumok}
+						<#else>
+						<div class="alert alert-info">Ehhez a kategóriához nem tartoznak egyéb mezők.</div>
+						</#if>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="col-sm-3 control-label" for="hirdetesEgyebInfo">Egyéb információ</label>
+					<label class="col-sm-3 control-label" for="hirdeteSzoveg">Hirdetés szövege</label>
 					<div class="col-sm-7">
-						<input type="url" class="form-control" id="hirdetesEgyebInfo" name="hirdetesEgyebInfo" placeholder="http://" value="${(hirdetes.egyebInfo)!''}">
-						<span class="help-block">Pl. egy weboldal címe, ahol további részleteket talál az érdeklődő, vagy egy YouTube link, stb.</span>
+						<textarea class="form-control" rows="5" id="hirdetesSzoveg" name="hirdetesSzoveg">${(hirdetes.szoveg)!''}</textarea>
 					</div>
 				</div>
 				
@@ -113,15 +94,44 @@
 						</div>
 					</div>
 				</div>
-			
-			<h3>Egyéb mezők</h3>
-			<div id="attributumWrapper">
-				<#if egyebAttributumok?? >
-				${egyebAttributumok}
-				<#else>
-				<div class="alert alert-info">Ehhez a kategóriához nem tartoznak egyéb mezők.</div>
-				</#if>
-			</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetesEgyebInfo">Egyéb információ</label>
+					<div class="col-sm-7">
+						<input type="url" class="form-control" id="hirdetesEgyebInfo" name="hirdetesEgyebInfo" placeholder="http://" value="${(hirdetes.egyebInfo)!''}">
+						<span class="help-block">Pl. egy weboldal címe, ahol további részleteket talál az érdeklődő, vagy egy YouTube link, stb.</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="hirdetesHelyseg">Ország, megye, település</label>
+					<div class="col-sm-7">
+						<select class="form-control" id="hirdetesHelyseg" name="hirdetesHelyseg">
+							<#list helysegList as helyseg>
+							<#assign selected=''>
+							<#if hirdetesHelyseg==helyseg.urlNev>
+								<#assign selected=' selected'>
+							</#if>
+							<option value="${helyseg.urlNev}"${selected}>${helyseg.nev}</option>
+								<#list helyseg.alhelysegList as alhelyseg>
+								<#assign selected=''>
+								<#if hirdetesHelyseg==alhelyseg.urlNev>
+									<#assign selected=' selected'>
+								</#if>
+								<option value="${alhelyseg.urlNev}"${selected} style="font-weight: bold;">&nbsp;&nbsp;${alhelyseg.nev}</option>
+									<#list alhelyseg.alhelysegList as alalhelyseg>
+									<#assign selected=''>
+									<#if hirdetesHelyseg==alalhelyseg.urlNev>
+										<#assign selected=' selected'>
+									</#if>
+									<option value="${alalhelyseg.urlNev}"${selected}>&nbsp;&nbsp;&nbsp;&nbsp;${alalhelyseg.nev}</option>
+									</#list>
+								</#list>
+							</#list>
+						</select>
+						<span class="help-block">Válaszd ki a hozzád legközelebb eső települést! Kereséskor a nagyobb földrajzi egység magában foglalja a kisebbeket, tehát pl. Budapestet megadva feltételként, az összes kerületbe feladott hirdetés meg fog jelenni.</span>
+					</div>
+				</div>
 			
 			<h3>Hirdető adatai</h3>
 			

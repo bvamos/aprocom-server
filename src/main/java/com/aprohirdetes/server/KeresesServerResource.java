@@ -49,7 +49,7 @@ public class KeresesServerResource extends ServerResource implements
 	private String contextPath = "";
 	private String hirdetesTipusString = "kinal";
 	/**
-	 * Hirdetes tipusa. 1=Keres, 2=Kinal
+	 * Hirdetes tipusa. 1=Keres, 2=Kinal, 3=Berel, 4=Kiad
 	 */
 	private int hirdetesTipus = HirdetesTipus.KINAL;
 	/**
@@ -92,7 +92,7 @@ public class KeresesServerResource extends ServerResource implements
 		this.selectedHelysegList = HelysegCache.getHelysegListByUrlNevList(this.selectedHelysegUrlNevListString);
 		
 		this.hirdetesTipusString = (String) this.getRequestAttributes().get("hirdetesTipus");
-		this.hirdetesTipus = ("keres".equals(this.hirdetesTipusString)) ? HirdetesTipus.KERES : HirdetesTipus.KINAL;
+		this.hirdetesTipus = HirdetesTipus.getHirdetesTipus(this.hirdetesTipusString);
 		
 		this.kulcsszo = getQueryValue("q")==null ? "" : getQueryValue("q");
 		
@@ -262,7 +262,7 @@ public class KeresesServerResource extends ServerResource implements
 			
 			// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 			for(Hirdetes h : query) {
-				h.getEgyebMezok().put("tipusNev", (h.getTipus()==HirdetesTipus.KINAL) ? "Kínál" : "Keres");
+				h.getEgyebMezok().put("tipusNev", HirdetesTipus.getHirdetesTipusNev(h.getTipus()));
 				
 				Kategoria kat = KategoriaCache.getCacheById().get(h.getKategoriaId());
 				h.getEgyebMezok().put("kategoriaNev", (kat!=null) ? KategoriaCache.getKategoriaNevChainAsLink(kat.getId()) : "");

@@ -113,11 +113,7 @@ public class Hirdetes {
 	}
 	
 	public void setTipus(String tipus) {
-		if("keres".equalsIgnoreCase(tipus)) {
-			this.setTipus(HirdetesTipus.KERES);
-		} else {
-			this.setTipus(HirdetesTipus.KINAL);
-		}
+		this.setTipus(HirdetesTipus.getHirdetesTipus(tipus));
 	}
 
 	public String getCim() {
