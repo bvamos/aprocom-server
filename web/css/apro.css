@@ -465,3 +465,20 @@ span.twitter-typeahead {
 	left: 1rem;
 	font-size: 2rem;
 }
+
+h2.rolunk {
+	text-align: right;
+}
+
+h2.rolunk-right {
+	text-align: left;
+}
+
+p.rolunk {
+	color: #999;
+}
+
+p.rolunk-left {
+	text-align: right;
+	color: #999;
+}

@@ -97,6 +97,7 @@ public class AproApplication extends Application {
 		router.attach("/feltetelek", StaticFelhasznalasServerResource.class);
 		router.attach("/kapcsolat", StaticKapcsolatServerResource.class);
 		router.attach("/sugo", StaticSugoServerResource.class);
+		router.attach("/rolunk", StaticRolunkServerResource.class);
 		
 		// RSS
 		router.attach("/rss/{hirdetesTipus}/", RssServerResource.class);
