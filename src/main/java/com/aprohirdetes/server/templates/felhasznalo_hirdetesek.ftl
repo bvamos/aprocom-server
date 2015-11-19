@@ -1,3 +1,12 @@
+<#macro hirdetesStatusz kod>
+	<#if kod=1>Új</#if>
+	<#if kod=11>Hitelesítve</#if>
+	<#if kod=21>Aktív</#if>
+	<#if kod=31>Törölve (Lejárt)</#if>
+	<#if kod=32>Törölve</#if>
+	<#if kod=33>Eladva</#if>
+</#macro>
+
 <#include "html_header.ftl.html"/>
 	<div class="container">
 <#include "page_header_banner.ftl.html"/>
@@ -26,7 +35,8 @@
 						<th>Kategória</th>
 						<th>Ár</th>
 						<th>Feladva/Lejár</th>
-						<th>Megjelent</th>
+						<th>Státusz</th>
+						<th title="Megjelenések száma">Megj.</th>
 						<th>Műveletek</th>
 					</tr>
 					</thead>
@@ -37,7 +47,8 @@
 						<td>${(hirdetes.egyebMezok.kategoria)!''}</td>
 						<td align="right" nowrap>${hirdetes.ar} Ft</td>
 						<td><small>${(hirdetes.egyebMezok.feladvaSzoveg)!''}<br>${(hirdetes.egyebMezok.lejarSzoveg)!''}</small></td>
-						<#if hirdetes.hitelesitve>
+						<td><@hirdetesStatusz kod=hirdetes.statusz /></td>
+						<#if hirdetes.statusz!=1>
 						<td align="right">${hirdetes.megjelenes!'0'}</td>
 						<#else>
 						<td align="right">Nincs aktiválva</td>

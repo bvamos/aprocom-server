@@ -170,8 +170,7 @@ public class KeresesServerResource extends ServerResource implements
 			Datastore datastore = MongoUtils.getDatastore();
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			
-			query.criteria("hitelesitve").equal(true);
-			query.criteria("torolve").equal(false);
+			query.criteria("statusz").equal(Hirdetes.Statusz.JOVAHAGYVA.value());
 			query.criteria("tipus").equal(this.hirdetesTipus);
 			if(selectedHelysegIdList.size()>0) {
 				query.criteria("helysegId").in(selectedHelysegIdList);

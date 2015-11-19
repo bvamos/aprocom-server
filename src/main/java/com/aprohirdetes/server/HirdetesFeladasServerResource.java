@@ -159,9 +159,9 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		
 		Hirdetes hi = new Hirdetes();
 		
-		// Automatikusan hitelesitjuk a Hirdetest, ha a szerver ugy van beallitva (fejlesztes kozben hasznos)
+		// Automatikusan hitelesitjuk/jovahagyjuk a Hirdetest, ha a szerver ugy van beallitva (fejlesztes kozben hasznos)
 		if("1".equalsIgnoreCase(AproConfig.APP_CONFIG.getProperty("AUTO_VALIDATE", "0"))) {
-			hi.setHitelesitve(true);
+			hi.setStatusz(Hirdetes.Statusz.JOVAHAGYVA);
 		}
 		
 		try {
@@ -193,7 +193,8 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				// Van belepett felhasznalo, az ID-t elmentjuk
 				hi.setHirdetoId(this.session.getHirdetoId());
 				// Regisztralt felhasznalonak nem kell hitelesites emailben
-				hi.setHitelesitve(true);
+				// TODO: Amig nincs jovahagyas, addig:
+				hi.setStatusz(Hirdetes.Statusz.JOVAHAGYVA);
 			}
 			ho.setTipus(HirdetoHelper.getHirdetoTipus(form.getFirstValue("hirdetoTipus")));
 			ho.setNev(form.getFirstValue("hirdetoNev"));

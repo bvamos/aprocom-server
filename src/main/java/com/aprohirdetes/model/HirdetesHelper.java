@@ -54,7 +54,8 @@ public class HirdetesHelper {
 	}
 	
 	/**
-	 * Hirdetes torolve mezojenek igazra allitasa es a torolveDatum beallitasa az aktualis idopontra
+	 * Hirdetes statuszanak beallitasa TOROLVE ertekre 
+	 * es a torolveDatum beallitasa az aktualis idopontra
 	 * @param hirdetesId A Hirdetes azonositoja
 	 * @throws Exception
 	 */
@@ -62,7 +63,21 @@ public class HirdetesHelper {
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		query.criteria("id").equal(hirdetesId);
-		UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("torolve", true).set("torolveDatum", new Date());
+		UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("torolveDatum", new Date()).set("statusz", Hirdetes.Statusz.TOROLVE.value());
+		datastore.update(query, ops);
+	}
+	
+	/**
+	 * Hirdetes statuszanak beallitasa a megadott ertekre 
+	 * es a torolveDatum beallitasa az aktualis idopontra
+	 * @param hirdetesId A Hirdetes azonositoja
+	 * @throws Exception
+	 */
+	public static void delete(ObjectId hirdetesId, Hirdetes.Statusz statusz) throws Exception {
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("id").equal(hirdetesId);
+		UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("torolveDatum", new Date()).set("statusz", statusz.value());
 		datastore.update(query, ops);
 	}
 	
@@ -86,7 +101,7 @@ public class HirdetesHelper {
 		query.criteria("hirdeto.email").exists();
 		query.criteria("hirdeto.email").equal(hirdetes.getHirdeto().getEmail());
 		query.criteria("cim").equal(hirdetes.getCim());
-		query.criteria("torolve").equal(false);
+		query.criteria("statusz").equal(Hirdetes.Statusz.JOVAHAGYVA.value());
 		
 		// TODO: Lehet, hogy a query.get() gyorsabb, mint a countAll()
 		if(query.countAll()>0) {

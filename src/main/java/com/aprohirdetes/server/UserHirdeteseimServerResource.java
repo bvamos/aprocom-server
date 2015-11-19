@@ -3,6 +3,7 @@ package com.aprohirdetes.server;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -72,8 +73,9 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			
 			query.criteria("hirdetoId").equal(this.session.getHirdetoId());
-			query.criteria("torolve").equal(false);
+			query.criteria("statusz").lessThan(30);
 			
+			//System.out.println(query);
 			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
 			for(Hirdetes h : query) {
 				// Kategoria lanc hozzaadasa

@@ -11,7 +11,6 @@ import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.NotSaved;
-
 import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.utils.IndexUtils;
 
@@ -25,6 +24,11 @@ public class Hirdetes {
 	 * @see HirdetesTipus
 	 */
 	private int tipus = HirdetesTipus.KINAL;
+	/**
+	 * Hirdetes statusza
+	 * @see Statusz
+	 */
+	private int statusz = Statusz.UJ.value();
 	private String cim;
 	/**
 	 * Hirdetes szovege. Maximum 3000 karakter.
@@ -52,7 +56,6 @@ public class Hirdetes {
 	private HashMap<String, Object> attributumok = new HashMap<String, Object>();
 	@NotSaved private HashMap<String, String> egyebMezok = new HashMap<String, String>();
 	private HashSet<String> kulcsszavak = new HashSet<String>();
-	private boolean hitelesitve;
 	/**
 	 * Megjelenesek szama. Minden megjeleniteskor no az erteke.
 	 */
@@ -70,15 +73,12 @@ public class Hirdetes {
 	 */
 	private Date lejarErtesites;
 	/**
-	 * Torolt statusz. Alapertelmezett: false
-	 */
-	private boolean torolve = false;
-	/**
 	 * Torles datuma
 	 */
 	private Date torolveDatum;
 	/**
-	 * Hirdetes forrasa. HirdetesForras
+	 * Hirdetes forrasa. 
+	 * @see HirdetesForras
 	 */
 	private int forras;
 	/**
@@ -87,12 +87,11 @@ public class Hirdetes {
 	@NotSaved private String helysegUrlNev;
 	
 	public Hirdetes() {
+		setStatusz(Statusz.UJ.value());
 		setAr(0);
-		setHitelesitve(false);
 		setMegjelenes(0);
 		setModositva(new Date());
 		setLejar(30);
-		setTorolve(false);
 		setForras(HirdetesForras.WEB);
 	}
 	
@@ -114,6 +113,27 @@ public class Hirdetes {
 	
 	public void setTipus(String tipus) {
 		this.setTipus(HirdetesTipus.getHirdetesTipus(tipus));
+	}
+
+	/**
+	 * @return the statusz
+	 */
+	public int getStatusz() {
+		return statusz;
+	}
+
+	/**
+	 * @param statusz the statusz to set
+	 */
+	public void setStatusz(int statusz) {
+		this.statusz = statusz;
+	}
+	
+	/**
+	 * @param statusz the statusz to set
+	 */
+	public void setStatusz(Statusz statusz) {
+		this.statusz = statusz.value();
 	}
 
 	public String getCim() {
@@ -242,14 +262,6 @@ public class Hirdetes {
 		return kulcsszavak;
 	}
 	
-	public boolean isHitelesitve() {
-		return hitelesitve;
-	}
-
-	public void setHitelesitve(boolean hitelesitve) {
-		this.hitelesitve = hitelesitve;
-	}
-
 	public int getMegjelenes() {
 		return megjelenes;
 	}
@@ -343,14 +355,6 @@ public class Hirdetes {
 		this.lejarErtesites = d;
 	}
 
-	public boolean isTorolve() {
-		return torolve;
-	}
-
-	public void setTorolve(boolean torolve) {
-		this.torolve = torolve;
-	}
-
 	public Date getTorolveDatum() {
 		return torolveDatum;
 	}
@@ -395,4 +399,34 @@ public class Hirdetes {
 		}
 	}
 	
+	/**
+	 * Hirdetes statusza. Csak JOVAHAGYVA eseten jelenik meg az oldalon.<br>
+	 * UJ: a hirdetes fel van adva<br>
+	 * HITELESITVE: a felhasznalo hitelesitette, vagy automatikusan hitelesitesre kerult, ha a hirdeto regisztaralt felhasznalo<br>
+	 * JOVAHAGYVA: a cenzura jovahagyta a hirdetest, megjelenhet<br>
+	 * LEJART: lejart az ideje, es automatikusan "torlesre" kerult<br>
+	 * TOROLVE: a felhasznalo torolte, de nem azert, mert eladta nalunk<br>
+	 * ELADVA: a felhasznalo torolte azert, mert eladta nalunk<br>
+	 * @author bvamos
+	 *
+	 */
+	public enum Statusz {
+		
+		UJ(1),
+		HITELESITVE(11),
+		JOVAHAGYVA(21),
+		LEJART(31),
+		TOROLVE(32),
+		ELADVA(33);
+		
+		private final int value;
+		
+		Statusz(int value) {
+			this.value = value;
+		}
+		
+		public int value() {
+			return this.value;
+		}
+	}
 }

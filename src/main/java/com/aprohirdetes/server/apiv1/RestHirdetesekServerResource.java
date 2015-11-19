@@ -251,7 +251,8 @@ public class RestHirdetesekServerResource extends ServerResource implements APIR
 			// Uj id
 			hirdetes.setId(new ObjectId());
 			// API-n feladott hirdetest nem kell hitelesiteni
-			hirdetes.setHitelesitve(true);
+			// TODO: amig nincs jovahagyas, addig:
+			hirdetes.setStatusz(Hirdetes.Statusz.JOVAHAGYVA);
 			// Forras beallitasa
 			hirdetes.setForras(HirdetesForras.API);
 			

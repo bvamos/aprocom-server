@@ -67,7 +67,7 @@ public class FooldalServerResource extends ServerResource implements
 		long ret = 0;
 		
 		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("torolve", false);
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", Hirdetes.Statusz.JOVAHAGYVA.value());
 		
 		ret = query.countAll();
 		
@@ -80,7 +80,7 @@ public class FooldalServerResource extends ServerResource implements
 		long ret = 0;
 		
 		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("torolve", true);
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", true);
 		
 		ret = query.countAll();
 		
@@ -93,7 +93,7 @@ public class FooldalServerResource extends ServerResource implements
 		long ret = 0;
 		
 		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("hitelesitve", false);
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", Hirdetes.Statusz.UJ.value());
 		
 		ret = query.countAll();
 		

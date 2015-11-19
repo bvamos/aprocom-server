@@ -84,10 +84,12 @@ public class HirdetesNyomtatasServerResource extends ServerResource implements
 		
 		// Hirdetes adatai
 		if(hirdetes != null) {
-			if(hirdetes.isTorolve()) {
+			if(hirdetes.getStatusz()==Hirdetes.Statusz.ELADVA.value() 
+					|| hirdetes.getStatusz()==Hirdetes.Statusz.LEJART.value()
+					|| hirdetes.getStatusz()==Hirdetes.Statusz.TOROLVE.value()) {
 				// Letezik a hirdetes, de mar lejart es torolve lett
 				dataModel.put("hibaUzenet", "A megadott hirdetés már lejárt, és feladója nem hosszabbította meg.");
-			} else {
+			} else if(hirdetes.getStatusz()==Hirdetes.Statusz.JOVAHAGYVA.value()) {
 				// HTML Title modositasa
 				((HashMap<String, Object>) dataModel.get("app")).put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
 				((HashMap<String, Object>) dataModel.get("app")).put("description", hirdetes.getCim());
@@ -155,6 +157,8 @@ public class HirdetesNyomtatasServerResource extends ServerResource implements
 				}
 				
 				dataModel.put("hirdetes", hirdetes);
+			} else {
+				dataModel.put("hibaUzenet", "A megadott hirdetés még nincs jóváhagyva.");
 			}
 		} else {
 			// Nincs ilyen hirdetes

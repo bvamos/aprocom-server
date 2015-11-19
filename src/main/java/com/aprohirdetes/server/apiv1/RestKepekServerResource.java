@@ -69,8 +69,8 @@ public class RestKepekServerResource extends ServerResource  {
 			return response;
 		}
 		
-		if(hirdetes.isTorolve()) {
-			response.addError(1032, "A megadott hirdetes mar nem aktiv, nem modosithato");
+		if(hirdetes.getStatusz()!=Hirdetes.Statusz.JOVAHAGYVA.value()) {
+			response.addError(1032, "A megadott hirdetes mar vagy meg nem aktiv, nem modosithato");
 			response.setSuccess(false);
 			return response;
 		}

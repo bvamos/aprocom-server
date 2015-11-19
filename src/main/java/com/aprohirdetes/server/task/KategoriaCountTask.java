@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.bson.types.ObjectId;
 
+import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.KulcsszoCache;
@@ -38,8 +39,8 @@ public class KategoriaCountTask implements Runnable {
 		DB db = MongoUtils.getMongoDB();
 		DBCollection hirdetesCollection = db.getCollection("hirdetes");
 		
-		DBObject matchFields = new BasicDBObject("torolve", false);
-		matchFields.put("hitelesitve", true);
+		DBObject matchFields = new BasicDBObject("statusz", Hirdetes.Statusz.JOVAHAGYVA.value());
+		//matchFields.put("hitelesitve", true);
 		DBObject match = new BasicDBObject("$match", matchFields);
 		
 		DBObject groupFields = new BasicDBObject( "_id", "$kategoriaId");
