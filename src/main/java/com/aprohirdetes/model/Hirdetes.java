@@ -401,12 +401,12 @@ public class Hirdetes {
 	
 	/**
 	 * Hirdetes statusza. Csak JOVAHAGYVA eseten jelenik meg az oldalon.<br>
-	 * UJ: a hirdetes fel van adva<br>
-	 * HITELESITVE: a felhasznalo hitelesitette, vagy automatikusan hitelesitesre kerult, ha a hirdeto regisztaralt felhasznalo<br>
-	 * JOVAHAGYVA: a cenzura jovahagyta a hirdetest, megjelenhet<br>
-	 * LEJART: lejart az ideje, es automatikusan "torlesre" kerult<br>
-	 * TOROLVE: a felhasznalo torolte, de nem azert, mert eladta nalunk<br>
-	 * ELADVA: a felhasznalo torolte azert, mert eladta nalunk<br>
+	 * UJ (1): a hirdetes fel van adva<br>
+	 * HITELESITVE (11): a felhasznalo hitelesitette, vagy automatikusan hitelesitesre kerult, ha a hirdeto regisztaralt felhasznalo<br>
+	 * JOVAHAGYVA (21): a cenzura jovahagyta a hirdetest, megjelenhet<br>
+	 * LEJART (31): lejart az ideje, es automatikusan "torlesre" kerult<br>
+	 * TOROLVE (32): a felhasznalo torolte, de nem azert, mert eladta nalunk<br>
+	 * ELADVA (33): a felhasznalo torolte azert, mert eladta nalunk<br>
 	 * @author bvamos
 	 *
 	 */

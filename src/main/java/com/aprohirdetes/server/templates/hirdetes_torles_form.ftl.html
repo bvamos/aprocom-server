@@ -1,0 +1,43 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<div class="col-sm-3 col-md-2">
+		
+<#include "profil_menu.ftl.html"/>
+				
+			</div>
+			<div class="col-sm-9 col-md-10">
+			<h3>Hirdetés törlése</h3>
+			
+				<#if hibaUzenet?? >
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+				<#if uzenet?? >
+				<div class="alert alert-success">${uzenet}</div>
+				</#if>
+				
+				<form class="form-horizontal" role="form" method="post">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="torlesOka">Törlés oka</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="torlesOka" name="torlesOka">
+								<option value="ELADVA">Törlöm a hirdetést, mert már eladtam a terméket</option>
+								<option value="TOROLVE">Már nem aktuális a hirdetés</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-7">
+							<button type="submit" class="btn btn-success btn-lg">Törlöm a hirdetésem</button>
+						</div>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>
