@@ -5,7 +5,7 @@
 				<#if hirdetes?? >
 					<div class="hirdetes-container">
 						<div class="page-header">
-							<h1>${hirdetes.cim} <small>${hirdetes.egyebMezok.tipusNev}</small></h1>
+							<h1>${hirdetes.cim?html} <small>${hirdetes.egyebMezok.tipusNev}</small></h1>
 						</div>
 						<h2><span class="label label-warning">${hirdetes.ar} Ft</span></h2>
 						
@@ -16,7 +16,7 @@
 
 						<br>
 						<div class="panel panel-default">
-							<div class="panel-body">${hirdetes.szoveg!""}</div>
+							<div class="panel-body">${(hirdetes.szoveg!"")?html?replace('\n', '<br>')}</div>
 							<#if hirdetes.egyebInfo?? && (hirdetes.egyebInfo?length>0) >
 							<div class="panel-body">További információ: <a href="${hirdetes.egyebInfo}" target="_blank">${hirdetes.egyebInfo}</a></div>
 							</#if>
@@ -47,7 +47,7 @@
 						<h3>Hirdető adatai</h3>
 						<div>
 							<span class="hirdetes-hirdeto-header">Hirdető: </span>
-							<span>${hirdetes.hirdeto.nev!""}</span>
+							<span>${(hirdetes.hirdeto.nev!"")?html}</span>
 						</div>
 						<div>
 							<span class="hirdetes-hirdeto-header">Telefon: </span>

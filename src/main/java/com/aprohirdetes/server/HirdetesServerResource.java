@@ -87,9 +87,6 @@ public class HirdetesServerResource extends ServerResource implements
 				((HashMap<String, Object>) dataModel.get("app")).put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
 				((HashMap<String, Object>) dataModel.get("app")).put("description", "Apróhirdetés: " + hirdetes.getCim());
 				
-				// Hirdetes szovegenek modositasa: ujsorok
-				hirdetes.setSzoveg(hirdetes.getSzoveg().replaceAll("\\r\\n", "<br>"));
-				
 				// Megjelenes szamanak novelese
 				HirdetesHelper.increaseMegjelenes(hirdetes);
 			    
