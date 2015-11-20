@@ -176,7 +176,7 @@ public class MailUtils {
 					+ "Tudtad, hogy ha regisztrált felhasználó vagy, akkor automatikusan aktiváljuk a hirdetést és rögtön megjelenik? \n"
 					+ "Még nem késő, kattints a linkre és regisztrálj!\n\n"
 					+ "Regisztráció:\n"
-					+ "https://www.aprohirdetes.com/regisztracio" + hi.getId() +"\n\n";
+					+ "https://www.aprohirdetes.com/regisztracio\n\n";
 			} else {
 				// Belepett felhasznalokent adta fel
 				body +=	"Hirdetésedet sikeresen feladtad, és ahhoz, hogy megjelenjen az oldalunkon, "
