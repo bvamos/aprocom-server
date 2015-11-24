@@ -55,7 +55,9 @@ public class RestHirdetesekServerResource extends ServerResource implements APIR
 			// Hirdetes tipusa. Alapertelmezett: KINAL
 			if(requestJson.has("tipus")) {
 				String tipus = requestJson.getString("tipus");
-				if(!"keres".equalsIgnoreCase(tipus) && !"kinal".equalsIgnoreCase(tipus)) {
+				
+				if(!"keres".equalsIgnoreCase(tipus) && !"kinal".equalsIgnoreCase(tipus) 
+						&& !"berel".equalsIgnoreCase(tipus) && !"kiad".equalsIgnoreCase(tipus)) {
 					response.setSuccess(false);
 					response.addError(1018, "A hirdetes tipusa csak keres, kinal, berel vagy kiad lehet");
 				} else {
