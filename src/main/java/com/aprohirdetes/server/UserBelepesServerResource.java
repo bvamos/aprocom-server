@@ -21,7 +21,6 @@ import com.aprohirdetes.exception.AproException;
 import com.aprohirdetes.model.HirdetesTipus;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
-
 import freemarker.template.Template;
 
 public class UserBelepesServerResource extends ServerResource implements
@@ -93,6 +92,7 @@ public class UserBelepesServerResource extends ServerResource implements
 			}
 		} catch(AproException ae) {
 			getLogger().severe("Hibas belepes: " + ae.getMessage());
+			errorMessage = ae.getMessage();
 		}
 		
 		// Adatmodell a Freemarker sablonhoz

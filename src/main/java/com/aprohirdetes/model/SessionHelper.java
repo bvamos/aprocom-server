@@ -143,11 +143,11 @@ public class SessionHelper {
 		}
 		
 		if(felhasznaloNev == null || felhasznaloNev.isEmpty()) {
-			throw(new AproException(0, "A felhasznalonev nem lehet ures"));
+			throw(new AproException(0, "A felhasználónév nem lehet üres"));
 		}
 		
 		if(jelszo == null || jelszo.isEmpty()) {
-			throw(new AproException(0, "A jelszo nem lehet ures"));
+			throw(new AproException(0, "A jelszó nem lehet üres"));
 		}
 		
 		Datastore datastore = MongoUtils.getDatastore();
@@ -175,7 +175,7 @@ public class SessionHelper {
 		}
 		
 		if(ret==null) {
-			throw(new AproException(2003, "Hibas felhasznalonev vagy jelszo"));
+			throw(new AproException(2003, "Hibás felhasználónév vagy jelszó"));
 		}
 		
 		return ret;
