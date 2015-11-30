@@ -82,7 +82,7 @@ public class UserUjJelszoServerResource extends ServerResource implements
 		if(hirdeto != null) {
 			try {
 				Random r = new Random();
-				String password = Long.toString(r.nextLong(), 36);
+				String password = Long.toString(Math.abs(r.nextLong()), 36);
 				getLogger().info(password);
 				hirdeto.setJelszo(PasswordHash.createHash(password));
 				MailUtils.sendMailUjJelszo(hirdeto, password);
