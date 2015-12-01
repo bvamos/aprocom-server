@@ -71,6 +71,7 @@ public class AproApplication extends Application {
 		router.attach("/hirdetes/{hirdetesId}", HirdetesServerResource.class);
 		router.attach("/hirdetes/{hirdetesId}/nyomtat", HirdetesNyomtatasServerResource.class);
 		router.attach("/hirdetes/{hirdetesId}/torol", HirdetesTorlesServerResource.class);
+		router.attach("/hirdetes/{hirdetesId}/csatol", HirdetesCsatolasServerResource.class);
 		router.attach("/hirdetes/{hirdetesId}/{hirdetesCim}", HirdetesServerResource.class);
 		
 		router.attach("/feladas", HirdetesFeladasServerResource.class);
@@ -88,6 +89,7 @@ public class AproApplication extends Application {
 		router.attach("/felhasznalo/hirdetes/{hirdetesId}", UserHirdetesServerResource.class);
 		router.attach("/felhasznalo/kedvencek", UserKedvencekServerResource.class);
 		router.attach("/felhasznalo/beallitasok", UserBeallitasokServerResource.class);
+		router.attach("/felhasznalo/eszkozok", UserEszkozokServerResource.class);
 		router.attach("/felhasznalo/uzenetek/{tipus}", UserUzenetekServerResource.class);
 		router.attach("/felhasznalo/uzenet/{tipus}/{uzenetId}", UserUzenetServerResource.class);
 		router.attach("/ujjelszo", UserUjJelszoServerResource.class);

@@ -1,0 +1,50 @@
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<div class="col-sm-3 col-md-2">
+		
+<#include "profil_menu.ftl.html"/>
+				
+			</div>
+			<div class="col-sm-9 col-md-10">
+			
+				<h3>Eszközök</h3>
+					
+					<#if uzenet?? >
+					<div class="alert alert-success">${uzenet}</div>
+					</#if>
+					<#if hibaUzenet?? >
+					<div class="alert alert-danger">${hibaUzenet}</div>
+					</#if>
+					
+					<h4>Hirdetések csatolása</h4>
+					<p class="small">Itt azok a hirdetések találhatók, amelyek nem tartoznak egy regisztrált
+					felhasználóhoz sem, de a hirdetésben megadott email cím megegyezik a Te email címeddel.
+					<br>Csatold a hirdetéseket a fiókodhoz, és kezeld őket egy helyen!</p>
+					
+					<table class="table table-striped">
+					<thead>
+					<tr>
+						<th>Cím</th>
+						<th>Kategória</th>
+						<th>Műveletek</th>
+					</tr>
+					</thead>
+					<tbody>
+					<#list logoHirdetesekList as hirdetes>
+						<tr>
+							<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}" target="_blank">${hirdetes.cim}</a></td>
+							<td>${hirdetes.egyebMezok.kategoriaNev}</td>
+							<td><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/csatol"><i class="fa fa-magnet"></i> Csatolás</a></td>
+						</tr>
+					</#list>
+					</tbody>
+					</table>
+					
+			</div>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>

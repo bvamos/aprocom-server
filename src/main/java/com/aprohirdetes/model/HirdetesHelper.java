@@ -1,5 +1,6 @@
 package com.aprohirdetes.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -7,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
+
 import com.aprohirdetes.exception.HirdetesValidationException;
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -17,9 +19,23 @@ public class HirdetesHelper {
 	}
 	
 	public static Hirdetes load(ObjectId hirdetesId) {
+		return load(hirdetesId, null);
+	}
+	
+	/**
+	 * Hirdetes betoltese id alapjan. Ha a hirdetoId nem null, akkor az is bekerul a
+	 * feltetelek koze
+	 * @param hirdetesId
+	 * @param hirdetoId
+	 * @return Hirdetes vagy null
+	 */
+	public static Hirdetes load(ObjectId hirdetesId, ObjectId hirdetoId) {
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		query.criteria("id").equal(hirdetesId);
+		if(hirdetoId != null) {
+			query.criteria("hirdetoId").equal(hirdetoId);
+		}
 		Hirdetes hirdetes = query.get();
 		
 		if(hirdetes != null) {
@@ -121,5 +137,22 @@ public class HirdetesHelper {
 		datastore.update(query, ops);
 		//UpdateResults<Hirdetes> results = datastore.update(query, ops);
 	    //return (int)results.getWriteResult().getField("megjelenes");
+	}
+	
+	public static ArrayList<Hirdetes> getLogoHirdetesek(String email) {
+		ArrayList<Hirdetes> ret = new ArrayList<Hirdetes>();
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("hirdetoId").doesNotExist();
+		query.criteria("hirdeto.email").equal(email);
+		query.criteria("statusz").equal(Hirdetes.Statusz.JOVAHAGYVA.value());
+		
+		for(Hirdetes h : query) {
+			h.getEgyebMezok().put("kategoriaNev", KategoriaCache.getKategoriaNevChain(h.getKategoriaId()));
+			ret.add(h);
+		}
+		
+		return ret;
 	}
 }
