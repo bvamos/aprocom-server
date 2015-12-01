@@ -296,6 +296,8 @@ public class MailUtils {
 		body.append("Az Apróhirdetés.com oldalon feladott '" + h.getCim() + "' hirdetésed 5 napon belül lejár!\n\n");
 		body.append("A hirdetés meghosszabbításához kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába! A linkre kattintva a hirdetésed automatikusan meghosszabbodik 30 nappal.\n");
 		body.append("https://www.aprohirdetes.com/hosszabbitas/" + h.getId().toString() + "23afc87dd765476ad66c\n\n");
+		body.append("A hirdetés azonnali törléséhez kérjük kattints az alábbi linkre:\n");
+		body.append("https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "/torol\n\n");
 		body.append("Ha csak meg szeretnéd tekinteni hirdetésed, kattints ide:\n");
 		body.append("https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "\n\n");
 		body.append("Üdvözlettel,\nApróhirdetés.com\n");
