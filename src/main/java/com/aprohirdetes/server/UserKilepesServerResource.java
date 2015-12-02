@@ -65,7 +65,7 @@ public class UserKilepesServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
-		dataModel.put("hibaUzenet", "Sikeresen kiléptél. Visszavárunk!");
+		dataModel.put("uzenet", "Sikeresen kiléptél. Visszavárunk!");
 		
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
