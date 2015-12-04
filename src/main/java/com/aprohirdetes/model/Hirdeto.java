@@ -36,6 +36,8 @@ public class Hirdeto {
 	private Date regisztralas;
 	private Date utolsoBelepes;
 	
+	private boolean admin;
+	
 	@Indexed(value=IndexDirection.ASC, name="ix_fbId") private String facebookId;
 	
 	public Hirdeto() {
@@ -43,6 +45,7 @@ public class Hirdeto {
 		setHirlevel(true);
 		setHitelesitve(false);
 		setRegisztralas(new Date());
+		setAdmin(false);
 	}
 	
 	public ObjectId getId() {
@@ -193,6 +196,20 @@ public class Hirdeto {
 
 	public void setUtolsoBelepes(Date utolsoBelepes) {
 		this.utolsoBelepes = utolsoBelepes;
+	}
+
+	/**
+	 * @return the admin
+	 */
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	/**
+	 * @param admin the admin to set
+	 */
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	/**

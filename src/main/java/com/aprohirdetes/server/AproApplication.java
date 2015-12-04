@@ -162,7 +162,7 @@ public class AproApplication extends Application {
 		router.attach("/api/v1/kulcsszoLista", com.aprohirdetes.server.apiv1.RestKulcsszoListaServerResource.class);
 		
 		// ADMIN
-		router.attach("/ilyennincs/", com.aprohirdetes.server.admin.FooldalServerResource.class);
+		router.attach("/admin", com.aprohirdetes.server.admin.FooldalServerResource.class);
 		
 		// Statikus konyvtarak
 		String cssUri = "war:///css";

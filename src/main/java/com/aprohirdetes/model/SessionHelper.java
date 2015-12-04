@@ -42,6 +42,8 @@ public class SessionHelper {
 		session = query.get();
 		
 		if(session != null) {
+			// TODO: Hulye megoldas, de igy toltom be a Hirdetot. Kell erre pl egy Morphia annotacio
+			session.setHirdetoId(session.getHirdetoId());
 			session.setUtolsoKeres(new Date());
 		}
 		

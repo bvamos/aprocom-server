@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Indexed;
+import org.mongodb.morphia.annotations.NotSaved;
 import org.mongodb.morphia.utils.IndexDirection;
 
 @Entity("session")
@@ -17,6 +18,7 @@ public class Session {
 	private String sessionId;
 	@Indexed(value=IndexDirection.ASC, name="ix_hirdetoId", unique=true, dropDups=true)
 	private ObjectId hirdetoId;
+	@NotSaved private Hirdeto hirdeto;
 	private Date utolsoKeres;
 	
 	public Session() {
@@ -45,6 +47,14 @@ public class Session {
 
 	public void setHirdetoId(ObjectId hirdetoId) {
 		this.hirdetoId = hirdetoId;
+		
+		if(hirdetoId != null) {
+			this.hirdeto = HirdetoHelper.load(hirdetoId);
+		}
+	}
+	
+	public Hirdeto getHirdeto() {
+		return hirdeto;
 	}
 
 	public Date getUtolsoKeres() {
@@ -60,18 +70,7 @@ public class Session {
 	 * @return Nev (email cim)
 	 */
 	public String getFelhasznaloNev() {
-		String ret = null;
-		
-		if(hirdetoId != null) {
-			Hirdeto h = HirdetoHelper.load(hirdetoId);
-			if(h != null) {
-				if(h.getNev() != null && !h.getNev().isEmpty()) {
-					ret = h.getNev();
-				}
-			}
-		}
-		
-		return ret;
+		return (hirdeto != null) ? hirdeto.getNev() : null;
 	}
 	
 	/**
@@ -79,28 +78,10 @@ public class Session {
 	 * @return Email cim
 	 */
 	public String getFelhasznaloEmail() {
-		String ret = null;
-		
-		if(hirdetoId != null) {
-			Hirdeto h = HirdetoHelper.load(hirdetoId);
-			if(h != null) {
-				ret = h.getEmail();
-			}
-		}
-		
-		return ret;
+		return (hirdeto != null) ? hirdeto.getEmail() : null;
 	}
 	
 	public String getFelhasznaloApikey() {
-		String ret = null;
-		
-		if(hirdetoId != null) {
-			Hirdeto h = HirdetoHelper.load(hirdetoId);
-			if(h != null) {
-				ret = h.getApiKey();
-			}
-		}
-		
-		return ret;
+		return (hirdeto != null) ? hirdeto.getApiKey() : null;
 	}
 }

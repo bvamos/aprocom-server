@@ -1,6 +1,16 @@
 <#include "html_header.ftl.html"/>
 	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
 		<div class="row">
+			<div class="col-sm-3 col-md-2">
+		
+<#if ((session.hirdeto.admin)!false) >
+	<#include "felhasznalo_menu_admin.ftl.html"/>
+</#if>
+				
+			</div>
+			<div class="col-sm-9 col-md-10">
 		
 			<div><b>Aktiv hirdetesek szama:</b> ${aktivHirdetesekSzama}</div>
 			<div><b>Törölt hirdetesek szama:</b> ${toroltHirdetesekSzama}</div>
@@ -10,6 +20,8 @@
 <#list keys as key>${key} = ${kulcsszavak[key]}; </#list>  
 			</div>
 	
+			</div>
 		</div>
+<#include "page_footer.ftl.html"/>
 	</div>
 <#include "html_footer.ftl.html"/>

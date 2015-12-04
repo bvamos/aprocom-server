@@ -20,6 +20,8 @@ import org.restlet.resource.ServerResource;
 import com.aprohirdetes.common.StaticHtmlResource;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.KulcsszoCache;
+import com.aprohirdetes.model.Session;
+import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.server.AproConfig;
 import com.aprohirdetes.utils.MongoUtils;
@@ -30,6 +32,7 @@ public class FooldalServerResource extends ServerResource implements
 		StaticHtmlResource {
 
 	private String contextPath = "";
+	private Session session = null;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -38,10 +41,14 @@ public class FooldalServerResource extends ServerResource implements
 		//System.out.println(getRequest().getRootRef().toString());
 		ServletContext sc = (ServletContext) getContext().getAttributes().get("org.restlet.ext.servlet.ServletContext");
 		contextPath = sc.getContextPath();
+		
+		this.session = SessionHelper.getSession(this);
 	}
 	
 	@Override
 	public Representation representHtml() throws IOException {
+		Template indexFtl = AproApplication.TPL_CONFIG.getTemplate("admin.fooldal.ftl.html");
+		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
@@ -52,13 +59,16 @@ public class FooldalServerResource extends ServerResource implements
 		appDataModel.put("version", AproConfig.PACKAGE_CONFIG.getProperty("version"));
 		
 		dataModel.put("app", appDataModel);
+		dataModel.put("session", this.session);
 		
-		dataModel.put("kulcsszavak", KulcsszoCache.getCacheByKulcsszo());
-		dataModel.put("aktivHirdetesekSzama", getAktivHirdetesekSzama());
-		dataModel.put("toroltHirdetesekSzama", getToroltHirdetesekSzama());
-		dataModel.put("nemHitelesitettHirdetesekSzama", getNemHitelesitettHirdetesekSzama());
-		
-		Template indexFtl = AproApplication.TPL_CONFIG.getTemplate("admin.fooldal.ftl.html");
+		if(!this.session.getHirdeto().isAdmin()) {
+			indexFtl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
+		} else {
+			dataModel.put("kulcsszavak", KulcsszoCache.getCacheByKulcsszo());
+			dataModel.put("aktivHirdetesekSzama", getAktivHirdetesekSzama());
+			dataModel.put("toroltHirdetesekSzama", getToroltHirdetesekSzama());
+			dataModel.put("nemHitelesitettHirdetesekSzama", getNemHitelesitettHirdetesekSzama());
+		}
 		
 		return new TemplateRepresentation(indexFtl, dataModel, MediaType.TEXT_HTML);
 	}

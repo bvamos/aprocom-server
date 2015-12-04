@@ -11,7 +11,7 @@ public class StaticRobotsServerResource extends ServerResource implements Static
 
 	public Representation representTxt() {
 		String sitemap = "User-agent: *\n"
-				+ "Disallow:\n";
+				+ "Disallow: /admin\n";
 		
 		return new StringRepresentation(sitemap, MediaType.TEXT_PLAIN);
 	}
