@@ -29,6 +29,7 @@ import com.aprohirdetes.model.HirdetoHelper;
 import com.aprohirdetes.model.Kategoria;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.SessionHelper;
+import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
 import com.mongodb.MongoException;
@@ -120,6 +121,9 @@ public class UserRegisztracioServerResource extends ServerResource implements
 			datastore.save(ho);
 			
 			message = "Köszönjük, hogy regisztráltál nálunk!";
+			
+			// Level kikuldese az aktivalo linkkel
+			MailUtils.sendMailRegisztracio(ho);
 		} catch (MongoException me) {
 			if(me.getCode()==11000) {
 				errorMessage = "A megadott email cím már létezik!";
