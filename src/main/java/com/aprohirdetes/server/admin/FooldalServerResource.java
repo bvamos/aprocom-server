@@ -2,6 +2,7 @@ package com.aprohirdetes.server.admin;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -90,7 +91,8 @@ public class FooldalServerResource extends ServerResource implements
 		long ret = 0;
 		
 		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", true);
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.ELADVA.value(), Hirdetes.Statusz.TOROLVE.value(), Hirdetes.Statusz.LEJART.value()));
 		
 		ret = query.countAll();
 		
