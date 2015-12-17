@@ -75,7 +75,7 @@ public class UserAktivaloLinkServerResource extends ServerResource implements
 		
 		if(hirdeto != null) {
 			if(MailUtils.sendMailRegisztracio(hirdeto)) {
-			
+				message = "A levelet az aktiváló linkkel újra elküldtük.";
 			} else {
 				errorMessage = "Hiba történt a levél kiküldése közben.";
 			}
