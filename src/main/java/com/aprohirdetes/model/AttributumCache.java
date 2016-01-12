@@ -349,7 +349,7 @@ public class AttributumCache {
 		szautoMarkaErtekMap.put("mazda", "Mazda");
 		szautoMarkaErtekMap.put("mercedes", "Mercedes");
 		szautoMarkaErtekMap.put("mini", "Mini");
-		szautoMarkaErtekMap.put("mitsubishi", "Mitsubushi");
+		szautoMarkaErtekMap.put("mitsubishi", "Mitsubishi");
 		szautoMarkaErtekMap.put("nissan", "Nissan");
 		szautoMarkaErtekMap.put("opel", "Opel");
 		szautoMarkaErtekMap.put("peugeot", "Peugeot");
