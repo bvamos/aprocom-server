@@ -306,4 +306,31 @@ public class MailUtils {
 		
 		return ret;
 	}
+	
+	/**
+	 * Hirlevel kikuldese a megadott cimzettnek
+	 * 
+	 * @param h
+	 * @param email
+	 * @return
+	 */
+	public static boolean sendMailHirlevel(Hirdetes h, String email) {
+		boolean ret = false;
+		
+		// TODO: TEST
+		if(!email.equalsIgnoreCase("bvamos@zuriel.net")) {
+			return true;
+		}
+		
+		String subject = h.getCim();
+		StringBuffer body = new StringBuffer();
+		body.append(h.getSzoveg() + "\n\n");
+		body.append("A hírlevél online verzióját ide kattintva olvashatod: \n");
+		body.append("https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "\n\n");
+		body.append("Üdvözlettel,\nApróhirdetés.com\n");
+		
+		ret = MailUtils.sendMail(email, subject, body.toString());
+		
+		return ret;
+	}
 }

@@ -33,6 +33,7 @@ import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.KategoriaCache;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
+import com.aprohirdetes.server.task.HirlevelKikuldoTask;
 import com.aprohirdetes.server.task.KategoriaCountTask;
 import com.aprohirdetes.server.task.LejaratErtesitoTask;
 import com.aprohirdetes.utils.MongoUtils;
@@ -164,6 +165,7 @@ public class AproApplication extends Application {
 		
 		// ADMIN
 		router.attach("/admin", com.aprohirdetes.server.admin.FooldalServerResource.class);
+		router.attach("/admin/hirlevelek", com.aprohirdetes.server.admin.HirlevelekServerResource.class);
 		
 		// Statikus konyvtarak
 		String cssUri = "war:///css";
@@ -347,6 +349,10 @@ public class AproApplication extends Application {
 		
 		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
 		taskService.scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
+		
+		// Hirlevelek kikuldese
+		// TODO: Orankent fusson
+		taskService.scheduleWithFixedDelay(new HirlevelKikuldoTask(getLogger()), 15, 3600, TimeUnit.SECONDS);
 		
 		// Tokenizer inicializacio
 		ResourceHolder.initHunSplitter();

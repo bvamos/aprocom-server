@@ -2,7 +2,6 @@ package com.aprohirdetes.server.admin;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -10,8 +9,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.representation.Representation;
@@ -19,17 +16,15 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.StaticHtmlResource;
-import com.aprohirdetes.model.Hirdetes;
-import com.aprohirdetes.model.KulcsszoCache;
+import com.aprohirdetes.model.HirlevelHelper;
 import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.server.AproConfig;
-import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.template.Template;
 
-public class FooldalServerResource extends ServerResource implements
+public class HirlevelekServerResource extends ServerResource implements
 		StaticHtmlResource {
 
 	private String contextPath = "";
@@ -48,7 +43,7 @@ public class FooldalServerResource extends ServerResource implements
 	
 	@Override
 	public Representation representHtml() throws IOException {
-		Template indexFtl = AproApplication.TPL_CONFIG.getTemplate("admin_fooldal.ftl.html");
+		Template indexFtl = AproApplication.TPL_CONFIG.getTemplate("admin_hirlevelek.ftl.html");
 		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
@@ -65,52 +60,9 @@ public class FooldalServerResource extends ServerResource implements
 		if(!this.session.getHirdeto().isAdmin()) {
 			indexFtl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
 		} else {
-			dataModel.put("kulcsszavak", KulcsszoCache.getCacheByKulcsszo());
-			dataModel.put("aktivHirdetesekSzama", getAktivHirdetesekSzama());
-			dataModel.put("toroltHirdetesekSzama", getToroltHirdetesekSzama());
-			dataModel.put("nemHitelesitettHirdetesekSzama", getNemHitelesitettHirdetesekSzama());
+			dataModel.put("hirlevelList", HirlevelHelper.getHirlevelList().asList());
 		}
 		
 		return new TemplateRepresentation(indexFtl, dataModel, MediaType.TEXT_HTML);
-	}
-
-	private long getAktivHirdetesekSzama() {
-		long ret = 0;
-		
-		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", Hirdetes.Statusz.JOVAHAGYVA.value());
-		
-		ret = query.countAll();
-		
-		query = null;
-		
-		return ret;
-	}
-	
-	private long getToroltHirdetesekSzama() {
-		long ret = 0;
-		
-		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
-		query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.ELADVA.value(), Hirdetes.Statusz.TOROLVE.value(), Hirdetes.Statusz.LEJART.value()));
-		
-		ret = query.countAll();
-		
-		query = null;
-		
-		return ret;
-	}
-	
-	private long getNemHitelesitettHirdetesekSzama() {
-		long ret = 0;
-		
-		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", Hirdetes.Statusz.UJ.value());
-		
-		ret = query.countAll();
-		
-		query = null;
-		
-		return ret;
 	}
 }

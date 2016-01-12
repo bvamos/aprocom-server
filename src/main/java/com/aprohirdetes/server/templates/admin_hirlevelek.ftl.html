@@ -1,0 +1,62 @@
+<#macro hirlevelStatusz kod>
+	<#if kod="1">Szerkesztes</#if>
+	<#if kod="2">Elokeszites</#if>
+	<#if kod="11">Kiküldes</#if>
+	<#if kod="21">Kiküldve</#if>
+	<#if kod="31">Törölve</#if>
+</#macro>
+
+<#include "html_header.ftl.html"/>
+	<div class="container">
+<#include "page_header_banner.ftl.html"/>
+<#include "page_header.ftl.html"/>
+		<div class="row">
+			<div class="col-sm-3 col-md-2">
+		
+<#include "menu_admin.ftl.html"/>
+				
+			</div>
+			<div class="col-sm-9 col-md-10">
+			
+				<h3>Hírlevelek (${hirlevelList?size})</h3>
+					
+				<#if uzenet?? >
+				<div class="alert alert-success">${uzenet}</div>
+				</#if>
+				<#if hibaUzenet?? >
+				<div class="alert alert-danger">${hibaUzenet}</div>
+				</#if>
+					
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th>Státusz</th>
+						<th>Kiküldés</th>
+						<th>Sikeres</th>
+						<th>Hibás</th>
+						<th>Összes</th>
+						<th>Műveletek</th>
+					</tr>
+					</thead>
+					<tbody>
+				<#list hirlevelList as hirlevel>
+					<tr>
+						<td><a href="${app.contextRoot}/hirdetes/${hirlevel.hirdetesId}" target="_blank">${hirlevel.hirdetesId}</a></td>
+						<td><@hirlevelStatusz kod="${hirlevel.statusz}"></@hirlevelStatusz></td>
+						<td><small>${hirlevel.kuldesKezdete!'-'} - ${hirlevel.kuldesVege!'-'}</small></td>
+						<td align="right">${hirlevel.dbSikeres!'0'}</td>
+						<td align="right">${hirlevel.dbHibas!'0'}</td>
+						<td align="right">${hirlevel.dbOsszes!'0'}</td>
+						<td><span style="white-space:nowrap"><a href="${app.contextRoot}/felhasznalo/hirdetes/${hirlevel.id}"><i class="fa fa-edit"></i> Szerkesztés</a></span><br>
+							<a href="${app.contextRoot}/hirdetes/${hirlevel.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a>
+						</td>
+					</tr>
+				</#list>
+					</tbody>
+				</table>
+			</div>
+		</div>
+<#include "page_footer.ftl.html"/>
+	</div>
+<#include "html_footer.ftl.html"/>
