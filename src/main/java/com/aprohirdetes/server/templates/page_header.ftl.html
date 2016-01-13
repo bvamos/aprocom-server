@@ -61,7 +61,7 @@
 			<span class="header_alkat hidden-xs">${alkategoriaLinkek!''}</span>
 			<#if session?? >
 			<span class="header_user">${(session.felhasznaloNev)!''} (${(session.felhasznaloEmail)!''})
-			| <a href="${app.contextRoot}/felhasznalo/kedvencek"><i class="fa fa-heart"></i></a></span>
+			| <a href="${app.contextRoot}/felhasznalo/kedvencek" title="Kedvenc hirdetéseim"><i class="fa fa-heart"></i></a></span>
 			</#if>
 		</div>
 		
