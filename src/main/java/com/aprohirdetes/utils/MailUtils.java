@@ -1,5 +1,7 @@
 package com.aprohirdetes.utils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -8,6 +10,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import org.restlet.data.MediaType;
+import org.restlet.ext.freemarker.TemplateRepresentation;
 
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.Hirdeto;
@@ -69,6 +74,7 @@ public class MailUtils {
 		if (user != null && !user.isEmpty()) {
 			properties.put("mail.smtp.auth", "true");
 			properties.put("mail.smtp.starttls.enable","true");
+			properties.put("mail.smtp.ssl.trust","*");
 			properties.put("mail.user", user);
 			properties.put("mail.password", pass);
 			
@@ -83,7 +89,7 @@ public class MailUtils {
 		}
 
 		session.setDebug(debug);
-
+		
 		try {
 			// Create a default MimeMessage object.
 			MimeMessage message = new MimeMessage(session);
@@ -99,8 +105,11 @@ public class MailUtils {
 			message.setSubject(messageSubject);
 
 			// Send the actual HTML message, as big as you like
-			//message.setContent(messageBody, "text/html");
-			message.setText(messageBody);
+			Map<String, Object> dataModel = new HashMap<String, Object>();
+			dataModel.put("content", messageBody);
+			TemplateRepresentation rep = new TemplateRepresentation(AproApplication.TPL_CONFIG.getTemplate("mail_hirlevel.ftl.html"), dataModel, MediaType.TEXT_HTML);
+			message.setContent(rep.getText(), "text/html; charset=utf-8");
+			//message.setText(messageBody);
 
 			// Send message
 			Transport.send(message);
@@ -130,22 +139,21 @@ public class MailUtils {
 		String email = ho.getEmail();
 		if(email != null && !email.isEmpty()) {
 			String subject = "Regisztráció aktiválása";
-			String body = "Kedves " + ho.getNev() + "!\n\n"
-					+ "Köszönjük, hogy az Apróhirdetés.com-ot választottad!\n";
-				body +=	"A regisztrációd véglegesítéséhez "
-					+ "kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába!\n\n"
-					+ "Aktiválás:\n"
-					+ "https://www.aprohirdetes.com/regisztracio/" + ho.getId() +"\n\n"
-					;
-			body +=	"Üdvözlettel,\n"
-					+ "Apróhirdetés.com";
+			String body = "<p>Kedves " + ho.getNev() + "!</p>\n\n"
+					+ "<p>Köszönjük, hogy az Apróhirdetés.com-ot választottad!<br>\n"
+					+ "A regisztrációd véglegesítéséhez kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába!</p>\n\n"
+					+ "<p>Aktiválás:<br>\n"
+					+ "<a href=\"https://www.aprohirdetes.com/regisztracio/" + ho.getId() +"\">https://www.aprohirdetes.com/regisztracio/" + ho.getId() +"</a></p>\n\n"
+					+ "<p>Üdvözlettel,<br>\n"
+					+ "Apróhirdetés.com</p>";
 			
 			ret = MailUtils.sendMail(email, subject, body);
 		}
 		
 		// Ertesites kuldese magamnak
 		String subject = "Új felhasznalo: " + ho.getEmail();
-		String body = ho.getNev() + "\n\n";
+		String body = "<p>" + ho.getNev() + "\n\n";
+		
 		MailUtils.sendMail(AproConfig.APP_CONFIG.getProperty("MAIL.FROM"), subject, body);
 		
 		return ret;
@@ -165,26 +173,26 @@ public class MailUtils {
 		String email = hi.getHirdeto().getEmail();
 		if(email != null && !email.isEmpty()) {
 			String subject = "Hirdetés feladva: " + hi.getCim();
-			String body = "Kedves " + hi.getHirdeto().getNev() + "!\n\n"
-					+ "Köszönjük, hogy az Apróhirdetés.com-ot választottad!\n";
+			String body = "<p>Kedves " + hi.getHirdeto().getNev() + "!</p>\n\n"
+					+ "<p>Köszönjük, hogy az Apróhirdetés.com-ot választottad!\n";
 			if(session == null) {
 				// Nem belepett felhasznalokent adta fel
-				body +=	"Hirdetésedet sikeresen feladtad, de ahhoz, hogy megjelenjen az oldalunkon, "
-					+ "kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába!\n\n"
-					+ "Aktiválás:\n"
-					+ "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
-					+ "Tudtad, hogy ha regisztrált felhasználó vagy, akkor automatikusan aktiváljuk a hirdetést és rögtön megjelenik? \n"
-					+ "Még nem késő, kattints a linkre és regisztrálj!\n\n"
-					+ "Regisztráció:\n"
-					+ "https://www.aprohirdetes.com/regisztracio\n\n";
+				body +=	"<p>Hirdetésedet sikeresen feladtad, de ahhoz, hogy megjelenjen az oldalunkon, "
+					+ "kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába!</p>\n\n"
+					+ "<p>Aktiválás:<br>\n"
+					+ "<a href=\"https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\">https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"</a></p>\n\n"
+					+ "<p>Tudtad, hogy ha regisztrált felhasználó vagy, akkor automatikusan aktiváljuk a hirdetést és rögtön megjelenik? \n"
+					+ "Még nem késő, kattints a linkre és regisztrálj!</p>\n\n"
+					+ "<p>Regisztráció:<br>\n"
+					+ "<a href=\"https://www.aprohirdetes.com/regisztracio\">https://www.aprohirdetes.com/regisztracio</a></p>\n\n";
 			} else {
 				// Belepett felhasznalokent adta fel
-				body +=	"Hirdetésedet sikeresen feladtad, és ahhoz, hogy megjelenjen az oldalunkon, "
-						+ "semmit sem kell tenned, mivel regisztrált felhasználónk vagy!\n"
-						+ "Közvetlen link a hirdetéshez:\n"
-						+ "https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"\n\n";
+				body +=	"<p>Hirdetésedet sikeresen feladtad, és ahhoz, hogy megjelenjen az oldalunkon, "
+						+ "semmit sem kell tenned, mivel regisztrált felhasználónk vagy!</p>\n"
+						+ "<p>Közvetlen link a hirdetéshez:<br>\n"
+						+ "<a href=\"https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"\">https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"</a></p>\n\n";
 			}
-			body +=	"Üdvözlettel,\n"
+			body +=	"<p>Üdvözlettel,<br>\n"
 					+ "Apróhirdetés.com";
 			
 			ret = MailUtils.sendMail(email, subject, body);
@@ -192,11 +200,13 @@ public class MailUtils {
 		
 		// Ertesites kuldese magamnak
 		String subject = "Új hirdetés: " + hi.getCim();
-		String body = hi.getSzoveg() + "\n\n"
-				+ "Kategória: " + KategoriaCache.getKategoriaNevChain(hi.getKategoriaId()) + "\n"
-				+ "Ár: " + hi.getAr() + "\n\n"
-				+ "https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\n\n"
-				+ "https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"\n\n";
+		String body = "<p>" + hi.getSzoveg() + "</p>\n\n"
+				+ "<ul><li>Kategória: " + KategoriaCache.getKategoriaNevChain(hi.getKategoriaId()) + "\n"
+				+ "<li>Ár: " + hi.getAr() + "\n\n"
+				+ "<li><a href=\"https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\"></a>\n\n"
+				+ "<li><a href=\"https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"\"></a>\n\n"
+				+ "</ul>";
+		
 		MailUtils.sendMail(AproConfig.APP_CONFIG.getProperty("MAIL.FROM"), subject, body);
 		
 		return ret;
@@ -214,11 +224,11 @@ public class MailUtils {
 		String email = ho.getEmail();
 		if(email != null && !email.isEmpty()) {
 			String subject = "Új jelszót generáltunk";
-			String body = "Kedves " + ho.getNev() + "!\n\n"
-					+ "Kérésedre új jelszót generáltunk: " + jelszo + "\n"
-					+ "Belépés: https://www.aprohirdetes.com/belepes\n\n"
-					+ "Üdvözlettel,\n"
-					+ "Apróhirdetés.com";
+			String body = "<p>Kedves " + ho.getNev() + "!</p>\n\n"
+					+ "<p>Kérésedre új jelszót generáltunk: " + jelszo + "</p>\n"
+					+ "<p>Belépés: <a href=\"https://www.aprohirdetes.com/belepes\">https://www.aprohirdetes.com/belepes</a></p>\n\n"
+					+ "<p>Üdvözlettel,<br>\n"
+					+ "Apróhirdetés.com</p>";
 			
 			ret = MailUtils.sendMail(email, subject, body);
 		}
@@ -239,10 +249,10 @@ public class MailUtils {
 		
 		if(fromEmail != null && !fromEmail.isEmpty()) {
 			String subject = "Üzenet a weboldalról";
-			String body = "Kedves Apróhirdetés.com!\n\n"
-					+ uzenet + "\n\n"
-					+ "Üdvözlettel,\n"
-					+ fromNev + " (" + fromEmail + ")\n";
+			String body = "<p>Kedves Apróhirdetés.com!</p>\n\n"
+					+ "<p>" + uzenet + "</p>\n\n"
+					+ "<p>Üdvözlettel,<br>\n"
+					+ fromNev + " (" + fromEmail + ")</p>\n";
 			
 			ret = MailUtils.sendMail(to, subject, body, fromEmail);
 		}
@@ -265,13 +275,13 @@ public class MailUtils {
 		
 		if(fromEmail != null && !fromEmail.isEmpty()) {
 			String subject = "Üzenet: " + hirdetes.getCim();
-			String body = "Kedves " + hirdetes.getHirdeto().getNev() + "!\n\n"
-					+ uzenet + "\n\n"
-					+ "Kapcsolódó hirdetés: \n"
-					+ "  " + hirdetes.getCim() + "\n"
-					+ "  https://www.aprohirdetes.com/hirdetes/" + hirdetes.getId() + "\n\n"
-					+ "Üdvözlettel,\n"
-					+ fromNev + " (" + fromEmail + ")\n";
+			String body = "<p>Kedves " + hirdetes.getHirdeto().getNev() + "!</p>\n\n"
+					+ "<p>" + uzenet + "</p>\n\n"
+					+ "<p>Kapcsolódó hirdetés: \n"
+					+ "  " + hirdetes.getCim() + "<br>\n"
+					+ "  <a href=\"https://www.aprohirdetes.com/hirdetes/" + hirdetes.getId() + "\">https://www.aprohirdetes.com/hirdetes/" + hirdetes.getId() + "</a></p>\n\n"
+					+ "<p>Üdvözlettel,<br>\n"
+					+ fromNev + " (" + fromEmail + ")</p>\n";
 			
 			ret = MailUtils.sendMail(to, subject, body, fromEmail);
 		}
@@ -292,15 +302,15 @@ public class MailUtils {
 		String subject = "Értesítés lejáró hirdetésről";
 		
 		StringBuffer body = new StringBuffer();
-		body.append("Kedves " + h.getHirdeto().getNev() + "!\n\n");
-		body.append("Az Apróhirdetés.com oldalon feladott '" + h.getCim() + "' hirdetésed 5 napon belül lejár!\n\n");
-		body.append("A hirdetés meghosszabbításához kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába! A linkre kattintva a hirdetésed automatikusan meghosszabbodik 30 nappal.\n");
-		body.append("https://www.aprohirdetes.com/hosszabbitas/" + h.getId().toString() + "23afc87dd765476ad66c\n\n");
-		body.append("A hirdetés azonnali törléséhez kérjük kattints az alábbi linkre:\n");
-		body.append("https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "/torol\n\n");
-		body.append("Ha csak meg szeretnéd tekinteni hirdetésed, kattints ide:\n");
-		body.append("https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "\n\n");
-		body.append("Üdvözlettel,\nApróhirdetés.com\n");
+		body.append("<p>Kedves " + h.getHirdeto().getNev() + "!</p>\n\n");
+		body.append("<p>Az Apróhirdetés.com oldalon feladott '" + h.getCim() + "' hirdetésed 5 napon belül lejár!</p>\n\n");
+		body.append("<p>A hirdetés meghosszabbításához kérjük kattints az alábbi linkre, vagy másold böngésződ címsorába! A linkre kattintva a hirdetésed automatikusan meghosszabbodik 30 nappal.<br>\n");
+		body.append("<a href=\"https://www.aprohirdetes.com/hosszabbitas/" + h.getId().toString() + "23afc87dd765476ad66c\">https://www.aprohirdetes.com/hosszabbitas/" + h.getId().toString() + "23afc87dd765476ad66c</a></p>\n\n");
+		body.append("<p>A hirdetés azonnali törléséhez kérjük kattints az alábbi linkre:<br>\n");
+		body.append("<a href=\"https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "/torol\">https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "/torol</a></p>\n\n");
+		body.append("<p>Ha csak meg szeretnéd tekinteni hirdetésed, kattints ide:<br>\n");
+		body.append("<a href=\"https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "\">https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "</a></p>\n\n");
+		body.append("<p>Üdvözlettel,<br>\nApróhirdetés.com</p>\n");
 				
 		ret = MailUtils.sendMail(email, subject, body.toString());
 		
@@ -324,10 +334,11 @@ public class MailUtils {
 		
 		String subject = h.getCim();
 		StringBuffer body = new StringBuffer();
-		body.append(h.getSzoveg() + "\n\n");
-		body.append("A hírlevél online verzióját ide kattintva olvashatod: \n");
-		body.append("https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "\n\n");
-		body.append("Üdvözlettel,\nApróhirdetés.com\n");
+		body.append("<h2>" + h.getCim() + "</h2>\n\n");
+		body.append("<p>" + h.getSzoveg() + "</p>\n\n");
+		body.append("<p>A hírlevél online verzióját ide kattintva olvashatod: <br>\n");
+		body.append("<a href=\"https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "\">https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "</a></p>\n\n");
+		body.append("<p>Üdvözlettel,<br>\nApróhirdetés.com</p>\n");
 		
 		ret = MailUtils.sendMail(email, subject, body.toString());
 		
