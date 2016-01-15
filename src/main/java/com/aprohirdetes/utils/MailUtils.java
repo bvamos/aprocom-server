@@ -327,11 +327,6 @@ public class MailUtils {
 	public static boolean sendMailHirlevel(Hirdetes h, String email) {
 		boolean ret = false;
 		
-		// TODO: TEST
-		if(!email.equalsIgnoreCase("bvamos@zuriel.net")) {
-			return true;
-		}
-		
 		String subject = h.getCim();
 		StringBuffer body = new StringBuffer();
 		body.append("<h2>" + h.getCim() + "</h2>\n\n");
