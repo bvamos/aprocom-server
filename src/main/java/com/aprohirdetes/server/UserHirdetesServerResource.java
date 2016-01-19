@@ -2,7 +2,6 @@ package com.aprohirdetes.server;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -84,7 +83,7 @@ public class UserHirdetesServerResource extends ServerResource implements
 				Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 				
 				query.criteria("id").equal(hirdetesId);
-				query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.UJ.value(), Hirdetes.Statusz.JOVAHAGYVA.value(), Hirdetes.Statusz.HITELESITVE.value()));
+				query.criteria("statusz").notEqual(Hirdetes.Statusz.TOROLVE.value());
 				query.criteria("hirdetoId").equal(this.session.getHirdetoId());
 				
 				Hirdetes hirdetes = query.get();

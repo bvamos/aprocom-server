@@ -56,7 +56,7 @@ public class HirdetesAktivalasServerResource extends ServerResource implements
 			Datastore datastore = MongoUtils.getDatastore();
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			query.criteria("id").equal(this.hirdetesId);
-			UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("statusz", Hirdetes.Statusz.JOVAHAGYVA.value());
+			UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("statusz", Hirdetes.Statusz.AKTIV.value());
 			datastore.update(query, ops);
 			
 			getLogger().info("Hirdetes aktivalva: " + this.hirdetesId.toString());

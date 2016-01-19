@@ -79,7 +79,7 @@ public class HirdetesHelper {
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		query.criteria("id").equal(hirdetesId);
-		UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("torolveDatum", new Date()).set("statusz", Hirdetes.Statusz.TOROLVE.value());
+		UpdateOperations<Hirdetes> ops = datastore.createUpdateOperations(Hirdetes.class).set("torolveDatum", new Date()).set("statusz", Hirdetes.Statusz.INAKTIV.value());
 		datastore.update(query, ops);
 	}
 	
@@ -117,7 +117,7 @@ public class HirdetesHelper {
 		query.criteria("hirdeto.email").exists();
 		query.criteria("hirdeto.email").equal(hirdetes.getHirdeto().getEmail());
 		query.criteria("cim").equal(hirdetes.getCim());
-		query.criteria("statusz").equal(Hirdetes.Statusz.JOVAHAGYVA.value());
+		query.criteria("statusz").equal(Hirdetes.Statusz.AKTIV.value());
 		
 		// TODO: Lehet, hogy a query.get() gyorsabb, mint a countAll()
 		if(query.countAll()>0) {
@@ -146,7 +146,7 @@ public class HirdetesHelper {
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		query.criteria("hirdetoId").doesNotExist();
 		query.criteria("hirdeto.email").equal(email);
-		query.criteria("statusz").equal(Hirdetes.Statusz.JOVAHAGYVA.value());
+		query.criteria("statusz").equal(Hirdetes.Statusz.AKTIV.value());
 		
 		for(Hirdetes h : query) {
 			h.getEgyebMezok().put("kategoriaNev", KategoriaCache.getKategoriaNevChain(h.getKategoriaId()));

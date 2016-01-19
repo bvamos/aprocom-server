@@ -112,7 +112,7 @@ public class HirdetesTorlesServerResource extends ServerResource implements
 				
 				// Hirdetes torlese
 				try {
-					Hirdetes.Statusz hirdetesStatusz = Hirdetes.Statusz.valueOf(form.getFirstValue("hirdetesStatusz", Hirdetes.Statusz.TOROLVE.toString()));
+					Hirdetes.Statusz hirdetesStatusz = Hirdetes.Statusz.valueOf(form.getFirstValue("hirdetesStatusz", Hirdetes.Statusz.INAKTIV.toString()));
 					HirdetesHelper.delete(hirdetesId, hirdetesStatusz);
 					
 					getLogger().info("Hirdetes torolve: " + this.hirdetesId.toString());

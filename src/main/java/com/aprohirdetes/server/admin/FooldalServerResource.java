@@ -78,7 +78,7 @@ public class FooldalServerResource extends ServerResource implements
 		long ret = 0;
 		
 		Datastore datastore = MongoUtils.getDatastore();
-		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", Hirdetes.Statusz.JOVAHAGYVA.value());
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).filter("statusz", Hirdetes.Statusz.AKTIV.value());
 		
 		ret = query.countAll();
 		
@@ -92,7 +92,7 @@ public class FooldalServerResource extends ServerResource implements
 		
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
-		query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.ELADVA.value(), Hirdetes.Statusz.TOROLVE.value(), Hirdetes.Statusz.LEJART.value()));
+		query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.INAKTIV_ELADVA.value(), Hirdetes.Statusz.INAKTIV.value(), Hirdetes.Statusz.INAKTIV_LEJART.value()));
 		
 		ret = query.countAll();
 		

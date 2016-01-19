@@ -3,6 +3,7 @@ package com.aprohirdetes.server;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -34,6 +35,7 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 
 	private String contextPath = "";
 	private Session session = null;
+	private boolean hirdetesAktiv = true;
 	
 	@Override
 	protected void doInit() throws ResourceException {
@@ -43,6 +45,8 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 		contextPath = sc.getContextPath();
 		
 		this.session = SessionHelper.getSession(this);
+		
+		this.hirdetesAktiv = "aktiv".equalsIgnoreCase((String) this.getRequestAttributes().get("tipus"));
 	}
 
 	@Override
@@ -61,6 +65,7 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 		
 		dataModel.put("app", appDataModel);
 		dataModel.put("hirdetesTipus", HirdetesTipus.KINAL);
+		dataModel.put("hirdetesAktiv", this.hirdetesAktiv);
 		
 		if(this.session == null) {
 			ftl = AproApplication.TPL_CONFIG.getTemplate("forbidden.ftl.html");
@@ -72,7 +77,12 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			
 			query.criteria("hirdetoId").equal(this.session.getHirdetoId());
-			query.criteria("statusz").lessThan(30);
+			// Megjelenitjuk az inaktiv hirdeteseket is, hogy vissza lehessen allitani
+			if(this.hirdetesAktiv) {
+				query.criteria("statusz").equal(Hirdetes.Statusz.AKTIV.value());
+			} else {
+				query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.INAKTIV.value(), Hirdetes.Statusz.INAKTIV_ELADVA.value(), Hirdetes.Statusz.INAKTIV_LEJART.value()));
+			}
 			
 			//System.out.println(query);
 			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();

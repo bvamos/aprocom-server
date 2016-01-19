@@ -403,10 +403,12 @@ public class Hirdetes {
 	 * Hirdetes statusza. Csak JOVAHAGYVA eseten jelenik meg az oldalon.<br>
 	 * UJ (1): a hirdetes fel van adva<br>
 	 * HITELESITVE (11): a felhasznalo hitelesitette, vagy automatikusan hitelesitesre kerult, ha a hirdeto regisztaralt felhasznalo<br>
-	 * JOVAHAGYVA (21): a cenzura jovahagyta a hirdetest, megjelenhet<br>
-	 * LEJART (31): lejart az ideje, es automatikusan "torlesre" kerult<br>
-	 * TOROLVE (32): a felhasznalo torolte, de nem azert, mert eladta nalunk<br>
-	 * ELADVA (33): a felhasznalo torolte azert, mert eladta nalunk<br>
+	 * AKTIV (21): a cenzura jovahagyta a hirdetest, megjelenhet<br>
+	 * INAKTIV allapotok: a hirdetes nem jelenik meg, de benne van a rendszerben, visszaallithato
+	 * INAKTIV_LEJART (31): lejart az ideje, es automatikusan inaktiv lett<br>
+	 * INAKTIV (32): a felhasznalo inaktivalta, hogy ne jelenlen meg, de nem azert, mert eladta nalunk<br>
+	 * INAKTIV_ELADVA (33): a felhasznalo inaktivalta azert, mert eladta nalunk<br>
+	 * TODO: TOROLVE (41): INAKTIV utan 2 hettel torlodik
 	 * @author bvamos
 	 *
 	 */
@@ -414,10 +416,11 @@ public class Hirdetes {
 		
 		UJ(1),
 		HITELESITVE(11),
-		JOVAHAGYVA(21),
-		LEJART(31),
-		TOROLVE(32),
-		ELADVA(33);
+		AKTIV(21),
+		INAKTIV_LEJART(31),
+		INAKTIV(32),
+		INAKTIV_ELADVA(33),
+		TOROLVE(41);
 		
 		private final int value;
 		

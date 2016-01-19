@@ -49,7 +49,10 @@ public class AproUtils {
 		
 		long elteltIdo = (lejaratDatuma - new Date().getTime()) / 1000;
 		
-		if(elteltIdo<86400) {
+		if(elteltIdo<0) {
+			long nap = Math.abs(elteltIdo/86400);
+			ret = nap + " napja - " + new SimpleDateFormat("yyyy. MMMM d. EEEE", new Locale("hu")).format(new Date(lejaratDatuma));
+		} else if(elteltIdo<86400) {
 			ret = "Holnap";
 		} else if(elteltIdo>=86400 && elteltIdo<432000){
 			ret = "5 napon belül";

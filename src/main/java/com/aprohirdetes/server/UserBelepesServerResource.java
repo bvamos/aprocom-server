@@ -88,7 +88,7 @@ public class UserBelepesServerResource extends ServerResource implements
 			if("feladas".equalsIgnoreCase(this.referrer)) {
 				redirectPermanent(this.contextPath + "/feladas");
 			} else {
-				redirectPermanent(this.contextPath + "/felhasznalo/hirdetesek");
+				redirectPermanent(this.contextPath + "/felhasznalo/hirdetesek/aktiv");
 			}
 		} catch(AproException ae) {
 			getLogger().severe("Hibas belepes: " + ae.getMessage());

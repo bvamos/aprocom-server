@@ -20,7 +20,12 @@
 			<div class="col-sm-9 col-md-10">
 			
 				<h3>Hirdetéseim (${hirdetesList?size})</h3>
-					
+				
+				<ul class="nav nav-tabs">
+					<li role="presentation" class="<#if hirdetesAktiv==true>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/aktiv">Aktív hirdetéseim<#if hirdetesAktiv=true> (${hirdetesList?size})</#if></a></li>
+					<li role="presentation" class="<#if hirdetesAktiv==false>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/inaktiv">Inkatív hirdetéseim<#if hirdetesAktiv=false> (${hirdetesList?size})</#if></a></li>
+				</ul>
+				
 				<#if uzenet?? >
 				<div class="alert alert-success">${uzenet}</div>
 				</#if>
@@ -54,7 +59,7 @@
 						<td align="right">Nincs aktiválva</td>
 						</#if>
 						<td><span style="white-space:nowrap"><a href="${app.contextRoot}/felhasznalo/hirdetes/${hirdetes.id}"><i class="fa fa-edit"></i> Szerkesztés</a></span><br>
-							<a href="${app.contextRoot}/hirdetes/${hirdetes.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a><br>
+							<#if hirdetesAktiv==true><a href="${app.contextRoot}/hirdetes/${hirdetes.id}/torol"><i class="fa fa-trash-o"></i> Törlés</a><br></#if>
 							<span style="white-space:nowrap"><a href="${app.contextRoot}/hosszabbitas/${hirdetes.id}"><i class="fa fa-recycle"></i> Hosszabbítás</a></span>
 						</td>
 					</tr>

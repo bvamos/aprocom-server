@@ -44,7 +44,7 @@ public class LejaratErtesitoTask implements Runnable {
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			query.criteria("lejar").lessThanOrEq(otNapMulva);
 			query.criteria("lejarErtesites").notEqual(c.getTime());
-			query.criteria("statusz").equal(Hirdetes.Statusz.JOVAHAGYVA.value());
+			query.criteria("statusz").equal(Hirdetes.Statusz.AKTIV.value());
 			
 			// Egy lepesben max 100 levelet kuldjunk ki. Kesobb majd novelhetjuk, ha ez nem eleg, a task orankent fut.
 			query.limit(100);
@@ -57,7 +57,7 @@ public class LejaratErtesitoTask implements Runnable {
 				
 				if(h.getLejaratDatuma()<new Date().getTime()) {
 					// Lejart hirdetes, toroljuk
-					HirdetesHelper.delete(h.getId(), Hirdetes.Statusz.LEJART);
+					HirdetesHelper.delete(h.getId(), Hirdetes.Statusz.INAKTIV_LEJART);
 					this.logger.info("Hirdetes torolve: " + h.getId().toString());
 				} else {
 					// 5 napon belul lejar, ertesitest kuldunk

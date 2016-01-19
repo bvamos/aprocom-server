@@ -161,7 +161,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		
 		// Automatikusan hitelesitjuk/jovahagyjuk a Hirdetest, ha a szerver ugy van beallitva (fejlesztes kozben hasznos)
 		if("1".equalsIgnoreCase(AproConfig.APP_CONFIG.getProperty("AUTO_VALIDATE", "0"))) {
-			hi.setStatusz(Hirdetes.Statusz.JOVAHAGYVA);
+			hi.setStatusz(Hirdetes.Statusz.AKTIV);
 		}
 		
 		try {
@@ -194,7 +194,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				hi.setHirdetoId(this.session.getHirdetoId());
 				// Regisztralt felhasznalonak nem kell hitelesites emailben
 				// TODO: Amig nincs jovahagyas, addig:
-				hi.setStatusz(Hirdetes.Statusz.JOVAHAGYVA);
+				hi.setStatusz(Hirdetes.Statusz.AKTIV);
 			}
 			ho.setTipus(HirdetoHelper.getHirdetoTipus(form.getFirstValue("hirdetoTipus")));
 			ho.setNev(form.getFirstValue("hirdetoNev"));
@@ -302,9 +302,11 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
 					+ "Kérjük, kattints a levélben lévő linkre, és hirdetésed megjelenik oldalunkon!<br>" +
 					"Tudtad, hogy ha regisztrált felhasználó vagy, akkor automatikusan aktiváljuk a hirdetést és rögtön megjelenik? " +
-					"Még nem késő, <a href=\"${app.contextRoot}/regisztracio\">kattints ide és regisztrálj</a>!";
+					"Még nem késő, <a href=\"${app.contextRoot}/regisztracio\">kattints ide és regisztrálj</a>!" +
+					"<script>ga('send', {hitType:'event', eventCategory:'Hirdetes', eventAction:'feladas', eventValue:1});</script>";
 			} else {
-				uzenet = "A Hirdetés mentése sikeresen megtörtént. Mivel regisztrált felhasználó vagy, a hirdetésedet automatikusan aktiváltuk, nincs más teendőd.";
+				uzenet = "A Hirdetés mentése sikeresen megtörtént. Mivel regisztrált felhasználó vagy, a hirdetésedet automatikusan aktiváltuk, nincs más teendőd." +
+						"<script>ga('send', {hitType:'event', eventCategory:'Hirdetes', eventAction:'feladas', eventValue:1});</script>";
 			}
 			getLogger().info("Sikeres hirdetesfeladas. " + id.toString());
 			if(!MailUtils.sendMailHirdetesFeladva(hi, session)) {

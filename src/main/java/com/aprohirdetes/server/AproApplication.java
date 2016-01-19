@@ -86,7 +86,7 @@ public class AproApplication extends Application {
 		router.attach("/regisztracio", UserRegisztracioServerResource.class);
 		router.attach("/regisztracio/{hirdetoId}", UserAktivalasServerResource.class);
 		router.attach("/felhasznalo/adatlap", UserAdatlapServerResource.class);
-		router.attach("/felhasznalo/hirdetesek", UserHirdeteseimServerResource.class);
+		router.attach("/felhasznalo/hirdetesek/{tipus}", UserHirdeteseimServerResource.class);
 		router.attach("/felhasznalo/hirdetes/{hirdetesId}", UserHirdetesServerResource.class);
 		router.attach("/felhasznalo/kedvencek", UserKedvencekServerResource.class);
 		router.attach("/felhasznalo/beallitasok", UserBeallitasokServerResource.class);
@@ -351,7 +351,6 @@ public class AproApplication extends Application {
 		taskService.scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
 		
 		// Hirlevelek kikuldese
-		// TODO: Orankent fusson
 		taskService.scheduleWithFixedDelay(new HirlevelKikuldoTask(getLogger()), 15, 3600, TimeUnit.SECONDS);
 		
 		// Tokenizer inicializacio

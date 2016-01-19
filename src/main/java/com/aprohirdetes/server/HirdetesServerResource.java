@@ -82,7 +82,7 @@ public class HirdetesServerResource extends ServerResource implements
 		
 		// Hirdetes adatai
 		if(hirdetes != null) {
-			if(hirdetes.getStatusz()==Hirdetes.Statusz.JOVAHAGYVA.value()) {
+			if(hirdetes.getStatusz()==Hirdetes.Statusz.AKTIV.value()) {
 				// HTML Title modositasa
 				((HashMap<String, Object>) dataModel.get("app")).put("htmlTitle", getApplication().getName() + " - " + hirdetes.getCim());
 				((HashMap<String, Object>) dataModel.get("app")).put("description", "Apróhirdetés: " + hirdetes.getCim());
@@ -133,9 +133,9 @@ public class HirdetesServerResource extends ServerResource implements
 			} else if(hirdetes.getStatusz()==Hirdetes.Statusz.HITELESITVE.value()) {
 				// Letezik a hirdetes, de nincs hitelesitve a felado altal
 				dataModel.put("hibaUzenet", "A megadott hirdetés ugyan létezik, de a feladó még nem hitelesítette az emailben kiküldött linkre kattintva.");
-			} else if(hirdetes.getStatusz()==Hirdetes.Statusz.ELADVA.value() 
-					|| hirdetes.getStatusz()==Hirdetes.Statusz.LEJART.value()
-					|| hirdetes.getStatusz()==Hirdetes.Statusz.TOROLVE.value()){
+			} else if(hirdetes.getStatusz()==Hirdetes.Statusz.INAKTIV_ELADVA.value() 
+					|| hirdetes.getStatusz()==Hirdetes.Statusz.INAKTIV_LEJART.value()
+					|| hirdetes.getStatusz()==Hirdetes.Statusz.INAKTIV.value()){
 				// Letezik a hirdetes, de mar lejart es/vagy torolve lett
 				dataModel.put("hibaUzenet", "A megadott hirdetés már lejárt, és feladója nem hosszabbította meg.");
 			}

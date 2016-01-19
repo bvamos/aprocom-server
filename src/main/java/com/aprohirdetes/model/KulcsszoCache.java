@@ -35,7 +35,7 @@ public class KulcsszoCache {
 		// Vegig megyunk a Hirdeteseken, kiszedjuk a kulcsszavakat
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class).retrievedFields(true, "kulcsszavak");
-		query.criteria("statusz").equal(Hirdetes.Statusz.JOVAHAGYVA.value());
+		query.criteria("statusz").equal(Hirdetes.Statusz.AKTIV.value());
 		
 		Iterator<Hirdetes> ih = query.iterator();
 		Map<String, Integer> map = new LinkedHashMap<String, Integer>();
