@@ -8,7 +8,6 @@ import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ServerResource;
 
 import com.aprohirdetes.common.StaticXmlResource;
-import com.aprohirdetes.model.HelysegCache;
 import com.aprohirdetes.model.KategoriaCache;
 
 public class SitemapServerResource extends ServerResource implements StaticXmlResource {
@@ -84,6 +83,7 @@ public class SitemapServerResource extends ServerResource implements StaticXmlRe
 		StringBuilder sb = new StringBuilder();
 		
 		for(String hirdetesTipus : hirdetesTipusList) {
+			/*
 			for(String helyseg : HelysegCache.getCacheByUrlNev().keySet()) {
 				for(String kategoria : KategoriaCache.getCacheByUrlNev().keySet()) {
 					sb.append("<url>\n" + 
@@ -92,7 +92,7 @@ public class SitemapServerResource extends ServerResource implements StaticXmlRe
 							"<priority>1</priority>\n" + 
 							"</url>\n");
 				}
-			}
+			}*/
 			// Helyseg nelkul is (Osszes helyseg)
 			for(String kategoria : KategoriaCache.getCacheByUrlNev().keySet()) {
 				sb.append("<url>\n" + 
