@@ -16,7 +16,7 @@ public class SitemapServerResource extends ServerResource implements StaticXmlRe
 	public Representation representXml() {
 		String sitemap;
 		
-		String lastModDate = "2014-07-28";
+		String lastModDate = "2016-01-19";
 		String siteMapHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + 
 				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" + 
 				"<url>\n" + 
@@ -35,6 +35,12 @@ public class SitemapServerResource extends ServerResource implements StaticXmlRe
 				"  <loc>https://www.aprohirdetes.com/kapcsolat</loc>\n" + 
 				"  <lastmod>" + lastModDate + "</lastmod>\n" + 
 				"  <changefreq>yearly</changefreq>\n" + 
+				"  <priority>0.4</priority>\n" + 
+				"</url>\n" + 
+				"<url>\n" + 
+				"  <loc>https://www.aprohirdetes.com/rolunk</loc>\n" + 
+				"  <lastmod>" + lastModDate + "</lastmod>\n" + 
+				"  <changefreq>monthly</changefreq>\n" + 
 				"  <priority>0.4</priority>\n" + 
 				"</url>\n" + 
 				"<url>\n" + 
@@ -72,6 +78,8 @@ public class SitemapServerResource extends ServerResource implements StaticXmlRe
 		ArrayList<String> hirdetesTipusList = new ArrayList<String>();
 		hirdetesTipusList.add("keres");
 		hirdetesTipusList.add("kinal");
+		hirdetesTipusList.add("kiad");
+		hirdetesTipusList.add("berel");
 		
 		StringBuilder sb = new StringBuilder();
 		
