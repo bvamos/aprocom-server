@@ -39,6 +39,7 @@ public class HirlevelKikuldoTask implements Runnable {
 			this.logger.info("Hirlevel Elokeszites: " + h.getId().toString());
 			Query<Hirdeto> queryHirdeto = datastore.createQuery(Hirdeto.class);
 			queryHirdeto.criteria("hitelesitve").equal(true);
+			queryHirdeto.criteria("hirlevel").equal(true);
 			
 			for(Hirdeto hirdeto : queryHirdeto) {
 				HirlevelHirdeto hh = new HirlevelHirdeto(h.getId(), hirdeto.getId());
@@ -53,8 +54,8 @@ public class HirlevelKikuldoTask implements Runnable {
 			queryHirlevel.criteria("id").equal(h.getId());
 			UpdateOperations<Hirlevel> ops = datastore.createUpdateOperations(Hirlevel.class)
 					.set("statusz", Hirlevel.Statusz.KIKULDES.value())
-					.set("dbSikeres", 0)
-					.set("dbHibas", 0)
+					.set("dbSikeres", 0l)
+					.set("dbHibas", 0l)
 					.set("dbOsszes", cnt);
 			datastore.update(queryHirlevel, ops);
 			
@@ -74,8 +75,8 @@ public class HirlevelKikuldoTask implements Runnable {
 			queryHirlevelHirdeto.criteria("hirlevelId").equal(h.getId());
 			queryHirlevelHirdeto.criteria("statusz").equal(0);
 			
-			int dbSikeres = 0;
-			int dbHibas = 0;
+			long dbSikeres = 0;
+			long dbHibas = 0;
 			for(HirlevelHirdeto hh : queryHirlevelHirdeto) {
 				boolean statusz = MailUtils.sendMailHirlevel(hirdetes, hh.getEmail());
 				
