@@ -293,6 +293,13 @@ public class KeresesServerResource extends ServerResource implements
 					tag += "Friss";
 					h.getEgyebMezok().put("tag", tag);
 				}
+				// CSOK 10+10 ingatlan: Lakas vagy haz es Uj epitesu
+				if(h.getAttributumok().containsKey("ingatlan-allapot")) {
+					if("ujepitesu".equalsIgnoreCase((String) h.getAttributumok().get("ingatlan-allapot"))) {
+						String tag = h.getEgyebMezok().get("tag");
+						h.getEgyebMezok().put("tag", tag.isEmpty() ? "CSOK 10+10" : tag + ";CSOK 10+10");
+					}
+				}
 	
 				
 				// Kepek
