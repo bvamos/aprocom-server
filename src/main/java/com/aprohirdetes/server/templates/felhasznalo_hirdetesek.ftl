@@ -3,8 +3,8 @@
 	<#if kod=11>Hitelesítve</#if>
 	<#if kod=21>Aktív</#if>
 	<#if kod=31>Törölve (Lejárt)</#if>
-	<#if kod=32>Törölve</#if>
-	<#if kod=33>Eladva</#if>
+	<#if kod=32>Inaktív</#if>
+	<#if kod=33>Törölve (Eladva)</#if>
 </#macro>
 
 <#include "html_header.ftl.html"/>

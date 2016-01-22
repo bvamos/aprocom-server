@@ -1,29 +1,31 @@
 package com.aprohirdetes.server.task;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesHelper;
 import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
-public class LejaratErtesitoTask implements Runnable {
+public class HirdetesKezeloTask implements Runnable {
 
 	private Logger logger;
 	
-	public LejaratErtesitoTask(Logger logger) {
+	public HirdetesKezeloTask(Logger logger) {
 		this.logger = logger;
 	}
 	
 	@Override
 	public void run() {
-		this.logger.info("LejaratErtesitoTask start");
-		Thread.currentThread().setName("Apro-LejaratErtesitoTask");
+		this.logger.info("HirdetesKezeloTask start");
+		Thread.currentThread().setName("Apro-HirdetesKezeloTask");
 		
 		Calendar c = Calendar.getInstance();
 		// Datum 5 nap mulva. Az 5 napon belul lejaro hirdeteseket listazzuk vele.
@@ -74,7 +76,25 @@ public class LejaratErtesitoTask implements Runnable {
 			this.logger.severe("ERROR: " + e.getMessage());
 		}
 		
-		this.logger.info("LejaratErtesitoTask end");
+		
+		// 2 hete inaktiv hirdetesek torlese
+		Calendar c2hete = Calendar.getInstance();
+		// Datum 5 nap mulva. Az 5 napon belul lejaro hirdeteseket listazzuk vele.
+		c2hete.setTime(new Date()); 
+		c2hete.add(Calendar.DATE, -14);
+		Date datumKetHete = c2hete.getTime();
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> queryInaktiv = datastore.createQuery(Hirdetes.class);
+		queryInaktiv.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.INAKTIV_ELADVA.value(), Hirdetes.Statusz.INAKTIV_LEJART.value()));
+		queryInaktiv.criteria("torolveDatum").lessThan(datumKetHete);
+		
+		UpdateOperations<Hirdetes> updateOpsInaktiv = datastore.createUpdateOperations(Hirdetes.class)
+				.set("statusz", Hirdetes.Statusz.TOROLVE.value())
+				.set("torolveDatum", new Date());
+		datastore.update(queryInaktiv, updateOpsInaktiv);
+		
+		this.logger.info("HirdetesKezeloTask end");
 	}
 
 }
