@@ -35,7 +35,7 @@ import com.aprohirdetes.model.Session;
 import com.aprohirdetes.model.SessionHelper;
 import com.aprohirdetes.server.task.HirlevelKikuldoTask;
 import com.aprohirdetes.server.task.KategoriaCountTask;
-import com.aprohirdetes.server.task.LejaratErtesitoTask;
+import com.aprohirdetes.server.task.HirdetesKezeloTask;
 import com.aprohirdetes.utils.MongoUtils;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -348,10 +348,10 @@ public class AproApplication extends Application {
 		taskService.scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
 		
 		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
-		taskService.scheduleWithFixedDelay(new LejaratErtesitoTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
+		taskService.scheduleWithFixedDelay(new HirdetesKezeloTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
 		
 		// Hirlevelek kikuldese
-		taskService.scheduleWithFixedDelay(new HirlevelKikuldoTask(getLogger()), 15, 3600, TimeUnit.SECONDS);
+		taskService.scheduleWithFixedDelay(new HirlevelKikuldoTask(getLogger()), 15, 60, TimeUnit.SECONDS);
 		
 		// Tokenizer inicializacio
 		ResourceHolder.initHunSplitter();
