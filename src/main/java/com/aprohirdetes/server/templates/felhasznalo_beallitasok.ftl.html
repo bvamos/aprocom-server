@@ -34,6 +34,7 @@
 							<button id="apikeyGenerateButton">Generálok API Key-t</button></div>
 						</#if>
 					</div>
+					<br>
 					
 					<h4>Facebook belépés</h4>
 					<#if hirdeto.facebookId?? >
@@ -66,6 +67,30 @@
 				        });
 					});
 					</script>
+					<br>
+					
+					<h4>Jelszó megváltoztatása</h4>
+					<form class="form-horizontal" role="form" method="post" action="${app.contextRoot}/felhasznalo/jelszocsere">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="hirdetoJelszo">Jelszó</label>
+						<div class="col-sm-4">
+							<input type="password" class="form-control" id="hirdetoJelszo" name="hirdetoJelszo" required="">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="hirdetoJelszo2">Jelszó újból</label>
+						<div class="col-sm-4">
+							<input type="password" class="form-control" id="hirdetoJelszo2" name="hirdetoJelszo2" required="">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-offset-3 colsm-7">
+							<button type="submit" class="btn btn-success btn-lg">Mentés</button>
+						</div>
+					</div>
+					</form>
 			</div>
 		</div>
 <#include "page_footer.ftl.html"/>
