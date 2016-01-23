@@ -19,11 +19,11 @@
 			</div>
 			<div class="col-sm-9 col-md-10">
 			
-				<h3>Hirdetéseim (${hirdetesList?size})</h3>
+				<h3>Hirdetéseim</h3>
 				
 				<ul class="nav nav-tabs">
 					<li role="presentation" class="<#if hirdetesAktiv==true>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/aktiv">Aktív hirdetéseim<#if hirdetesAktiv=true> (${hirdetesList?size})</#if></a></li>
-					<li role="presentation" class="<#if hirdetesAktiv==false>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/inaktiv">Inkatív hirdetéseim<#if hirdetesAktiv=false> (${hirdetesList?size})</#if></a></li>
+					<li role="presentation" class="<#if hirdetesAktiv==false>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/inaktiv">Inaktív hirdetéseim<#if hirdetesAktiv=false> (${hirdetesList?size})</#if></a></li>
 				</ul>
 				
 				<#if uzenet?? >
