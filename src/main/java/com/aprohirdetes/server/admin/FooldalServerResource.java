@@ -67,6 +67,7 @@ public class FooldalServerResource extends ServerResource implements
 		} else {
 			dataModel.put("kulcsszavak", KulcsszoCache.getCacheByKulcsszo());
 			dataModel.put("aktivHirdetesekSzama", getAktivHirdetesekSzama());
+			dataModel.put("inaktivHirdetesekSzama", getInaktivHirdetesekSzama());
 			dataModel.put("toroltHirdetesekSzama", getToroltHirdetesekSzama());
 			dataModel.put("nemHitelesitettHirdetesekSzama", getNemHitelesitettHirdetesekSzama());
 		}
@@ -87,12 +88,26 @@ public class FooldalServerResource extends ServerResource implements
 		return ret;
 	}
 	
-	private long getToroltHirdetesekSzama() {
+	private long getInaktivHirdetesekSzama() {
 		long ret = 0;
 		
 		Datastore datastore = MongoUtils.getDatastore();
 		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 		query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.INAKTIV_ELADVA.value(), Hirdetes.Statusz.INAKTIV.value(), Hirdetes.Statusz.INAKTIV_LEJART.value()));
+		
+		ret = query.countAll();
+		
+		query = null;
+		
+		return ret;
+	}
+	
+	private long getToroltHirdetesekSzama() {
+		long ret = 0;
+		
+		Datastore datastore = MongoUtils.getDatastore();
+		Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
+		query.criteria("statusz").equal(Hirdetes.Statusz.TOROLVE.value());
 		
 		ret = query.countAll();
 		
