@@ -45,22 +45,30 @@
 						
 						<#if hirdetes.hirdeto??>
 						<h3>Hirdető adatai</h3>
+						<#if hirdetes.hirdeto.nev!="" || hirdetes.hirdeto.cegNev??>
 						<div>
-							<span class="hirdetes-hirdeto-header">Hirdető: </span>
-							<span>${hirdetes.hirdeto.nev!""}</span>
+							<span class="hirdetes-hirdeto-header">Név: </span>
+							<span><#if hirdetes.hirdeto.cegNev?? >${hirdetes.hirdeto.cegNev?html} - </#if>${(hirdetes.hirdeto.nev!"")?html}</span>
 						</div>
+						</#if>
+						<#if hirdetes.hirdeto.telefon!="" >
 						<div>
 							<span class="hirdetes-hirdeto-header">Telefon: </span>
-							<span>${hirdetes.hirdeto.telefon!""}</span>
+							<span>${(hirdetes.hirdeto.telefon!"")?html}</span>
 						</div>
+						</#if>
+						<#if hirdetes.hirdeto.email!="" >
 						<div>
 							<span class="hirdetes-hirdeto-header">Email: </span>
-							<span>${hirdetes.hirdeto.email!""}</span>
+							<span>${(hirdetes.hirdeto.email!"")?html}</span>
 						</div>
+						</#if>
+						<#if hirdetes.hirdeto.cim!="" >
 						<div>
 							<span class="hirdetes-hirdeto-header">Cím: </span>
-							<span>${hirdetes.hirdeto.iranyitoSzam!""} ${hirdetes.hirdeto.telepules!""}, ${hirdetes.hirdeto.cim!""}</span>
+							<span>${(hirdetes.hirdeto.iranyitoSzam!"")?html} ${(hirdetes.hirdeto.telepules!"")?html} ${(hirdetes.hirdeto.cim!"")?html}</span>
 						</div>
+						</#if>
 						</#if>
 						
 						<hr>
