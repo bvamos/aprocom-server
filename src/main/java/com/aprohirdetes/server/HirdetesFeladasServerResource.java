@@ -165,6 +165,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 		}
 		
 		try {
+			Datastore datastore = MongoUtils.getDatastore();
 			
 			// Model
 			hi.setId(hirdetesId);
@@ -188,14 +189,8 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			// Kulcsszavak kigyujtese
 			hi.tokenize();
 			
+			// Hirdeto kezelese
 			Hirdeto ho = new Hirdeto();
-			if(this.session != null) {
-				// Van belepett felhasznalo, az ID-t elmentjuk
-				hi.setHirdetoId(this.session.getHirdetoId());
-				// Regisztralt felhasznalonak nem kell hitelesites emailben
-				// TODO: Amig nincs jovahagyas, addig:
-				hi.setStatusz(Hirdetes.Statusz.AKTIV);
-			}
 			ho.setTipus(HirdetoHelper.getHirdetoTipus(form.getFirstValue("hirdetoTipus")));
 			ho.setNev(form.getFirstValue("hirdetoNev"));
 			if(ho.getTipus()==2) {
@@ -209,7 +204,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			ho.setTelepules(form.getFirstValue("hirdetoTelepules"));
 			ho.setCim(form.getFirstValue("hirdetoCim"));
 			
-			if(this.session == null) {
+			if(this.session == null && !"true".equals(form.getFirstValue("hirdetoRegisztracio"))) {
 				try {
 					ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
 				} catch (NoSuchAlgorithmException e) {
@@ -221,7 +216,45 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 				}
 			}
 			
+			// Hozzaadjuk a hirdeto adatait a hirdeteshez
 			hi.setHirdeto(ho);
+			
+			// Ha van a megadott email cimmel regisztralt hirdeto, betoltjuk
+			Hirdeto regisztraltHirdeto = HirdetoHelper.loadByEmail(form.getFirstValue("hirdetoEmail"));
+			if(this.session != null) {
+				// Van belepett felhasznalo, az ID-t elmentjuk
+				hi.setHirdetoId(this.session.getHirdetoId());
+				// Regisztralt felhasznalonak nem kell hitelesites emailben
+				// TODO: ha lesz cenzura, akkor ezt modositani kell
+				hi.setStatusz(Hirdetes.Statusz.AKTIV);
+			} else if(regisztraltHirdeto!=null) {
+				// Van regisztralt felhasznalo, az ID-t elmentjuk a hirdetesbe
+				hi.setHirdetoId(regisztraltHirdeto.getId());
+			} else if("true".equals(form.getFirstValue("hirdetoRegisztracio"))) {
+				// Uj felhasznalo, de regisztralni szeretne
+				ho.setId(new ObjectId());
+				
+				try {
+					ho.setJelszo(PasswordHash.createHash(form.getFirstValue("hirdetoJelszo")));
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				hi.setHirdetoId(ho.getId());
+				// Regisztralt felhasznalonak nem kell hitelesites emailben
+				// TODO: ha lesz cenzura, akkor ezt modositani kell
+				hi.setStatusz(Hirdetes.Statusz.AKTIV);
+				
+				// Elmentjuk a hirdetot, mint regisztralt felhasznalot
+				datastore.save(ho);
+				
+				// Level kikuldese az aktivalo linkkel
+				MailUtils.sendMailRegisztracio(ho);
+			}
 			
 			// Attributumok
 			LinkedList<Attributum> attributumList = AttributumCache.getKATEGORIA_ATTRIBUTUM().get(form.getFirstValue("hirdetesKategoria"));
@@ -260,7 +293,7 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			HirdetesHelper.validate(hi);
 			
 			// Hirdetes mentese
-			Datastore datastore = MongoUtils.getDatastore();
+			
 			Key<Hirdetes> id = datastore.save(hi);
 			
 			// Kepek atmasolasa a vegleges helyükre
@@ -298,7 +331,9 @@ public class HirdetesFeladasServerResource extends ServerResource implements
 			}
 	
 			// Level kikuldese
-			if(this.session == null) {
+			// if(this.session == null && hi.getHirdetoId()==null) {
+			if(hi.getHirdetoId()==null) {
+				// Nem regisztralt felhasznalo
 				uzenet = "A Hirdetés mentése sikeresen megtörtént. Ahhoz, hogy megjelenjen, a megadott email címre egy aktiváló linket küldtünk. "
 					+ "Kérjük, kattints a levélben lévő linkre, és hirdetésed megjelenik oldalunkon!<br>" +
 					"Tudtad, hogy ha regisztrált felhasználó vagy, akkor automatikusan aktiváljuk a hirdetést és rögtön megjelenik? " +

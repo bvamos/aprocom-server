@@ -138,7 +138,20 @@
 				<#if session?? >
 				<div class="alert alert-info">Az adataidat előre kitöltöttük, de bármelyik mező megváltoztatható hirdetésenként!</div>
 				<#else>
-				<div class="alert alert-info">Ha már regisztráltál nálunk, <a href="${app.contextRoot}/belepes?referrer=feladas">lépj be</a>, és kitöltjük az adataidat helyetted! Ha még nem, <a href="${app.contextRoot}/regisztracio">regisztrálj</a>, érdemes!</div>
+				<div class="alert alert-info">Regisztráltál már nálunk, de nem vagy <a href="${app.contextRoot}/belepes?referrer=feladas">belépve?</a> Semmi gond, csak használd a szokásos email címed!<br>
+				Ha még nem <a href="${app.contextRoot}/regisztracio">regisztráltál</a> az sem baj, a hirdetés feladásakor regisztrálhatsz egy lépésben, érdemes!</div>
+				</#if>
+				
+				<#if !session?? >
+				<div class="form-group">
+					<div class="checkbox col-sm-7 col-sm-offset-3">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="true" name="hirdetoRegisztracio" checked="checked"> Regisztrálni is szeretnék
+							</label>
+						</div>
+					</div>
+				</div>
 				</#if>
 				
 				<div class="form-group">
