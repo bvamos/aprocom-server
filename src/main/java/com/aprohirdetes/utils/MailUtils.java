@@ -203,8 +203,8 @@ public class MailUtils {
 		String body = "<p>" + hi.getSzoveg() + "</p>\n\n"
 				+ "<ul><li>Kategória: " + KategoriaCache.getKategoriaNevChain(hi.getKategoriaId()) + "\n"
 				+ "<li>Ár: " + hi.getAr() + "\n\n"
-				+ "<li><a href=\"https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\"></a>\n\n"
-				+ "<li><a href=\"https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"\"></a>\n\n"
+				+ "<li><a href=\"https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"\">https://www.aprohirdetes.com/aktivalas/23afc87dd765476ad66c" + hi.getId() +"</a>\n\n"
+				+ "<li><a href=\"https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"\">https://www.aprohirdetes.com/hirdetes/" + hi.getId() +"</a>\n\n"
 				+ "</ul>";
 		
 		MailUtils.sendMail(AproConfig.APP_CONFIG.getProperty("MAIL.FROM"), subject, body);
