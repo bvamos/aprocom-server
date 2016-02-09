@@ -408,7 +408,7 @@ public class Hirdetes {
 	 * INAKTIV_LEJART (31): lejart az ideje, es automatikusan inaktiv lett<br>
 	 * INAKTIV (32): a felhasznalo inaktivalta, hogy ne jelenlen meg, de nem azert, mert eladta nalunk<br>
 	 * INAKTIV_ELADVA (33): a felhasznalo inaktivalta azert, mert eladta nalunk<br>
-	 * TODO: TOROLVE (41): INAKTIV utan 2 hettel torlodik
+	 * TOROLVE (41): INAKTIV utan 2 hettel torlodik
 	 * @author bvamos
 	 *
 	 */
