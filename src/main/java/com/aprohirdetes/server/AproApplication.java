@@ -355,7 +355,7 @@ public class AproApplication extends Application {
 		taskService.scheduleWithFixedDelay(new HirdetesKezeloTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
 		
 		// Hirlevelek kikuldese
-		taskService.scheduleWithFixedDelay(new HirlevelKikuldoTask(getLogger()), 15, 60, TimeUnit.SECONDS);
+		taskService.scheduleWithFixedDelay(new HirlevelKikuldoTask(getLogger()), 15, 4, TimeUnit.HOURS);
 		
 		// Tokenizer inicializacio
 		ResourceHolder.initHunSplitter();
