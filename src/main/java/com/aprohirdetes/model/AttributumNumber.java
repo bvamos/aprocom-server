@@ -97,7 +97,7 @@ public class AttributumNumber extends Attributum {
 			try {
 				ret = df.format(value);
 			} catch (IllegalArgumentException iae) {
-				System.out.println(getNev() + "=" + value);
+				//System.out.println(getNev() + "=" + value);
 			}
 		} else {
 			ret = value.toString();

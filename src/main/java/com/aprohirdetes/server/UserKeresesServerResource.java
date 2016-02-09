@@ -50,7 +50,7 @@ public class UserKeresesServerResource extends ServerResource implements
 			this.keresesId = new ObjectId((String) this.getRequestAttributes().get("keresesId"));
 			this.muvelet = (String) this.getRequestAttributes().get("muvelet");
 		} catch(Exception e) {
-			System.out.println(e.getMessage());
+			getLogger().severe(e.getMessage());
 		}
 	}
 

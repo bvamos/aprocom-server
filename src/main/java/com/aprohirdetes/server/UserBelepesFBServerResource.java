@@ -134,7 +134,6 @@ public class UserBelepesFBServerResource extends ServerResource implements
 
 	@Override
 	public Representation accept(Form form) throws IOException {
-		System.out.println("POST");
 		return null;
 	}
 }

@@ -145,7 +145,6 @@ public class UserAdatlapServerResource extends ServerResource implements
 		dataModel.put("hibaUzenet", errorMessage);
 		dataModel.put("session", this.session);
 		dataModel.put("hirdeto", hirdeto);
-		System.out.println(hirdeto.getTipus());
 		dataModel.put("hirdetoTipusMsz", (hirdeto.getTipus()==2) ? "" : "checked");
 		dataModel.put("hirdetoTipusCeg", (hirdeto.getTipus()==2) ? "checked" : "");
 		

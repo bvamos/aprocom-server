@@ -34,7 +34,6 @@ public class AttributumYesNo extends Attributum {
 		String ret = null;
 		
 		String alapErtek = query.getFirstValue(getNev(), "");
-		System.out.println(alapErtek);
 		String selectedIgen = ("igen".equalsIgnoreCase(alapErtek)) ? " selected" : "";
 		String selectedNem = ("nem".equalsIgnoreCase(alapErtek)) ? " selected" : "";
 		

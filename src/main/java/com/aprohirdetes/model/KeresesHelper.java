@@ -68,9 +68,7 @@ public class KeresesHelper {
 			URL url = new URL("https://www.aprohirdetes.com" + kereses.getUrl());
 			
 			String urlPath = url.getPath();
-			System.out.println(urlPath);
 			String[] urlPathArray = urlPath.split("\\/");
-			System.out.println(urlPathArray.toString());
 			
 			int hirdetesTipus = HirdetesTipus.getHirdetesTipus(urlPathArray[2]);
 			List<ObjectId> selectedHelysegIdList = HelysegCache.getHelysegIdListByUrlNevList(urlPathArray[3]);

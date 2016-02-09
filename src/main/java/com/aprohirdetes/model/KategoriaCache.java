@@ -114,7 +114,6 @@ public class KategoriaCache {
 	}
 	
 	public static ArrayList<ObjectId> getKategoriaIdListByUrlNevList(String urlNevList) {
-		System.out.println(urlNevList);
 		ArrayList<ObjectId> ret = new ArrayList<ObjectId>();
 		for(Kategoria kategoria : getKategoriaListByUrlNevList(urlNevList)) {
 			ret.add(kategoria.getId());
