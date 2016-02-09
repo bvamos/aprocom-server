@@ -113,6 +113,15 @@ public class KategoriaCache {
 		return ret;
 	}
 	
+	public static ArrayList<ObjectId> getKategoriaIdListByUrlNevList(String urlNevList) {
+		System.out.println(urlNevList);
+		ArrayList<ObjectId> ret = new ArrayList<ObjectId>();
+		for(Kategoria kategoria : getKategoriaListByUrlNevList(urlNevList)) {
+			ret.add(kategoria.getId());
+		}
+		return ret;
+	}
+	
 	/**
 	 * Visszadja a Kategirak nevet, vesszovel elvalasztva a '+' jellel elvalasztott, URL-ben megadott
 	 * lista alapjan. Arra hasznalom, hogy a HTML title tagben megjelenítsem az eppen keresett kategoriak neveit,

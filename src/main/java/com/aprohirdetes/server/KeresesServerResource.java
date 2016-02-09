@@ -257,7 +257,7 @@ public class KeresesServerResource extends ServerResource implements
 				query.order("-modositva");
 			}
 			
-			System.out.println(query);
+			//System.out.println(query);
 			
 			// Kereses eredmenyeben levo Hirdetes objektumok feltoltese kepekkel, egyeb adatokkal a megjeleniteshez
 			for(Hirdetes h : query) {
@@ -317,10 +317,10 @@ public class KeresesServerResource extends ServerResource implements
 					kedvencQuery.criteria("hirdetoId").equal(this.session.getHirdetoId());
 					kedvencQuery.criteria("hirdetesId").equal(h.getId());
 					
-					System.out.println(kedvencQuery);
+					//System.out.println(kedvencQuery);
 					HirdetesKedvenc kedvenc = kedvencQuery.get();
 					if(kedvenc != null) {
-						System.out.println("Kedvenc: " + kedvenc.getHirdetes().getCim());
+						//System.out.println("Kedvenc: " + kedvenc.getHirdetes().getCim());
 						h.getEgyebMezok().put("kedvenc", "true");
 					}
 				}

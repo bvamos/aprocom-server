@@ -37,7 +37,7 @@ public class AttributumText extends Attributum {
 				"	<label class=\"control-label\" for=\"" + getNev() + "\">" + getCim() + "</label>\n" + 
 				"	<div class=\"\">\n" + 
 				"		<input type=\"text\" class=\"form-control input-sm\" id=\"" + getNev() + "\" name=\"" + getNev() + "\" autofocus=\"\"";
-		ret +=  " placeholder=\"\" value=\"\">\n";
+		ret +=  " placeholder=\"\" value=\"\" onChange=\"$('#btnKereses').click();\">\n";
 		ret +=  "	</div>\n" + 
 				"</div>\n";
 		

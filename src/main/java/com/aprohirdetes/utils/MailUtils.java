@@ -1,6 +1,7 @@
 package com.aprohirdetes.utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -17,6 +18,7 @@ import org.restlet.ext.freemarker.TemplateRepresentation;
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.Hirdeto;
 import com.aprohirdetes.model.KategoriaCache;
+import com.aprohirdetes.model.Kereses;
 import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.server.AproConfig;
 
@@ -336,6 +338,25 @@ public class MailUtils {
 		body.append("<p>Üdvözlettel,<br>\nApróhirdetés.com</p>\n");
 		
 		ret = MailUtils.sendMail(email, subject, body.toString());
+		
+		return ret;
+	}
+	
+	public static boolean sendMailKereses(Kereses kereses, List<Hirdetes> hirdetesList) {
+		boolean ret = false;
+		
+		String subject = "Hirdetés figyelő: " + kereses.getNev();
+		StringBuffer body = new StringBuffer();
+		body.append("<p>Kedves Felhasználó!</p>\n\n");
+		body.append("<p>A beállított hirdetésfigyelőd - melynek neve '" + kereses.getNev() + "' - feltételeinek az alábbi új hirdetések felelnek meg:</p>\n\n");
+		body.append("<ul>\n");
+		for(Hirdetes hirdetes : hirdetesList) {
+			body.append("<li><a href=\"https://www.aprohirdetes.com/hirdetes/" + hirdetes.getId().toString() + "\">" + hirdetes.getCim() + "</a> - " + hirdetes.getAr() + " Ft</li>\n");
+		}
+		body.append("</ul>\n");
+		body.append("<p>Üdvözlettel,<br>\nApróhirdetés.com</p>\n");
+		
+		ret = MailUtils.sendMail(kereses.getEmail(), subject, body.toString());
 		
 		return ret;
 	}

@@ -93,6 +93,8 @@ public class AproApplication extends Application {
 		router.attach("/felhasznalo/eszkozok", UserEszkozokServerResource.class);
 		router.attach("/felhasznalo/uzenetek/{tipus}", UserUzenetekServerResource.class);
 		router.attach("/felhasznalo/uzenet/{tipus}/{uzenetId}", UserUzenetServerResource.class);
+		router.attach("/felhasznalo/keresesek/{tipus}", UserKeresesekServerResource.class);
+		router.attach("/felhasznalo/kereses/{keresesId}/{muvelet}", UserKeresesServerResource.class);
 		router.attach("/felhasznalo/jelszocsere", UserJelszoCsereServerResource.class);
 		router.attach("/ujjelszo", UserUjJelszoServerResource.class);
 		router.attach("/aktivalolink", UserAktivaloLinkServerResource.class);
@@ -115,6 +117,7 @@ public class AproApplication extends Application {
 		apiAuthRouter.attach("/api/v1/hirdetesek/{hirdetesId}/kepek", com.aprohirdetes.server.apiv1.RestKepekServerResource.class);
 		apiAuthRouter.attach("/api/v1/kedvencek", com.aprohirdetes.server.apiv1.RestKedvencekServerResource.class);
 		apiAuthRouter.attach("/api/v1/kedvencek/{hirdetesId}", com.aprohirdetes.server.apiv1.RestKedvencServerResource.class);
+		apiAuthRouter.attach("/api/v1/keresesek", com.aprohirdetes.server.apiv1.RestKeresesekServerResource.class);
 		apiAuthRouter.attach("/api/v1/admin/retokenize", com.aprohirdetes.server.apiv1.AdminRetokenizeServerResource.class);
 		
 		Authenticator apiAuthFilter = new Authenticator(getContext()) {

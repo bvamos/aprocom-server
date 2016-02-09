@@ -11,6 +11,7 @@ import org.mongodb.morphia.query.UpdateOperations;
 
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesHelper;
+import com.aprohirdetes.model.KeresesHelper;
 import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
@@ -79,7 +80,7 @@ public class HirdetesKezeloTask implements Runnable {
 		
 		// 2 hete inaktiv hirdetesek torlese
 		Calendar c2hete = Calendar.getInstance();
-		// Datum 5 nap mulva. Az 5 napon belul lejaro hirdeteseket listazzuk vele.
+		// Datum: 2 hete
 		c2hete.setTime(new Date()); 
 		c2hete.add(Calendar.DATE, -14);
 		Date datumKetHete = c2hete.getTime();
@@ -93,6 +94,10 @@ public class HirdetesKezeloTask implements Runnable {
 				.set("statusz", Hirdetes.Statusz.TOROLVE.value())
 				.set("torolveDatum", new Date());
 		datastore.update(queryInaktiv, updateOpsInaktiv);
+		
+		
+		// HirdetesFigyelo
+		KeresesHelper.sendMails();
 		
 		this.logger.info("HirdetesKezeloTask end");
 	}

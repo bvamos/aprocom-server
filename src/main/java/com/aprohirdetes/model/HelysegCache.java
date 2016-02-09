@@ -106,6 +106,14 @@ public class HelysegCache {
 		return ret;
 	}
 	
+	public static ArrayList<ObjectId> getHelysegIdListByUrlNevList(String urlNevList) {
+		ArrayList<ObjectId> ret = new ArrayList<ObjectId>();
+		for(Helyseg helyseg : getHelysegListByUrlNevList(urlNevList)) {
+			ret.add(helyseg.getId());
+		}
+		return ret;
+	}
+	
 	/**
 	 * Visszadja a Helysegek nevet, vesszovel elvalasztva a '+' jellel elvalasztott, URL-ben megadott
 	 * lista alapjan. Arra hasznalom, hogy a HTML title tagben megjelenítsem az eppen keresett helysegek neveit.

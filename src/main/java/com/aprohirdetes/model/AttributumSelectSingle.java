@@ -49,7 +49,7 @@ public class AttributumSelectSingle extends Attributum {
 			}
 			
 			ret += "	<div class=\"checkbox input-sm\">\n" + 
-					"		<label><input type=\"checkbox\" value=\"" + ertek + "\" name=\"" + getNev() + "\"" + alapErtek + "> " + getErtekMap().get(ertek).toString() + "</label>\n" + 
+					"		<label><input type=\"checkbox\" value=\"" + ertek + "\" name=\"" + getNev() + "\"" + alapErtek + " onChange=\"$('#btnKereses').click();\"> " + getErtekMap().get(ertek).toString() + "</label>\n" + 
 					"	</div>\n";
 		}
 		ret +=  "</div>\n";

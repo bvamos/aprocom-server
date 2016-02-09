@@ -63,7 +63,7 @@ public class AttributumNumber extends Attributum {
 		}
 		ret += "		<input type=\"number\" class=\"form-control input-sm\" " +
 				"id=\"" + getNev() + "_min\" name=\"" + getNev() + "_min\" autofocus=\"\"" +
-				" placeholder=\"-tól\" value=\"" + query.getFirstValue(getNev()+"_min", "") + "\">\n";
+				" placeholder=\"-tól\" value=\"" + query.getFirstValue(getNev()+"_min", "") + "\" onChange=\"$('#btnKereses').click();\">\n";
 		if(getMertekEgyseg() != null) {
 			ret += "		<span class=\"input-group-addon\">" + getMertekEgyseg() + "</span>" +
 					"		</div>\n";
@@ -77,7 +77,7 @@ public class AttributumNumber extends Attributum {
 		}
 		ret += "		<input type=\"number\" class=\"form-control input-sm\" " +
 				"id=\"" + getNev() + "_max\" name=\"" + getNev() + "_max\" autofocus=\"\"" +
-				" placeholder=\"-ig\" value=\"" + query.getFirstValue(getNev()+"_max", "") + "\">\n";
+				" placeholder=\"-ig\" value=\"" + query.getFirstValue(getNev()+"_max", "") + "\" onChange=\"$('#btnKereses').click();\">\n";
 		if(getMertekEgyseg() != null) {
 			ret += "		<span class=\"input-group-addon\">" + getMertekEgyseg() + "</span>" +
 					"		</div>\n";

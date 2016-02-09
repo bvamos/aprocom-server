@@ -41,7 +41,7 @@ public class AttributumYesNo extends Attributum {
 		ret = "<div class=\"form-group\">\n" + 
 				"	<label class=\"control-label\" for=\"" + getNev() + "\">" + getCim() + "</label>\n" + 
 				"	<div class=\"\">\n" + 
-				"		<select class=\"form-control input-sm\" id=\"" + getNev() + "\" name=\"" + getNev() + "\">\n";
+				"		<select class=\"form-control input-sm\" id=\"" + getNev() + "\" name=\"" + getNev() + "\" onChange=\"$('#btnKereses').click();\">\n";
 			ret += "			<option value=\"\"></option>\n";
 			ret += "			<option value=\"igen\"" + selectedIgen + ">Igen</option>\n";
 			ret += "			<option value=\"nem\"" + selectedNem + ">Nem</option>\n";
