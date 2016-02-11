@@ -22,8 +22,8 @@
 				<h3>Hirdetéseim</h3>
 				
 				<ul class="nav nav-tabs">
-					<li role="presentation" class="<#if hirdetesAktiv==true>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/aktiv">Aktív hirdetéseim<#if hirdetesAktiv=true> (${hirdetesList?size})</#if></a></li>
-					<li role="presentation" class="<#if hirdetesAktiv==false>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/inaktiv">Inaktív hirdetéseim<#if hirdetesAktiv=false> (${hirdetesList?size})</#if></a></li>
+					<li role="presentation" class="<#if hirdetesAktiv==true>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/aktiv">Aktív hirdetéseim (${countHirdetesAktiv})</a></li>
+					<li role="presentation" class="<#if hirdetesAktiv==false>active</#if>"><a href="${app.contextRoot}/felhasznalo/hirdetesek/inaktiv">Inaktív hirdetéseim (${countHirdetesInaktiv})</a></li>
 				</ul>
 				
 				<#if uzenet?? >

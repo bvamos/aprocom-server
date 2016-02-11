@@ -77,16 +77,29 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			
 			query.criteria("hirdetoId").equal(this.session.getHirdetoId());
-			// Megjelenitjuk az inaktiv hirdeteseket is, hogy vissza lehessen allitani
-			if(this.hirdetesAktiv) {
-				query.criteria("statusz").equal(Hirdetes.Statusz.AKTIV.value());
-			} else {
-				query.criteria("statusz").in(Arrays.asList(Hirdetes.Statusz.INAKTIV.value(), Hirdetes.Statusz.INAKTIV_ELADVA.value(), Hirdetes.Statusz.INAKTIV_LEJART.value()));
-			}
 			
 			//System.out.println(query);
 			ArrayList<Hirdetes> hirdetesList = new ArrayList<Hirdetes>();
+			int countHirdetesAktiv = 0;
+			int countHirdetesInaktiv = 0;
 			for(Hirdetes h : query) {
+				// Darabszamok megszamolasa
+				if(h.getStatusz()==Hirdetes.Statusz.AKTIV.value()) {
+					countHirdetesAktiv++;
+				} else if(h.getStatusz()!=Hirdetes.Statusz.TOROLVE.value()) {
+					countHirdetesInaktiv++;
+				}
+				
+				// Szures megjelenitendo tipus alapjan
+				if(this.hirdetesAktiv && h.getStatusz()!=Hirdetes.Statusz.AKTIV.value()) {
+					// Nem aktiv, pedig nekunk csak azok kellenek
+					continue;
+				}
+				if(!this.hirdetesAktiv && (h.getStatusz()==Hirdetes.Statusz.AKTIV.value() || h.getStatusz()==Hirdetes.Statusz.TOROLVE.value())) {
+					// Aktiv, pedig nekunk nem azok kellenek
+					continue;
+				}
+				
 				// Kategoria lanc hozzaadasa
 				h.getEgyebMezok().put("kategoria", KategoriaCache.getKategoriaNevChain(h.getKategoriaId()));
 				
@@ -101,6 +114,8 @@ public class UserHirdeteseimServerResource extends ServerResource implements
 			}
 			
 			dataModel.put("hirdetesList", hirdetesList);
+			dataModel.put("countHirdetesAktiv", countHirdetesAktiv);
+			dataModel.put("countHirdetesInaktiv", countHirdetesInaktiv);
 		}
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);
