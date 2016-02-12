@@ -27,8 +27,8 @@
 				<h3>Mentett kereséseim</h3>
 				
 				<ul class="nav nav-tabs">
-					<li role="presentation" class="<#if keresesAktiv==true>active</#if>"><a href="${app.contextRoot}/felhasznalo/keresesek/aktiv">Aktív kereséseim<#if keresesAktiv=true> (${keresesList?size})</#if></a></li>
-					<li role="presentation" class="<#if keresesAktiv==false>active</#if>"><a href="${app.contextRoot}/felhasznalo/keresesek/inaktiv">Inaktív kereséseim<#if keresesAktiv=false> (${keresesList?size})</#if></a></li>
+					<li role="presentation" class="<#if keresesAktiv==true>active</#if>"><a href="${app.contextRoot}/felhasznalo/keresesek/aktiv">Aktív kereséseim (${countKeresesAktiv})</a></li>
+					<li role="presentation" class="<#if keresesAktiv==false>active</#if>"><a href="${app.contextRoot}/felhasznalo/keresesek/inaktiv">Inaktív kereséseim (${countKeresesInaktiv})</a></li>
 				</ul>
 				
 				<#if uzenet?? >

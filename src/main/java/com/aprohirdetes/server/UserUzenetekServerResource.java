@@ -54,6 +54,9 @@ public class UserUzenetekServerResource extends ServerResource implements
 	public Representation representHtml() throws IOException {
 		Template ftl = AproApplication.TPL_CONFIG.getTemplate("felhasznalo_uzenetek.ftl.html");
 		
+		int countBeerkezett = 0;
+		int countElkuldott = 0;
+		
 		// Adatmodell a Freemarker sablonhoz
 		Map<String, Object> dataModel = new HashMap<String, Object>();
 		
@@ -74,25 +77,37 @@ public class UserUzenetekServerResource extends ServerResource implements
 			dataModel.put("uzenetTipus", this.uzenetTipus);
 
 			// Uzenetek lekerdezese
-			Datastore datastore = MongoUtils.getDatastore();
+			final Datastore datastore = MongoUtils.getDatastore();
 			Query<Uzenet> query = datastore.createQuery(Uzenet.class);
 			
-			if("elkuldott".equalsIgnoreCase(uzenetTipus)) {
-				query.criteria("feladoId").equal(this.session.getHirdetoId());
-			} else {
-				query.criteria("cimzettId").equal(this.session.getHirdetoId());
-			}
 			query.criteria("torolve").equal(false);
+			query.or(query.criteria("cimzettId").equal(this.session.getHirdetoId()), query.criteria("feladoId").equal(this.session.getHirdetoId()));
 			
 			query.order("-id");
 			
 			ArrayList<Uzenet> uzenetList = new ArrayList<Uzenet>();
 			for(Uzenet h : query) {
-				// Uzenet mentese a listaba
-				uzenetList.add(h);
+				System.out.println(this.session.getHirdetoId());
+				System.out.println(h.getFeladoId() + ", " + h.getCimzettId() + ", " + this.uzenetTipus + ", " + h.isTorolve());
+				if(h.getFeladoId() != null && this.session.getHirdetoId().equals(h.getFeladoId())) {
+					countElkuldott++;
+					if("elkuldott".equalsIgnoreCase(this.uzenetTipus)) {
+						// Uzenet mentese a listaba
+						uzenetList.add(h);
+					}
+				}
+				if(h.getCimzettId() != null && this.session.getHirdetoId().equals(h.getCimzettId())) {
+					countBeerkezett++;
+					if("beerkezett".equalsIgnoreCase(this.uzenetTipus)) {
+						// Uzenet mentese a listaba
+						uzenetList.add(h);
+					}
+				}
 			}
 			
 			dataModel.put("uzenetList", uzenetList);
+			dataModel.put("countBeerkezett", countBeerkezett);
+			dataModel.put("countElkuldott", countElkuldott);
 		}
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);

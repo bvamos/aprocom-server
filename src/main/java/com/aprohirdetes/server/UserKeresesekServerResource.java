@@ -3,6 +3,7 @@ package com.aprohirdetes.server;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -74,21 +75,32 @@ public class UserKeresesekServerResource extends ServerResource implements
 			Query<Kereses> query = datastore.createQuery(Kereses.class);
 			
 			query.criteria("hirdetoId").equal(this.session.getHirdetoId());
-			// Megjelenitjuk az inaktiv kereseseket is, hogy vissza lehessen allitani
-			if(this.keresesAktiv) {
-				query.criteria("statusz").equal(Kereses.Statusz.AKTIV.value());
-			} else {
-				query.criteria("statusz").equal(Kereses.Statusz.INAKTIV.value());
-			}
+			query.criteria("statusz").in(Arrays.asList(Kereses.Statusz.AKTIV.value(), Kereses.Statusz.INAKTIV.value()));
 			
 			ArrayList<Kereses> keresesList = new ArrayList<Kereses>();
+			int countKeresesAktiv = 0;
+			int countKeresesInaktiv = 0;
 			for(Kereses k : query) {
-				// Kereses mentese a listaba
-				keresesList.add(k);
+				if(k.getStatusz()==Kereses.Statusz.AKTIV.value()) {
+					countKeresesAktiv++;
+					if(this.keresesAktiv) {
+						// Kereses mentese a listaba
+						keresesList.add(k);
+					}
+				}
+				if(k.getStatusz()==Kereses.Statusz.INAKTIV.value()) {
+					countKeresesInaktiv++;
+					if(!this.keresesAktiv) {
+						// Kereses mentese a listaba
+						keresesList.add(k);
+					}
+				}
 			}
 			
 			dataModel.put("keresesList", keresesList);
 			dataModel.put("keresesAktiv", this.keresesAktiv);
+			dataModel.put("countKeresesAktiv", countKeresesAktiv);
+			dataModel.put("countKeresesInaktiv", countKeresesInaktiv);
 		}
 		
 		return new TemplateRepresentation(ftl, dataModel, MediaType.TEXT_HTML);

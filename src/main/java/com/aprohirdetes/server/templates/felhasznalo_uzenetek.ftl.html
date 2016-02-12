@@ -13,8 +13,8 @@
 				<h3>Üzeneteim</h3>
 				
 				<ul class="nav nav-tabs">
-					<li role="presentation" class="<#if uzenetTipus=="beerkezett">active</#if>"><a href="${app.contextRoot}/felhasznalo/uzenetek/beerkezett">Beérkezett üzeneteim<#if uzenetTipus=="beerkezett"> (${uzenetList?size})</#if></a></li>
-					<li role="presentation" class="<#if uzenetTipus=="elkuldott">active</#if>"><a href="${app.contextRoot}/felhasznalo/uzenetek/elkuldott">Elküldött üzeneteim<#if uzenetTipus=="elkuldott"> (${uzenetList?size})</#if></a></li>
+					<li role="presentation" class="<#if uzenetTipus=="beerkezett">active</#if>"><a href="${app.contextRoot}/felhasznalo/uzenetek/beerkezett">Beérkezett üzeneteim (${countBeerkezett})</a></li>
+					<li role="presentation" class="<#if uzenetTipus=="elkuldott">active</#if>"><a href="${app.contextRoot}/felhasznalo/uzenetek/elkuldott">Elküldött üzeneteim (${countElkuldott})</a></li>
 				</ul>
 					
 				<#if uzenet?? >
