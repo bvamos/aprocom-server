@@ -320,6 +320,33 @@ public class MailUtils {
 	}
 	
 	/**
+	 * Ertesito level kuldese ha a hirdetes megjelenese eler egy bizonyos darabszamot
+	 * 
+	 * @param h Hirdetes objektum
+	 * @return True, ha sikerult a levelet elkuldeni, kulonben False
+	 */
+	public static boolean sendMailHirdetesMegjelenes(Hirdetes h) {
+		boolean ret = false;
+		
+		String email = h.getHirdeto().getEmail();
+		String subject = "Hirdetés-emlékeztető";
+		
+		StringBuffer body = new StringBuffer();
+		body.append("<p>Kedves " + h.getHirdeto().getNev() + "!</p>\n\n");
+		body.append("<p><b>Gratulálunk! Az Apróhirdetés.com oldalon feladott '" + h.getCim() + "' hirdetésedet már " + h.getMegjelenes() + " alkalommal nézték meg!</b></p>\n\n");
+		body.append("<p>Még több megjelenést szeretnél? Adunk néhány tippet:</p>\n");
+		body.append("<ul><li>Oszd meg a közösségi oldalakon</li>\n");
+		body.append("<li>Tölts fel annyi képet, amennyit csak tudsz</li></ul>\n");
+		body.append("<p>Ha csak meg szeretnéd tekinteni hirdetésed, kattints ide:<br>\n");
+		body.append("<a href=\"https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "\">https://www.aprohirdetes.com/hirdetes/" + h.getId().toString() + "</a></p>\n\n");
+		body.append("<p>Üdvözlettel,<br>\nApróhirdetés.com</p>\n");
+				
+		ret = MailUtils.sendMail(email, subject, body.toString());
+		
+		return ret;
+	}
+	
+	/**
 	 * Hirlevel kikuldese a megadott cimzettnek
 	 * 
 	 * @param h

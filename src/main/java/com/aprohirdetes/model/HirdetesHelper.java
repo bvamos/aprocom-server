@@ -1,6 +1,7 @@
 package com.aprohirdetes.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -10,6 +11,7 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import com.aprohirdetes.exception.HirdetesValidationException;
+import com.aprohirdetes.utils.MailUtils;
 import com.aprohirdetes.utils.MongoUtils;
 
 public class HirdetesHelper {
@@ -137,6 +139,10 @@ public class HirdetesHelper {
 		datastore.update(query, ops);
 		//UpdateResults<Hirdetes> results = datastore.update(query, ops);
 	    //return (int)results.getWriteResult().getField("megjelenes");
+		
+		if(Arrays.asList(1, 10, 20, 50, 100).contains(hirdetes.getMegjelenes())) {
+			MailUtils.sendMailHirdetesMegjelenes(hirdetes);
+		}
 	}
 	
 	public static ArrayList<Hirdetes> getLogoHirdetesek(String email) {
