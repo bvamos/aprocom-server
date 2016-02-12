@@ -87,8 +87,6 @@ public class UserUzenetekServerResource extends ServerResource implements
 			
 			ArrayList<Uzenet> uzenetList = new ArrayList<Uzenet>();
 			for(Uzenet h : query) {
-				System.out.println(this.session.getHirdetoId());
-				System.out.println(h.getFeladoId() + ", " + h.getCimzettId() + ", " + this.uzenetTipus + ", " + h.isTorolve());
 				if(h.getFeladoId() != null && this.session.getHirdetoId().equals(h.getFeladoId())) {
 					countElkuldott++;
 					if("elkuldott".equalsIgnoreCase(this.uzenetTipus)) {
