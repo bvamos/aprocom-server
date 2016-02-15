@@ -1,13 +1,55 @@
+<#if session?? >
+<!-- HirdetesFigyelo/Kereses mentese -->
+<div class="modal fade" id="keresesMentesModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Bezár"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Hirdetésfigyelő</h4>
+      </div>
+      <div class="modal-body">
+      
+        <form class="form-horizontal" role="form">
+        	<div class="form-group">
+				<label class="col-sm-3 control-label" for="hirdetoNev">Név</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="keresesNev" name="keresesNev" value="" required="">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="kuldesGyakorisaga">Értesítés gyakorisága</label>
+				<div class="col-sm-7">
+					<select class="form-control" id="kuldesGyakorisaga" name="kuldesGyakorisaga">
+						<option value="SOHA">Nem kérek értesítést</option>
+						<option value="NAPONTA">Naponta egyszer kérek értesítést</option>
+						<option value="HETENTE">Hetente egyszer kérek értesítést</option>
+						<option value="HAVONTA">Havonta egyszer kérek értesítést</option>
+					</select>
+				</div>
+			</div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Bezár</button>
+        <button type="button" class="btn btn-success" onClick="javascript:mentKereses();">Keresés mentése</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</#if>
+
 		<div class="row search_container">
 			<form class="form-inline" name="KeresesForm" role="form" id="KeresesForm">
 				<input type="hidden" name="s" value="${sorrend!1}">
 				
-				<div class="form-group col-md-4 col-sm-3 col-md-4">
+				<div class="form-group col-xs-8 col-sm-3 col-md-3 col-lg-3">
 				  <label class="sr-only" for="searchQuery">Keresett kifejezés</label>
 				  <input type="text" class="typeahead form-control" id="hirdetesKulcsszo" name="q" value="${q!''?html}" placeholder="Keresett kifejezés">
 				</div>
 				
-				<div class="form-group col-xs-5 col-sm-2 col-md-2">
+				<div class="form-group col-xs-4 col-sm-3 col-md-2 col-lg-1">
 					<select class="form-control" id="hirdetesTipus" width="100%">
 						<option value="kinal" <#if hirdetesTipus=2>selected</#if>>Kínál</option>
 						<option value="keres" <#if hirdetesTipus=1>selected</#if>>Keres</option>
@@ -16,7 +58,7 @@
 					</select>
 				</div>
 				
-				<div class="form-group col-xs-7 col-sm-3 col-md-2">
+				<div class="form-group col-xs-6 col-sm-6 col-md-2 col-lg-3">
 					<select class="form-control" id="hirdetesKategoria">
 						<#assign selectedKategoria="">
 						<#if hirdetesKategoria?has_content >
@@ -35,7 +77,7 @@
 					</select>
 				</div>
 				
-				<div class="form-group col-xs-12 col-sm-4 col-md-3">
+				<div class="form-group col-xs-6 col-sm-6 col-md-3 col-lg-3">
 					<select class="form-control" id="hirdetesHelyseg">
 						<option value="osszes-helyseg">Összes helység</option>
 						<#list helysegList as helyseg>
@@ -50,7 +92,10 @@
 					</select>
 				</div>
 				
-				<button type="button" class="btn btn-success hidden-xs hidden-sm" id="btnKereses">Keresés</button>
+				<div class="btn-group col-xs-12 col-sm-6 col-md-2 col-lg-2" role="group">
+					<button type="button" class="btn btn-success" id="btnKereses">Keresés</button>
+					<#if session?? ><button type="button" class="btn btn-success" id="btnMentes1" data-toggle="modal" data-target="#keresesMentesModal"><i class="fa fa-save"></i></button></#if>
+				</div>
 			</form>
 			<script type="text/javascript">
 			$('#hirdetesKulcsszo').keypress(function(event) {
