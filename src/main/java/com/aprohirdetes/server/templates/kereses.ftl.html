@@ -7,10 +7,10 @@
 				<div class="col-sm-3 col-md-2"><#include "kereses_form.ftl"/></div>
 				<div class="col-sm-9 col-md-10">
 				<#if hibaUzenet?? >
-					<div class="alert alert-danger">${hibaUzenet}</div>
+					<br/><div class="alert alert-danger">${hibaUzenet}</div>
 				<#else>
+					<#if (hirdetesek_szama>0) >
 					<div class="hirdeteslista-header">
-						<#if (hirdetesek_szama>0) >
 						<span>${hirdetesek_szama} apróhirdetés</span> - <span>${aktualisOldal}. oldal</span>
 						<span style="float: right;">
 							<a href="${rssUrl}" target="_blank" class="hidden-xs hidden-sm"><img alt="RSS" src="${app.contextRoot}/images/rss.png" border="0" width="20" height="20" /></a>
@@ -21,10 +21,13 @@
 								<option value="4" <#if sorrend==4>selected</#if>>Legdrágább elöl</option>
 							</select>
 						</span>
-						<#else>
-						<span>Nincs a feltételeknek megfelelő hirdetés :-(</span>
-						</#if>
 					</div><!-- hirdeteslista-header -->
+					<#else>
+					<br/><div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> Sajnos nincs a feltételeknek megfelelő hirdetés :-(</div>
+					<div>Ha szeretnél értesítést kapni, ha megjelenik a megadott keresési feltételeknek megfelelő hirdetés, 
+					a Keresés gomb melletti Mentés gombra kattintva létrehozhatsz egy HirdetésFigyelőt!</div>
+					<#if !session??>De ehhez be kell lépned!</#if>
+					</#if>
 					<#assign sorszam = 1>
 					<#list hirdetesList as hirdetes>
 						<#include "lista_hirdetes.ftl.html">
