@@ -38,7 +38,7 @@ public class SessionBelepesServerResource extends ServerResource implements
 
 			Session session = null;
 			try {
-				session = SessionHelper.login(this.felhasznaloNev, this.jelszo);
+				session = SessionHelper.login(this.felhasznaloNev, this.jelszo, getRequest().getClientInfo().getAddress());
 
 				// Session Cookie
 				SessionHelper.setSessionCookie(this, session.getSessionId());

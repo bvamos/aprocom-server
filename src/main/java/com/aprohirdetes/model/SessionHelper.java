@@ -18,6 +18,8 @@ import org.restlet.data.CookieSetting;
 import org.restlet.resource.Resource;
 
 import com.aprohirdetes.exception.AproException;
+import com.aprohirdetes.model.Esemeny.EsemenySzint;
+import com.aprohirdetes.model.Esemeny.EsemenyTipus;
 import com.aprohirdetes.server.AproApplication;
 import com.aprohirdetes.utils.MongoUtils;
 import com.aprohirdetes.utils.PasswordHash;
@@ -72,7 +74,7 @@ public class SessionHelper {
 		return session;
 	}
 	
-	public static Session login(String felhasznaloNev, String jelszo) throws AproException {
+	public static Session login(String felhasznaloNev, String jelszo, String clientIp) throws AproException {
 		Hirdeto hirdeto = null;
 		Session session = null;
 		
@@ -85,7 +87,11 @@ public class SessionHelper {
 				session.setSessionId(UUID.randomUUID().toString());
 				session.setHirdetoId(hirdeto.getId());
 			}
-			Context.getCurrentLogger().info("Sikeres belepes: " + hirdeto.getEmail() + "; AproSession: " + session.getSessionId());
+			
+			Context.getCurrentLogger().info("Sikeres belepes: " + hirdeto.getEmail() + "; AproSession: " + session.getSessionId() + "; Ip: " + clientIp);
+			Esemeny esemeny = new Esemeny(EsemenyTipus.FELHASZNALO_BELEPES, EsemenySzint.INFO, 2010, "{IP="+clientIp+"}");
+			esemeny.setHirdetoId(hirdeto.getId());
+			EsemenyHelper.add(esemeny);
 			
 			Datastore datastore = MongoUtils.getDatastore();
 			

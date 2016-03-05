@@ -72,13 +72,13 @@ public class UserBelepesServerResource extends ServerResource implements
 	public Representation accept(Form form) throws IOException {
 		String message = null;
 		String errorMessage = null;
-		Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
+		final Template ftl = AproApplication.TPL_CONFIG.getTemplate("belepes.ftl.html");
 		
-		String felhasznaloNev = form.getFirstValue("signinEmail");
-		String jelszo = form.getFirstValue("signinPassword");
+		final String felhasznaloNev = form.getFirstValue("signinEmail");
+		final String jelszo = form.getFirstValue("signinPassword");
 		
 		try {
-			session = SessionHelper.login(felhasznaloNev, jelszo);
+			session = SessionHelper.login(felhasznaloNev, jelszo, getRequest().getClientInfo().getAddress());
 			
 			// Session Cookie
 			SessionHelper.setSessionCookie(this, session.getSessionId());
