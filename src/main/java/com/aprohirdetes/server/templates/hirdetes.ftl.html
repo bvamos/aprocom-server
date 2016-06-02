@@ -76,13 +76,13 @@
 							<div class="form-group form-group-sm">
 								<label class="col-sm-3 control-label" for="feladoNev">Nevem</label>
 								<div class="col-sm-7">
-									<input type="text" class="form-control" id="feladoNev" name="feladoNev" autofocus="" required="true" placeholder="" value="${(session.felhasznaloNev)!''}">
+									<input type="text" class="form-control" id="feladoNev" name="feladoNev" required="true" placeholder="" value="${(session.felhasznaloNev)!''}">
 								</div>
 							</div>
 							<div class="form-group form-group-sm">
 								<label class="col-sm-3 control-label" for="feladoEmail">Email címem</label>
 								<div class="col-sm-7">
-									<input type="email" class="form-control" id="feladoEmail" name="feladoEmail" autofocus="" required="true" placeholder="" value="${(session.felhasznaloEmail)!''}">
+									<input type="email" class="form-control" id="feladoEmail" name="feladoEmail" required="true" placeholder="" value="${(session.felhasznaloEmail)!''}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -180,7 +180,7 @@
 					</div>
 				<#else>
 				<h1>Hoppá, gond van</h1>
-				<div class="alert alert-danger">${hibaUzenet}</div>
+				<div class="alert alert-danger">${hibaUzenet!""}</div>
 				</#if>
 				<br>
 <#include "page_footer.ftl.html"/>
