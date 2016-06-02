@@ -28,18 +28,18 @@ public class KeresesHelper {
 	}
 
 	public static void setUtolsoKuldes(Kereses kereses) {
-		Datastore datastore = MongoUtils.getDatastore();
+		final Datastore datastore = MongoUtils.getDatastore();
 		Query<Kereses> queryKereses = datastore.createQuery(Kereses.class);
 		queryKereses.criteria("id").equal(kereses.getId());
 		
-		UpdateOperations<Kereses> ops = datastore.createUpdateOperations(Kereses.class).set("utolsoKuldes", new Date());
+		final UpdateOperations<Kereses> ops = datastore.createUpdateOperations(Kereses.class).set("utolsoKuldes", new Date());
 		datastore.update(queryKereses, ops);
 	}
 	
 	public static void sendMails() {
 		Context.getCurrentLogger().info("HirdetesFigyelo Start");
 		
-		Datastore datastore = MongoUtils.getDatastore();
+		final Datastore datastore = MongoUtils.getDatastore();
 		Query<Kereses> queryKereses = datastore.createQuery(Kereses.class);
 		queryKereses.criteria("statusz").equal(Kereses.Statusz.AKTIV.value());
 		queryKereses.criteria("kuldesGyakorisaga").greaterThan(Kereses.KuldesGyakorisaga.SOHA.value());
@@ -67,7 +67,7 @@ public class KeresesHelper {
 			// &ingatlan-allapot=ujepitesu&ingatlan-komfort=luxus&ingatlan-komfort=osszkomfort
 			URL url = new URL("https://www.aprohirdetes.com" + kereses.getUrl());
 			
-			String urlPath = url.getPath();
+			final String urlPath = url.getPath();
 			String[] urlPathArray = urlPath.split("\\/");
 			
 			int hirdetesTipus = HirdetesTipus.getHirdetesTipus(urlPathArray[2]);
@@ -75,7 +75,7 @@ public class KeresesHelper {
 			List<ObjectId> selectedKategoriaIdList = KategoriaCache.getKategoriaIdListByUrlNevList(urlPathArray[4]);
 			List<Kategoria> selectedKategoriaList = KategoriaCache.getKategoriaListByUrlNevList(urlPathArray[4]);
 			
-			String urlQuery = url.getQuery();
+			final String urlQuery = url.getQuery();
 			Form f = new Form();
 			Integer arMin = null, arMax = null;
 			String kulcsszo = null;
@@ -87,9 +87,10 @@ public class KeresesHelper {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				Context.getCurrentLogger().severe(e.getMessage());
 			}
 			
-			Datastore datastore = MongoUtils.getDatastore();
+			final Datastore datastore = MongoUtils.getDatastore();
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			if(kereses.getUtolsoKuldes()!=null) {
 				query.criteria("modositva").greaterThan(kereses.getUtolsoKuldes());
@@ -165,7 +166,7 @@ public class KeresesHelper {
 						
 			query.limit(50);
 			
-			Context.getCurrentLogger().info("Kereses query: " + query.toString());
+			Context.getCurrentLogger().info("Kereses '" + kereses.getNev() + "', Query: " + query.toString());
 			
 			for(Hirdetes hirdetes : query) {
 				ret.add(hirdetes);
