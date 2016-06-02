@@ -49,8 +49,8 @@ public class HirdetesKezeloTask implements Runnable {
 			query.criteria("lejarErtesites").notEqual(c.getTime());
 			query.criteria("statusz").equal(Hirdetes.Statusz.AKTIV.value());
 			
-			// Egy lepesben max 100 levelet kuldjunk ki. Kesobb majd novelhetjuk, ha ez nem eleg, a task orankent fut.
-			query.limit(100);
+			// Egy lepesben max 200 levelet kuldjunk ki. Kesobb majd novelhetjuk, ha ez nem eleg, a task orankent fut.
+			query.limit(200);
 			
 			for(Hirdetes h : query) {
 				String s = "Hirdetes lejar: " + h.getId().toString();
