@@ -206,11 +206,11 @@ public class KeresesHelper {
 			break;
 		}
 		
-		Context.getCurrentLogger().info("Kereses '" + kereses.getNev() +"', Utolso kuldes: " + kereses.getUtolsoKuldes().toString() + ", Gyakorisag: " + Kereses.KuldesGyakorisaga.valueOf(kereses.getKuldesGyakorisaga()));
 		if(datum!=null && kereses.getUtolsoKuldes().before(datum)) {
 			ret = true;
 		}
 		
+		Context.getCurrentLogger().info("Kereses '" + kereses.getNev() +"', Utolso kuldes: " + kereses.getUtolsoKuldes().toString() + ", Gyakorisag: " + Kereses.KuldesGyakorisaga.valueOf(kereses.getKuldesGyakorisaga()) + ", Fut: " + ret);
 		return ret;
 	}
 }
