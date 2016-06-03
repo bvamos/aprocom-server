@@ -1,6 +1,5 @@
 package com.aprohirdetes.model;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -84,8 +83,7 @@ public class KeresesHelper {
 				arMin = f.getFirstValue("ar_min")==null ? null : Integer.parseInt(f.getFirstValue("ar_min"));
 				arMax = f.getFirstValue("ar_max")==null ? null : Integer.parseInt(f.getFirstValue("ar_max"));
 				kulcsszo = f.getFirstValue("q")==null ? null : f.getFirstValue("q");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
 				Context.getCurrentLogger().severe(e.getMessage());
 			}
