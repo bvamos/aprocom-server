@@ -352,7 +352,7 @@ public class AproApplication extends Application {
 		taskService.scheduleWithFixedDelay(new KategoriaCountTask(getLogger()), 5, 600, TimeUnit.SECONDS);
 		
 		// Lejaro hirdetesek feladoinak ertesitese naponta egyszer
-		taskService.scheduleWithFixedDelay(new HirdetesKezeloTask(getLogger()), 10, 3600, TimeUnit.SECONDS);
+		taskService.scheduleWithFixedDelay(new HirdetesKezeloTask(), 10, 3600, TimeUnit.SECONDS);
 		
 		// Hirlevelek kikuldese
 		taskService.scheduleWithFixedDelay(new HirlevelKikuldoTask(getLogger()), 15, 4, TimeUnit.HOURS);

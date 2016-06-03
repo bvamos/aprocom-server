@@ -3,8 +3,6 @@ package com.aprohirdetes.server.task;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Logger;
-
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -18,10 +16,7 @@ import com.aprohirdetes.utils.MongoUtils;
 
 public class HirdetesKezeloTask implements Runnable {
 
-	private Logger logger;
-	
-	public HirdetesKezeloTask(Logger logger) {
-		this.logger = logger;
+	public HirdetesKezeloTask() {
 	}
 	
 	@Override
@@ -76,6 +71,7 @@ public class HirdetesKezeloTask implements Runnable {
 			
 		} catch(Exception e) {
 			Context.getCurrentLogger().throwing(this.getClass().getName(), "run", e);
+			e.printStackTrace();
 		}
 		
 		
@@ -102,6 +98,7 @@ public class HirdetesKezeloTask implements Runnable {
 			KeresesHelper.sendMails();
 		} catch(Exception e) {
 			Context.getCurrentLogger().throwing(this.getClass().getName(), "run", e);
+			e.printStackTrace();
 		}
 		
 		Context.getCurrentLogger().info("HirdetesKezeloTask end");
