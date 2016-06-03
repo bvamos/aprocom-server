@@ -44,7 +44,7 @@ public class HirdetesKezeloTask implements Runnable {
 		
 		try {
 			// 5 napon belul lejaro hirdetesek, amiknel ma meg nem kuldtunk ki ertesitest
-			Datastore datastore = MongoUtils.getDatastore();
+			final Datastore datastore = MongoUtils.getDatastore();
 			Query<Hirdetes> query = datastore.createQuery(Hirdetes.class);
 			query.criteria("lejar").lessThanOrEq(otNapMulva);
 			query.criteria("lejarErtesites").notEqual(c.getTime());
@@ -75,7 +75,7 @@ public class HirdetesKezeloTask implements Runnable {
 			}
 			
 		} catch(Exception e) {
-			Context.getCurrentLogger().severe("ERROR: " + e.getMessage());
+			Context.getCurrentLogger().throwing(this.getClass().getName(), "run", e);
 		}
 		
 		
@@ -99,9 +99,9 @@ public class HirdetesKezeloTask implements Runnable {
 		
 		// HirdetesFigyelo
 		try {
-		KeresesHelper.sendMails();
+			KeresesHelper.sendMails();
 		} catch(Exception e) {
-			Context.getCurrentLogger().severe("ERROR: " + e.getMessage());
+			Context.getCurrentLogger().throwing(this.getClass().getName(), "run", e);
 		}
 		
 		Context.getCurrentLogger().info("HirdetesKezeloTask end");

@@ -173,7 +173,7 @@ public class KeresesHelper {
 			}
 			
 		} catch (MalformedURLException e) {
-			Context.getCurrentLogger().severe(e.getMessage());
+			Context.getCurrentLogger().throwing("KeresesHelper", "getHirdetesList", e);
 		}
 		
 		return ret;
