@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
+import org.restlet.Context;
 
 import com.aprohirdetes.model.Hirdetes;
 import com.aprohirdetes.model.HirdetesHelper;
@@ -25,7 +26,7 @@ public class HirdetesKezeloTask implements Runnable {
 	
 	@Override
 	public void run() {
-		this.logger.info("HirdetesKezeloTask start");
+		Context.getCurrentLogger().info("HirdetesKezeloTask start");
 		Thread.currentThread().setName("Apro-HirdetesKezeloTask");
 		
 		Calendar c = Calendar.getInstance();
@@ -56,25 +57,25 @@ public class HirdetesKezeloTask implements Runnable {
 				String s = "Hirdetes lejar: " + h.getId().toString();
 				if(h.getLejarErtesites()!=null) s += ", Utolso ertesites: " + h.getLejarErtesites().toString();
 				if(h.getLejar()!=null) s += ", Lejar: " + h.getLejar().toString();
-				this.logger.info(s);
+				Context.getCurrentLogger().info(s);
 				
 				if(h.getLejaratDatuma()<new Date().getTime()) {
 					// Lejart hirdetes, toroljuk
 					HirdetesHelper.delete(h.getId(), Hirdetes.Statusz.INAKTIV_LEJART);
-					this.logger.info("Hirdetes torolve: " + h.getId().toString());
+					Context.getCurrentLogger().info("Hirdetes torolve: " + h.getId().toString());
 				} else {
 					// 5 napon belul lejar, ertesitest kuldunk
 					if(MailUtils.sendMailHirdetesLejar(h)) {
 						// Utolso ertesites beallitasa
 						HirdetesHelper.saveLejarErtesites(h.getId(), c.getTime());
 					} else {
-						this.logger.severe("Hiba az ertesito level kikuldese kozben");
+						Context.getCurrentLogger().severe("Hiba az ertesito level kikuldese kozben");
 					}
 				}
 			}
 			
 		} catch(Exception e) {
-			this.logger.severe("ERROR: " + e.getMessage());
+			Context.getCurrentLogger().severe("ERROR: " + e.getMessage());
 		}
 		
 		
@@ -97,9 +98,13 @@ public class HirdetesKezeloTask implements Runnable {
 		
 		
 		// HirdetesFigyelo
+		try {
 		KeresesHelper.sendMails();
+		} catch(Exception e) {
+			Context.getCurrentLogger().severe("ERROR: " + e.getMessage());
+		}
 		
-		this.logger.info("HirdetesKezeloTask end");
+		Context.getCurrentLogger().info("HirdetesKezeloTask end");
 	}
 
 }

@@ -27,7 +27,7 @@ public class KeresesHelper {
 		
 	}
 
-	public static void setUtolsoKuldes(Kereses kereses) {
+	public static void setUtolsoKuldes(Kereses kereses) throws Exception {
 		final Datastore datastore = MongoUtils.getDatastore();
 		Query<Kereses> queryKereses = datastore.createQuery(Kereses.class);
 		queryKereses.criteria("id").equal(kereses.getId());
@@ -36,7 +36,7 @@ public class KeresesHelper {
 		datastore.update(queryKereses, ops);
 	}
 	
-	public static void sendMails() {
+	public static void sendMails() throws Exception {
 		Context.getCurrentLogger().info("HirdetesFigyelo Start");
 		
 		final Datastore datastore = MongoUtils.getDatastore();
